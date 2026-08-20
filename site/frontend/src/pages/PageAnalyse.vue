@@ -120,6 +120,14 @@ function choisirMatch(match) {
   exterieur.value = match.exterieur;
 }
 
+function choisirAncienMatch(match) {
+  if (match.saison) {
+    saison.value = match.saison;
+  }
+  domicile.value = match.domicile;
+  exterieur.value = match.exterieur;
+}
+
 function surChoixClub() {
   data.value = null;
   domicile.value = "";
@@ -193,9 +201,19 @@ chargerSaisons().then(async () => {
 
 const pred = computed(() => (data.value && data.value.prediction) || {});
 const suggestionsVisibles = computed(() => !data.value);
+const matchJoue = computed(() => {
+  const bloc = data.value && data.value.match_joue;
+  return bloc && bloc.joue ? bloc : null;
+});
+const confrontations = computed(() => (data.value && data.value.confrontations) || null);
 
 function largeur(pct) {
   return { width: `${pct || 0}%` };
+}
+
+function couple(a, b) {
+  if (a == null && b == null) return "—";
+  return `${a ?? "—"} – ${b ?? "—"}`;
 }
 </script>
 
@@ -364,8 +382,39 @@ function largeur(pct) {
         </article>
       </div>
 
+      <div class="bloc carte-scenario" v-if="matchJoue">
+        <h2>Ce qui s'est passé</h2>
+        <p class="doux">{{ formaterDate(matchJoue.date) }}</p>
+        <p class="score-gros">
+          {{ data.domicile.nom }} {{ matchJoue.buts_domicile }} – {{ matchJoue.buts_exterieur }}
+          {{ data.exterieur.nom }}
+        </p>
+        <div class="cartes-stats">
+          <div class="carte-stat">
+            <span>xG</span>
+            <strong class="valeur-couple">{{ couple(matchJoue.xg_domicile, matchJoue.xg_exterieur) }}</strong>
+          </div>
+          <div class="carte-stat">
+            <span>Tirs</span>
+            <strong class="valeur-couple">{{ couple(matchJoue.tirs_domicile, matchJoue.tirs_exterieur) }}</strong>
+          </div>
+          <div class="carte-stat">
+            <span>Cadrés</span>
+            <strong class="valeur-couple">{{ couple(matchJoue.tirs_cadres_domicile, matchJoue.tirs_cadres_exterieur) }}</strong>
+          </div>
+          <div class="carte-stat">
+            <span>Jaunes</span>
+            <strong class="valeur-couple">{{ couple(matchJoue.jaunes_domicile, matchJoue.jaunes_exterieur) }}</strong>
+          </div>
+          <div class="carte-stat">
+            <span>Rouges</span>
+            <strong class="valeur-couple">{{ couple(matchJoue.rouges_domicile, matchJoue.rouges_exterieur) }}</strong>
+          </div>
+        </div>
+      </div>
+
       <div class="bloc carte-scenario">
-        <h2>Ce qui peut se passer</h2>
+        <h2>{{ matchJoue ? "Ce qui pouvait se passer" : "Ce qui peut se passer" }}</h2>
         <p class="doux">{{ pred.texte }}</p>
         <div class="cartes-stats">
           <div class="carte-stat">
@@ -400,6 +449,34 @@ function largeur(pct) {
             <span class="doux">{{ item.pct }} %</span>
           </li>
         </ul>
+      </div>
+
+      <div class="bloc carte-scenario" v-if="confrontations">
+        <h2>Confrontations</h2>
+        <p v-if="!confrontations.nb" class="doux">
+          Pas encore de match entre ces deux clubs dans cette compétition.
+        </p>
+        <template v-else>
+          <div class="ligne-1n2">
+            <span>{{ data.domicile.nom }} {{ confrontations.victoires_domicile }}</span>
+            <span>Nuls {{ confrontations.nuls }}</span>
+            <span>{{ data.exterieur.nom }} {{ confrontations.victoires_exterieur }}</span>
+          </div>
+          <ul class="liste-suggestions">
+            <li
+              v-for="match in confrontations.matchs"
+              :key="match.date + match.domicile + match.exterieur"
+            >
+              <button type="button" class="suggestion-match" @click="choisirAncienMatch(match)">
+                <span class="suggestion-date">{{ formaterDate(match.date) }}</span>
+                <span class="doux">{{ match.saison }}</span>
+                <span>{{ match.domicile }}</span>
+                <span class="score-gros">{{ match.score }}</span>
+                <span>{{ match.exterieur }}</span>
+              </button>
+            </li>
+          </ul>
+        </template>
       </div>
 
       <div class="bloc" v-if="matchsEquipe.length">

@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import CalendrierMatchs from "../composants/CalendrierMatchs.vue";
 import { chargerEquipe } from "../services/api.js";
 
 const route = useRoute();
@@ -29,12 +30,6 @@ function ouvrirJoueur(nom) {
   });
 }
 
-function score(match) {
-  if (!match.joue) return "—";
-  if (match.buts_domicile == null || match.buts_exterieur == null) return "—";
-  return `${match.buts_domicile} - ${match.buts_exterieur}`;
-}
-
 function ouvrirEquipe(nom) {
   if (!nom || nom === equipe.value) return;
   routeur.push({
@@ -44,7 +39,6 @@ function ouvrirEquipe(nom) {
 }
 
 function analyserMatch(match) {
-  if (match.joue) return;
   routeur.push({
     path: "/match",
     query: {
@@ -141,54 +135,13 @@ function analyserMatch(match) {
 
     <div class="bloc" v-if="data.matchs.length">
       <h2>Calendrier</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Heure</th>
-            <th>Domicile</th>
-            <th class="droit">Score</th>
-            <th>Extérieur</th>
-            <th class="droit">Tirs</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="match in data.matchs"
-            :key="match.date + match.domicile + match.exterieur"
-            :class="{ 'match-avenir': !match.joue, cliquable: !match.joue }"
-            @click="analyserMatch(match)"
-          >
-            <td>{{ match.date }}</td>
-            <td>{{ match.heure || "—" }}</td>
-            <td>
-              <a
-                href="#"
-                class="equipe-ligne"
-                @click.prevent.stop="ouvrirEquipe(match.domicile)"
-              >
-                {{ match.domicile }}
-              </a>
-            </td>
-            <td class="droit score-gros">{{ score(match) }}</td>
-            <td>
-              <a
-                href="#"
-                class="equipe-ligne"
-                @click.prevent.stop="ouvrirEquipe(match.exterieur)"
-              >
-                {{ match.exterieur }}
-              </a>
-            </td>
-            <td class="droit">
-              <template v-if="match.joue && match.tirs_domicile != null">
-                {{ match.tirs_domicile }} - {{ match.tirs_exterieur }}
-              </template>
-              <span v-else class="doux">—</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <CalendrierMatchs
+        :matchs="data.matchs"
+        :equipe-focus="equipe"
+        afficher-tirs
+        @ouvrir-equipe="ouvrirEquipe"
+        @analyser="analyserMatch"
+      />
     </div>
   </div>
 </template>

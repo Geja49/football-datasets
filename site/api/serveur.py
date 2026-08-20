@@ -1,6 +1,7 @@
 """
 API lecture seule pour le site de stats.
 Usage (a la racine du projet) : python -m uvicorn site.api.serveur:app --reload --port 8000
+Les endpoints sont en GET uniquement.
 """
 
 from collections import defaultdict
@@ -13,7 +14,12 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from analyse_rencontre import analyser_rencontre, lister_equipes_analyse
+from analyse_rencontre import (
+    LIGUES_NATIONALES,
+    analyser_rencontre,
+    lister_equipes_analyse,
+    serie_forme_matchs,
+)
 from correspondances import nom_pour_calendrier, nom_pour_joueurs, normaliser
 from photos_joueurs import DOSSIER_PHOTOS, obtenir_photo, photo_en_cache
 from sites_officiels import SITES_CHAMPIONNATS, SITES_EQUIPES
@@ -240,6 +246,8 @@ def fusionner_programme(joues, avenir):
                 "buts_domicile": match.get("buts_domicile"),
                 "buts_exterieur": match.get("buts_exterieur"),
                 "joue": True,
+                "xg_domicile": None,
+                "xg_exterieur": None,
             }
         )
     for match in avenir:
@@ -257,10 +265,66 @@ def fusionner_programme(joues, avenir):
                 "buts_domicile": None,
                 "buts_exterieur": None,
                 "joue": False,
+                "xg_domicile": None,
+                "xg_exterieur": None,
             }
         )
     programme.sort(key=lambda m: (m["date"] or "", m["heure"] or "", m["domicile"]))
     return programme
+
+
+def joindre_xg(connexion, championnat, saison, matchs):
+    """Ajoute xg_domicile / xg_exterieur via matchs_xg (noms Understat)."""
+    if not matchs:
+        return matchs
+    try:
+        lignes = connexion.execute(
+            """
+            SELECT date, domicile, exterieur, xg_domicile, xg_exterieur
+            FROM matchs_xg
+            WHERE championnat = ? AND saison = ?
+            """,
+            (championnat, saison),
+        ).fetchall()
+    except sqlite3.OperationalError:
+        for match in matchs:
+            match.setdefault("xg_domicile", None)
+            match.setdefault("xg_exterieur", None)
+        return matchs
+    noms = []
+    vus = set()
+    par_date = {}
+    par_paire = {}
+    for ligne in lignes:
+        for nom in (ligne["domicile"], ligne["exterieur"]):
+            if nom not in vus:
+                vus.add(nom)
+                noms.append(nom)
+        xg_d = (
+            None
+            if ligne["xg_domicile"] is None
+            else round(float(ligne["xg_domicile"]), 2)
+        )
+        xg_e = (
+            None
+            if ligne["xg_exterieur"] is None
+            else round(float(ligne["xg_exterieur"]), 2)
+        )
+        couple = (xg_d, xg_e)
+        par_date[(ligne["date"], ligne["domicile"], ligne["exterieur"])] = couple
+        par_paire[(ligne["domicile"], ligne["exterieur"])] = couple
+    for match in matchs:
+        nom_d = nom_pour_joueurs(match["domicile"], noms)
+        nom_e = nom_pour_joueurs(match["exterieur"], noms)
+        couple = par_date.get((match.get("date"), nom_d, nom_e))
+        if not couple:
+            couple = par_paire.get((nom_d, nom_e))
+        if couple:
+            match["xg_domicile"], match["xg_exterieur"] = couple
+        else:
+            match["xg_domicile"] = None
+            match["xg_exterieur"] = None
+    return matchs
 
 
 LIMITE_EQUIPE = 8
@@ -374,16 +438,159 @@ def charger_programme_saison(connexion, championnat, saison):
         )
     )
     avenir = lire_calendrier(connexion, championnat, saison)
-    return fusionner_programme(joues, avenir)
+    programme = fusionner_programme(joues, avenir)
+    joindre_xg(connexion, championnat, saison, programme)
+    return programme
+
+
+def saison_avec_joueurs(connexion, championnat):
+    try:
+        ligne = connexion.execute(
+            """
+            SELECT saison FROM joueurs
+            WHERE championnat = ? AND minutes > 0
+            GROUP BY saison
+            ORDER BY saison DESC
+            LIMIT 1
+            """,
+            (championnat,),
+        ).fetchone()
+    except sqlite3.OperationalError:
+        return None
+    return ligne[0] if ligne else None
+
+
+def buteurs_par_ligue(connexion):
+    resultats = []
+    for ligue in LIGUES_NATIONALES:
+        saison = saison_avec_joueurs(connexion, ligue)
+        joueurs = []
+        if saison:
+            joueurs = lignes_dict(
+                connexion.execute(
+                    """
+                    SELECT joueur, equipe, poste, matchs, minutes, buts, xg
+                    FROM joueurs
+                    WHERE championnat = ? AND saison = ? AND minutes > 0
+                    ORDER BY buts DESC, minutes DESC
+                    LIMIT 3
+                    """,
+                    (ligue, saison),
+                )
+            )
+            for joueur in joueurs:
+                joueur["url_photo"] = photo_en_cache(connexion, joueur["joueur"])
+        resultats.append(
+            {
+                "championnat": ligue,
+                "saison": saison or "",
+                "joueurs": joueurs,
+            }
+        )
+    return resultats
+
+
+def choisir_jour_matchs(connexion, aujourd_hui):
+    try:
+        ligne = connexion.execute(
+            """
+            SELECT MIN(date) FROM (
+                SELECT date FROM matchs WHERE date >= ?
+                UNION
+                SELECT date FROM calendrier WHERE date >= ?
+            )
+            """,
+            (aujourd_hui, aujourd_hui),
+        ).fetchone()
+    except sqlite3.OperationalError:
+        return None
+    return ligne[0] if ligne and ligne[0] else None
+
+
+def charger_matchs_jour(connexion, jour):
+    joues = lignes_dict(
+        connexion.execute(
+            """
+            SELECT date, saison, championnat, domicile, exterieur,
+                   buts_domicile, buts_exterieur
+            FROM matchs
+            WHERE date = ?
+            """,
+            (jour,),
+        )
+    )
+    try:
+        avenir = lignes_dict(
+            connexion.execute(
+                """
+                SELECT date, saison, championnat, heure, journee,
+                       domicile, exterieur
+                FROM calendrier
+                WHERE date = ?
+                """,
+                (jour,),
+            )
+        )
+    except sqlite3.OperationalError:
+        avenir = []
+    vus = {}
+    programme = []
+    for match in joues:
+        cle = (match["championnat"], match["domicile"], match["exterieur"])
+        item = {
+            "date": match["date"],
+            "heure": "",
+            "journee": "",
+            "championnat": match["championnat"],
+            "saison": match["saison"],
+            "domicile": match["domicile"],
+            "exterieur": match["exterieur"],
+            "buts_domicile": match.get("buts_domicile"),
+            "buts_exterieur": match.get("buts_exterieur"),
+            "joue": True,
+        }
+        vus[cle] = item
+        programme.append(item)
+    for match in avenir:
+        cle = (match["championnat"], match["domicile"], match["exterieur"])
+        if cle in vus:
+            vus[cle]["heure"] = match.get("heure") or ""
+            vus[cle]["journee"] = match.get("journee") or ""
+            continue
+        programme.append(
+            {
+                "date": match.get("date", ""),
+                "heure": match.get("heure") or "",
+                "journee": match.get("journee") or "",
+                "championnat": match["championnat"],
+                "saison": match["saison"],
+                "domicile": match["domicile"],
+                "exterieur": match["exterieur"],
+                "buts_domicile": None,
+                "buts_exterieur": None,
+                "joue": False,
+            }
+        )
+    programme.sort(
+        key=lambda m: (m.get("heure") or "", m["championnat"], m["domicile"])
+    )
+    ajouter_logos_programme(connexion, programme)
+    return programme
 
 
 @app.get("/api/accueil")
 def accueil():
     connexion = ouvrir_base()
     try:
+        aujourd_hui = date.today().isoformat()
+        jour = choisir_jour_matchs(connexion, aujourd_hui)
+        matchs_jour = charger_matchs_jour(connexion, jour) if jour else []
         return {
             "championnats": [infos_championnat(nom) for nom in CHAMPIONNATS],
             "saisons": saisons_disponibles(connexion),
+            "jour": jour or aujourd_hui,
+            "matchs_jour": matchs_jour,
+            "buteurs": buteurs_par_ligue(connexion),
         }
     finally:
         connexion.close()
@@ -401,7 +608,7 @@ def classement(
             matchs = lignes_dict(
                 connexion.execute(
                     """
-                    SELECT domicile, exterieur, buts_domicile, buts_exterieur, resultat, phase
+                    SELECT date, domicile, exterieur, buts_domicile, buts_exterieur, resultat, phase
                     FROM matchs
                     WHERE championnat = ? AND saison = ?
                     """,
@@ -412,7 +619,7 @@ def classement(
             matchs = lignes_dict(
                 connexion.execute(
                     """
-                    SELECT domicile, exterieur, buts_domicile, buts_exterieur, resultat
+                    SELECT date, domicile, exterieur, buts_domicile, buts_exterieur, resultat
                     FROM matchs
                     WHERE championnat = ? AND saison = ?
                     """,
@@ -421,6 +628,7 @@ def classement(
             )
         classement = calculer_classement(matchs_classement(matchs, championnat))
         for ligne in classement:
+            ligne["forme"] = serie_forme_matchs(matchs, ligne["equipe"])
             ligne.update(infos_site_equipe(connexion, ligne["equipe"]))
         return {
             "classement": classement,
@@ -440,19 +648,7 @@ def calendrier_api(
     verifier_filtres(championnat, saison)
     connexion = ouvrir_base()
     try:
-        joues = lignes_dict(
-            connexion.execute(
-                """
-                SELECT date, domicile, exterieur, buts_domicile, buts_exterieur
-                FROM matchs
-                WHERE championnat = ? AND saison = ?
-                ORDER BY date
-                """,
-                (championnat, saison),
-            )
-        )
-        avenir = lire_calendrier(connexion, championnat, saison)
-        programme = fusionner_programme(joues, avenir)
+        programme = charger_programme_saison(connexion, championnat, saison)
         ajouter_logos_programme(connexion, programme)
         return {
             "programme": programme,
@@ -517,10 +713,14 @@ def fiche_equipe(
                     "jaunes_exterieur": None,
                     "rouges_domicile": None,
                     "rouges_exterieur": None,
+                    "xg_domicile": None,
+                    "xg_exterieur": None,
                     "joue": False,
                 }
             )
         matchs.sort(key=lambda m: (m["date"] or "", m.get("heure") or ""))
+        joindre_xg(connexion, championnat, saison, matchs)
+        ajouter_logos_programme(connexion, matchs)
         noms_understat = [
             row[0]
             for row in connexion.execute(

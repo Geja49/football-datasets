@@ -1,22 +1,8 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import CalendrierMatchs from "../composants/CalendrierMatchs.vue";
 import { chargerAccueil, chargerCalendrier, chargerClassement, chargerMeilleurs } from "../services/api.js";
-
-const MOIS = [
-  "janvier",
-  "février",
-  "mars",
-  "avril",
-  "mai",
-  "juin",
-  "juillet",
-  "août",
-  "septembre",
-  "octobre",
-  "novembre",
-  "décembre",
-];
 
 const route = useRoute();
 const routeur = useRouter();
@@ -116,33 +102,21 @@ function zone(rang) {
   return "";
 }
 
-function formaterDate(iso) {
-  if (!iso || iso.length < 10) return iso || "";
-  const jour = Number(iso.slice(8, 10));
-  const mois = Number(iso.slice(5, 7));
-  const annee = iso.slice(0, 4);
-  if (!mois || mois < 1 || mois > 12) return iso;
-  return `${jour} ${MOIS[mois - 1]} ${annee}`;
+function analyserMatch(match) {
+  routeur.push({
+    path: "/match",
+    query: {
+      championnat: championnat.value,
+      saison: saison.value,
+      domicile: match.domicile,
+      exterieur: match.exterieur,
+    },
+  });
 }
 
-function score(match) {
-  if (!match.joue) return "—";
-  if (match.buts_domicile == null || match.buts_exterieur == null) return "—";
-  return `${match.buts_domicile} - ${match.buts_exterieur}`;
+function serieForme(serie) {
+  return [...(serie || [])].reverse();
 }
-
-const groupesDate = computed(() => {
-  const groupes = [];
-  let courant = null;
-  for (const match of programme.value) {
-    if (!courant || courant.date !== match.date) {
-      courant = { date: match.date, matchs: [] };
-      groupes.push(courant);
-    }
-    courant.matchs.push(match);
-  }
-  return groupes;
-});
 </script>
 
 <template>
@@ -224,6 +198,7 @@ const groupesDate = computed(() => {
               <th class="droit">BP</th>
               <th class="droit">BC</th>
               <th class="droit">Diff</th>
+              <th>Forme</th>
             </tr>
           </thead>
           <tbody>
@@ -254,6 +229,15 @@ const groupesDate = computed(() => {
               <td class="droit">{{ ligne.bp }}</td>
               <td class="droit">{{ ligne.bc }}</td>
               <td class="droit">{{ ligne.diff }}</td>
+              <td>
+                <span class="forme forme-classement">
+                  <span
+                    v-for="(lettre, i) in serieForme(ligne.forme)"
+                    :key="i"
+                    :class="'pastille pastille-' + lettre"
+                  >{{ lettre }}</span>
+                </span>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -263,69 +247,12 @@ const groupesDate = computed(() => {
         <p v-if="!programme.length" class="doux">
           Pas encore de calendrier pour {{ championnat }} en {{ saison }}.
         </p>
-        <div v-for="groupe in groupesDate" :key="groupe.date" class="groupe-date">
-          <h2>{{ formaterDate(groupe.date) }}</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Heure</th>
-                <th>Domicile</th>
-                <th class="droit">Score</th>
-                <th>Extérieur</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="match in groupe.matchs"
-                :key="match.date + match.domicile + match.exterieur"
-                :class="{ 'match-avenir': !match.joue }"
-              >
-                <td>{{ match.heure || "—" }}</td>
-                <td>
-                  <a
-                    href="#"
-                    class="equipe-ligne"
-                    @click.prevent="ouvrirEquipe(match.domicile)"
-                  >
-                    <img
-                      v-if="match.url_logo_domicile"
-                      :src="match.url_logo_domicile"
-                      :alt="match.domicile"
-                      class="blason"
-                    />
-                    {{ match.domicile }}
-                  </a>
-                </td>
-                <td class="droit">
-                  <button
-                    v-if="match.joue"
-                    type="button"
-                    class="lien-score"
-                    @click="ouvrirEquipe(match.domicile)"
-                  >
-                    {{ score(match) }}
-                  </button>
-                  <span v-else class="doux">—</span>
-                </td>
-                <td>
-                  <a
-                    href="#"
-                    class="equipe-ligne"
-                    @click.prevent="ouvrirEquipe(match.exterieur)"
-                  >
-                    <img
-                      v-if="match.url_logo_exterieur"
-                      :src="match.url_logo_exterieur"
-                      :alt="match.exterieur"
-                      class="blason"
-                    />
-                    {{ match.exterieur }}
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <CalendrierMatchs
+          v-else
+          :matchs="programme"
+          @ouvrir-equipe="ouvrirEquipe"
+          @analyser="analyserMatch"
+        />
       </template>
 
       <template v-else-if="onglet === 'buteurs' || onglet === 'passeurs'">

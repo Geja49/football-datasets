@@ -1,0 +1,3 @@
+# Une CVE par ligne pour ignorer un faux positif, avec un commentaire au-dessus.
+# Exemple :
+# CVE-2024-0000

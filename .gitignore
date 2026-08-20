@@ -6,3 +6,9 @@ donnees/photos_joueurs/
 *.pyc
 site/frontend/node_modules/
 site/frontend/dist/
+.cache/trivy/
+resultats-trivy.sarif
+trivy-brut.json
+donnees/etat_sources.json
+donnees/collecte.lock
+donnees/football-nouveau.db

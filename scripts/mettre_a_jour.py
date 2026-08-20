@@ -30,6 +30,9 @@ def main():
     lancer("creer_base.py")
     print("\nTermine. Rechargez la page du site (localhost:5173).")
     print(
+        "Pour rester a jour ensuite : python scripts/surveiller_sources.py"
+    )
+    print(
         "Si un match du jour manque encore : football-data.co.uk "
         "publie souvent avec 1 a 2 jours de retard."
     )
@@ -38,7 +41,7 @@ def main():
         "(pas toujours les 38 journees en aout) et de fixtures.csv pour la semaine."
     )
     print(
-        "La Ligue des champions vient d'openfootball (GitHub). "
+        "La Ligue des champions vient d'openfootball (GitHub), depuis 2020-2021. "
         "Pas de xG. La saison 2026-2027 apparait quand le fichier est publie."
     )
 

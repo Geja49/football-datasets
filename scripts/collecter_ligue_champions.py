@@ -1,13 +1,14 @@
 """
 Collecte Ligue des champions depuis openfootball (GitHub, domaine public).
 
-Saisons visees : 2025-2026 (terminee) et 2026-2027 si le fichier existe.
+Saisons visees : 2020-2021 a 2026-2027 (si le fichier existe).
 Pas d'Understat ni football-data.co.uk (ils n'ont pas la CL).
 """
 
 import csv
 import re
 import sys
+import time
 from pathlib import Path
 
 import requests
@@ -17,9 +18,9 @@ from correspondances import nom_depuis_openfootball
 
 DOSSIER_SORTIE = Path("donnees/cinq_championnats")
 NOM_LDC = "Ligue des champions"
-ANNEES = (2025, 2026)
+ANNEES = tuple(range(2020, 2027))
 URL_FICHIER = (
-    "https://raw.githubusercontent.com/openfootball/europe-champions-league/"
+    "https://raw.githubusercontent.com/openfootball/champions-league/"
     "master/{dossier}/cl.txt"
 )
 SESSION_WEB = requests.Session()
@@ -88,6 +89,9 @@ def lire_phase(en_tete):
     match_j = re.search(r"matchday\s+(\d+)", texte)
     if match_j:
         journee = match_j.group(1)
+    if texte.startswith("group") or texte.startswith("gruppe"):
+        lettre = texte.split()[-1] if texte.split() else ""
+        return "phase de groupes", lettre
     if texte.startswith("league"):
         return "phase de ligue", journee
     if texte.startswith("playoff"):
@@ -307,6 +311,7 @@ def collecter():
         print(f"     {len(joues)} joues, {len(avenir)} a venir")
         matchs_ldc.extend(joues)
         calendrier_ldc.extend(avenir)
+        time.sleep(0.5)
 
     ecrire_csv(chemin_matchs, fusionner(matchs_existants, matchs_ldc))
     ecrire_csv(

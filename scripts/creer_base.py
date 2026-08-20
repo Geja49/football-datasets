@@ -4,7 +4,9 @@ Usage : python scripts/creer_base.py
 """
 
 import csv
+import os
 import sqlite3
+import time
 from pathlib import Path
 
 DOSSIER = Path("donnees/cinq_championnats")
@@ -140,13 +142,25 @@ def restaurer_photos(connexion, lignes):
     )
 
 
+def remplacer_base(temporaire):
+    for essai in range(8):
+        try:
+            os.replace(temporaire, FICHIER_BASE)
+            return
+        except PermissionError:
+            print("  base encore ouverte, nouvel essai...")
+            time.sleep(1)
+    raise PermissionError(f"Impossible de remplacer {FICHIER_BASE}")
+
+
 def main():
     FICHIER_BASE.parent.mkdir(parents=True, exist_ok=True)
     photos = sauver_photos(FICHIER_BASE)
-    if FICHIER_BASE.exists():
-        FICHIER_BASE.unlink()
+    temporaire = FICHIER_BASE.with_name("football-nouveau.db")
+    if temporaire.exists():
+        temporaire.unlink()
 
-    connexion = sqlite3.connect(FICHIER_BASE)
+    connexion = sqlite3.connect(temporaire)
     try:
         for nom_table, nom_fichier in TABLES.items():
             chemin = DOSSIER / nom_fichier
@@ -162,6 +176,7 @@ def main():
     finally:
         connexion.close()
 
+    remplacer_base(temporaire)
     print(f"Base creee : {FICHIER_BASE.resolve()}")
 
 

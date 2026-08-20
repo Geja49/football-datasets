@@ -434,6 +434,10 @@ tr.zone-hors-course td:first-child {
   color: var(--accent);
 }
 
+.valeur-couple {
+  font-size: 1.15rem;
+}
+
 .joueur-cellule {
   display: inline-flex;
   align-items: center;
@@ -493,14 +497,175 @@ tr.zone-hors-course td:first-child {
   color: var(--accent);
 }
 
-.groupe-date {
-  margin-bottom: 22px;
+.calendrier-barre {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
 }
 
-.groupe-date h2 {
-  font-size: 1.05rem;
-  margin: 0 0 8px;
+.filtres-calendrier {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filtres-calendrier button {
+  background: transparent;
+  border: 1px solid var(--ligne);
+  color: var(--texte-doux);
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.filtres-calendrier button.actif {
+  border-color: var(--accent);
   color: var(--accent);
+}
+
+.lien-prochain {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.mois-calendrier {
+  margin-bottom: 28px;
+}
+
+.mois-calendrier h2 {
+  font-size: 1.15rem;
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--accent);
+}
+
+.jour-calendrier {
+  margin-bottom: 14px;
+}
+
+.libelle-jour {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 8px;
+  color: var(--texte-doux);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.pastille-jour {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--fond);
+  background: var(--accent);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+}
+
+.carte-match {
+  display: grid;
+  grid-template-columns: 3.6rem 1fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+  background: var(--fond-carte);
+  border: 1px solid var(--ligne);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 6px;
+}
+
+.carte-match.match-avenir,
+.carte-match.match-joue {
+  cursor: pointer;
+}
+
+.carte-match.match-avenir:hover,
+.carte-match.match-joue:hover,
+.carte-match.match-prochain {
+  border-color: var(--accent);
+}
+
+.match-prochain {
+  scroll-margin-top: 72px;
+}
+
+.heure-match {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--texte-doux);
+  font-size: 0.85rem;
+}
+
+.club-match {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.club-domicile {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.club-exterieur {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.club-match.focus span {
+  color: var(--accent);
+}
+
+.club-match span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.milieu-match {
+  min-width: 4.8rem;
+  text-align: center;
+}
+
+.score-match {
+  font-family: Oswald, sans-serif;
+  font-size: 1.25rem;
+  color: var(--accent);
+}
+
+.versus {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--texte-doux);
+}
+
+.milieu-match small {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--texte-doux);
+  margin-top: 2px;
+}
+
+.hint-analyse {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .lien-score {
@@ -713,6 +878,46 @@ tr.zone-hors-course td:first-child {
   letter-spacing: 0.06em;
 }
 
+.forme-classement {
+  margin: 0;
+  justify-content: flex-end;
+}
+
+.ligue-match {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--texte-doux);
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.liste-buteurs {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+}
+
+.liste-buteurs li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--ligne);
+  cursor: pointer;
+}
+
+.liste-buteurs li:hover {
+  color: var(--accent);
+}
+
+.buteurs-buts {
+  margin-left: auto;
+  font-weight: 800;
+  color: var(--accent);
+}
+
 @media (max-width: 640px) {
   .fiche-joueur {
     flex-direction: column;
@@ -722,4 +927,17 @@ tr.zone-hors-course td:first-child {
   .grille-analyse {
     grid-template-columns: 1fr;
   }
+
+  .carte-match {
+    grid-template-columns: 2.8rem 1fr;
+    grid-template-areas:
+      "heure domicile"
+      "heure score"
+      "heure exterieur";
+  }
+
+  .heure-match { grid-area: heure; }
+  .club-domicile { grid-area: domicile; justify-content: flex-start; text-align: left; }
+  .milieu-match { grid-area: score; text-align: left; }
+  .club-exterieur { grid-area: exterieur; }
 }

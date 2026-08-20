@@ -28,6 +28,7 @@ SEUIL_FAIBLESSE = 0.85
 MAX_BUTS = 8
 NB_SCORES = 5
 NB_FORME = 5
+NB_CONFRONTATIONS = 8
 
 
 def saison_precedente(saison):
@@ -65,6 +66,37 @@ def _noms_xg(connexion, championnat, saison, nom_matchs):
         )
     ]
     return nom_pour_joueurs(nom_matchs, noms)
+
+
+def _xg_du_match(connexion, championnat, saison, nom_domicile, nom_exterieur, date):
+    """xG Understat du match, avec mapping des noms football-data."""
+    nom_d = _noms_xg(connexion, championnat, saison, nom_domicile)
+    nom_e = _noms_xg(connexion, championnat, saison, nom_exterieur)
+    ligne = connexion.execute(
+        """
+        SELECT xg_domicile, xg_exterieur
+        FROM matchs_xg
+        WHERE championnat = ? AND saison = ?
+          AND domicile = ? AND exterieur = ?
+          AND date = ?
+        """,
+        (championnat, saison, nom_d, nom_e, date),
+    ).fetchone()
+    if not ligne:
+        ligne = connexion.execute(
+            """
+            SELECT xg_domicile, xg_exterieur
+            FROM matchs_xg
+            WHERE championnat = ? AND saison = ?
+              AND domicile = ? AND exterieur = ?
+            ORDER BY date DESC
+            LIMIT 1
+            """,
+            (championnat, saison, nom_d, nom_e),
+        ).fetchone()
+    if not ligne:
+        return None, None
+    return _arrondi(ligne[0]), _arrondi(ligne[1])
 
 
 def _compter_xg(connexion, championnat, saison, nom_xg):
@@ -363,6 +395,30 @@ def forme_recente(connexion, championnat, nom_matchs):
     }
 
 
+def serie_forme_matchs(matchs, nom_equipe):
+    """5 derniers matchs de la liste déjà chargée (plus récent d'abord)."""
+    joues = [
+        match
+        for match in matchs
+        if match.get("buts_domicile") is not None
+        and match.get("buts_exterieur") is not None
+        and (match.get("domicile") == nom_equipe or match.get("exterieur") == nom_equipe)
+    ]
+    joues.sort(key=lambda m: m.get("date") or "", reverse=True)
+    serie = []
+    for match in joues[:NB_FORME]:
+        est_domicile = match["domicile"] == nom_equipe
+        bp = int(match["buts_domicile"] if est_domicile else match["buts_exterieur"])
+        bc = int(match["buts_exterieur"] if est_domicile else match["buts_domicile"])
+        if bp > bc:
+            serie.append("V")
+        elif bp < bc:
+            serie.append("D")
+        else:
+            serie.append("N")
+    return serie
+
+
 def _phrases(profil, moyennes, a_domicile, donnees_limitees):
     lieu = "à domicile" if a_domicile else "à l'extérieur"
     suffixe = "domicile" if a_domicile else "exterieur"
@@ -550,6 +606,105 @@ def lister_equipes_analyse(connexion, championnat, saison):
     return [row[0] for row in lignes]
 
 
+def confrontations_directes(connexion, championnat, nom_a, nom_b):
+    """Matchs A vs B dans cette compétition, toutes saisons."""
+    lignes = connexion.execute(
+        """
+        SELECT date, saison, domicile, exterieur,
+               buts_domicile, buts_exterieur
+        FROM matchs
+        WHERE championnat = ?
+          AND (
+            (domicile = ? AND exterieur = ?)
+            OR (domicile = ? AND exterieur = ?)
+          )
+          AND buts_domicile IS NOT NULL
+          AND buts_exterieur IS NOT NULL
+        ORDER BY date DESC
+        """,
+        (championnat, nom_a, nom_b, nom_b, nom_a),
+    ).fetchall()
+    victoires_a = 0
+    nuls = 0
+    victoires_b = 0
+    matchs = []
+    for ligne in lignes:
+        if ligne["domicile"] == nom_a:
+            bp_a = int(ligne["buts_domicile"])
+            bc_a = int(ligne["buts_exterieur"])
+        else:
+            bp_a = int(ligne["buts_exterieur"])
+            bc_a = int(ligne["buts_domicile"])
+        if bp_a > bc_a:
+            victoires_a += 1
+        elif bp_a < bc_a:
+            victoires_b += 1
+        else:
+            nuls += 1
+        matchs.append(
+            {
+                "date": ligne["date"],
+                "saison": ligne["saison"],
+                "domicile": ligne["domicile"],
+                "exterieur": ligne["exterieur"],
+                "buts_domicile": int(ligne["buts_domicile"]),
+                "buts_exterieur": int(ligne["buts_exterieur"]),
+                "score": f"{int(ligne['buts_domicile'])}-{int(ligne['buts_exterieur'])}",
+            }
+        )
+    return {
+        "victoires_domicile": victoires_a,
+        "nuls": nuls,
+        "victoires_exterieur": victoires_b,
+        "nb": len(lignes),
+        "matchs": matchs[:NB_CONFRONTATIONS],
+    }
+
+
+def lire_match_joue(connexion, championnat, saison, nom_domicile, nom_exterieur):
+    """Fiche du match si le score est déjà en base pour cette saison."""
+    ligne = connexion.execute(
+        """
+        SELECT date, saison, domicile, exterieur,
+               buts_domicile, buts_exterieur,
+               tirs_domicile, tirs_exterieur,
+               tirs_cadres_domicile, tirs_cadres_exterieur,
+               jaunes_domicile, jaunes_exterieur,
+               rouges_domicile, rouges_exterieur
+        FROM matchs
+        WHERE championnat = ? AND saison = ?
+          AND domicile = ? AND exterieur = ?
+          AND buts_domicile IS NOT NULL
+          AND buts_exterieur IS NOT NULL
+        ORDER BY date DESC
+        LIMIT 1
+        """,
+        (championnat, saison, nom_domicile, nom_exterieur),
+    ).fetchone()
+    if not ligne:
+        return {"joue": False}
+    xg_d, xg_e = _xg_du_match(
+        connexion, championnat, saison, nom_domicile, nom_exterieur, ligne["date"]
+    )
+    return {
+        "joue": True,
+        "date": ligne["date"],
+        "saison": ligne["saison"],
+        "buts_domicile": int(ligne["buts_domicile"]),
+        "buts_exterieur": int(ligne["buts_exterieur"]),
+        "tirs_domicile": ligne["tirs_domicile"],
+        "tirs_exterieur": ligne["tirs_exterieur"],
+        "tirs_cadres_domicile": ligne["tirs_cadres_domicile"],
+        "tirs_cadres_exterieur": ligne["tirs_cadres_exterieur"],
+        "jaunes_domicile": ligne["jaunes_domicile"],
+        "jaunes_exterieur": ligne["jaunes_exterieur"],
+        "rouges_domicile": ligne["rouges_domicile"],
+        "rouges_exterieur": ligne["rouges_exterieur"],
+        "xg_domicile": xg_d,
+        "xg_exterieur": xg_e,
+    }
+
+
 def analyser_rencontre(connexion, championnat, saison, nom_domicile, nom_exterieur):
     if nom_domicile == nom_exterieur:
         raise ValueError("Les deux équipes doivent être différentes")
@@ -679,4 +834,10 @@ def analyser_rencontre(connexion, championnat, saison, nom_domicile, nom_exterie
         "domicile": domicile,
         "exterieur": exterieur,
         "prediction": pred,
+        "confrontations": confrontations_directes(
+            connexion, championnat, nom_domicile, nom_exterieur
+        ),
+        "match_joue": lire_match_joue(
+            connexion, championnat, saison, nom_domicile, nom_exterieur
+        ),
     }

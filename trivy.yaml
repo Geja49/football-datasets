@@ -1,0 +1,18 @@
+# Configuration Trivy (scan du dépôt, pas d'image Docker).
+# https://trivy.dev/docs/latest/configuration/config-file/
+
+scan:
+  scanners:
+    - vuln
+    - secret
+    - misconfig
+  skip-dirs:
+    - site/frontend/node_modules
+    - site/frontend/dist
+    - datasets
+    - donnees
+    - anu
+    - .git
+
+vulnerability:
+  ignore-unfixed: true
