@@ -1,0 +1,169 @@
+"""
+Cree une base SQLite et y importe les CSV des championnats (5 ligues + LDC).
+Usage : python scripts/creer_base.py
+"""
+
+import csv
+import sqlite3
+from pathlib import Path
+
+DOSSIER = Path("donnees/cinq_championnats")
+FICHIER_BASE = Path("donnees/football.db")
+
+COLONNES_ENTIER = {
+    "buts_domicile",
+    "buts_exterieur",
+    "buts_domicile_mt",
+    "buts_exterieur_mt",
+    "tirs_domicile",
+    "tirs_exterieur",
+    "tirs_cadres_domicile",
+    "tirs_cadres_exterieur",
+    "fautes_domicile",
+    "fautes_exterieur",
+    "corners_domicile",
+    "corners_exterieur",
+    "jaunes_domicile",
+    "jaunes_exterieur",
+    "rouges_domicile",
+    "rouges_exterieur",
+    "matchs",
+    "minutes",
+    "buts",
+    "passes_decisives",
+    "tirs",
+    "passes_cles",
+    "buts_hors_penalty",
+    "carton_jaune",
+    "carton_rouge",
+}
+COLONNES_REEL = {
+    "xg",
+    "xa",
+    "xg_hors_penalty",
+    "xg_chaine",
+    "xg_construction",
+    "xg_domicile",
+    "xg_exterieur",
+}
+
+TABLES = {
+    "matchs": "matchs.csv",
+    "matchs_xg": "matchs_xg.csv",
+    "joueurs": "joueurs.csv",
+    "equipes": "equipes.csv",
+    "sites_equipes": "sites_equipes.csv",
+    "calendrier": "calendrier.csv",
+}
+
+INDEXS = [
+    "CREATE INDEX IF NOT EXISTS idx_matchs_saison ON matchs (championnat, saison)",
+    "CREATE INDEX IF NOT EXISTS idx_matchs_equipes ON matchs (domicile, exterieur)",
+    "CREATE INDEX IF NOT EXISTS idx_joueurs_saison ON joueurs (championnat, saison)",
+    "CREATE INDEX IF NOT EXISTS idx_joueurs_equipe ON joueurs (equipe)",
+    "CREATE INDEX IF NOT EXISTS idx_joueurs_nom ON joueurs (joueur)",
+    "CREATE INDEX IF NOT EXISTS idx_calendrier_saison ON calendrier (championnat, saison)",
+    "CREATE INDEX IF NOT EXISTS idx_calendrier_equipes ON calendrier (domicile, exterieur)",
+]
+
+
+def type_sql(nom):
+    if nom in COLONNES_ENTIER:
+        return "INTEGER"
+    if nom in COLONNES_REEL:
+        return "REAL"
+    return "TEXT"
+
+
+def convertir(nom, valeur):
+    if valeur is None or str(valeur).strip() == "":
+        return None
+    if nom in COLONNES_ENTIER:
+        return int(float(valeur))
+    if nom in COLONNES_REEL:
+        return float(valeur)
+    return valeur
+
+
+def creer_table(connexion, nom_table, colonnes):
+    definition = ", ".join(f"{col} {type_sql(col)}" for col in colonnes)
+    connexion.execute(f"DROP TABLE IF EXISTS {nom_table}")
+    connexion.execute(f"CREATE TABLE {nom_table} ({definition})")
+
+
+def importer_csv(connexion, nom_table, chemin):
+    with open(chemin, newline="", encoding="utf-8") as fichier:
+        lecteur = csv.DictReader(fichier)
+        colonnes = lecteur.fieldnames
+        creer_table(connexion, nom_table, colonnes)
+        places = ", ".join(["?"] * len(colonnes))
+        noms = ", ".join(colonnes)
+        requete = f"INSERT INTO {nom_table} ({noms}) VALUES ({places})"
+        lignes = []
+        for ligne in lecteur:
+            lignes.append([convertir(col, ligne.get(col, "")) for col in colonnes])
+        connexion.executemany(requete, lignes)
+    return len(lignes)
+
+
+def sauver_photos(chemin_base):
+    if not chemin_base.exists():
+        return []
+    connexion = sqlite3.connect(chemin_base)
+    try:
+        return list(
+            connexion.execute(
+                "SELECT joueur, fichier, source FROM photos_joueurs"
+            )
+        )
+    except sqlite3.OperationalError:
+        return []
+    finally:
+        connexion.close()
+
+
+def restaurer_photos(connexion, lignes):
+    if not lignes:
+        return
+    connexion.execute(
+        """
+        CREATE TABLE IF NOT EXISTS photos_joueurs (
+            joueur TEXT PRIMARY KEY,
+            fichier TEXT,
+            source TEXT
+        )
+        """
+    )
+    connexion.executemany(
+        "INSERT OR REPLACE INTO photos_joueurs (joueur, fichier, source) VALUES (?, ?, ?)",
+        lignes,
+    )
+
+
+def main():
+    FICHIER_BASE.parent.mkdir(parents=True, exist_ok=True)
+    photos = sauver_photos(FICHIER_BASE)
+    if FICHIER_BASE.exists():
+        FICHIER_BASE.unlink()
+
+    connexion = sqlite3.connect(FICHIER_BASE)
+    try:
+        for nom_table, nom_fichier in TABLES.items():
+            chemin = DOSSIER / nom_fichier
+            if not chemin.exists():
+                print(f"  {nom_table}: fichier absent, ignore")
+                continue
+            nb = importer_csv(connexion, nom_table, chemin)
+            print(f"  {nom_table}: {nb} lignes")
+        for index in INDEXS:
+            connexion.execute(index)
+        restaurer_photos(connexion, photos)
+        connexion.commit()
+    finally:
+        connexion.close()
+
+    print(f"Base creee : {FICHIER_BASE.resolve()}")
+
+
+if __name__ == "__main__":
+    main()

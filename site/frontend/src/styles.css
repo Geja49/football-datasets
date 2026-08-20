@@ -1,0 +1,725 @@
+:root,
+[data-theme="accueil"] {
+  --fond: #070b12;
+  --fond-carte: #121a28;
+  --fond-lisible: #1c2738;
+  --bandeau: #0b1220;
+  --texte: #f4f7fb;
+  --texte-doux: #9aa8bc;
+  --accent: #e8b923;
+  --ligne: #243044;
+  --hero: linear-gradient(120deg, #0b1220 0%, #1a2740 100%);
+}
+
+[data-theme="Premier League"] {
+  --fond: #1a0524;
+  --fond-carte: #2a0d3d;
+  --fond-lisible: #3d195b;
+  --bandeau: #37003c;
+  --texte: #ffffff;
+  --texte-doux: #d4c2de;
+  --accent: #00ff87;
+  --ligne: #4a2168;
+  --hero: linear-gradient(115deg, #37003c 0%, #6b1d8a 55%, #00ff87 160%);
+}
+
+[data-theme="La Liga"] {
+  --fond: #0a0a0a;
+  --fond-carte: #161616;
+  --fond-lisible: #222;
+  --bandeau: #111;
+  --texte: #ffffff;
+  --texte-doux: #c8c8c8;
+  --accent: #ff4b44;
+  --ligne: #333;
+  --hero: linear-gradient(115deg, #111 0%, #3a0a0a 50%, #ff4b44 140%);
+}
+
+[data-theme="Bundesliga"] {
+  --fond: #12080a;
+  --fond-carte: #1e1013;
+  --fond-lisible: #2a1518;
+  --bandeau: #1a1a1a;
+  --texte: #ffffff;
+  --texte-doux: #d0c4c6;
+  --accent: #e2001a;
+  --ligne: #3a2226;
+  --hero: linear-gradient(115deg, #1a1a1a 0%, #4a0a12 60%, #e2001a 150%);
+}
+
+[data-theme="Serie A"] {
+  --fond: #061018;
+  --fond-carte: #0c1c2c;
+  --fond-lisible: #123048;
+  --bandeau: #001428;
+  --texte: #f3f8fc;
+  --texte-doux: #9db8cc;
+  --accent: #00a3e0;
+  --ligne: #1a3a52;
+  --hero: linear-gradient(115deg, #001428 0%, #0a3a5c 55%, #00a3e0 150%);
+}
+
+[data-theme="Ligue des champions"] {
+  --fond: #050c16;
+  --fond-carte: #0c1a2e;
+  --fond-lisible: #13263f;
+  --bandeau: #061525;
+  --texte: #f2f6fb;
+  --texte-doux: #9bb0c7;
+  --accent: #7ec8ff;
+  --ligne: #1c3550;
+  --hero: linear-gradient(115deg, #061525 0%, #0a2a4a 55%, #1a4a7a 150%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Manrope, "Segoe UI", sans-serif;
+  background: var(--fond);
+  color: var(--texte);
+  min-height: 100vh;
+}
+
+h1,
+h2,
+.logo,
+.titre-hero {
+  font-family: Oswald, Impact, sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+.bandeau {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 14px 28px;
+  background: var(--bandeau);
+  border-bottom: 3px solid var(--accent);
+}
+
+.logo {
+  font-size: 1.15rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.recherche {
+  flex: 1;
+  max-width: 440px;
+  background: var(--fond-lisible);
+  border: 1px solid var(--ligne);
+  color: var(--texte);
+  border-radius: 999px;
+  padding: 10px 16px;
+}
+
+.contenu {
+  padding: 0 0 48px;
+}
+
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px 24px;
+}
+
+.hero {
+  background: var(--hero);
+  padding: 36px 24px 28px;
+  margin-bottom: 28px;
+}
+
+.hero-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.titre-hero {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  margin: 8px 0 6px;
+}
+
+.grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.carte {
+  background: var(--fond-carte);
+  border: 1px solid var(--ligne);
+  border-radius: 4px;
+  padding: 22px 18px;
+  overflow: hidden;
+  position: relative;
+}
+
+.carte::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: var(--carte-accent, var(--accent));
+}
+
+.carte.cliquable:hover {
+  transform: translateY(-2px);
+  border-color: var(--carte-accent, var(--accent));
+}
+
+.carte-pl {
+  --carte-accent: #00ff87;
+  background: #2a0d3d;
+}
+.carte-laliga {
+  --carte-accent: #ff4b44;
+  background: #1a0c0c;
+}
+.carte-bundesliga {
+  --carte-accent: #e2001a;
+  background: #1e1013;
+}
+.carte-seriea {
+  --carte-accent: #00a3e0;
+  background: #0c1c2c;
+}
+.carte-ligue1 {
+  --carte-accent: #e8b923;
+  background: #101c30;
+}
+.carte-ldc {
+  --carte-accent: #7ec8ff;
+  background: #0c1a2e;
+}
+
+.tag {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--carte-accent, var(--accent));
+  font-weight: 700;
+}
+
+.ligne-haut {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+select {
+  background: var(--fond-lisible);
+  color: var(--texte);
+  border: 1px solid var(--ligne);
+  border-radius: 4px;
+  padding: 8px 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--fond-carte);
+  overflow: hidden;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--ligne);
+}
+
+th {
+  color: var(--texte-doux);
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: color-mix(in srgb, var(--bandeau) 80%, black);
+}
+
+tr.cliquable {
+  cursor: pointer;
+}
+
+tr.cliquable:hover {
+  background: var(--fond-lisible);
+}
+
+tr.zone-ldc td:first-child {
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+tr.zone-barrages td:first-child {
+  box-shadow: inset 3px 0 0 #f0c36a;
+}
+
+tr.zone-rel td:first-child {
+  box-shadow: inset 3px 0 0 #ff5a5a;
+}
+
+tr.zone-hors-course td:first-child {
+  box-shadow: inset 3px 0 0 #5a6a80;
+}
+
+.droit {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.pts {
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.legende-classement {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 0 0 14px;
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+.legende-classement span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legende-classement i {
+  width: 3px;
+  height: 14px;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.legende-ldc i { background: var(--accent); }
+.legende-barrages i { background: #f0c36a; }
+.legende-hors i { background: #5a6a80; }
+
+.resultats {
+  position: absolute;
+  background: var(--fond-carte);
+  border: 1px solid var(--ligne);
+  border-radius: 8px;
+  width: min(440px, 90vw);
+  margin-top: 6px;
+  z-index: 5;
+}
+
+.resultats a {
+  display: block;
+  padding: 10px 14px;
+}
+
+.erreur {
+  color: #ffb4b4;
+}
+
+.doux {
+  color: var(--texte-doux);
+}
+
+.equipe-ligne {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+
+.blason {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.blason-grand {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+}
+
+.fiche-club {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.bloc {
+  margin-top: 28px;
+}
+
+.score-gros {
+  font-family: Oswald, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.fiche-joueur {
+  display: flex;
+  gap: 28px;
+  align-items: flex-end;
+}
+
+.identite-joueur {
+  flex: 1;
+  min-width: 0;
+}
+
+.portrait-joueur {
+  width: 168px;
+  height: 210px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 8px;
+  background: var(--fond-lisible);
+  border: 2px solid var(--accent);
+  flex-shrink: 0;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+.portrait-vide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Oswald, sans-serif;
+  font-size: 4rem;
+  color: var(--accent);
+}
+
+.cartes-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.carte-stat {
+  background: color-mix(in srgb, var(--fond-carte) 80%, black);
+  border: 1px solid var(--ligne);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.carte-stat span {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--texte-doux);
+}
+
+.carte-stat strong {
+  font-family: Oswald, sans-serif;
+  font-size: 1.7rem;
+  color: var(--accent);
+}
+
+.joueur-cellule {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.portrait-mini {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  background: var(--fond-lisible);
+}
+
+.lien-analyse {
+  font-size: 0.9rem;
+  white-space: nowrap;
+  color: var(--texte-doux);
+}
+
+.bouton-analyse {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.ligne-haut .bouton-analyse {
+  margin-top: 0;
+}
+
+.onglets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+
+.onglet {
+  background: transparent;
+  border: 1px solid var(--ligne);
+  color: var(--texte-doux);
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.onglet.actif {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.groupe-date {
+  margin-bottom: 22px;
+}
+
+.groupe-date h2 {
+  font-size: 1.05rem;
+  margin: 0 0 8px;
+  color: var(--accent);
+}
+
+.lien-score {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-family: Oswald, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.match-avenir td {
+  color: var(--texte-doux);
+}
+
+.mention {
+  color: var(--texte-doux);
+  font-size: 0.9rem;
+  border-left: 3px solid var(--accent);
+  padding: 8px 12px;
+  background: var(--fond-carte);
+}
+
+.grille-analyse {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.carte-equipe,
+.carte-scenario {
+  background: var(--fond-carte);
+  border: 1px solid var(--ligne);
+  border-radius: 6px;
+  padding: 18px;
+}
+
+.entete-equipe {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.forme {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin: 8px 0 0;
+}
+
+.pastille {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.pastille-V {
+  background: #1f8a4c;
+  color: #fff;
+}
+
+.pastille-N {
+  background: #6b7280;
+  color: #fff;
+}
+
+.pastille-D {
+  background: #c43c3c;
+  color: #fff;
+}
+
+.chiffres-xg {
+  margin: 12px 0;
+}
+
+.liste-points {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.liste-points li {
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  background: var(--fond-lisible);
+  border-radius: 4px;
+}
+
+.point-force {
+  border-left: 3px solid var(--accent);
+}
+
+.point-faiblesse {
+  border-left: 3px solid #ff5a5a;
+}
+
+.bloc-1n2 {
+  margin: 18px 0;
+}
+
+.ligne-1n2 {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+}
+
+.barre-1n2 {
+  display: flex;
+  height: 18px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--fond-lisible);
+}
+
+.seg-1 {
+  background: var(--accent);
+}
+
+.seg-n {
+  background: #6b7280;
+}
+
+.seg-2 {
+  background: #c43c3c;
+}
+
+.liste-scores {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.liste-scores li {
+  background: var(--fond-lisible);
+  padding: 10px 14px;
+  border-radius: 4px;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.liste-suggestions {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.suggestion-match {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  width: 100%;
+  text-align: left;
+  background: var(--fond-carte);
+  border: 1px solid var(--ligne);
+  color: var(--texte);
+  border-radius: 6px;
+  padding: 12px 14px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.suggestion-match:hover {
+  border-color: var(--accent);
+}
+
+.suggestion-date {
+  font-weight: 700;
+  min-width: 8.5rem;
+}
+
+.suggestion-heure {
+  color: var(--texte-doux);
+  font-variant-numeric: tabular-nums;
+  min-width: 3rem;
+}
+
+.suggestion-lieu {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 5.5rem;
+}
+
+.hero label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--texte-doux);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 640px) {
+  .fiche-joueur {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .grille-analyse {
+    grid-template-columns: 1fr;
+  }
+}
