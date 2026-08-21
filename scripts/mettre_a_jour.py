@@ -14,19 +14,24 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parents[1]
 
 
-def lancer(nom_script):
+def lancer(nom_script, obligatoire=True):
     print(f"\n=== {nom_script} ===")
     resultat = subprocess.run(
         [sys.executable, str(RACINE / "scripts" / nom_script)],
         cwd=RACINE,
     )
-    if resultat.returncode != 0:
+    if resultat.returncode != 0 and obligatoire:
         sys.exit(resultat.returncode)
+    if resultat.returncode != 0:
+        print(f"{nom_script} a echoue, on continue avec les fichiers deja presents.")
 
 
 def main():
     lancer("collecter_cinq_championnats.py")
     lancer("collecter_ligue_champions.py")
+    lancer("collecter_wyscout.py", obligatoire=False)
+    lancer("collecter_statsbomb.py", obligatoire=False)
+    lancer("collecter_api_football.py", obligatoire=False)
     lancer("creer_base.py")
     print("\nTermine. Rechargez la page du site (localhost:5173).")
     print(
@@ -41,8 +46,18 @@ def main():
         "(pas toujours les 38 journees en aout) et de fixtures.csv pour la semaine."
     )
     print(
-        "La Ligue des champions vient d'openfootball (GitHub), depuis 2020-2021. "
-        "Pas de xG. La saison 2026-2027 apparait quand le fichier est publie."
+        "La Ligue des champions vient d'openfootball (GitHub), depuis 2011-2012. "
+        "Pas de xG sauf quelques finales StatsBomb. "
+        "La saison 2026-2027 apparait quand le fichier est publie."
+    )
+    print(
+        "Defense : Wyscout 2017-2018 (5 ligues) et StatsBomb open-data "
+        "(surtout 2015-2016 + saisons partielles). "
+        "Les 5 ligues 2025-2026 n'ont pas de tacles/interceptions en open data."
+    )
+    print(
+        "API-Football : uniquement si CLE_API_FOOTBALL est dans .env "
+        "(une ligue a la fois, cache)."
     )
 
 

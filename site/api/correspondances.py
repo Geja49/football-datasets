@@ -204,3 +204,31 @@ def nom_depuis_openfootball(nom_brut, noms_ligues=None):
     if noms_ligues:
         return nom_pour_calendrier(propre, noms_ligues)
     return propre
+
+
+def alias_noms_equipe(nom):
+    """Variantes d'un club : football-data, Understat, openfootball."""
+    nom = (nom or "").strip()
+    if not nom:
+        return []
+    vus = []
+
+    def ajouter(valeur):
+        texte = (valeur or "").strip()
+        if texte and texte not in vus:
+            vus.append(texte)
+
+    ajouter(nom)
+    ajouter(CORRESPONDANCES.get(nom))
+    ajouter(NOMS_VERS_CALENDRIER.get(nom))
+    ajouter(nom_depuis_openfootball(nom))
+    for nom_matchs, nom_understat in CORRESPONDANCES.items():
+        if nom_matchs in vus or nom_understat in vus:
+            ajouter(nom_matchs)
+            ajouter(nom_understat)
+    cibles = {cle_nom(texte) for texte in vus}
+    for brut, alias in NOMS_LDC.items():
+        if alias in vus or cle_nom(brut) in cibles or cle_nom(alias) in cibles:
+            ajouter(alias)
+            ajouter(nom_depuis_openfootball(brut))
+    return vus

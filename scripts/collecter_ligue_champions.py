@@ -1,7 +1,8 @@
 """
 Collecte Ligue des champions depuis openfootball (GitHub, domaine public).
 
-Saisons visees : 2020-2021 a 2026-2027 (si le fichier existe).
+Saisons visees : 2011-2012 a 2026-2027 (si le fichier existe).
+Fichiers : cl.txt (tournoi) et clq.txt (qualifications). Pas elq/confq.
 Pas d'Understat ni football-data.co.uk (ils n'ont pas la CL).
 """
 
@@ -18,10 +19,11 @@ from correspondances import nom_depuis_openfootball
 
 DOSSIER_SORTIE = Path("donnees/cinq_championnats")
 NOM_LDC = "Ligue des champions"
-ANNEES = tuple(range(2020, 2027))
+ANNEES = tuple(range(2011, 2027))
+FICHIERS_LDC = ("cl.txt", "clq.txt")
 URL_FICHIER = (
     "https://raw.githubusercontent.com/openfootball/champions-league/"
-    "master/{dossier}/cl.txt"
+    "master/{dossier}/{fichier}"
 )
 SESSION_WEB = requests.Session()
 SESSION_WEB.headers.update(
@@ -96,6 +98,8 @@ def lire_phase(en_tete):
         return "phase de ligue", journee
     if texte.startswith("playoff"):
         return "barrages", journee
+    if "qualif" in texte:
+        return "qualifications", journee
     if "round of 16" in texte or "huitieme" in texte:
         return "huitiemes", journee
     if "quarter" in texte or "quart" in texte:
@@ -137,10 +141,10 @@ def resultat_depuis_buts(buts_domicile, buts_exterieur):
     return "D"
 
 
-def parser_football_txt(texte, saison, noms_ligues):
+def parser_football_txt(texte, saison, noms_ligues, phase_defaut="phase de ligue"):
     matchs = []
     calendrier = []
-    phase = "phase de ligue"
+    phase = phase_defaut
     journee = ""
     date_iso = ""
     annee = int(saison[:4])
@@ -214,22 +218,31 @@ def parser_football_txt(texte, saison, noms_ligues):
     return matchs, calendrier
 
 
-def telecharger_saison(annee):
-    saison = libelle_saison(annee)
-    url = URL_FICHIER.format(dossier=dossier_saison(annee))
+def telecharger_fichier(annee, fichier):
+    url = URL_FICHIER.format(dossier=dossier_saison(annee), fichier=fichier)
     try:
         reponse = SESSION_WEB.get(url, timeout=30)
     except requests.RequestException as exc:
-        print(f"   {saison}: telechargement impossible ({exc})")
+        print(f"   {libelle_saison(annee)} {fichier}: impossible ({exc})")
         return None
     if reponse.status_code == 404:
-        print(f"   {saison}: pas encore de fichier openfootball")
         return None
     if reponse.status_code != 200 or " v " not in reponse.text:
-        print(f"   {saison}: fichier invalide (HTTP {reponse.status_code})")
         return None
     reponse.encoding = "utf-8"
     return reponse.text
+
+
+def telecharger_saison(annee):
+    textes = []
+    for fichier in FICHIERS_LDC:
+        texte = telecharger_fichier(annee, fichier)
+        if texte:
+            textes.append((fichier, texte))
+        time.sleep(0.3)
+    if not textes:
+        print(f"   {libelle_saison(annee)}: pas encore de fichier openfootball")
+    return textes
 
 
 def lire_csv(chemin):
@@ -304,14 +317,24 @@ def collecter():
     for annee in ANNEES:
         saison = libelle_saison(annee)
         print(f"  openfootball LDC {saison}...")
-        texte = telecharger_saison(annee)
-        if not texte:
+        textes = telecharger_saison(annee)
+        if not textes:
             continue
-        joues, avenir = parser_football_txt(texte, saison, noms_ligues)
-        print(f"     {len(joues)} joues, {len(avenir)} a venir")
-        matchs_ldc.extend(joues)
-        calendrier_ldc.extend(avenir)
-        time.sleep(0.5)
+        joues_saison = []
+        avenir_saison = []
+        for fichier, texte in textes:
+            phase_defaut = "qualifications" if fichier == "clq.txt" else "phase de ligue"
+            joues, avenir = parser_football_txt(
+                texte, saison, noms_ligues, phase_defaut=phase_defaut
+            )
+            joues_saison.extend(joues)
+            avenir_saison.extend(avenir)
+        print(
+            f"     {len(joues_saison)} joues, {len(avenir_saison)} a venir "
+            f"({', '.join(f for f, _ in textes)})"
+        )
+        matchs_ldc.extend(joues_saison)
+        calendrier_ldc.extend(avenir_saison)
 
     ecrire_csv(chemin_matchs, fusionner(matchs_existants, matchs_ldc))
     ecrire_csv(

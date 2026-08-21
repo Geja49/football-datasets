@@ -38,6 +38,18 @@ COLONNES_ENTIER = {
     "buts_hors_penalty",
     "carton_jaune",
     "carton_rouge",
+    "tacles",
+    "tacles_reussis",
+    "interceptions",
+    "blocs",
+    "degagements",
+    "duels",
+    "duels_gagnes",
+    "recoveries",
+    "pressions",
+    "arrets",
+    "nb_matchs",
+    "complet",
 }
 COLONNES_REEL = {
     "xg",
@@ -47,6 +59,7 @@ COLONNES_REEL = {
     "xg_construction",
     "xg_domicile",
     "xg_exterieur",
+    "xg_tirs_subis",
 }
 
 TABLES = {
@@ -56,6 +69,8 @@ TABLES = {
     "equipes": "equipes.csv",
     "sites_equipes": "sites_equipes.csv",
     "calendrier": "calendrier.csv",
+    "actions_defensives": "actions_defensives.csv",
+    "couverture_sources": "couverture_sources.csv",
 }
 
 INDEXS = [
@@ -66,6 +81,9 @@ INDEXS = [
     "CREATE INDEX IF NOT EXISTS idx_joueurs_nom ON joueurs (joueur)",
     "CREATE INDEX IF NOT EXISTS idx_calendrier_saison ON calendrier (championnat, saison)",
     "CREATE INDEX IF NOT EXISTS idx_calendrier_equipes ON calendrier (domicile, exterieur)",
+    "CREATE INDEX IF NOT EXISTS idx_defense_saison ON actions_defensives (championnat, saison)",
+    "CREATE INDEX IF NOT EXISTS idx_defense_equipe ON actions_defensives (equipe)",
+    "CREATE INDEX IF NOT EXISTS idx_defense_joueur ON actions_defensives (joueur)",
 ]
 
 
@@ -170,7 +188,10 @@ def main():
             nb = importer_csv(connexion, nom_table, chemin)
             print(f"  {nom_table}: {nb} lignes")
         for index in INDEXS:
-            connexion.execute(index)
+            try:
+                connexion.execute(index)
+            except sqlite3.OperationalError:
+                continue
         restaurer_photos(connexion, photos)
         connexion.commit()
     finally:

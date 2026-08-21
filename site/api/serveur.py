@@ -20,9 +20,16 @@ from analyse_rencontre import (
     lister_equipes_analyse,
     serie_forme_matchs,
 )
-from correspondances import nom_pour_calendrier, nom_pour_joueurs, normaliser
+from correspondances import (
+    alias_noms_equipe,
+    cle_nom,
+    nom_pour_calendrier,
+    nom_pour_joueurs,
+    normaliser,
+)
 from photos_joueurs import DOSSIER_PHOTOS, obtenir_photo, photo_en_cache
 from sites_officiels import SITES_CHAMPIONNATS, SITES_EQUIPES
+from cotes import lecture_marche_pour_analyse, routeur_cotes
 
 RACINE = Path(__file__).resolve().parents[2]
 FICHIER_BASE = RACINE / "donnees" / "football.db"
@@ -45,6 +52,7 @@ app.add_middleware(
     allow_methods=["GET"],
     allow_headers=["*"],
 )
+app.include_router(routeur_cotes)
 
 
 def ouvrir_base():
@@ -102,6 +110,82 @@ def infos_championnat(nom):
 
 def lignes_dict(curseur):
     return [dict(ligne) for ligne in curseur.fetchall()]
+
+
+AXES_JOUEUR = (
+    ("buts", "Buts"),
+    ("xg", "xG"),
+    ("passes_decisives", "Passes D."),
+    ("xa", "xA"),
+    ("tirs", "Tirs"),
+    ("minutes", "Minutes"),
+)
+NB_CLASSES_HISTO = 12
+
+
+def nombre_ok(valeur):
+    try:
+        n = float(valeur)
+    except (TypeError, ValueError):
+        return 0.0
+    if n != n:
+        return 0.0
+    return n
+
+
+def histogramme_simple(valeurs, plafond, nb_classes=NB_CLASSES_HISTO):
+    comptes = [0] * nb_classes
+    if plafond <= 0:
+        return [{"n": 0} for _ in comptes]
+    for v in valeurs:
+        ratio = min(max(v / plafond, 0.0), 0.9999)
+        comptes[int(ratio * nb_classes)] += 1
+    return [{"n": c} for c in comptes]
+
+
+def saison_pour_radar(saisons):
+    """Saison la plus récente, ligue où le joueur a le plus joué (évite la LDC courte)."""
+    if not saisons:
+        return None
+    annee = saisons[0].get("saison")
+    candidates = [s for s in saisons if s.get("saison") == annee] or saisons
+    return max(candidates, key=lambda s: nombre_ok(s.get("minutes")))
+
+
+def reperes_joueur_ligue(connexion, championnat, saison):
+    """Max et histogrammes de la ligue pour normaliser le radar joueur."""
+    try:
+        lignes = lignes_dict(
+            connexion.execute(
+                """
+                SELECT buts, xg, passes_decisives, xa, tirs, minutes
+                FROM joueurs
+                WHERE championnat = ? AND saison = ? AND minutes > 0
+                """,
+                (championnat, saison),
+            )
+        )
+    except sqlite3.OperationalError:
+        return None
+    if not lignes:
+        return None
+    axes = []
+    for cle, libelle in AXES_JOUEUR:
+        valeurs = [nombre_ok(ligne.get(cle)) for ligne in lignes]
+        plafond = max(valeurs) if valeurs else 0.0
+        axes.append(
+            {
+                "cle": cle,
+                "libelle": libelle,
+                "plafond": round(plafond, 2),
+                "histogramme": histogramme_simple(valeurs, plafond),
+            }
+        )
+    return {
+        "championnat": championnat,
+        "saison": saison,
+        "axes": axes,
+    }
 
 
 def matchs_classement(matchs, championnat):
@@ -389,6 +473,433 @@ def annoter_pour_equipe(matchs, nom_equipe):
     return annotes
 
 
+MESSAGE_LDC_JOUEUR = "Ligue des champions : non disponible par joueur"
+MESSAGE_DEFENSE_ABSENT = (
+    "Non disponible pour cette saison/compétition. "
+    "Les tacles, interceptions, duels et arrêts viennent de StatsBomb Open Data "
+    "et du jeu Wyscout 2017-2018 (licence CC BY). "
+    "Les 5 ligues 2025-2026 n'y figurent pas."
+)
+CHAMPS_DEFENSE = (
+    "matchs",
+    "tacles",
+    "tacles_reussis",
+    "interceptions",
+    "blocs",
+    "degagements",
+    "duels",
+    "duels_gagnes",
+    "recoveries",
+    "pressions",
+    "arrets",
+    "xg_tirs_subis",
+)
+
+
+def table_existe(connexion, nom):
+    ligne = connexion.execute(
+        "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?",
+        (nom,),
+    ).fetchone()
+    return bool(ligne)
+
+
+def fusionner_defense_sources(lignes):
+    """Une ligne par joueur/saison : on garde la source avec le plus de matchs."""
+    meilleur = {}
+    for ligne in lignes:
+        cle = (
+            ligne.get("championnat"),
+            ligne.get("saison"),
+            (ligne.get("equipe") or "").lower(),
+            (ligne.get("joueur") or "").lower(),
+        )
+        actuel = meilleur.get(cle)
+        if actuel is None or nombre_ok(ligne.get("matchs")) > nombre_ok(
+            actuel.get("matchs")
+        ):
+            meilleur[cle] = ligne
+    return list(meilleur.values())
+
+
+def totaux_defense(lignes):
+    totaux = {champ: 0 for champ in CHAMPS_DEFENSE}
+    totaux["xg_tirs_subis"] = 0.0
+    totaux["matchs"] = 0
+    for ligne in lignes:
+        totaux["matchs"] = max(totaux["matchs"], int(nombre_ok(ligne.get("matchs"))))
+        totaux["xg_tirs_subis"] += nombre_ok(ligne.get("xg_tirs_subis"))
+        for champ in CHAMPS_DEFENSE:
+            if champ in ("matchs", "xg_tirs_subis"):
+                continue
+            totaux[champ] += int(nombre_ok(ligne.get(champ)))
+    totaux["xg_tirs_subis"] = round(totaux["xg_tirs_subis"], 2)
+    totaux["a_xg_subis"] = totaux["xg_tirs_subis"] > 0
+    totaux["a_pressions"] = totaux["pressions"] > 0
+    totaux["a_recoveries"] = totaux["recoveries"] > 0
+    return totaux
+
+
+def message_couverture_defense(connexion, championnat, saison):
+    if not table_existe(connexion, "couverture_sources"):
+        return MESSAGE_DEFENSE_ABSENT, False
+    try:
+        lignes = lignes_dict(
+            connexion.execute(
+                """
+                SELECT source, nb_matchs, complet, commentaire
+                FROM couverture_sources
+                WHERE championnat = ? AND saison = ?
+                """,
+                (championnat, saison),
+            )
+        )
+    except sqlite3.OperationalError:
+        return MESSAGE_DEFENSE_ABSENT, False
+    if not lignes:
+        return MESSAGE_DEFENSE_ABSENT, False
+    sources = ", ".join(sorted({ligne["source"] for ligne in lignes if ligne.get("source")}))
+    extra = (lignes[0].get("commentaire") or "").strip()
+    message = f"Source : {sources}."
+    if extra:
+        message = f"{message} {extra}"
+    return message, True
+
+
+def equipe_defense_connue(nom, aliases):
+    cibles_norm = {normaliser(a) for a in aliases if a}
+    cibles_cle = {cle_nom(a) for a in aliases if a}
+    nom_n = normaliser(nom)
+    nom_c = cle_nom(nom)
+    if nom in aliases or nom_n in cibles_norm or nom_c in cibles_cle:
+        return True
+    if len(nom_n) >= 6:
+        for cible in cibles_norm:
+            if len(cible) >= 6 and (nom_n in cible or cible in nom_n):
+                return True
+    return False
+
+
+def charger_defense_equipe(connexion, championnat, saison, nom_equipe, alias):
+    vide = {
+        "disponible": False,
+        "message": MESSAGE_DEFENSE_ABSENT,
+        "totaux": None,
+        "joueurs": [],
+        "gardiens": [],
+    }
+    if not table_existe(connexion, "actions_defensives"):
+        return vide
+    aliases = alias_noms_equipe(nom_equipe)
+    for nom in alias or []:
+        if nom and nom not in aliases:
+            aliases.append(nom)
+    try:
+        lignes = fusionner_defense_sources(
+            lignes_dict(
+                connexion.execute(
+                    """
+                    SELECT championnat, saison, equipe, joueur, matchs,
+                           tacles, tacles_reussis, interceptions, blocs,
+                           degagements, duels, duels_gagnes, recoveries,
+                           pressions, arrets, xg_tirs_subis, source
+                    FROM actions_defensives
+                    WHERE championnat = ? AND saison = ?
+                    """,
+                    (championnat, saison),
+                )
+            )
+        )
+    except sqlite3.OperationalError:
+        return vide
+    du_club = [
+        ligne
+        for ligne in lignes
+        if equipe_defense_connue(ligne.get("equipe") or "", aliases)
+    ]
+    message, connue = message_couverture_defense(connexion, championnat, saison)
+    if not du_club:
+        vide["message"] = (
+            message
+            if not connue
+            else (
+                "Pas de stats défensives pour ce club dans cette saison "
+                "(saison absente ou partielle dans l'open data)."
+            )
+        )
+        return vide
+    gardiens = [
+        {
+            "joueur": ligne["joueur"],
+            "arrets": int(nombre_ok(ligne.get("arrets"))),
+            "xg_tirs_subis": round(nombre_ok(ligne.get("xg_tirs_subis")), 2),
+            "matchs": int(nombre_ok(ligne.get("matchs"))),
+        }
+        for ligne in du_club
+        if nombre_ok(ligne.get("arrets")) > 0 or nombre_ok(ligne.get("xg_tirs_subis")) > 0
+    ]
+    gardiens.sort(key=lambda x: x["arrets"], reverse=True)
+    joueurs = sorted(
+        du_club,
+        key=lambda x: (
+            nombre_ok(x.get("tacles")) + nombre_ok(x.get("interceptions")),
+            nombre_ok(x.get("matchs")),
+        ),
+        reverse=True,
+    )
+    return {
+        "disponible": True,
+        "message": message,
+        "totaux": totaux_defense(du_club),
+        "joueurs": joueurs[:40],
+        "gardiens": gardiens[:8],
+    }
+
+
+def charger_defense_joueur(connexion, nom_joueur):
+    vide = {
+        "disponible": False,
+        "message": (
+            "Pas de stats défensives pour ce joueur dans les jeux ouverts "
+            "(souvent hors 2015-2016 / 2017-2018)."
+        ),
+        "saisons": [],
+    }
+    if not table_existe(connexion, "actions_defensives"):
+        vide["message"] = MESSAGE_DEFENSE_ABSENT
+        return vide
+    try:
+        toutes = fusionner_defense_sources(
+            lignes_dict(
+                connexion.execute(
+                    """
+                    SELECT championnat, saison, equipe, joueur, matchs,
+                           tacles, tacles_reussis, interceptions, blocs,
+                           degagements, duels, duels_gagnes, recoveries,
+                           pressions, arrets, xg_tirs_subis, source
+                    FROM actions_defensives
+                    WHERE lower(joueur) = lower(?)
+                    ORDER BY saison DESC
+                    """,
+                    (nom_joueur,),
+                )
+            )
+        )
+        if not toutes:
+            cible = normaliser(nom_joueur)
+            cible_cle = cle_nom(nom_joueur)
+            if len(cible) >= 5:
+                candidates = lignes_dict(
+                    connexion.execute(
+                        """
+                        SELECT championnat, saison, equipe, joueur, matchs,
+                               tacles, tacles_reussis, interceptions, blocs,
+                               degagements, duels, duels_gagnes, recoveries,
+                               pressions, arrets, xg_tirs_subis, source
+                        FROM actions_defensives
+                        """
+                    )
+                )
+                toutes = fusionner_defense_sources(
+                    [
+                        ligne
+                        for ligne in candidates
+                        if normaliser(ligne.get("joueur") or "") == cible
+                        or cle_nom(ligne.get("joueur") or "") == cible_cle
+                    ]
+                )
+    except sqlite3.OperationalError:
+        return vide
+    if not toutes:
+        return vide
+    toutes.sort(key=lambda x: (x.get("saison") or ""), reverse=True)
+    return {
+        "disponible": True,
+        "message": (
+            "Chiffres réels (StatsBomb Open Data et/ou Wyscout 2017-2018). "
+            "Pas les 5 ligues 2025-2026. "
+            "xG des tirs subis = xG StatsBomb des tirs, pas un PSxG."
+        ),
+        "saisons": toutes,
+    }
+
+
+def choisir_nom_dans_competition(connexion, championnat, saison, noms):
+    """Nom tel qu'il apparait dans les matchs (ou le calendrier) de la competition."""
+    if not noms:
+        return ""
+    places = ", ".join(["?"] * len(noms))
+    requete = f"""
+        SELECT nom FROM (
+            SELECT domicile AS nom FROM matchs
+            WHERE championnat = ? AND saison = ? AND domicile IN ({places})
+            UNION
+            SELECT exterieur FROM matchs
+            WHERE championnat = ? AND saison = ? AND exterieur IN ({places})
+        )
+        LIMIT 1
+        """
+    ligne = connexion.execute(
+        requete,
+        (championnat, saison, *noms, championnat, saison, *noms),
+    ).fetchone()
+    if ligne:
+        return ligne[0]
+    try:
+        ligne = connexion.execute(
+            f"""
+            SELECT nom FROM (
+                SELECT domicile AS nom FROM calendrier
+                WHERE championnat = ? AND saison = ? AND domicile IN ({places})
+                UNION
+                SELECT exterieur FROM calendrier
+                WHERE championnat = ? AND saison = ? AND exterieur IN ({places})
+            )
+            LIMIT 1
+            """,
+            (championnat, saison, *noms, championnat, saison, *noms),
+        ).fetchone()
+    except sqlite3.OperationalError:
+        ligne = None
+    return ligne[0] if ligne else noms[0]
+
+
+def sommer_buts_equipe(connexion, saison, noms):
+    """Buts marques par competition, saison donnee, noms deja alignes."""
+    vides = defaultdict(lambda: {"buts": 0, "matchs": 0})
+    if not noms:
+        return vides
+    connus = set(noms)
+    competitions = list(LIGUES_NATIONALES) + [NOM_LDC]
+    places_noms = ", ".join(["?"] * len(noms))
+    places_comp = ", ".join(["?"] * len(competitions))
+    lignes = connexion.execute(
+        f"""
+        SELECT championnat, domicile, exterieur, buts_domicile, buts_exterieur
+        FROM matchs
+        WHERE saison = ?
+          AND championnat IN ({places_comp})
+          AND (domicile IN ({places_noms}) OR exterieur IN ({places_noms}))
+        """,
+        (saison, *competitions, *noms, *noms),
+    )
+    for ligne in lignes:
+        if ligne["buts_domicile"] is None or ligne["buts_exterieur"] is None:
+            continue
+        if ligne["domicile"] in connus:
+            marques = int(ligne["buts_domicile"])
+        elif ligne["exterieur"] in connus:
+            marques = int(ligne["buts_exterieur"])
+        else:
+            continue
+        stats = vides[ligne["championnat"]]
+        stats["buts"] += marques
+        stats["matchs"] += 1
+    return vides
+
+
+def resume_buts_equipe(connexion, saison, nom_equipe, championnat_page):
+    """Championnat national + Ligue des champions + total, pour la saison."""
+    noms = alias_noms_equipe(nom_equipe)
+    par_comp = sommer_buts_equipe(connexion, saison, noms)
+    buts_ldc = par_comp.get(NOM_LDC, {}).get("buts", 0)
+    matchs_ldc = par_comp.get(NOM_LDC, {}).get("matchs", 0)
+    ligue = championnat_page if championnat_page in LIGUES_NATIONALES else ""
+    if not ligue:
+        for nom_ligue in LIGUES_NATIONALES:
+            if nom_ligue in par_comp:
+                ligue = nom_ligue
+                break
+    buts_ligue = par_comp.get(ligue, {}).get("buts", 0) if ligue else 0
+    matchs_ligue = par_comp.get(ligue, {}).get("matchs", 0) if ligue else 0
+    return {
+        "championnat": buts_ligue,
+        "libelle_championnat": ligue or "Championnat",
+        "ligue_des_champions": buts_ldc,
+        "total": buts_ligue + buts_ldc,
+        "matchs_championnat": matchs_ligue,
+        "matchs_ldc": matchs_ldc,
+        "alias": noms,
+    }
+
+
+def charger_matchs_radar_equipe(connexion, saison, noms):
+    """Matchs joues ligue + LDC, pour les moyennes du radar."""
+    if not noms:
+        return []
+    competitions = list(LIGUES_NATIONALES) + [NOM_LDC]
+    places_noms = ", ".join(["?"] * len(noms))
+    places_comp = ", ".join(["?"] * len(competitions))
+    matchs = lignes_dict(
+        connexion.execute(
+            f"""
+            SELECT date, domicile, exterieur, buts_domicile, buts_exterieur,
+                   tirs_domicile, tirs_exterieur, championnat
+            FROM matchs
+            WHERE saison = ?
+              AND championnat IN ({places_comp})
+              AND (domicile IN ({places_noms}) OR exterieur IN ({places_noms}))
+              AND buts_domicile IS NOT NULL
+              AND buts_exterieur IS NOT NULL
+            ORDER BY date
+            """,
+            (saison, *competitions, *noms, *noms),
+        )
+    )
+    for match in matchs:
+        match["joue"] = True
+    return matchs
+
+
+def ldc_par_joueur_en_base(connexion, nom_joueur=None):
+    """True seulement s'il existe des buteurs LDC (Understat n'en a pas)."""
+    try:
+        if nom_joueur:
+            ligne = connexion.execute(
+                """
+                SELECT 1 FROM joueurs
+                WHERE joueur = ? AND championnat = ?
+                LIMIT 1
+                """,
+                (nom_joueur, NOM_LDC),
+            ).fetchone()
+        else:
+            ligne = connexion.execute(
+                "SELECT 1 FROM joueurs WHERE championnat = ? LIMIT 1",
+                (NOM_LDC,),
+            ).fetchone()
+    except sqlite3.OperationalError:
+        return False
+    return bool(ligne)
+
+
+def resume_buts_joueur(saisons, ldc_disponible):
+    """Total = ligue. Pas de buts LDC inventes s'ils ne sont pas en base."""
+    buts_ligue = 0
+    buts_ldc = 0
+    for ligne in saisons:
+        n = int(nombre_ok(ligne.get("buts")))
+        if ligne.get("championnat") == NOM_LDC:
+            buts_ldc += n
+        else:
+            buts_ligue += n
+    if ldc_disponible:
+        return {
+            "championnat": buts_ligue,
+            "ligue_des_champions": buts_ldc,
+            "total": buts_ligue + buts_ldc,
+            "ldc_par_joueur": True,
+            "message_ldc": "",
+        }
+    return {
+        "championnat": buts_ligue,
+        "ligue_des_champions": None,
+        "total": buts_ligue,
+        "ldc_par_joueur": False,
+        "message_ldc": MESSAGE_LDC_JOUEUR,
+    }
+
+
 def joueurs_depuis_ligue(connexion, nom_equipe, saison):
     """Si la LDC n'a pas de joueurs, on reprend ceux du club en ligue nationale."""
     ligues = [nom for nom in CHAMPIONNATS if nom != NOM_LDC]
@@ -408,7 +919,8 @@ def joueurs_depuis_ligue(connexion, nom_equipe, saison):
         connexion.execute(
             f"""
             SELECT joueur, poste, matchs, minutes, buts, passes_decisives,
-                   tirs, passes_cles, xg, xa, carton_jaune, carton_rouge, equipe
+                   tirs, passes_cles, xg, xa, xg_chaine, xg_construction,
+                   carton_jaune, carton_rouge, equipe
             FROM joueurs
             WHERE saison = ? AND championnat IN ({places})
               AND (equipe = ? OR equipe LIKE ? OR equipe LIKE ?)
@@ -668,9 +1180,28 @@ def fiche_equipe(
     equipe: str = Query(...),
 ):
     verifier_filtres(championnat, saison)
-    nom_matchs = limiter_texte(equipe)
+    nom_page = limiter_texte(equipe)
     connexion = ouvrir_base()
     try:
+        noms_alias = alias_noms_equipe(nom_page)
+        nom_matchs = (
+            choisir_nom_dans_competition(
+                connexion, championnat, saison, noms_alias
+            )
+            or nom_page
+        )
+        resume_buts = resume_buts_equipe(
+            connexion, saison, nom_page, championnat
+        )
+        matchs_radar = charger_matchs_radar_equipe(
+            connexion, saison, resume_buts["alias"]
+        )
+        par_xg = defaultdict(list)
+        for match in matchs_radar:
+            par_xg[match.get("championnat")].append(match)
+        for nom_comp, groupe in par_xg.items():
+            if nom_comp and nom_comp != NOM_LDC:
+                joindre_xg(connexion, nom_comp, saison, groupe)
         matchs = lignes_dict(
             connexion.execute(
                 """
@@ -736,7 +1267,8 @@ def fiche_equipe(
             connexion.execute(
                 """
                 SELECT joueur, poste, matchs, minutes, buts, passes_decisives,
-                       tirs, passes_cles, xg, xa, carton_jaune, carton_rouge, equipe
+                       tirs, passes_cles, xg, xa, xg_chaine, xg_construction,
+                       carton_jaune, carton_rouge, equipe
                 FROM joueurs
                 WHERE championnat = ? AND saison = ?
                   AND (equipe = ? OR equipe LIKE ? OR equipe LIKE ?)
@@ -755,11 +1287,19 @@ def fiche_equipe(
             joueurs = joueurs_depuis_ligue(connexion, nom_matchs, saison)
         for joueur in joueurs:
             joueur["url_photo"] = photo_en_cache(connexion, joueur["joueur"])
+        alias_radar = resume_buts.pop("alias")
+        defense = charger_defense_equipe(
+            connexion, championnat, saison, nom_matchs, alias_radar
+        )
         return {
             "equipe": nom_matchs,
             "nom_stats": nom_stats,
             "matchs": matchs,
+            "matchs_radar": matchs_radar,
+            "alias_equipe": alias_radar,
+            "buts": resume_buts,
             "joueurs": joueurs,
+            "defense": defense,
             "site": infos_site_equipe(connexion, nom_matchs),
             "championnat": infos_championnat(championnat),
         }
@@ -772,20 +1312,22 @@ def fiche_joueur(nom: str = Query(...), championnat: str | None = None):
     nom_joueur = limiter_texte(nom)
     if championnat and championnat not in CHAMPIONNATS:
         raise HTTPException(400, "Championnat inconnu")
+    # Pas de stats joueurs LDC : on ne filtre pas sur cette competition.
+    filtre_ligue = championnat if championnat and championnat != NOM_LDC else None
     connexion = ouvrir_base()
     try:
-        if championnat:
+        if filtre_ligue:
             saisons = lignes_dict(
                 connexion.execute(
                     """
                     SELECT championnat, saison, equipe, poste, matchs, minutes,
-                           buts, passes_decisives, tirs, xg, xa,
-                           carton_jaune, carton_rouge
+                           buts, passes_decisives, tirs, passes_cles, xg, xa,
+                           xg_chaine, xg_construction, carton_jaune, carton_rouge
                     FROM joueurs
                     WHERE joueur = ? AND championnat = ?
                     ORDER BY saison DESC
                     """,
-                    (nom_joueur, championnat),
+                    (nom_joueur, filtre_ligue),
                 )
             )
         else:
@@ -793,8 +1335,8 @@ def fiche_joueur(nom: str = Query(...), championnat: str | None = None):
                 connexion.execute(
                     """
                     SELECT championnat, saison, equipe, poste, matchs, minutes,
-                           buts, passes_decisives, tirs, xg, xa,
-                           carton_jaune, carton_rouge
+                           buts, passes_decisives, tirs, passes_cles, xg, xa,
+                           xg_chaine, xg_construction, carton_jaune, carton_rouge
                     FROM joueurs
                     WHERE joueur = ?
                     ORDER BY saison DESC, championnat
@@ -805,10 +1347,23 @@ def fiche_joueur(nom: str = Query(...), championnat: str | None = None):
         if not saisons:
             raise HTTPException(404, "Joueur introuvable")
         club_recent = (saisons[0].get("equipe") or "").split(",")[0]
+        ligne_radar = saison_pour_radar(saisons)
+        reperes = None
+        if ligne_radar:
+            reperes = reperes_joueur_ligue(
+                connexion,
+                ligne_radar.get("championnat"),
+                ligne_radar.get("saison"),
+            )
         return {
             "joueur": nom_joueur,
             "saisons": saisons,
             "url_photo": obtenir_photo(connexion, nom_joueur, club_recent),
+            "reperes": reperes,
+            "buts": resume_buts_joueur(
+                saisons, ldc_par_joueur_en_base(connexion, nom_joueur)
+            ),
+            "defense": charger_defense_joueur(connexion, nom_joueur),
         }
     finally:
         connexion.close()
@@ -943,6 +1498,17 @@ def analyse_rencontre_api(
             site = infos_site_equipe(connexion, resultat[cote]["nom"])
             resultat[cote]["url_logo"] = site.get("url_logo", "")
         resultat["championnat"] = infos_championnat(championnat)
+        date_match = None
+        match_joue = resultat.get("match_joue") or {}
+        if match_joue.get("joue"):
+            date_match = match_joue.get("date")
+        resultat["lecture_marche"] = lecture_marche_pour_analyse(
+            championnat,
+            nom_domicile,
+            nom_exterieur,
+            date_match=date_match,
+            prediction=resultat.get("prediction"),
+        )
         return resultat
     finally:
         connexion.close()

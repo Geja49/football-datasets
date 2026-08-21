@@ -1,4 +1,5 @@
 /anu/
+test/
 .DS_Store
 venv
 donnees/photos_joueurs/
@@ -12,3 +13,9 @@ trivy-brut.json
 donnees/etat_sources.json
 donnees/collecte.lock
 donnees/football-nouveau.db
+.env
+.env.*
+!.env.exemple
+donnees/cache_statsbomb/
+donnees/cache_wyscout/
+donnees/cache_api_football/

@@ -101,11 +101,18 @@ a:hover {
   color: var(--accent);
 }
 
+.entete-site {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
 .bandeau {
   display: flex;
-  gap: 20px;
+  gap: 16px 24px;
   align-items: center;
-  padding: 14px 28px;
+  flex-wrap: wrap;
+  padding: 12px 24px;
   background: var(--bandeau);
   border-bottom: 3px solid var(--accent);
 }
@@ -114,16 +121,129 @@ a:hover {
   font-size: 1.15rem;
   font-weight: 700;
   white-space: nowrap;
+  color: var(--texte);
+}
+
+.logo:hover {
+  color: var(--accent);
+}
+
+.nav-bandeau {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.lien-nav {
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--texte-doux);
+}
+
+.lien-nav:hover,
+.lien-nav.actif {
+  color: var(--texte);
+  background: var(--fond-lisible);
+}
+
+.boite-recherche {
+  position: relative;
+  flex: 1 1 220px;
+  max-width: 480px;
+  margin-left: auto;
+}
+
+.icone-recherche {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--texte-doux);
+  pointer-events: none;
 }
 
 .recherche {
-  flex: 1;
-  max-width: 440px;
+  width: 100%;
   background: var(--fond-lisible);
   border: 1px solid var(--ligne);
   color: var(--texte);
   border-radius: 999px;
-  padding: 10px 16px;
+  padding: 10px 16px 10px 40px;
+}
+
+.recherche:hover,
+.recherche:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.barre-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 8px 24px;
+  background: color-mix(in srgb, var(--bandeau) 88%, black);
+  border-bottom: 1px solid var(--ligne);
+}
+
+.fil-ariane {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--texte-doux);
+}
+
+.fil-ariane a:hover {
+  color: var(--accent);
+}
+
+.fil-ariane .actuel {
+  color: var(--texte);
+  font-weight: 700;
+}
+
+.separateur-ariane {
+  color: var(--ligne);
+}
+
+.raccourcis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.puce-raccourci {
+  display: inline-block;
+  background: transparent;
+  border: 1px solid var(--ligne);
+  color: var(--texte-doux);
+  padding: 5px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.puce-raccourci:hover,
+.puce-raccourci.actif {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.lien-equipe {
+  font-weight: 700;
+  color: var(--texte);
+}
+
+.lien-equipe:hover {
+  color: var(--accent);
 }
 
 .contenu {
@@ -317,12 +437,17 @@ tr.zone-hors-course td:first-child {
 
 .resultats {
   position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
   background: var(--fond-carte);
   border: 1px solid var(--ligne);
   border-radius: 8px;
-  width: min(440px, 90vw);
-  margin-top: 6px;
-  z-index: 5;
+  width: 100%;
+  z-index: 50;
+  max-height: 320px;
+  overflow: auto;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
 }
 
 .resultats a {
@@ -413,6 +538,11 @@ tr.zone-hors-course td:first-child {
   margin-top: 18px;
 }
 
+.cartes-buts {
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  max-width: 520px;
+}
+
 .carte-stat {
   background: color-mix(in srgb, var(--fond-carte) 80%, black);
   border: 1px solid var(--ligne);
@@ -432,6 +562,29 @@ tr.zone-hors-course td:first-child {
   font-family: Oswald, sans-serif;
   font-size: 1.7rem;
   color: var(--accent);
+}
+
+.carte-stat.manquant strong {
+  color: var(--texte-doux);
+}
+
+.mention-ldc {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+.gardiens-defense {
+  margin-top: 1.4rem;
+}
+
+.gardiens-defense h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+}
+
+.table-defense {
+  margin-top: 1rem;
 }
 
 .valeur-couple {
@@ -595,7 +748,7 @@ tr.zone-hors-course td:first-child {
 }
 
 .match-prochain {
-  scroll-margin-top: 72px;
+  scroll-margin-top: 140px;
 }
 
 .heure-match {
@@ -816,8 +969,79 @@ tr.zone-hors-course td:first-child {
   padding: 10px 14px;
   border-radius: 4px;
   display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  min-width: 140px;
+}
+
+.ligne-score-pct {
+  display: flex;
   gap: 10px;
   align-items: baseline;
+}
+
+.commentaire-score {
+  font-size: 0.8rem;
+  color: var(--texte-doux);
+}
+
+.liste-scenarios {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.carte-scenario-detail {
+  background: var(--fond-lisible);
+  padding: 12px 14px;
+  border-radius: 4px;
+}
+
+.carte-scenario-detail h4 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.carte-scenario-detail p {
+  margin: 0;
+}
+
+.bloc-bilan {
+  margin-top: 18px;
+}
+
+.bloc-recit {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  background: var(--fond-lisible);
+  border-radius: 4px;
+  border-left: 3px solid var(--accent);
+}
+
+.bloc-recit h3 {
+  margin: 0 0 10px;
+}
+
+.bloc-recit p {
+  margin: 0 0 10px;
+  line-height: 1.45;
+}
+
+.bloc-recit p:last-child {
+  margin-bottom: 0;
+}
+
+.lecture-marche .ligne-cotes {
+  margin: 0 0 12px;
+}
+
+.petit {
+  margin: 4px 0 0;
+  font-size: 0.75rem;
 }
 
 .liste-suggestions {
@@ -878,6 +1102,154 @@ tr.zone-hors-course td:first-child {
   letter-spacing: 0.06em;
 }
 
+/* Hero analyse de match — plus fluide, scopé pour ne pas toucher Accueil / Cotes / etc. */
+.hero-analyse {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 42px 24px 36px;
+  margin-bottom: 20px;
+  background:
+    radial-gradient(ellipse 70% 90% at 8% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 55%),
+    radial-gradient(ellipse 55% 70% at 92% 75%, color-mix(in srgb, var(--bandeau) 70%, transparent), transparent 60%),
+    linear-gradient(165deg, color-mix(in srgb, var(--bandeau) 88%, black) 0%, var(--fond) 52%, color-mix(in srgb, var(--fond) 82%, var(--accent)) 100%);
+  border-bottom: 1px solid color-mix(in srgb, var(--ligne) 65%, transparent);
+}
+
+.hero-analyse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 40%, color-mix(in srgb, var(--accent) 6%, transparent) 100%);
+  pointer-events: none;
+}
+
+.hero-analyse .hero-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.entete-analyse {
+  max-width: 36rem;
+}
+
+.sur-titre-analyse {
+  margin: 0 0 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+
+.titre-analyse {
+  margin: 0;
+  font-family: Oswald, Impact, sans-serif;
+  font-size: clamp(1.85rem, 3.6vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.12;
+  text-transform: none;
+}
+
+.intro-analyse {
+  margin: 10px 0 0;
+  max-width: 34rem;
+  color: var(--texte-doux);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.filtres-analyse {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.rangee-filtres {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px 18px;
+}
+
+.rangee-equipes {
+  gap: 12px 14px;
+}
+
+.hero-analyse .champ-filtre {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 9.5rem;
+  flex: 0 1 auto;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--texte-doux);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.hero-analyse .champ-filtre-large {
+  min-width: 12rem;
+  flex: 1 1 12rem;
+  max-width: 18rem;
+}
+
+.hero-analyse .champ-filtre select {
+  width: 100%;
+  background: color-mix(in srgb, var(--fond-lisible) 72%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ligne) 80%, transparent);
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-size: 0.92rem;
+}
+
+.hero-analyse .champ-filtre select:focus {
+  outline: none;
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--ligne));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.separateur-filtres {
+  margin: 2px 0 0;
+  font-size: 0.82rem;
+  color: var(--texte-doux);
+  opacity: 0.9;
+}
+
+.versus-filtre {
+  display: inline-flex;
+  align-items: center;
+  padding-bottom: 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--texte-doux);
+  opacity: 0.7;
+}
+
+@media (max-width: 640px) {
+  .hero-analyse {
+    padding: 32px 18px 28px;
+  }
+
+  .hero-analyse .hero-inner {
+    gap: 22px;
+  }
+
+  .hero-analyse .champ-filtre,
+  .hero-analyse .champ-filtre-large {
+    min-width: 100%;
+    max-width: none;
+    flex: 1 1 100%;
+  }
+
+  .versus-filtre {
+    display: none;
+  }
+}
+
 .forme-classement {
   margin: 0;
   justify-content: flex-end;
@@ -918,13 +1290,175 @@ tr.zone-hors-course td:first-child {
   color: var(--accent);
 }
 
+.grille-diagrammes {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(260px, 1.15fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.cadre-diagramme {
+  background: var(--fond-carte);
+  border: 1px solid var(--ligne);
+  border-radius: 6px;
+  padding: 12px 10px 8px;
+  overflow: visible;
+}
+
+.titre-cadre {
+  margin: 0 0 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}
+
+.diagramme-radar {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+.diagramme-radar .anneau {
+  fill: none;
+  stroke: var(--ligne);
+  stroke-width: 1;
+}
+
+.diagramme-radar .rayon {
+  stroke: color-mix(in srgb, var(--texte) 18%, transparent);
+  stroke-width: 1.5;
+}
+
+.diagramme-radar .polygone {
+  fill: color-mix(in srgb, var(--accent) 28%, transparent);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.diagramme-radar .polygone-comparaison {
+  fill: none;
+  stroke: var(--texte-doux);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+}
+
+.diagramme-radar .noeud {
+  fill: var(--accent);
+  stroke: var(--fond-carte);
+  stroke-width: 2;
+}
+
+.diagramme-radar .etiquette-axe {
+  fill: var(--texte);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.diagramme-radar .etiquette-axe tspan:last-child {
+  fill: var(--accent);
+  font-size: 12px;
+  font-family: Oswald, Impact, sans-serif;
+}
+
+.diagramme-densites {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.legende-densite {
+  margin: 0 0 2px;
+  font-size: 0.72rem;
+  color: var(--texte-doux);
+  letter-spacing: 0.02em;
+}
+
+.rangee-densite svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.entete-densite {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--texte-doux);
+  font-weight: 700;
+}
+
+.entete-densite strong {
+  color: var(--accent);
+  font-family: Oswald, Impact, sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.aire-densite {
+  fill: color-mix(in srgb, var(--accent) 42%, transparent);
+  stroke: none;
+}
+
+.crete-densite {
+  fill: none;
+  stroke: color-mix(in srgb, var(--accent) 70%, white);
+  stroke-width: 1.7;
+  stroke-linejoin: round;
+}
+
+.axe-densite {
+  stroke: color-mix(in srgb, var(--texte) 55%, var(--ligne));
+  stroke-width: 1.25;
+}
+
+.tige-densite {
+  stroke: var(--accent);
+  stroke-width: 1.6;
+}
+
+.marqueur-densite {
+  fill: var(--accent);
+  stroke: var(--fond-carte);
+  stroke-width: 2.2;
+}
+
+.valeur-densite {
+  fill: var(--texte);
+  font-size: 11px;
+  font-weight: 700;
+  font-family: Oswald, Impact, sans-serif;
+  paint-order: stroke;
+  stroke: var(--fond-carte);
+  stroke-width: 3px;
+}
+
+@media (max-width: 800px) {
+  .grille-diagrammes {
+    grid-template-columns: 1fr;
+  }
+
+  .boite-recherche {
+    flex: 1 1 100%;
+    max-width: none;
+    margin-left: 0;
+  }
+}
+
 @media (max-width: 640px) {
   .fiche-joueur {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .grille-analyse {
+  .grille-analyse,
+  .liste-scenarios {
     grid-template-columns: 1fr;
   }
 
@@ -940,4 +1474,63 @@ tr.zone-hors-course td:first-child {
   .club-domicile { grid-area: domicile; justify-content: flex-start; text-align: left; }
   .milieu-match { grid-area: score; text-align: left; }
   .club-exterieur { grid-area: exterieur; }
+}
+
+.carte-cote {
+  background: var(--fond-carte);
+  border: 1px solid var(--ligne);
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+
+.entete-cote {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--texte-doux);
+  font-size: 0.82rem;
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.noms-cote {
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.ligne-cotes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.puce-cote {
+  background: var(--fond-lisible);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.puce-cote em {
+  font-style: normal;
+  color: var(--texte-doux);
+  font-weight: 600;
+  margin-right: 6px;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+
+.liste-bookmakers {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.75rem;
+  color: var(--texte-doux);
+}
+
+.liste-bookmakers li {
+  margin-top: 2px;
 }

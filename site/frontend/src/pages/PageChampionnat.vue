@@ -1,7 +1,8 @@
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import CalendrierMatchs from "../composants/CalendrierMatchs.vue";
+import { definirExtraNavigation, viderExtraNavigation } from "../contexteNavigation.js";
 import { chargerAccueil, chargerCalendrier, chargerClassement, chargerMeilleurs } from "../services/api.js";
 
 const route = useRoute();
@@ -12,7 +13,10 @@ const saison = ref(route.query.saison || "");
 const classement = ref([]);
 const programme = ref([]);
 const formatClassement = ref("ligue");
-const onglet = ref("classement");
+const ONGLET_VALIDES = ["classement", "calendrier", "buteurs", "passeurs"];
+const onglet = ref(
+  ONGLET_VALIDES.includes(route.query.vue) ? route.query.vue : "classement",
+);
 const meilleurs = ref([]);
 const erreur = ref("");
 
@@ -46,6 +50,40 @@ async function charger() {
 }
 
 watch([championnat, saison], charger, { immediate: true });
+
+watch(
+  () => route.query.vue,
+  (vue) => {
+    if (ONGLET_VALIDES.includes(vue) && vue !== onglet.value) {
+      onglet.value = vue;
+    }
+  },
+);
+
+watch(
+  [championnat, saison],
+  () => {
+    definirExtraNavigation({
+      championnat: championnat.value,
+      saison: saison.value,
+      equipe: "",
+    });
+  },
+  { immediate: true },
+);
+
+onUnmounted(viderExtraNavigation);
+
+function choisirOnglet(nom) {
+  onglet.value = nom;
+  routeur.replace({
+    query: {
+      ...route.query,
+      ...(saison.value ? { saison: saison.value } : {}),
+      vue: nom,
+    },
+  });
+}
 
 async function chargerClassementJoueurs() {
   if (onglet.value !== "buteurs" && onglet.value !== "passeurs") {
@@ -122,7 +160,6 @@ function serieForme(serie) {
 <template>
   <section class="hero">
     <div class="hero-inner">
-      <router-link to="/" class="doux">← Ligues</router-link>
       <h1 class="titre-hero">{{ championnat }}</h1>
       <div class="ligne-haut">
         <p class="doux">{{ saison }}</p>
@@ -146,7 +183,7 @@ function serieForme(serie) {
           type="button"
           class="onglet"
           :class="{ actif: onglet === 'classement' }"
-          @click="onglet = 'classement'"
+          @click="choisirOnglet('classement')"
         >
           Classement
         </button>
@@ -154,7 +191,7 @@ function serieForme(serie) {
           type="button"
           class="onglet"
           :class="{ actif: onglet === 'calendrier' }"
-          @click="onglet = 'calendrier'"
+          @click="choisirOnglet('calendrier')"
         >
           Calendrier
         </button>
@@ -162,7 +199,7 @@ function serieForme(serie) {
           type="button"
           class="onglet"
           :class="{ actif: onglet === 'buteurs' }"
-          @click="onglet = 'buteurs'"
+          @click="choisirOnglet('buteurs')"
         >
           Buteurs
         </button>
@@ -170,7 +207,7 @@ function serieForme(serie) {
           type="button"
           class="onglet"
           :class="{ actif: onglet === 'passeurs' }"
-          @click="onglet = 'passeurs'"
+          @click="choisirOnglet('passeurs')"
         >
           Passeurs
         </button>

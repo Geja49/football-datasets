@@ -1,7 +1,7 @@
 """
-Collecte des 5 grands championnats depuis 2020-21 :
-- matchs : CSV locaux (football-data.co.uk)
-- joueurs et xG : Understat
+Collecte des 5 grands championnats depuis 1993-94 :
+- matchs : CSV locaux (football-data.co.uk), y compris 1993-2019
+- joueurs et xG : Understat (depuis 2020, deja en CSV)
 - calendrier : Understat (dates isResult=false) + fixtures.csv en complement
 
 Conserve les lignes Ligue des champions deja presentes.
@@ -19,7 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site" / "api"))
 from correspondances import nom_pour_calendrier
 
 DOSSIER_SORTIE = Path("donnees/cinq_championnats")
-ANNEE_MIN = 2020
+ANNEE_MIN = 1993
 ANNEE_COURANTE = 2026
 SAISONS_UNDERSTAT = [2020, 2021, 2022, 2023, 2024, 2025, 2026]
 PAUSE_SECONDES = 1.2
@@ -166,7 +166,7 @@ def collecter_matchs_locaux():
                         {
                             "championnat": champ["nom"],
                             "saison": libelle_saison(debut),
-                            "date": ligne.get("Date", ""),
+                            "date": normaliser_date(ligne.get("Date", "")),
                             "domicile": (ligne.get("HomeTeam") or "").strip(),
                             "exterieur": (ligne.get("AwayTeam") or "").strip(),
                             "buts_domicile": ligne.get("FTHG", ""),
@@ -512,7 +512,7 @@ def main():
     print(f"0/3 Telechargement football-data {libelle_saison(ANNEE_COURANTE)}...")
     telecharger_matchs_saison(ANNEE_COURANTE)
 
-    print("1/3 Matchs locaux depuis 2020...")
+    print("1/3 Matchs locaux depuis 1993...")
     matchs = collecter_matchs_locaux()
     print(f"   {len(matchs)} matchs football-data")
 

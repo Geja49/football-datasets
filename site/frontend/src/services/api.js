@@ -55,3 +55,7 @@ export function chargerMeilleurs(championnat, saison, type) {
   const params = new URLSearchParams({ championnat, saison, type });
   return getJson(`/api/meilleurs?${params}`);
 }
+
+export function chargerCotes() {
+  return getJson("/api/cotes");
+}

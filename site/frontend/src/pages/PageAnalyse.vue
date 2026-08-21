@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import {
   chargerAccueil,
@@ -7,6 +7,7 @@ import {
   chargerEquipesAnalyse,
   chargerProchainsMatchs,
 } from "../services/api.js";
+import { definirExtraNavigation, viderExtraNavigation } from "../contexteNavigation.js";
 
 const MOIS = [
   "janvier",
@@ -185,6 +186,20 @@ watch(club, () => {
   chargerSuggestions();
 });
 
+watch(
+  [championnat, saison, club],
+  () => {
+    definirExtraNavigation({
+      championnat: championnat.value,
+      saison: saison.value,
+      equipe: club.value,
+    });
+  },
+  { immediate: true },
+);
+
+onUnmounted(viderExtraNavigation);
+
 watch([domicile, exterieur], () => {
   if (domicile.value && exterieur.value && domicile.value !== exterieur.value) {
     lancerAnalyse();
@@ -206,6 +221,14 @@ const matchJoue = computed(() => {
   return bloc && bloc.joue ? bloc : null;
 });
 const confrontations = computed(() => (data.value && data.value.confrontations) || null);
+const scenarios = computed(() => pred.value.scenarios || []);
+const cartons = computed(() => pred.value.cartons || null);
+const bilan = computed(() => pred.value.bilan || null);
+const recit = computed(() => pred.value.recit || []);
+const lectureMarche = computed(() => {
+  const bloc = data.value && data.value.lecture_marche;
+  return bloc && bloc.disponible ? bloc : null;
+});
 
 function largeur(pct) {
   return { width: `${pct || 0}%` };
@@ -215,57 +238,83 @@ function couple(a, b) {
   if (a == null && b == null) return "—";
   return `${a ?? "—"} – ${b ?? "—"}`;
 }
+
+function texteCote(valeur) {
+  if (valeur == null || valeur === "") return "—";
+  const nombre = Number(valeur);
+  if (Number.isNaN(nombre)) return "—";
+  return nombre.toFixed(2).replace(".", ",");
+}
+
+function resumeCartons(forme) {
+  if (!forme || !forme.nb_avec_cartons) return "";
+  const jaunes = forme.jaunes ?? 0;
+  const rouges = forme.rouges ?? 0;
+  const motJaune = jaunes === 1 ? "jaune" : "jaunes";
+  const motRouge = rouges === 1 ? "rouge" : "rouges";
+  return `${jaunes} ${motJaune}, ${rouges} ${motRouge}`;
+}
 </script>
 
 <template>
-  <section class="hero">
+  <section class="hero hero-analyse">
     <div class="hero-inner">
-      <router-link to="/" class="doux">← Ligues</router-link>
-      <h1 class="titre-hero">Analyse de match</h1>
-      <p class="doux">Forces, faiblesses et scénario statistique — pas un pronostic de paris.</p>
-      <div class="ligne-haut" style="margin-top: 18px">
-        <label>
-          Championnat
-          <select v-model="championnat">
-            <option v-for="item in championnats" :key="item" :value="item">{{ item }}</option>
-          </select>
-        </label>
-        <label>
-          Saison
-          <select v-model="saison">
-            <option v-for="item in saisons" :key="item" :value="item">{{ item }}</option>
-          </select>
-        </label>
-        <label>
-          Club
-          <select v-model="club" @change="surChoixClub">
-            <option value="">Choisir un club…</option>
-            <option v-for="item in equipes" :key="'c' + item.equipe" :value="item.equipe">
-              {{ item.equipe }}
-            </option>
-          </select>
-        </label>
-      </div>
-      <p class="doux" style="margin-top: 12px">Ou deux équipes au choix :</p>
-      <div class="ligne-haut">
-        <label>
-          Domicile
-          <select v-model="domicile">
-            <option value="">Choisir…</option>
-            <option v-for="item in equipes" :key="'d' + item.equipe" :value="item.equipe">
-              {{ item.equipe }}
-            </option>
-          </select>
-        </label>
-        <label>
-          Extérieur
-          <select v-model="exterieur">
-            <option value="">Choisir…</option>
-            <option v-for="item in equipes" :key="'e' + item.equipe" :value="item.equipe">
-              {{ item.equipe }}
-            </option>
-          </select>
-        </label>
+      <header class="entete-analyse">
+        <p class="sur-titre-analyse">Scénario statistique</p>
+        <h1 class="titre-analyse">Analyse de match</h1>
+        <p class="intro-analyse">
+          Forces, faiblesses et scénario statistique — pas un pronostic de paris.
+        </p>
+      </header>
+
+      <div class="filtres-analyse">
+        <div class="rangee-filtres">
+          <label class="champ-filtre">
+            Championnat
+            <select v-model="championnat">
+              <option v-for="item in championnats" :key="item" :value="item">{{ item }}</option>
+            </select>
+          </label>
+          <label class="champ-filtre">
+            Saison
+            <select v-model="saison">
+              <option v-for="item in saisons" :key="item" :value="item">{{ item }}</option>
+            </select>
+          </label>
+          <label class="champ-filtre champ-filtre-large">
+            Club
+            <select v-model="club" @change="surChoixClub">
+              <option value="">Choisir un club…</option>
+              <option v-for="item in equipes" :key="'c' + item.equipe" :value="item.equipe">
+                {{ item.equipe }}
+              </option>
+            </select>
+          </label>
+        </div>
+
+        <p class="separateur-filtres">Ou deux équipes au choix</p>
+
+        <div class="rangee-filtres rangee-equipes">
+          <label class="champ-filtre champ-filtre-large">
+            Domicile
+            <select v-model="domicile">
+              <option value="">Choisir…</option>
+              <option v-for="item in equipes" :key="'d' + item.equipe" :value="item.equipe">
+                {{ item.equipe }}
+              </option>
+            </select>
+          </label>
+          <span class="versus-filtre" aria-hidden="true">contre</span>
+          <label class="champ-filtre champ-filtre-large">
+            Extérieur
+            <select v-model="exterieur">
+              <option value="">Choisir…</option>
+              <option v-for="item in equipes" :key="'e' + item.equipe" :value="item.equipe">
+                {{ item.equipe }}
+              </option>
+            </select>
+          </label>
+        </div>
       </div>
     </div>
   </section>
@@ -364,6 +413,16 @@ function couple(a, b) {
               <p class="doux">
                 5 derniers : {{ cote.forme.buts_pour }} buts pour,
                 {{ cote.forme.buts_contre }} contre
+                <template v-if="resumeCartons(cote.forme)">
+                  · {{ resumeCartons(cote.forme) }}
+                </template>
+              </p>
+              <p class="doux" v-if="cote.jaunes != null">
+                Saison {{ cote.saison_xg }} :
+                {{ cote.jaunes }} jaunes / match
+                <template v-if="cote.rouges != null">
+                  · {{ cote.rouges }} rouges / match
+                </template>
               </p>
             </div>
           </header>
@@ -411,10 +470,36 @@ function couple(a, b) {
             <strong class="valeur-couple">{{ couple(matchJoue.rouges_domicile, matchJoue.rouges_exterieur) }}</strong>
           </div>
         </div>
+        <div class="bloc-bilan" v-if="bilan && bilan.points && bilan.points.length">
+          <h3>Prévu et réel</h3>
+          <ul class="liste-points">
+            <li v-for="phrase in bilan.points" :key="phrase">{{ phrase }}</li>
+          </ul>
+        </div>
       </div>
 
       <div class="bloc carte-scenario">
         <h2>{{ matchJoue ? "Ce qui pouvait se passer" : "Ce qui peut se passer" }}</h2>
+        <div class="bloc-recit" v-if="recit.length">
+          <h3>Comment le match peut se dérouler</h3>
+          <p v-for="(paragraphe, i) in recit" :key="'r' + i">{{ paragraphe }}</p>
+        </div>
+        <div class="bloc-recit lecture-marche" v-if="lectureMarche">
+          <h3>Lecture du marché</h3>
+          <div class="ligne-cotes" v-if="lectureMarche.cotes">
+            <span class="puce-cote">
+              <em>1</em>{{ texteCote(lectureMarche.cotes.domicile) }}
+            </span>
+            <span class="puce-cote">
+              <em>N</em>{{ texteCote(lectureMarche.cotes.nul) }}
+            </span>
+            <span class="puce-cote">
+              <em>2</em>{{ texteCote(lectureMarche.cotes.exterieur) }}
+            </span>
+          </div>
+          <p>{{ lectureMarche.texte }}</p>
+          <p class="doux petit">{{ lectureMarche.disclaimer }}</p>
+        </div>
         <p class="doux">{{ pred.texte }}</p>
         <div class="cartes-stats">
           <div class="carte-stat">
@@ -430,6 +515,31 @@ function couple(a, b) {
             <strong>{{ pred.score_plus_probable }}</strong>
           </div>
         </div>
+        <div class="cartes-stats" v-if="cartons">
+          <div class="carte-stat">
+            <span>Jaunes prévus</span>
+            <strong>{{ cartons.jaunes_match }}</strong>
+            <p class="doux petit">
+              {{ cartons.jaunes_domicile }} – {{ cartons.jaunes_exterieur }}
+              (moy. ligue {{ cartons.moyenne_championnat }})
+            </p>
+          </div>
+          <div class="carte-stat">
+            <span>Rouges prévus</span>
+            <strong>{{ cartons.rouges_match }}</strong>
+            <p class="doux petit">
+              au moins un rouge : {{ cartons.p_au_moins_un_rouge }} %
+            </p>
+          </div>
+          <div class="carte-stat">
+            <span>Les deux marquent</span>
+            <strong>{{ pred.p_les_deux_marquent }} %</strong>
+          </div>
+          <div class="carte-stat">
+            <span>Plus de 2 buts</span>
+            <strong>{{ pred.p_plus_de_2_buts }} %</strong>
+          </div>
+        </div>
         <div class="bloc-1n2">
           <div class="ligne-1n2">
             <span>{{ data.domicile.nom }} {{ pred.p_victoire_domicile }} %</span>
@@ -442,11 +552,23 @@ function couple(a, b) {
             <div class="seg-2" :style="largeur(pred.p_victoire_exterieur)"></div>
           </div>
         </div>
+        <h3>Comment le match peut tourner</h3>
+        <ul class="liste-scenarios">
+          <li v-for="item in scenarios" :key="item.cle" class="carte-scenario-detail">
+            <h4>{{ item.titre }}</h4>
+            <p>{{ item.texte }}</p>
+            <p class="doux petit" v-if="item.chiffre">{{ item.chiffre }}</p>
+            <p class="doux petit" v-else-if="item.pct != null">{{ item.pct }} %</p>
+          </li>
+        </ul>
         <h3>Scores les plus fréquents</h3>
         <ul class="liste-scores">
           <li v-for="item in pred.scores_frequents" :key="item.score">
-            <span class="score-gros">{{ item.score }}</span>
-            <span class="doux">{{ item.pct }} %</span>
+            <div class="ligne-score-pct">
+              <span class="score-gros">{{ item.score }}</span>
+              <span class="doux">{{ item.pct }} %</span>
+            </div>
+            <span class="commentaire-score" v-if="item.commentaire">{{ item.commentaire }}</span>
           </li>
         </ul>
       </div>
