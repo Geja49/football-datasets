@@ -16738,173 +16738,577 @@ Ligue 1,2025-2026,Strasbourg,Idrissa Sabaly,M,1,58,0,0,1,0,0.03,0.0,0,0.03,0.04,
 Ligue 1,2025-2026,Paris Saint Germain,Pierre Mounguengue,S,1,15,0,0,2,0,0.69,0.0,0,0.69,0.72,0.02,0,0
 Ligue 1,2025-2026,Strasbourg,Yaya Diémé,F S,3,159,0,0,2,0,0.18,0.0,0,0.18,0.1,0.05,2,0
 Ligue 1,2025-2026,Paris Saint Germain,Dimitri Lucea,D S,2,59,0,0,0,0,0.0,0.0,0,0.0,0.19,0.19,0,0
-La Liga,2026-2027,Espanyol,Roberto Fernández,F,1,90,2,0,2,2,1.13,0.2,2,1.13,0.75,0.02,0,0
+Premier League,2026-2027,Brighton,Jack Hinshelwood,M,1,69,2,0,3,1,1.4,0.1,2,1.4,1.69,0.18,0,0
+Premier League,2026-2027,Arsenal,Martin Odegaard,M,1,78,1,0,3,3,0.23,0.29,1,0.23,0.64,0.43,0,0
+Premier League,2026-2027,Hull,Semi Ajayi,D,1,66,1,0,1,0,0.71,0.0,1,0.71,0.06,0.06,0,0
+Premier League,2026-2027,Arsenal,Kai Havertz,F,1,90,1,0,1,1,0.1,0.05,1,0.1,0.51,0.36,0,0
+Premier League,2026-2027,Newcastle United,Joe Willock,S,1,33,1,0,1,1,0.07,0.3,1,0.07,1.06,0.69,0,0
+Premier League,2026-2027,Arsenal,Bukayo Saka,M,1,70,1,0,3,2,0.78,0.05,1,0.78,1.15,0.42,0,0
+Premier League,2026-2027,Manchester City,Marc Guehi,M,1,90,1,0,2,1,0.65,0.48,1,0.65,1.45,1.45,0,0
+Premier League,2026-2027,Newcastle United,Anthony Elanga,M,1,77,1,0,2,0,0.28,0.0,1,0.28,0.91,0.65,0,0
+Premier League,2026-2027,Brentford,Vitaly Janelt,M,1,90,1,0,2,2,0.49,0.08,1,0.49,1.19,0.7,1,0
+Premier League,2026-2027,Everton,Kiernan Dewsbury-Hall,M,1,90,1,0,3,2,0.19,0.12,1,0.19,0.48,0.22,0,0
+Premier League,2026-2027,Liverpool,Dominik Szoboszlai,M,1,90,1,0,3,3,0.83,0.15,0,0.07,0.34,0.34,0,0
+Premier League,2026-2027,Manchester City,Josko Gvardiol,D,1,90,1,0,1,0,0.41,0.0,1,0.41,1.37,0.96,0,0
+Premier League,2026-2027,Leeds,Anton Stach,M,1,90,1,0,3,0,0.11,0.0,1,0.11,0.11,0.1,0,0
+Premier League,2026-2027,Bournemouth,Marcus Tavernier,M,1,90,1,0,2,1,0.48,0.08,1,0.48,0.48,0.0,0,0
+Premier League,2026-2027,Brentford,Keane Lewis-Potter,D,1,90,1,0,2,1,0.58,0.02,1,0.58,0.62,0.62,0,0
+Premier League,2026-2027,Brentford,Michael Kayode,D,1,77,1,0,4,0,0.82,0.0,1,0.82,0.09,0.08,0,0
+Premier League,2026-2027,Liverpool,Cody Gakpo,M,1,90,1,0,6,3,0.23,0.23,1,0.23,0.49,0.08,0,0
+Premier League,2026-2027,Hull,Nobel Mendy,D,1,66,1,0,1,0,0.53,0.0,1,0.53,0.0,0.0,0,0
+Premier League,2026-2027,Everton,Thierno Barry,F,1,83,1,0,2,1,0.59,0.13,1,0.59,0.19,0.16,0,0
+Premier League,2026-2027,Ipswich,Jack Clarke,S,1,17,1,0,2,0,0.1,0.0,1,0.1,0.1,0.0,0,0
+Premier League,2026-2027,Brighton,Maxim De Cuyper,M,1,83,1,0,4,3,1.38,0.14,1,1.38,2.38,0.92,0,0
+Premier League,2026-2027,Ipswich,Emersonn,F,1,68,1,0,3,2,0.61,0.13,1,0.61,1.32,0.62,0,0
+Premier League,2026-2027,Sunderland,Nilson Angulo,M,1,61,1,0,2,0,0.12,0.0,1,0.12,0.07,0.07,1,0
+Premier League,2026-2027,Newcastle United,Fabian Schär,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Sunderland,Granit Xhaka,M,1,90,0,0,0,2,0.0,0.05,0,0.0,0.87,0.86,0,0
+Premier League,2026-2027,Brighton,Pascal Groß,M,1,90,0,0,0,4,0.0,0.48,0,0.0,0.6,0.41,1,0
+Premier League,2026-2027,Brentford,Callum Wilson,S,1,6,0,0,1,1,0.08,0.14,0,0.08,0.23,0.0,0,0
+Premier League,2026-2027,Manchester United,Marcus Rashford,S,1,42,0,0,0,4,0.0,0.08,0,0.0,0.29,0.21,0,0
+Premier League,2026-2027,Hull,Paddy McNair,S,1,24,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Aston Villa,Ross Barkley,M,1,79,0,0,1,2,0.1,0.1,0,0.1,0.1,0.05,0,0
+Premier League,2026-2027,Manchester City,Jack Grealish,S,1,6,0,0,0,0,0.0,0.0,0,0.0,0.41,0.41,0,0
+Premier League,2026-2027,Nottingham Forest,Ola Aina,D,1,76,0,0,2,3,0.04,0.21,0,0.04,0.11,0.0,1,0
+Premier League,2026-2027,Everton,Jordan Pickford,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.07,0.07,0,0
+Premier League,2026-2027,Bournemouth,Adam Smith,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.52,0.52,0,0
+Premier League,2026-2027,Liverpool,Virgil van Dijk,D,1,90,0,0,2,0,0.12,0.0,0,0.12,0.24,0.24,1,0
+Premier League,2026-2027,Hull,Matt Targett,S,1,3,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Manchester United,Luke Shaw,D,1,90,0,0,0,4,0.0,0.23,0,0.0,0.34,0.26,0,0
+Premier League,2026-2027,Aston Villa,Tyrone Mings,S,1,11,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Coventry,Matt Grimes,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.52,0.52,0,0
+Premier League,2026-2027,Manchester City,Gianluigi Donnarumma,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Manchester United,Bruno Fernandes,M,1,90,0,0,3,3,0.04,0.17,0,0.04,0.84,0.74,0,0
+Premier League,2026-2027,Liverpool,Alisson,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+Premier League,2026-2027,Ipswich,Sasa Lukic,M,1,90,0,1,0,1,0.0,0.06,0,0.0,0.76,0.7,0,0
+Premier League,2026-2027,Everton,James Tarkowski,D,1,90,0,0,1,0,0.05,0.0,0,0.05,0.03,0.03,0,0
+Premier League,2026-2027,Tottenham,Dominic Solanke,S,1,21,0,0,1,0,0.04,0.0,0,0.04,0.04,0.0,0,0
+Premier League,2026-2027,Manchester United,Harry Maguire,D,1,90,0,0,2,2,0.06,0.51,0,0.06,0.75,0.7,0,0
+Premier League,2026-2027,Tottenham,Andrew Robertson,D,1,90,0,0,0,1,0.0,0.25,0,0.0,0.57,0.32,0,0
+Premier League,2026-2027,Hull,Oliver McBurnie,F,1,90,0,0,2,2,0.44,0.07,0,0.44,0.1,0.03,0,0
+Premier League,2026-2027,Bournemouth,Lewis Cook,M,1,78,0,0,0,0,0.0,0.0,0,0.0,0.52,0.52,0,0
+Premier League,2026-2027,Ipswich,Chuba Akpom,S,1,22,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+Premier League,2026-2027,Aston Villa,Emiliano Buendía,F,1,90,0,0,3,1,0.12,0.1,0,0.12,0.1,0.0,0,0
+Premier League,2026-2027,Manchester City,Mateo Kovacic,S,1,25,0,0,0,0,0.0,0.0,0,0.0,1.02,1.02,0,0
+Premier League,2026-2027,Ipswich,Issa Diop,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.07,0.07,0,0
+Premier League,2026-2027,Brighton,Olivier Boscagli,D,1,90,0,0,0,0,0.0,0.0,0,0.0,1.25,1.25,0,0
+Premier League,2026-2027,Nottingham Forest,Chris Wood,S,1,26,0,0,1,0,0.06,0.0,0,0.06,0.06,0.0,0,0
+Premier League,2026-2027,Liverpool,Alexander Isak,F,1,90,0,0,4,1,1.41,0.04,0,1.41,0.16,0.0,0,0
+Premier League,2026-2027,Arsenal,Mikel Merino,S,1,12,0,0,2,0,0.14,0.0,0,0.14,0.17,0.07,0,0
+Premier League,2026-2027,Arsenal,Declan Rice,M,1,70,0,0,2,0,0.04,0.0,0,0.04,0.54,0.52,0,0
+Premier League,2026-2027,Leeds,Dominic Calvert-Lewin,F,1,90,0,0,3,0,0.16,0.0,0,0.16,0.16,0.0,1,0
+Premier League,2026-2027,Leeds,Harry Wilson,M,1,68,0,0,0,1,0.0,0.02,0,0.0,0.02,0.02,0,0
+Premier League,2026-2027,Arsenal,Gabriel,D,1,90,0,0,1,0,0.03,0.0,0,0.03,0.41,0.38,1,0
+Premier League,2026-2027,Sunderland,Thomas Meunier,D,1,90,0,0,2,0,0.05,0.0,0,0.05,0.37,0.32,0,0
+Premier League,2026-2027,Nottingham Forest,Ibrahim Sangare,M,1,90,0,0,1,1,0.01,0.02,0,0.01,0.03,0.0,0,0
+Premier League,2026-2027,Crystal Palace,Jean-Philippe Mateta,F,1,67,0,0,2,1,1.32,0.02,0,1.32,1.6,0.26,0,0
+Premier League,2026-2027,Newcastle United,Yoane Wissa,M,1,90,0,1,4,1,0.97,0.07,0,0.97,1.18,0.14,1,0
+Premier League,2026-2027,Aston Villa,Boubacar Kamara,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.05,0.05,0,0
+Premier League,2026-2027,Manchester United,Youri Tielemans,M,1,69,0,0,1,0,0.03,0.0,0,0.03,0.29,0.26,0,0
+Premier League,2026-2027,Tottenham,Richarlison,F,1,69,0,0,0,0,0.0,0.0,0,0.0,0.1,0.1,0,0
+Premier League,2026-2027,Brighton,Lewis Dunk,D,1,90,0,0,0,0,0.0,0.0,0,0.0,2.14,2.14,0,0
+Premier League,2026-2027,Manchester City,Phil Foden,M,1,84,0,0,2,2,0.1,0.51,0,0.1,1.02,0.62,1,0
+Premier League,2026-2027,Newcastle United,Jacob Murphy,S,1,13,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+Premier League,2026-2027,Aston Villa,Victor Lindelöf,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.05,0.05,0,0
+Premier League,2026-2027,Tottenham,Rodrigo Bentancur,S,1,43,0,0,0,1,0.0,0.02,0,0.0,0.55,0.53,0,0
+Premier League,2026-2027,Crystal Palace,Daichi Kamada,M,1,90,0,0,0,2,0.0,0.3,0,0.0,0.49,0.24,1,0
+Premier League,2026-2027,Nottingham Forest,Nikola Milenkovic,D,1,90,0,0,2,0,0.12,0.0,0,0.12,0.05,0.0,0,0
+Premier League,2026-2027,Aston Villa,Pau Torres,D,1,79,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Leeds,Ethan Ampadu,M,1,90,0,0,0,2,0.0,0.08,0,0.0,0.2,0.12,0,0
+Premier League,2026-2027,Leeds,Joe Rodon,D,1,90,0,0,1,1,0.03,0.1,0,0.03,0.15,0.02,0,0
+Premier League,2026-2027,Crystal Palace,Eddie Nketiah,M,1,60,0,0,1,2,0.31,1.32,0,0.31,1.65,0.02,0,0
+Premier League,2026-2027,Manchester United,Bryan Mbeumo,M,1,90,0,0,4,1,0.55,0.12,0,0.55,1.21,0.66,0,0
+Premier League,2026-2027,Newcastle United,Harvey Barnes,M,1,90,0,0,1,0,0.06,0.0,0,0.06,0.69,0.63,0,0
+Premier League,2026-2027,Crystal Palace,Dwight McNeil,M,1,67,0,0,1,0,0.02,0.0,0,0.02,0.81,0.78,0,0
+Premier League,2026-2027,Leeds,Jaka Bijol,D,1,90,0,0,2,0,0.08,0.0,0,0.08,0.2,0.12,0,0
+Premier League,2026-2027,Tottenham,James Maddison,S,1,21,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,0,0
+Premier League,2026-2027,Nottingham Forest,Morgan Gibbs-White,M,1,90,0,0,3,0,0.14,0.0,0,0.14,0.11,0.05,0,0
+Premier League,2026-2027,Nottingham Forest,Matz Sels,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Brighton,Georginio Rutter,F,1,90,0,1,2,1,0.07,0.91,0,0.07,1.05,0.12,0,0
+Premier League,2026-2027,Bournemouth,Justin Kluivert,M,1,77,0,0,1,1,0.08,0.04,0,0.08,0.12,0.0,0,0
+Premier League,2026-2027,Leeds,Sean Longstaff,S,1,6,0,0,0,0,0.0,0.0,0,0.0,0.1,0.1,0,0
+Premier League,2026-2027,Manchester United,Matheus Cunha,F,1,82,0,0,3,2,0.19,0.45,0,0.19,1.18,0.61,0,0
+Premier League,2026-2027,Sunderland,Wilson Isidor,S,1,21,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Brentford,Mathias Jensen,M,1,68,0,0,2,3,0.09,0.59,0,0.09,0.68,0.64,0,0
+Premier League,2026-2027,Hull,Ryan John Giles,D,1,87,0,0,1,1,0.03,0.03,0,0.03,0.1,0.04,0,0
+Premier League,2026-2027,Manchester United,Diogo Dalot,S,1,8,0,0,0,1,0.0,0.02,0,0.0,0.08,0.06,0,0
+Premier League,2026-2027,Arsenal,Ben White,D,1,90,0,1,1,2,0.13,0.19,0,0.13,0.62,0.48,0,0
+Premier League,2026-2027,Bournemouth,Tyler Adams,S,1,12,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Sunderland,Reinildo,D,1,90,0,0,0,2,0.0,0.17,0,0.0,0.5,0.46,0,0
+Premier League,2026-2027,Everton,James Garner,S,1,7,0,0,0,1,0.0,0.06,0,0.0,0.06,0.0,0,0
+Premier League,2026-2027,Arsenal,Martín Zubimendi,S,1,20,0,0,0,0,0.0,0.0,0,0.0,0.1,0.1,0,0
+Premier League,2026-2027,Crystal Palace,Dean Henderson,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.07,0.07,0,0
+Premier League,2026-2027,Hull,John Egan,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Aston Villa,John McGinn,M,1,87,0,0,1,0,0.03,0.0,0,0.03,0.09,0.05,1,0
+Premier League,2026-2027,Leeds,James Justin,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.06,0.06,0,0
+Premier League,2026-2027,Nottingham Forest,Xaver Schlager,S,1,14,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Coventry,Taiwo Awoniyi,S,1,18,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Brentford,Caoimhin Kelleher,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.6,0.6,0,0
+Premier League,2026-2027,Crystal Palace,Takehiro Tomiyasu,S,1,13,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+Premier League,2026-2027,Tottenham,Sandro Tonali,M,1,90,0,0,2,0,0.03,0.0,0,0.03,0.32,0.31,0,0
+Premier League,2026-2027,Crystal Palace,Evann Guessand,S,1,23,0,0,1,0,0.04,0.0,0,0.04,0.04,0.0,0,0
+Premier League,2026-2027,Nottingham Forest,Arnaud Kalimuendo Muinga,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Liverpool,Ronald Araújo,S,1,19,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+Premier League,2026-2027,Manchester City,Mathis Cherki,S,1,25,0,2,0,4,0.0,0.66,0,0.0,1.02,0.48,0,0
+Premier League,2026-2027,Arsenal,Riccardo Calafiori,D,1,83,0,1,1,1,0.08,0.1,0,0.08,0.71,0.53,0,0
+Premier League,2026-2027,Nottingham Forest,Neco Williams,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,0,0
+Premier League,2026-2027,Crystal Palace,Tyrick Mitchell,D,1,90,0,0,0,1,0.0,0.03,0,0.0,0.29,0.26,0,0
+Premier League,2026-2027,Manchester City,Erling Haaland,F,1,90,0,0,5,0,0.75,0.0,0,0.75,0.99,0.35,0,0
+Premier League,2026-2027,Newcastle United,Malick Thiaw,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.13,0.13,0,0
+Premier League,2026-2027,Liverpool,Alexis Mac Allister,S,1,26,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+Premier League,2026-2027,Liverpool,Florian Wirtz,M,1,64,0,0,3,1,0.23,0.03,0,0.23,0.29,0.21,0,0
+Premier League,2026-2027,Nottingham Forest,Luca Netz,S,1,14,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Crystal Palace,Chris Richards,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.04,0.04,0,0
+Premier League,2026-2027,Everton,Jarrad Branthwaite,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.11,0.11,0,0
+Premier League,2026-2027,Coventry,Bobby Thomas,D,1,90,0,0,1,1,0.01,0.03,0,0.01,0.04,0.0,0,0
+Premier League,2026-2027,Coventry,Ellis Simms,F,1,72,0,0,0,1,0.0,0.01,0,0.0,0.01,0.0,0,0
+Premier League,2026-2027,Newcastle United,Sven Botman,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.06,0.06,0,0
+Premier League,2026-2027,Bournemouth,Adrien Truffert,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.08,0.08,0,0
+Premier League,2026-2027,Sunderland,Enzo Le Fée,M,1,82,0,0,0,0,0.0,0.0,0,0.0,0.82,0.82,0,0
+Premier League,2026-2027,Nottingham Forest,Dan Ndoye,M,1,64,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,0,0
+Premier League,2026-2027,Arsenal,Eberechi Eze,S,1,12,0,0,1,0,0.04,0.0,0,0.04,0.0,0.0,0,0
+Premier League,2026-2027,Ipswich,Dara O&#039;Shea,D,1,90,0,0,0,2,0.0,0.05,0,0.0,0.06,0.05,0,0
+Premier League,2026-2027,Tottenham,Iyenoma Destiny Udogie,S,1,3,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Brentford,Mikkel Damsgaard,S,1,13,0,0,0,2,0.0,0.16,0,0.0,0.37,0.29,0,0
+Premier League,2026-2027,Aston Villa,Matthew Cash,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.08,0.08,1,0
+Premier League,2026-2027,Aston Villa,Matteo Ruggeri,S,1,3,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Ipswich,Leif Davis,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.07,0.07,0,0
+Premier League,2026-2027,Newcastle United,Jacob Ramsey,S,1,33,0,0,1,0,0.09,0.0,0,0.09,0.72,0.63,1,0
+Premier League,2026-2027,Brentford,Aaron Hickey,S,1,13,0,0,0,0,0.0,0.0,0,0.0,0.23,0.23,0,0
+Premier League,2026-2027,Manchester City,Rúben Dias,D,1,90,0,0,0,1,0.0,0.03,0,0.0,1.45,1.45,0,0
+Premier League,2026-2027,Sunderland,Omar Alderete,S,1,21,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Crystal Palace,Yeremi Pino,S,1,30,0,0,2,0,0.05,0.0,0,0.05,0.09,0.04,0,0
+Premier League,2026-2027,Tottenham,Conor Gallagher,M,1,47,0,0,1,0,0.02,0.0,0,0.02,0.02,0.0,1,0
+Premier League,2026-2027,Leeds,James Trafford,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Manchester City,Elliot Anderson,M,1,65,0,0,0,1,0.0,0.53,0,0.0,0.4,0.4,0,0
+Premier League,2026-2027,Brentford,Kevin Schade,M,1,90,0,0,5,1,0.44,0.04,0,0.44,0.46,0.06,0,0
+Premier League,2026-2027,Leeds,Jayden Bogle,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,0,0
+Premier League,2026-2027,Everton,Iliman Ndiaye,M,1,90,0,1,2,3,0.22,0.61,0,0.22,0.3,0.14,0,0
+Premier League,2026-2027,Liverpool,Jeremie Frimpong,D,1,90,0,0,1,3,0.01,0.11,0,0.01,0.27,0.21,1,0
+Premier League,2026-2027,Hull,Cody Drameh,S,1,18,0,0,1,0,0.04,0.0,0,0.04,0.04,0.0,0,0
+Premier League,2026-2027,Bournemouth,Daniel Jebbison,S,1,13,0,0,1,0,0.08,0.0,0,0.08,0.0,0.0,0,0
+Premier League,2026-2027,Newcastle United,William Osula,F,1,57,0,1,2,1,0.06,0.26,0,0.06,0.26,0.0,0,0
+Premier League,2026-2027,Aston Villa,Marco Bizot,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.05,0.05,0,0
+Premier League,2026-2027,Brentford,Dango Ouattara,M,1,68,0,0,2,2,0.03,0.17,0,0.03,0.73,0.54,0,0
+Premier League,2026-2027,Arsenal,David Raya,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.21,0.21,0,0
+Premier League,2026-2027,Brentford,Kristoffer Ajer,D,1,90,0,0,1,0,0.08,0.0,0,0.08,0.62,0.62,0,0
+Premier League,2026-2027,Coventry,Frank Onyeka,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Brentford,Nathan Collins,D,1,90,0,0,2,2,0.5,0.06,0,0.5,0.64,0.62,0,0
+Premier League,2026-2027,Arsenal,Christos Tzolis,M,1,78,0,0,4,3,0.24,0.19,0,0.24,0.79,0.45,0,0
+Premier League,2026-2027,Sunderland,Habib Diarra,S,1,8,0,0,1,0,0.02,0.0,0,0.02,0.02,0.0,0,0
+Premier League,2026-2027,Tottenham,Mathys Tel,M,1,90,0,0,2,2,0.06,0.03,0,0.06,0.68,0.65,0,0
+Premier League,2026-2027,Sunderland,Brian Brobbey,F,1,69,0,0,2,0,0.64,0.0,0,0.64,0.64,0.0,0,0
+Premier League,2026-2027,Arsenal,Piero Hincapié,S,1,7,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+Premier League,2026-2027,Ipswich,Kjell Scherpen,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.62,0.62,0,0
+Premier League,2026-2027,Coventry,Loum Tchaouna,M,1,84,0,0,2,0,0.05,0.0,0,0.05,0.05,0.0,0,0
+Premier League,2026-2027,Everton,Beto,S,1,7,0,0,1,0,0.07,0.0,0,0.07,0.07,0.0,0,0
+Premier League,2026-2027,Arsenal,Cristhian Mosquera,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.38,0.38,0,0
+Premier League,2026-2027,Aston Villa,Lamare Bogarde,S,1,11,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Nottingham Forest,James McAtee,M,1,76,0,0,0,3,0.0,0.18,0,0.0,0.02,0.02,0,0
+Premier League,2026-2027,Ipswich,Kasey McAteer,S,1,22,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Tottenham,Archie Gray,D,1,87,0,0,0,0,0.0,0.0,0,0.0,0.29,0.29,0,0
+Premier League,2026-2027,Newcastle United,Lewis Hall,D,1,90,0,0,0,1,0.0,0.63,0,0.0,0.63,0.63,0,0
+Premier League,2026-2027,Everton,Vitalii Mykolenko,D,1,90,0,0,0,1,0.0,0.03,0,0.0,0.25,0.22,0,0
+Premier League,2026-2027,Ipswich,Guemissongui Ouattara,S,1,8,0,0,0,1,0.0,0.03,0,0.0,0.03,0.0,0,0
+Premier League,2026-2027,Aston Villa,Alejandro Garnacho,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Manchester United,Noussair Mazraoui,D,1,82,0,0,1,2,0.09,0.11,0,0.09,0.85,0.7,0,0
+Premier League,2026-2027,Liverpool,Ryan Gravenberch,M,1,79,0,1,2,1,0.06,0.01,0,0.06,0.27,0.2,0,0
+Premier League,2026-2027,Brentford,Jaidon Anthony,S,1,22,0,0,1,3,0.02,0.19,0,0.02,0.19,0.15,0,0
+Premier League,2026-2027,Bournemouth,James Hill,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.56,0.56,0,0
+Premier League,2026-2027,Leeds,Brenden Aaronson,M,1,84,0,0,1,0,0.02,0.0,0,0.02,0.06,0.05,0,0
+Premier League,2026-2027,Everton,Brennan Johnson,S,1,2,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Tottenham,Jan Paul van Hecke,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.3,0.3,0,0
+Premier League,2026-2027,Manchester City,Rico Lewis,D,1,59,0,0,1,0,0.35,0.0,0,0.35,0.4,0.06,0,0
+Premier League,2026-2027,Tottenham,Marcos Senesi,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.57,0.57,0,0
+Premier League,2026-2027,Manchester City,Matheus Nunes,S,1,31,0,0,0,0,0.0,0.0,0,0.0,0.61,0.61,0,0
+Premier League,2026-2027,Ipswich,Julio Enciso,M,1,73,0,1,3,1,0.2,0.57,0,0.2,1.39,0.62,0,0
+Premier League,2026-2027,Crystal Palace,Jørgen Strand Larsen,S,1,23,0,0,1,0,0.14,0.0,0,0.14,0.14,0.0,0,0
+Premier League,2026-2027,Crystal Palace,Chadi Riad,D,1,77,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,0,0
+Premier League,2026-2027,Manchester United,Kobbie Mainoo,S,1,21,0,0,1,0,0.03,0.0,0,0.03,0.54,0.51,0,0
+Premier League,2026-2027,Bournemouth,Ben Doak,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Everton,Carlos Alcaraz,S,1,1,0,0,1,0,0.06,0.0,0,0.06,0.06,0.0,0,0
+Premier League,2026-2027,Everton,Merlin Röhl,D,1,90,0,0,0,1,0.0,0.09,0,0.0,0.11,0.03,0,0
+Premier League,2026-2027,Arsenal,Noni Madueke,S,1,20,0,0,0,4,0.0,0.25,0,0.0,0.25,0.17,0,0
+Premier League,2026-2027,Manchester City,Antoine Semenyo,M,1,90,0,0,1,0,0.05,0.0,0,0.05,1.37,1.32,0,0
+Premier League,2026-2027,Aston Villa,João Gomes,M,1,39,0,0,0,1,0.0,0.03,0,0.0,0.03,0.0,1,1
+Premier League,2026-2027,Brighton,Yasin Ayari,M,1,69,0,0,2,1,0.08,0.11,0,0.08,0.16,0.01,1,0
+Premier League,2026-2027,Newcastle United,Lewis Miley,M,1,77,0,0,1,2,0.05,0.08,0,0.05,0.76,0.69,1,0
+Premier League,2026-2027,Liverpool,Jérémy Jacquet,D,1,71,0,0,0,1,0.0,0.02,0,0.0,0.19,0.17,0,0
+Premier League,2026-2027,Manchester City,Nico O&#039;Reilly,M,1,65,0,0,1,1,0.16,0.06,0,0.16,0.06,0.06,0,0
+Premier League,2026-2027,Liverpool,Milos Kerkez,D,1,90,0,0,2,1,0.04,0.02,0,0.04,0.22,0.18,1,0
+Premier League,2026-2027,Brighton,Bart Verbruggen,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,1.19,1.19,0,0
+Premier League,2026-2027,Manchester City,Abduqodir Khusanov,D,1,90,0,0,0,0,0.0,0.0,0,0.0,1.08,1.08,0,0
+Premier League,2026-2027,Brentford,Yehor Yarmolyuk,S,1,22,0,0,1,0,0.03,0.0,0,0.03,0.15,0.15,0,0
+Premier League,2026-2027,Aston Villa,Ian Maatsen,D,1,87,0,0,1,0,0.03,0.0,0,0.03,0.03,0.0,0,0
+Premier League,2026-2027,Manchester United,Andrey Santos,M,1,69,0,0,0,0,0.0,0.0,0,0.0,0.72,0.72,0,0
+Premier League,2026-2027,Coventry,Gustavo Hamer,S,1,6,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Manchester United,Patrick Dorgu,M,1,48,0,0,3,0,0.62,0.0,0,0.62,0.65,0.02,1,0
+Premier League,2026-2027,Leeds,Noah Okafor,S,1,22,0,0,0,1,0.0,0.06,0,0.0,0.06,0.0,0,0
+Premier League,2026-2027,Manchester United,Benjamin Sesko,S,1,21,0,0,1,0,0.04,0.0,0,0.04,0.47,0.43,0,0
+Premier League,2026-2027,Bournemouth,Djordje Petrovic,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.44,0.44,0,0
+Premier League,2026-2027,Nottingham Forest,Murillo,D,1,90,0,0,0,2,0.0,0.11,0,0.0,0.13,0.02,0,0
+Premier League,2026-2027,Bournemouth,Alex Scott,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.44,0.44,0,0
+Premier League,2026-2027,Arsenal,Myles Lewis-Skelly,M,1,90,0,0,1,1,0.05,0.05,0,0.05,0.6,0.56,0,0
+Premier League,2026-2027,Crystal Palace,Daniel Muñoz,D,1,59,0,0,2,0,0.33,0.0,0,0.33,1.15,0.82,0,0
+Premier League,2026-2027,Crystal Palace,Adam Wharton,M,1,90,0,0,0,2,0.0,0.33,0,0.0,1.32,0.99,0,0
+Premier League,2026-2027,Liverpool,Lewis Koumas,S,1,11,0,0,1,0,0.05,0.0,0,0.05,0.05,0.0,0,0
+Premier League,2026-2027,Everton,Tyrique George,M,1,88,0,0,5,2,0.24,0.13,0,0.24,0.4,0.09,0,0
+Premier League,2026-2027,Tottenham,Mikey Moore,M,1,69,0,0,3,1,0.61,0.02,0,0.61,0.63,0.02,0,0
+Premier League,2026-2027,Ipswich,Jacob Greaves,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.69,0.69,0,0
+Premier League,2026-2027,Everton,Harrison Armstrong,M,1,90,0,1,0,1,0.0,0.07,0,0.0,0.33,0.26,0,0
+Premier League,2026-2027,Brighton,Mats Wieffer,D,1,83,0,0,1,2,0.08,0.07,0,0.08,1.02,0.92,0,0
+Premier League,2026-2027,Coventry,Carl Rushworth,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.01,0.01,0,0
+Premier League,2026-2027,Ipswich,Abdul Fatawu,M,1,68,0,0,0,2,0.0,0.69,0,0.0,0.69,0.0,0,0
+Premier League,2026-2027,Tottenham,Lucas Bergvall,M,1,47,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Tottenham,Mateus Fernandes,S,1,43,0,0,0,2,0.0,0.36,0,0.0,0.64,0.55,0,0
+Premier League,2026-2027,Coventry,Aurèle Amenda,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.52,0.52,0,0
+Premier League,2026-2027,Bournemouth,Evanilson,F,1,77,0,1,0,1,0.0,0.44,0,0.0,0.44,0.44,1,0
+Premier League,2026-2027,Manchester United,Ayden Heaven,D,1,90,0,0,2,0,0.13,0.0,0,0.13,0.2,0.18,0,0
+Premier League,2026-2027,Crystal Palace,Jaydee Canvot,D,1,90,0,0,1,0,0.02,0.0,0,0.02,0.84,0.82,0,0
+Premier League,2026-2027,Newcastle United,Aladji Bamba,S,1,13,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Brentford,Thiago,F,1,84,0,0,2,0,0.91,0.0,0,0.15,0.15,0.0,0,0
+Premier League,2026-2027,Liverpool,Víctor Muñoz,S,1,26,0,0,2,0,0.11,0.0,0,0.11,0.11,0.0,0,0
+Premier League,2026-2027,Tottenham,Antonín Kinsky,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.26,0.26,0,0
+Premier League,2026-2027,Brighton,Diego Gómez,M,1,90,0,1,3,2,0.23,0.81,0,0.23,1.21,0.17,0,0
+Premier League,2026-2027,Newcastle United,Amar Dedic,D,1,90,0,0,1,0,0.06,0.0,0,0.06,0.7,0.64,0,0
+Premier League,2026-2027,Liverpool,Rio Ngumoha,M,1,64,0,0,1,0,0.05,0.0,0,0.05,0.09,0.04,0,0
+Premier League,2026-2027,Sunderland,Robin Roefs,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.07,0.07,0,0
+Premier League,2026-2027,Sunderland,Trai Hume,M,1,82,0,0,2,3,0.05,0.81,0,0.05,0.96,0.43,0,0
+Premier League,2026-2027,Sunderland,Dan Ballard,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.07,0.07,1,0
+Premier League,2026-2027,Sunderland,Noah Sadiki,M,1,90,0,0,1,2,0.29,0.06,0,0.29,0.36,0.03,0,0
+Premier League,2026-2027,Sunderland,Chemsdine Talbi,S,1,29,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Sunderland,Chris Rigg,S,1,8,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Brighton,Luka Vuskovic,D,1,90,0,0,2,0,0.37,0.0,0,0.37,1.31,1.31,0,0
+Premier League,2026-2027,Nottingham Forest,Igor Jesus,F,1,90,0,0,3,0,0.28,0.0,0,0.28,0.07,0.01,0,0
+Premier League,2026-2027,Nottingham Forest,Jair,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+Premier League,2026-2027,Brighton,Ibrahim Osman,S,1,7,0,0,0,1,0.0,0.03,0,0.0,0.31,0.31,0,0
+Premier League,2026-2027,Leeds,Tarik Muharemovic,D,1,90,0,0,1,0,0.06,0.0,0,0.06,0.08,0.02,0,0
+Premier League,2026-2027,Brentford,Mamadou Sangaré,M,1,77,0,1,1,2,0.04,0.56,0,0.04,0.66,0.64,0,0
+Premier League,2026-2027,Manchester United,Senne Lammens,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.06,0.06,0,0
+Premier League,2026-2027,Sunderland,Luke O&#039;Nien,D,1,69,0,0,1,0,0.02,0.0,0,0.02,0.86,0.86,1,0
+Premier League,2026-2027,Brighton,Charalampos Kostoulas,S,1,21,0,0,2,0,0.34,0.0,0,0.34,0.34,0.0,0,0
+Premier League,2026-2027,Aston Villa,George Hemmings,M,1,90,0,0,0,1,0.0,0.03,0,0.0,0.03,0.0,0,0
+Premier League,2026-2027,Manchester United,Shea Lacey,S,1,8,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Bournemouth,Alex Tóth,S,1,13,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Bournemouth,Rayan,M,1,90,0,0,1,1,0.07,0.08,0,0.07,0.59,0.44,0,0
+Premier League,2026-2027,Aston Villa,Alysson Edward,S,1,3,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Coventry,Milan van Ewijk,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Coventry,Jay Dasilva,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.01,0.01,0,0
+Premier League,2026-2027,Coventry,Caleb Yirenkyi,M,1,64,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+Premier League,2026-2027,Coventry,Brandon Thomas-Asante,M,1,72,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Coventry,Victor Torp,S,1,26,0,0,0,1,0.0,0.51,0,0.0,0.51,0.0,0,0
+Premier League,2026-2027,Coventry,Jack Rudoni,S,1,18,0,0,1,0,0.51,0.0,0,0.51,0.51,0.0,0,0
+Premier League,2026-2027,Hull,Konstantinos Tzolakis,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+Premier League,2026-2027,Hull,Lewie Coyle,D,1,72,0,0,0,1,0.0,0.03,0,0.0,0.03,0.03,0,0
+Premier League,2026-2027,Hull,Mohamed Belloumi,M,1,90,0,0,2,0,0.05,0.0,0,0.05,0.07,0.04,0,0
+Premier League,2026-2027,Hull,Matt Crooks,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,1,0
+Premier League,2026-2027,Hull,Regan Slater,M,1,90,0,1,0,1,0.0,0.53,0,0.0,0.03,0.03,0,0
+Premier League,2026-2027,Hull,Elliot Stroud,M,1,73,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+Premier League,2026-2027,Hull,Liam Millar,S,1,17,0,0,0,0,0.0,0.0,0,0.0,0.04,0.04,1,0
+Premier League,2026-2027,Hull,Lucas Herrington,S,1,24,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Everton,Hayden Hackney,M,1,83,0,0,1,1,0.04,0.03,0,0.04,0.12,0.09,0,0
+Premier League,2026-2027,Crystal Palace,Anan Khalaili,S,1,31,0,0,0,2,0.0,0.16,0,0.0,0.19,0.03,0,0
+Premier League,2026-2027,Ipswich,Marcelino Núñez,M,1,82,0,0,1,0,0.06,0.0,0,0.06,0.71,0.71,0,0
+Premier League,2026-2027,Ipswich,Daizen Maeda,M,1,82,0,0,1,0,0.62,0.0,0,0.62,0.72,0.11,0,0
+Premier League,2026-2027,Ipswich,Sindre Egeli,S,1,8,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Premier League,2026-2027,Brighton,Costinha,S,1,21,0,0,2,0,0.05,0.0,0,0.05,0.34,0.31,0,0
+Premier League,2026-2027,Brighton,Zadok Yohanna,S,1,7,0,0,0,0,0.0,0.0,0,0.0,0.31,0.31,0,0
+Premier League,2026-2027,Brighton,Malick Yalcouyé,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.31,0.31,0,0
+Premier League,2026-2027,Bournemouth,António Silva,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+Premier League,2026-2027,Newcastle United,Lukás Hornícek,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.06,0.06,1,0
+Premier League,2026-2027,Newcastle United,Sean Steur,M,1,57,0,0,0,0,0.0,0.0,0,0.0,0.06,0.06,0,0
+La Liga,2026-2027,Alaves,Mariano,S,2,55,2,2,5,2,0.5,0.55,2,0.5,1.48,0.52,1,0
+La Liga,2026-2027,Barcelona,Raphinha,F,1,85,2,1,3,3,1.69,1.04,1,0.94,2.1,0.57,0,0
+La Liga,2026-2027,Barcelona,Fermín López,M,1,90,2,0,2,1,0.99,0.19,2,0.99,1.18,0.0,0,0
+La Liga,2026-2027,Espanyol,Roberto Fernández,F,2,180,2,0,4,3,1.78,0.22,2,1.78,1.5,0.09,0,0
 La Liga,2026-2027,Deportivo La Coruna,Pierre-Emerick Aubameyang,F,1,86,1,0,2,1,0.11,0.09,1,0.11,0.22,0.05,0,0
-La Liga,2026-2027,Alaves,Mariano,S,1,30,1,2,3,2,0.21,0.55,1,0.21,1.2,0.52,1,0
-La Liga,2026-2027,Sevilla,Jon Guridi,M,1,87,1,0,2,0,0.79,0.0,0,0.05,0.05,0.0,1,0
-La Liga,2026-2027,Villarreal,Nicolas Pepe,M,1,83,1,0,2,0,0.06,0.0,1,0.06,0.32,0.26,0,0
-La Liga,2026-2027,Rayo Vallecano,Álvaro García,M,1,75,1,0,1,1,0.8,0.54,1,0.8,1.34,0.0,1,0
-La Liga,2026-2027,Atletico Madrid,Lee Kang-In,S,1,29,1,0,3,1,0.08,0.33,1,0.08,0.41,0.0,0,0
-La Liga,2026-2027,Atletico Madrid,Álex Baena,S,1,29,1,0,1,2,0.06,0.11,1,0.06,0.36,0.36,0,0
-La Liga,2026-2027,Villarreal,Pape Alassane Gueye,M,1,90,1,0,1,2,0.02,0.09,1,0.02,0.33,0.21,1,0
-La Liga,2026-2027,Racing Santander,Andrés Martín,M,1,90,1,0,6,3,1.1,0.21,0,0.36,0.51,0.04,0,0
-La Liga,2026-2027,Alaves,Nahuel Tenaglia,D,1,90,1,0,3,0,0.47,0.0,1,0.47,0.57,0.15,0,0
-La Liga,2026-2027,Sevilla,Peque,S,1,39,1,0,2,1,0.83,0.03,0,0.09,0.19,0.06,0,0
-La Liga,2026-2027,Espanyol,Tyrhys Dolan,M,1,87,1,0,4,0,0.24,0.0,1,0.24,1.06,0.82,0,0
-La Liga,2026-2027,Elche,Marc Aguado,M,1,90,1,0,1,1,0.09,0.05,1,0.09,0.51,0.45,0,0
-La Liga,2026-2027,Alaves,Mikel Rodríguez,S,1,30,1,0,2,2,0.65,0.04,1,0.65,0.74,0.04,0,0
-La Liga,2026-2027,Racing Santander,Sergio Martínez,M,1,75,1,0,1,0,0.03,0.0,1,0.03,0.17,0.14,0,0
+La Liga,2026-2027,Villarreal,Gerard Moreno,S,2,52,1,0,1,3,0.74,0.29,0,0.0,0.71,0.65,0,0
+La Liga,2026-2027,Sevilla,Jon Guridi,M,2,136,1,0,2,0,0.79,0.0,0,0.05,0.05,0.0,2,0
+La Liga,2026-2027,Villarreal,Nicolas Pepe,M,2,167,1,0,4,1,0.14,0.45,1,0.14,1.77,1.18,0,0
+La Liga,2026-2027,Getafe,Enes Ünal,F S,2,131,1,0,4,0,0.81,0.0,1,0.81,0.74,0.0,0,0
+La Liga,2026-2027,Rayo Vallecano,Álvaro García,M S,2,107,1,0,2,1,0.84,0.54,1,0.84,1.34,0.0,1,0
+La Liga,2026-2027,Atletico Madrid,Lee Kang-In,F S,2,100,1,0,9,3,0.26,0.43,1,0.26,0.7,0.06,0,0
+La Liga,2026-2027,Rayo Vallecano,Sergio Camello,F S,2,111,1,0,3,0,0.21,0.0,1,0.21,0.21,0.0,1,0
+La Liga,2026-2027,Real Betis,Rodrigo Riquelme,M,1,75,1,0,1,2,0.12,0.07,1,0.12,0.21,0.02,0,0
+La Liga,2026-2027,Villarreal,Georges Mikautadze,F,2,174,1,1,9,3,2.16,0.43,0,1.42,1.82,0.45,0,0
+La Liga,2026-2027,Atletico Madrid,Álex Baena,S,2,68,1,1,1,4,0.06,0.25,1,0.06,0.6,0.6,1,0
+La Liga,2026-2027,Sevilla,Chidera Ejuke,S,2,48,1,0,1,0,0.3,0.0,1,0.3,0.3,0.0,0,0
+La Liga,2026-2027,Villarreal,Pape Alassane Gueye,M,2,180,1,0,3,2,0.07,0.09,1,0.07,1.7,1.54,1,0
+La Liga,2026-2027,Real Madrid,Jude Bellingham,M,1,83,1,0,2,2,0.21,0.19,1,0.21,0.46,0.27,0,0
+La Liga,2026-2027,Athletic Club,Aitor Paredes,D,1,77,1,0,1,1,0.53,0.04,1,0.53,0.41,0.37,0,0
+La Liga,2026-2027,Atletico Madrid,Giuliano Simeone,M S,2,119,1,1,4,3,0.22,0.09,1,0.22,0.44,0.19,0,0
+La Liga,2026-2027,Racing Santander,Andrés Martín,M,2,180,1,0,9,3,2.15,0.21,0,0.66,0.85,0.08,0,0
+La Liga,2026-2027,Atletico Madrid,Marc Pubill,D,1,71,1,0,1,0,0.03,0.0,1,0.03,0.15,0.12,0,0
+La Liga,2026-2027,Alaves,Nahuel Tenaglia,D,2,180,1,0,4,0,0.48,0.0,1,0.48,0.57,0.15,1,0
+La Liga,2026-2027,Barcelona,Karim Adeyemi,M,1,70,1,0,1,1,0.46,0.07,1,0.46,0.53,0.07,0,0
+La Liga,2026-2027,Sevilla,Isaac Romero,F S,2,92,1,1,3,1,0.22,0.3,1,0.22,0.52,0.0,2,0
+La Liga,2026-2027,Sevilla,Peque,M S,2,88,1,0,3,1,0.88,0.03,0,0.14,0.23,0.06,1,0
+La Liga,2026-2027,Sevilla,Oso,M,2,164,1,1,4,1,0.47,0.14,1,0.47,0.87,0.34,0,0
+La Liga,2026-2027,Real Madrid,Carlos Espí,S,1,7,1,0,1,1,0.55,0.08,1,0.55,0.63,0.0,0,0
+La Liga,2026-2027,Espanyol,Tyrhys Dolan,M,2,177,1,0,4,0,0.24,0.0,1,0.24,1.61,1.37,0,0
+La Liga,2026-2027,Elche,Marc Aguado,M,2,159,1,0,1,1,0.09,0.05,1,0.09,0.51,0.45,0,0
+La Liga,2026-2027,Alaves,Mikel Rodríguez,M S,2,95,1,0,2,3,0.65,0.07,1,0.65,0.77,0.05,0,0
+La Liga,2026-2027,Racing Santander,Sergio Martínez,M,2,123,1,0,1,0,0.03,0.0,1,0.03,0.21,0.18,0,0
+La Liga,2026-2027,Espanyol,Cala,M,2,146,1,0,4,2,0.7,0.04,1,0.7,0.82,0.13,2,0
+La Liga,2026-2027,Barcelona,Andreas Christensen,D,1,90,0,0,0,0,0.0,0.0,0,0.0,1.34,1.34,0,0
 La Liga,2026-2027,Levante,Jeremy Toljan,S,1,9,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Sevilla,Odisseas Vlachodimos,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Villarreal,Ayoze Pérez,F,1,62,0,0,2,1,0.18,0.04,0,0.18,0.21,0.09,0,0
-La Liga,2026-2027,Villarreal,Gerard Moreno,S,1,28,0,0,0,2,0.0,0.26,0,0.0,0.26,0.23,0,0
-La Liga,2026-2027,Atletico Madrid,Jan Oblak,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.06,0.06,0,0
-La Liga,2026-2027,Atletico Madrid,Koke,M,1,82,0,0,0,1,0.0,0.05,0,0.0,0.12,0.12,0,0
-La Liga,2026-2027,Alaves,Jonny,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.04,0.04,0,0
-La Liga,2026-2027,Alaves,Denis Suárez,M,1,60,0,0,1,3,0.58,0.12,0,0.58,0.71,0.08,1,0
+La Liga,2026-2027,Sevilla,Odisseas Vlachodimos,GK,2,180,0,0,0,0,0.0,0.0,0,0.0,0.04,0.04,0,0
+La Liga,2026-2027,Real Betis,Héctor Bellerín,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.23,0.23,1,0
+La Liga,2026-2027,Real Madrid,Thibaut Courtois,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.46,0.46,0,0
+La Liga,2026-2027,Villarreal,Ayoze Pérez,F,2,128,0,0,3,2,0.47,0.09,0,0.47,1.57,1.41,0,0
+La Liga,2026-2027,Valencia,Pablo Maffeo,S,1,18,0,0,0,1,0.0,0.12,0,0.0,0.12,0.0,0,0
+La Liga,2026-2027,Alaves,Lucas Boyé,F,1,65,0,0,2,1,0.12,0.5,0,0.12,0.5,0.0,0,0
+La Liga,2026-2027,Valencia,Umar Sadiq,S,1,30,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Celta Vigo,Marcos Alonso,D,1,90,0,0,2,0,0.2,0.0,0,0.2,0.15,0.15,0,0
+La Liga,2026-2027,Real Madrid,Trent Alexander-Arnold,S,1,7,0,0,0,0,0.0,0.0,0,0.0,0.63,0.63,0,0
+La Liga,2026-2027,Celta Vigo,Ionut Radu,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+La Liga,2026-2027,Elche,Ezequiel Ponce,S,1,16,0,0,1,1,0.06,0.32,0,0.06,0.38,0.0,0,0
+La Liga,2026-2027,Athletic Club,Yuri,D,1,10,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,1
+La Liga,2026-2027,Real Sociedad,Mikel Oyarzabal,S,1,30,0,0,0,1,0.0,0.12,0,0.0,0.14,0.02,0,0
+La Liga,2026-2027,Getafe,Borja Mayoral,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Real Betis,Isco,S,1,30,0,0,2,1,0.59,0.07,0,0.59,0.81,0.22,0,0
+La Liga,2026-2027,Atletico Madrid,Jan Oblak,GK,2,180,0,0,0,0,0.0,0.0,0,0.0,0.17,0.17,0,0
+La Liga,2026-2027,Atletico Madrid,Koke,M,2,153,0,0,1,3,0.06,0.11,0,0.06,0.33,0.3,0,0
+La Liga,2026-2027,Atletico Madrid,Giménez,S,1,6,0,0,0,0,0.0,0.0,0,0.0,0.17,0.17,1,0
+La Liga,2026-2027,Alaves,Jonny,D,2,163,0,0,0,1,0.0,0.01,0,0.0,0.05,0.04,0,0
+La Liga,2026-2027,Celta Vigo,Iago Aspas,S,1,23,0,0,0,1,0.0,0.03,0,0.0,0.09,0.09,0,0
+La Liga,2026-2027,Alaves,Denis Suárez,M S,2,85,0,0,1,5,0.58,0.16,0,0.58,1.18,0.54,1,0
+La Liga,2026-2027,Real Betis,Pablo Fornals,M,1,90,0,0,2,4,0.15,0.22,0,0.15,0.56,0.39,0,0
+La Liga,2026-2027,Elche,Pedro Bigas,S,1,4,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Barcelona,João Cancelo,S,1,5,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
 La Liga,2026-2027,Levante,Mat Ryan,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.05,0.05,0,0
-La Liga,2026-2027,Getafe,David Soria,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.04,0.04,0,0
-La Liga,2026-2027,Atletico Madrid,Marcos Llorente,S,1,40,0,0,0,0,0.0,0.0,0,0.0,0.06,0.06,0,0
-La Liga,2026-2027,Racing Santander,Sergio Canales,M,1,83,0,0,3,0,0.15,0.0,0,0.15,0.14,0.04,0,0
+La Liga,2026-2027,Athletic Club,Iñaki Williams,M,1,61,0,0,2,2,0.11,0.07,0,0.11,0.18,0.0,0,0
+La Liga,2026-2027,Getafe,David Soria,GK,2,180,0,0,0,0,0.0,0.0,0,0.0,0.04,0.04,0,0
+La Liga,2026-2027,Real Sociedad,Igor Zubeldia,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.1,0.1,1,0
+La Liga,2026-2027,Real Betis,Marc Bartra,D,1,90,0,0,1,1,0.01,0.02,0,0.01,0.32,0.31,0,0
+La Liga,2026-2027,Real Sociedad,Carlos Soler,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.12,0.12,0,0
+La Liga,2026-2027,Athletic Club,Aymeric Laporte,S,1,29,0,0,0,0,0.0,0.0,0,0.0,0.22,0.22,0,0
+La Liga,2026-2027,Valencia,José Gayá,D,1,72,0,0,0,1,0.0,0.03,0,0.0,0.03,0.0,0,0
+La Liga,2026-2027,Atletico Madrid,Marcos Llorente,S,2,59,0,0,1,0,0.02,0.0,0,0.02,0.11,0.09,0,0
+La Liga,2026-2027,Valencia,Pepelu,D,1,90,0,0,1,0,0.05,0.0,0,0.05,0.08,0.08,0,0
+La Liga,2026-2027,Real Sociedad,Remiro,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Racing Santander,Sergio Canales,M,2,149,0,0,4,0,0.19,0.0,0,0.19,0.41,0.26,0,0
+La Liga,2026-2027,Valencia,Stole Dimitrievski,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
 La Liga,2026-2027,Levante,Aissa Mandi,D,1,90,0,0,1,0,0.05,0.0,0,0.05,0.1,0.05,0,0
+La Liga,2026-2027,Real Madrid,Kylian Mbappe-Lottin,F,1,90,0,0,10,1,1.44,0.06,0,1.44,1.4,0.9,0,0
+La Liga,2026-2027,Real Madrid,Bernardo Silva,M,1,83,0,0,0,1,0.0,0.06,0,0.0,0.34,0.28,0,0
 La Liga,2026-2027,Deportivo La Coruna,Ximo Navarro,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.21,0.21,1,0
-La Liga,2026-2027,Rayo Vallecano,Unai López,M,1,83,0,0,0,0,0.0,0.0,0,0.0,0.54,0.54,1,0
-La Liga,2026-2027,Espanyol,Pere Milla,S,1,3,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Rayo Vallecano,Unai López,M,2,173,0,0,1,5,0.03,0.37,0,0.03,0.61,0.58,1,0
+La Liga,2026-2027,Espanyol,Pere Milla,S,2,15,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
 La Liga,2026-2027,Getafe,Kiko Femenía,D,1,41,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,1
-La Liga,2026-2027,Alaves,Carles Aleñá,S,1,1,0,0,1,0,0.02,0.0,0,0.02,0.02,0.0,0,0
-La Liga,2026-2027,Rayo Vallecano,Florian Lejeune,D,1,90,0,0,2,0,0.09,0.0,0,0.09,0.0,0.0,0,0
-La Liga,2026-2027,Espanyol,Edu Expósito,M,1,90,0,0,3,1,0.08,0.09,0,0.08,0.86,0.78,0,0
-La Liga,2026-2027,Racing Santander,Asier Villalibre,F,1,75,0,0,1,0,0.09,0.0,0,0.09,0.0,0.0,0,0
-La Liga,2026-2027,Atletico Madrid,Ademola Lookman,F,1,90,0,0,2,0,0.35,0.0,0,0.35,0.38,0.04,0,0
+La Liga,2026-2027,Alaves,Carles Aleñá,S,2,8,0,0,1,1,0.02,0.46,0,0.02,0.48,0.46,0,0
+La Liga,2026-2027,Athletic Club,Yeray Álvarez,D,1,90,0,1,2,2,0.16,0.59,0,0.16,0.42,0.36,0,0
+La Liga,2026-2027,Rayo Vallecano,Florian Lejeune,D,2,180,0,0,2,0,0.09,0.0,0,0.09,0.09,0.09,0,0
+La Liga,2026-2027,Espanyol,Edu Expósito,M,2,180,0,0,6,1,0.14,0.09,0,0.14,1.08,0.96,1,0
+La Liga,2026-2027,Real Betis,Marc Roca,M,1,90,0,0,2,0,0.09,0.0,0,0.09,0.13,0.11,0,0
+La Liga,2026-2027,Athletic Club,Alex Berenguer,M,1,90,0,0,2,1,0.11,0.09,0,0.11,0.4,0.29,0,0
+La Liga,2026-2027,Racing Santander,Asier Villalibre,F,2,141,0,0,1,0,0.09,0.0,0,0.09,0.04,0.04,0,0
+La Liga,2026-2027,Athletic Club,Unai Simón,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.21,0.21,0,0
+La Liga,2026-2027,Atletico Madrid,Ademola Lookman,F,2,174,0,0,3,2,0.38,0.12,0,0.38,0.6,0.1,0,0
+La Liga,2026-2027,Valencia,Mouctar Diakhaby,S,1,41,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
 La Liga,2026-2027,Rayo Vallecano,Iván Balliu,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Alaves,Antonio Sivera,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.12,0.12,0,0
-La Liga,2026-2027,Getafe,Orel Mangala,M,1,90,0,0,1,0,0.06,0.0,0,0.06,0.0,0.0,0,0
+La Liga,2026-2027,Alaves,Antonio Sivera,GK,2,180,0,0,0,0,0.0,0.0,0,0.0,0.65,0.65,0,0
+La Liga,2026-2027,Getafe,Orel Mangala,M,2,180,0,0,2,0,0.07,0.0,0,0.07,0.15,0.14,0,0
 La Liga,2026-2027,Alaves,Ander Guevara,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Espanyol,Unai Núñez,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.7,0.7,0,0
-La Liga,2026-2027,Getafe,Djené Dakonam,D,1,84,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
-La Liga,2026-2027,Getafe,Enes Ünal,S,1,41,0,0,1,0,0.06,0.0,0,0.06,0.0,0.0,0,0
-La Liga,2026-2027,Espanyol,Marko Dmitrovic,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.61,0.61,0,0
-La Liga,2026-2027,Villarreal,Juan Foyth,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.14,0.14,1,0
-La Liga,2026-2027,Alaves,Antonio Martínez,F,1,90,0,0,3,2,0.17,1.1,0,0.17,1.28,0.04,0,0
-La Liga,2026-2027,Elche,Gonzalo Villar,M,1,90,0,1,2,1,0.09,0.09,0,0.09,0.16,0.08,1,0
+La Liga,2026-2027,Espanyol,Unai Núñez,D,2,180,0,0,0,0,0.0,0.0,0,0.0,0.72,0.72,0,0
+La Liga,2026-2027,Getafe,Djené Dakonam,D,2,174,0,0,0,0,0.0,0.0,0,0.0,0.09,0.09,1,0
+La Liga,2026-2027,Espanyol,Marko Dmitrovic,GK,2,180,0,0,0,0,0.0,0.0,0,0.0,0.61,0.61,0,0
+La Liga,2026-2027,Real Madrid,Federico Valverde,M,1,90,0,0,1,1,0.05,0.03,0,0.05,0.64,0.59,0,0
+La Liga,2026-2027,Getafe,Johan Mojica,D,1,90,0,0,0,2,0.0,0.09,0,0.0,0.18,0.15,0,0
+La Liga,2026-2027,Villarreal,Juan Foyth,D,2,180,0,0,0,1,0.0,0.42,0,0.0,1.45,1.45,2,0
+La Liga,2026-2027,Real Madrid,Ibrahima Konaté,D,1,90,0,0,1,0,0.02,0.0,0,0.02,1.18,1.18,0,0
+La Liga,2026-2027,Alaves,Antonio Martínez,F,2,180,0,0,7,4,1.82,1.22,0,1.82,2.99,0.04,0,0
+La Liga,2026-2027,Barcelona,Jules Koundé,S,1,5,0,0,0,0,0.0,0.0,0,0.0,0.19,0.19,0,0
+La Liga,2026-2027,Valencia,Hugo Duro,S,1,4,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Real Sociedad,Sergio Gómez,D,1,74,0,0,1,1,0.06,0.1,0,0.06,0.16,0.1,1,0
+La Liga,2026-2027,Elche,Gonzalo Villar,M,2,180,0,1,2,3,0.09,0.79,0,0.09,0.52,0.08,1,0
 La Liga,2026-2027,Malaga,Juan Cruz,S,1,19,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
-La Liga,2026-2027,Villarreal,Santiago Comesaña,M,1,62,0,0,0,0,0.0,0.0,0,0.0,0.09,0.09,0,0
-La Liga,2026-2027,Atletico Madrid,David Hancko,D,1,90,0,1,3,1,0.14,0.04,0,0.14,0.08,0.08,1,0
+La Liga,2026-2027,Real Betis,Juan Camilo Hernández,F,1,82,0,1,2,2,0.11,0.68,0,0.11,0.82,0.03,0,0
+La Liga,2026-2027,Real Madrid,Vinícius Júnior,M,1,90,0,0,1,0,0.06,0.0,0,0.06,0.14,0.07,1,0
+La Liga,2026-2027,Athletic Club,Gorka Guruzeta,F,1,61,0,0,2,0,0.06,0.0,0,0.06,0.13,0.11,1,0
+La Liga,2026-2027,Villarreal,Santiago Comesaña,M,2,152,0,0,0,0,0.0,0.0,0,0.0,1.41,1.41,0,0
+La Liga,2026-2027,Atletico Madrid,David Hancko,D,2,180,0,1,3,1,0.14,0.04,0,0.14,0.37,0.37,1,0
+La Liga,2026-2027,Real Madrid,Marc Cucurella,S,1,23,0,0,0,1,0.0,0.09,0,0.0,0.21,0.21,0,0
 La Liga,2026-2027,Malaga,Joaquín Muñoz,M,1,71,0,0,0,0,0.0,0.0,0,0.0,0.04,0.04,0,0
-La Liga,2026-2027,Atletico Madrid,Robin Le Normand,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Rayo Vallecano,Andrei Ratiu,D,1,90,0,0,1,1,0.05,0.46,0,0.05,0.0,0.0,0,0
-La Liga,2026-2027,Rayo Vallecano,Sergio Camello,S,1,21,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Atletico Madrid,Robin Le Normand,D,2,171,0,0,0,0,0.0,0.0,0,0.0,0.1,0.1,0,1
+La Liga,2026-2027,Real Sociedad,Aihen Muñoz,S,1,16,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,0,0
+La Liga,2026-2027,Real Sociedad,Ander Barrenetxea,M,1,60,0,0,1,0,0.02,0.0,0,0.02,0.12,0.1,0,0
+La Liga,2026-2027,Real Sociedad,Yangel Herrera,M,1,74,0,0,0,1,0.0,0.21,0,0.0,0.41,0.2,0,0
+La Liga,2026-2027,Real Madrid,Eduardo Camavinga,S,1,7,0,0,0,0,0.0,0.0,0,0.0,0.63,0.63,0,0
+La Liga,2026-2027,Celta Vigo,Javi Galán,D,1,67,0,0,0,1,0.0,0.02,0,0.0,0.04,0.04,0,0
+La Liga,2026-2027,Rayo Vallecano,Andrei Ratiu,D,2,180,0,0,2,1,0.27,0.46,0,0.27,0.11,0.11,0,0
+La Liga,2026-2027,Racing Santander,Iván Martín,S,1,42,0,0,0,0,0.0,0.0,0,0.0,0.22,0.22,0,0
 La Liga,2026-2027,Levante,Manuel Sánchez,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.05,0.05,0,0
+La Liga,2026-2027,Athletic Club,Oihan Sancet,M,1,90,0,0,3,3,0.21,0.21,0,0.21,0.42,0.03,0,0
 La Liga,2026-2027,Sevilla,Ruben Vargas,S,1,15,0,0,1,0,0.09,0.0,0,0.09,0.09,0.0,0,0
-La Liga,2026-2027,Espanyol,Pol Lozano,S,1,13,0,0,1,1,0.03,0.08,0,0.03,0.23,0.2,0,0
-La Liga,2026-2027,Rayo Vallecano,Jorge De Frutos,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.54,0.54,0,0
-La Liga,2026-2027,Sevilla,Lucien Agoume,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.12,0.12,1,0
-La Liga,2026-2027,Villarreal,Georges Mikautadze,F,1,90,0,1,4,2,0.22,0.14,0,0.22,0.31,0.14,0,0
-La Liga,2026-2027,Elche,German Valera,D,1,82,0,0,0,1,0.0,0.09,0,0.0,0.17,0.17,0,0
-La Liga,2026-2027,Elche,Fernando Niño,F,1,70,0,0,1,0,0.41,0.0,0,0.41,0.53,0.13,0,0
+La Liga,2026-2027,Celta Vigo,Aleix Febas,M,1,80,0,0,1,0,0.02,0.0,0,0.02,0.07,0.07,0,0
+La Liga,2026-2027,Espanyol,Pol Lozano,S,2,25,0,0,1,1,0.03,0.08,0,0.03,0.23,0.2,1,0
+La Liga,2026-2027,Real Sociedad,Takefusa Kubo,M,1,60,0,0,1,0,0.1,0.0,0,0.1,0.1,0.0,0,0
+La Liga,2026-2027,Barcelona,Eric Garcia,D,1,90,0,0,0,1,0.0,0.28,0,0.0,2.04,1.76,0,0
+La Liga,2026-2027,Valencia,Arnaut Danjuma Groeneveld,F,1,86,0,0,3,0,0.2,0.0,0,0.2,0.2,0.0,0,0
+La Liga,2026-2027,Rayo Vallecano,Jorge De Frutos,M,2,180,0,1,0,1,0.0,0.11,0,0.0,0.66,0.54,0,0
+La Liga,2026-2027,Rayo Vallecano,Daniel Cárdenas,S,1,27,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Celta Vigo,Sergio Carreira,D,1,90,0,0,1,0,0.01,0.0,0,0.01,0.13,0.11,1,0
+La Liga,2026-2027,Barcelona,Anthony Gordon,S,1,20,0,2,1,2,0.19,0.99,0,0.19,1.67,0.49,0,0
+La Liga,2026-2027,Sevilla,Lucien Agoume,M,2,180,0,0,0,0,0.0,0.0,0,0.0,0.12,0.12,1,0
+La Liga,2026-2027,Elche,German Valera,D,2,172,0,0,0,3,0.0,0.13,0,0.0,0.21,0.17,0,0
+La Liga,2026-2027,Valencia,Guido Rodríguez,M,1,90,0,0,1,0,0.01,0.0,0,0.01,0.14,0.12,0,0
+La Liga,2026-2027,Elche,Fernando Niño,F,2,144,0,0,1,0,0.41,0.0,0,0.41,0.53,0.13,0,0
+La Liga,2026-2027,Barcelona,Dani Olmo,S,1,20,0,0,1,0,0.13,0.0,0,0.13,1.12,0.99,0,0
 La Liga,2026-2027,Levante,Víctor García,M,1,81,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Sevilla,Chidera Ejuke,S,1,7,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Celta Vigo,Ferrán Jutglà,F,1,67,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Real Sociedad,Arsen Zakharyan,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
 La Liga,2026-2027,Levante,Oriol Rey,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.05,0.05,0,0
-La Liga,2026-2027,Espanyol,Urko Gonzalez,M,1,77,0,0,0,1,0.0,0.07,0,0.0,0.17,0.17,1,0
-La Liga,2026-2027,Elche,Tete Morente,S,1,29,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Espanyol,Urko Gonzalez,M,2,155,0,0,0,1,0.0,0.07,0,0.0,0.75,0.75,1,0
+La Liga,2026-2027,Elche,Tete Morente,M S,2,98,0,0,0,0,0.0,0.0,0,0.0,0.37,0.37,0,0
 La Liga,2026-2027,Malaga,José Salinas,S,1,14,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Racing Santander,Iñigo Vicente,M,1,90,0,0,0,1,0.0,0.11,0,0.0,0.11,0.0,0,0
-La Liga,2026-2027,Elche,Victor Chust,D,1,90,0,0,0,1,0.0,0.12,0,0.0,0.07,0.07,0,0
-La Liga,2026-2027,Getafe,Martín Satriano,F,1,76,0,0,1,0,0.04,0.0,0,0.04,0.04,0.0,0,0
-La Liga,2026-2027,Sevilla,Juan Iglesias,D,1,90,0,0,0,2,0.0,0.11,0,0.0,0.15,0.06,0,0
+La Liga,2026-2027,Racing Santander,Iñigo Vicente,M,2,180,0,0,1,3,0.03,0.39,0,0.03,0.36,0.0,0,0
+La Liga,2026-2027,Barcelona,Pedri,S,1,46,0,0,0,0,0.0,0.0,0,0.0,1.12,1.12,0,0
+La Liga,2026-2027,Elche,Victor Chust,D,2,180,0,0,0,1,0.0,0.12,0,0.0,0.52,0.52,0,0
+La Liga,2026-2027,Getafe,Martín Satriano,F,2,166,0,0,3,1,0.11,0.02,0,0.11,0.09,0.02,0,0
+La Liga,2026-2027,Athletic Club,Nico Williams,S,1,29,0,0,1,0,0.1,0.0,0,0.1,0.1,0.0,0,0
+La Liga,2026-2027,Valencia,Jesús Vázquez,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+La Liga,2026-2027,Sevilla,Juan Iglesias,D,2,180,0,0,1,2,0.03,0.11,0,0.03,0.22,0.1,0,0
+La Liga,2026-2027,Celta Vigo,Ilaix Moriba,S,1,10,0,0,0,0,0.0,0.0,0,0.0,0.06,0.06,0,0
 La Liga,2026-2027,Deportivo La Coruna,Mario Soriano,M,1,72,0,0,1,1,0.09,0.04,0,0.09,0.17,0.07,0,0
 La Liga,2026-2027,Levante,Iván Romero,F,1,69,0,0,1,0,0.02,0.0,0,0.02,0.08,0.05,0,0
-La Liga,2026-2027,Alaves,Antonio Blanco,M,1,90,0,0,3,1,0.1,0.02,0,0.1,0.04,0.02,1,0
-La Liga,2026-2027,Getafe,Abdelkabir Abqar,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Getafe,Saba Sazonov,S,1,6,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Alaves,Antonio Blanco,M,2,180,0,0,3,1,0.1,0.02,0,0.1,0.5,0.48,1,0
+La Liga,2026-2027,Getafe,Abdelkabir Abqar,D S,2,91,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Getafe,Saba Sazonov,D S,2,96,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+La Liga,2026-2027,Real Sociedad,Beñat Turrientes,S,1,16,0,0,0,1,0.0,0.02,0,0.0,0.02,0.02,0,0
 La Liga,2026-2027,Levante,Jon Ander Olasagasti,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Racing Santander,Pablo Ramón,D,1,83,0,0,0,1,0.0,0.04,0,0.0,0.11,0.11,1,0
-La Liga,2026-2027,Elche,Matías Dituro,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.05,0.05,0,0
-La Liga,2026-2027,Atletico Madrid,Giuliano Simeone,S,1,29,0,0,0,1,0.0,0.02,0,0.0,0.02,0.02,0,0
-La Liga,2026-2027,Rayo Vallecano,Óscar Valentín,M,1,83,0,0,0,0,0.0,0.0,0,0.0,0.8,0.8,0,0
-La Liga,2026-2027,Rayo Vallecano,Isi Palazón,M,1,69,0,0,0,0,0.0,0.0,0,0.0,0.54,0.54,0,0
-La Liga,2026-2027,Rayo Vallecano,Randy Nteka,F,1,70,0,0,1,0,0.54,0.0,0,0.54,0.54,0.0,0,0
-La Liga,2026-2027,Rayo Vallecano,Pathé Ciss,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
-La Liga,2026-2027,Racing Santander,Julen Agirrezabala,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Racing Santander,Pablo Ramón,D,2,173,0,0,0,1,0.0,0.04,0,0.0,0.15,0.15,1,0
+La Liga,2026-2027,Athletic Club,Inigo Ruiz de Galarreta,S,1,4,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+La Liga,2026-2027,Athletic Club,Jesús Areso,D,1,61,0,0,1,2,0.08,0.09,0,0.08,0.33,0.16,0,0
+La Liga,2026-2027,Barcelona,Joan García,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,1.26,1.26,0,0
+La Liga,2026-2027,Elche,Matías Dituro,GK,2,180,0,0,0,0,0.0,0.0,0,0.0,0.05,0.05,0,0
+La Liga,2026-2027,Barcelona,Gavi,M,1,44,0,0,0,0,0.0,0.0,0,0.0,0.28,0.28,0,0
+La Liga,2026-2027,Sevilla,José Ángel Carmona,S,1,19,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Real Betis,Fran García,D,1,90,0,0,0,2,0.0,0.22,0,0.0,0.31,0.09,1,0
+La Liga,2026-2027,Rayo Vallecano,Óscar Valentín,M S,2,115,0,0,0,0,0.0,0.0,0,0.0,0.8,0.8,0,0
+La Liga,2026-2027,Rayo Vallecano,Isi Palazón,M,2,85,0,0,1,0,0.05,0.0,0,0.05,0.6,0.6,0,0
+La Liga,2026-2027,Rayo Vallecano,Randy Nteka,F S,2,144,0,0,2,0,0.57,0.0,0,0.57,0.54,0.0,0,0
+La Liga,2026-2027,Rayo Vallecano,Pathé Ciss,D M,2,180,0,0,0,0,0.0,0.0,0,0.0,0.04,0.04,1,0
+La Liga,2026-2027,Racing Santander,Julen Agirrezabala,GK,2,180,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
 La Liga,2026-2027,Deportivo La Coruna,Leo Román,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.07,0.07,0,0
+La Liga,2026-2027,Real Madrid,Denzel Dumfries,D,1,83,0,0,4,0,0.24,0.0,0,0.24,0.34,0.17,0,0
+La Liga,2026-2027,Celta Vigo,Hugo Álvarez,F,1,60,0,0,0,1,0.0,0.25,0,0.0,0.29,0.04,0,0
 La Liga,2026-2027,Atletico Madrid,Carlos Martín,M,1,61,0,0,2,0,0.12,0.0,0,0.12,0.12,0.0,0,0
-La Liga,2026-2027,Villarreal,Ilias Akhomach,S,1,7,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Valencia,César Tárrega,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.05,0.05,0,0
+La Liga,2026-2027,Villarreal,Ilias Akhomach,S,2,13,0,0,0,0,0.0,0.0,0,0.0,0.42,0.42,0,0
 La Liga,2026-2027,Deportivo La Coruna,Luismi Cruz,S,1,18,0,0,1,1,0.04,0.02,0,0.04,0.06,0.0,0,0
-La Liga,2026-2027,Espanyol,Jofre Carreras,S,1,3,0,0,1,0,0.12,0.0,0,0.12,0.2,0.08,0,0
+La Liga,2026-2027,Espanyol,Jofre Carreras,S,2,4,0,0,1,0,0.12,0.0,0,0.12,0.2,0.08,0,0
 La Liga,2026-2027,Levante,Adrián De la Fuente,D,1,90,0,0,1,0,0.07,0.0,0,0.07,0.05,0.05,0,0
+La Liga,2026-2027,Valencia,Javier Guerra,M,1,90,0,0,1,1,0.08,0.08,0,0.08,0.2,0.05,0,0
+La Liga,2026-2027,Racing Santander,Juan Carlos Arana,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
 La Liga,2026-2027,Sevilla,Kike Salas,D,1,90,0,0,1,1,0.01,0.02,0,0.01,0.12,0.08,0,1
-La Liga,2026-2027,Atletico Madrid,Pablo Barrios Rivas,M,1,90,0,0,0,1,0.0,0.09,0,0.0,0.11,0.02,0,0
-La Liga,2026-2027,Alaves,Pablo Ibáñez,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.1,0.1,0,0
-La Liga,2026-2027,Espanyol,Omar El Hilali,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.2,0.2,0,0
-La Liga,2026-2027,Atletico Madrid,Morten Hjulmand,S,1,8,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Espanyol,Vanja Drkusic,S,1,21,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Atletico Madrid,Pablo Barrios Rivas,M S,2,109,0,0,0,1,0.0,0.09,0,0.0,0.28,0.19,0,0
+La Liga,2026-2027,Real Madrid,Álvaro Fernández,D,1,67,0,0,0,2,0.0,0.19,0,0.0,0.36,0.33,0,0
+La Liga,2026-2027,Atletico Madrid,Julián Álvarez,S,1,19,0,0,1,1,0.05,0.03,0,0.05,0.07,0.03,0,0
+La Liga,2026-2027,Alaves,Pablo Ibáñez,M,2,180,0,0,3,0,0.06,0.0,0,0.06,1.28,1.25,0,0
+La Liga,2026-2027,Celta Vigo,Williot Swedberg,S,1,30,0,0,0,1,0.0,0.06,0,0.0,0.09,0.03,0,0
+La Liga,2026-2027,Espanyol,Omar El Hilali,D,2,180,0,0,0,0,0.0,0.0,0,0.0,0.71,0.71,0,0
+La Liga,2026-2027,Atletico Madrid,Morten Hjulmand,M S,2,98,0,0,1,5,0.02,0.13,0,0.02,0.39,0.24,1,0
 La Liga,2026-2027,Levante,Etta Eyong,S,1,39,0,0,1,0,0.05,0.0,0,0.05,0.05,0.0,0,0
 La Liga,2026-2027,Deportivo La Coruna,Giacomo Quagliata,D,1,90,0,0,0,1,0.0,0.04,0,0.0,0.14,0.14,0,0
-La Liga,2026-2027,Rayo Vallecano,Fran Pérez,S,1,15,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
-La Liga,2026-2027,Getafe,Ramón Terrats,M,1,90,0,0,2,1,0.08,0.06,0,0.08,0.07,0.04,0,0
-La Liga,2026-2027,Atletico Madrid,Rodrigo Mendoza,M,1,61,0,0,3,0,0.16,0.0,0,0.16,0.11,0.0,0,0
+La Liga,2026-2027,Rayo Vallecano,Fran Pérez,M S,2,73,0,0,0,1,0.0,0.03,0,0.0,0.06,0.04,1,0
+La Liga,2026-2027,Getafe,Ramón Terrats,M,2,180,0,0,6,5,0.2,0.22,0,0.2,0.28,0.04,0,0
+La Liga,2026-2027,Real Betis,Antony,M,1,90,0,0,5,3,0.42,0.13,0,0.42,1.25,0.8,0,0
+La Liga,2026-2027,Celta Vigo,Pablo Durán,S,1,23,0,0,1,0,0.03,0.0,0,0.03,0.03,0.0,0,0
+La Liga,2026-2027,Atletico Madrid,Rodrigo Mendoza,M,2,112,0,0,5,0,0.28,0.0,0,0.28,0.23,0.0,0,0
 La Liga,2026-2027,Levante,Carlos Álvarez,M,1,51,0,0,0,1,0.0,0.02,0,0.0,0.02,0.0,0,0
 La Liga,2026-2027,Sevilla,Manu Bueno,S,1,3,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
 La Liga,2026-2027,Deportivo La Coruna,Lorenzo Amatucci,M,1,90,0,1,0,1,0.0,0.07,0,0.0,0.14,0.14,1,0
-La Liga,2026-2027,Sevilla,Gabriel Suazo,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.22,0.22,1,0
+La Liga,2026-2027,Sevilla,Gabriel Suazo,D,2,180,0,0,0,0,0.0,0.0,0,0.0,0.26,0.26,1,0
 La Liga,2026-2027,Getafe,Mario Martín,M,1,69,0,0,0,0,0.0,0.0,0,0.0,0.04,0.04,1,0
-La Liga,2026-2027,Villarreal,Renato Veiga,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.07,0.07,0,0
-La Liga,2026-2027,Villarreal,Carlos Romero,D,1,90,0,0,1,0,0.02,0.0,0,0.02,0.22,0.2,1,0
+La Liga,2026-2027,Elche,Facundo Buonanotte,S,1,21,0,0,2,0,0.35,0.0,0,0.35,0.35,0.0,0,0
+La Liga,2026-2027,Villarreal,Renato Veiga,D,2,180,0,0,0,0,0.0,0.0,0,0.0,1.83,1.83,0,0
+La Liga,2026-2027,Villarreal,Carlos Romero,D,2,180,0,0,1,1,0.02,0.06,0,0.02,1.02,1.0,1,0
+La Liga,2026-2027,Barcelona,Lamine Yamal,M,1,70,0,0,2,1,0.35,0.45,0,0.35,1.26,0.46,0,0
 La Liga,2026-2027,Malaga,Carlos Dotor,M,1,71,0,0,0,0,0.0,0.0,0,0.0,0.09,0.09,0,0
-La Liga,2026-2027,Sevilla,Arouna Sangante,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.17,0.17,0,0
-La Liga,2026-2027,Alaves,Abderrahmane Rebbach,D,1,90,0,0,1,0,0.02,0.0,0,0.02,0.1,0.08,1,0
+La Liga,2026-2027,Real Betis,Álvaro Vallés,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.15,0.15,0,0
+La Liga,2026-2027,Sevilla,Arouna Sangante,D,2,161,0,0,0,1,0.0,0.03,0,0.0,0.24,0.21,0,0
+La Liga,2026-2027,Alaves,Abderrahmane Rebbach,D,2,180,0,0,2,0,0.04,0.0,0,0.04,0.13,0.09,1,0
 La Liga,2026-2027,Deportivo La Coruna,Adrià Alti,M,1,72,0,0,0,1,0.0,0.03,0,0.0,0.11,0.07,0,0
-La Liga,2026-2027,Racing Santander,Gustavo Puerta,M,1,90,0,0,2,3,0.07,0.43,0,0.07,0.57,0.1,1,0
-La Liga,2026-2027,Espanyol,Clemens Riedel,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.24,0.24,0,0
-La Liga,2026-2027,Villarreal,Alberto Moleiro,M,1,62,0,1,0,2,0.0,0.1,0,0.0,0.2,0.09,0,0
-La Liga,2026-2027,Rayo Vallecano,Augusto Batalla,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Sevilla,Isaac Romero,F,1,51,0,0,2,0,0.09,0.0,0,0.09,0.09,0.0,1,0
-La Liga,2026-2027,Villarreal,Tajon Buchanan,S,1,28,0,0,1,0,0.04,0.0,0,0.04,0.04,0.0,0,0
-La Liga,2026-2027,Getafe,Alberto Risco,S,1,21,0,0,1,0,0.01,0.0,0,0.01,0.0,0.0,0,0
+La Liga,2026-2027,Atletico Madrid,Álex Grimaldo,D,1,90,0,0,1,0,0.02,0.0,0,0.02,0.29,0.28,0,0
+La Liga,2026-2027,Racing Santander,Gustavo Puerta,M,2,180,0,0,2,3,0.07,0.43,0,0.07,0.61,0.14,1,0
+La Liga,2026-2027,Real Betis,Natan,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.06,0.06,1,0
+La Liga,2026-2027,Espanyol,Clemens Riedel,D,2,159,0,0,1,0,0.02,0.0,0,0.02,0.77,0.75,1,0
+La Liga,2026-2027,Real Madrid,Dean Huijsen,D,1,90,0,0,1,0,0.06,0.0,0,0.06,0.14,0.14,0,0
+La Liga,2026-2027,Villarreal,Alberto Moleiro,M,2,128,0,1,0,3,0.0,0.12,0,0.0,1.02,0.89,0,0
+La Liga,2026-2027,Celta Vigo,Javier Rodríguez,D,1,90,0,0,1,0,0.02,0.0,0,0.02,0.13,0.11,0,0
+La Liga,2026-2027,Real Sociedad,Jon Aramburu,D,1,90,0,0,1,0,0.01,0.0,0,0.01,0.01,0.0,1,0
+La Liga,2026-2027,Athletic Club,Hugo Rincón,S,1,13,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Real Madrid,Arda Güler,M,1,67,0,1,0,7,0.0,0.51,0,0.0,0.38,0.33,0,0
+La Liga,2026-2027,Rayo Vallecano,Augusto Batalla,GK,2,153,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+La Liga,2026-2027,Villarreal,Tajon Buchanan,S,2,52,0,0,3,0,0.48,0.0,0,0.48,0.48,0.42,0,0
+La Liga,2026-2027,Real Sociedad,Jon Martín,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Getafe,Alberto Risco,S,2,22,0,0,1,0,0.01,0.0,0,0.01,0.0,0.0,0,0
 La Liga,2026-2027,Deportivo La Coruna,Jonathan Asp Jensen,M,1,61,0,0,1,0,0.03,0.0,0,0.03,0.03,0.0,0,0
+La Liga,2026-2027,Celta Vigo,Yoel Lago,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.11,0.11,0,0
+La Liga,2026-2027,Celta Vigo,Javier Rueda,S,1,23,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,1,0
+La Liga,2026-2027,Barcelona,Marc Bernal,M,1,85,0,0,1,0,0.45,0.0,0,0.45,1.03,1.03,0,0
+La Liga,2026-2027,Barcelona,Gerard Martín,D,1,90,0,0,0,0,0.0,0.0,0,0.0,1.34,1.34,0,0
+La Liga,2026-2027,Real Sociedad,Luka Sucic,M,1,89,0,0,2,1,0.14,0.1,0,0.14,0.24,0.0,0,0
 La Liga,2026-2027,Rayo Vallecano,Pedro Díaz,S,1,7,0,0,0,2,0.0,0.11,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Rayo Vallecano,Pelayo Fernández,S,1,7,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Elche,Buba Sangaré,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.48,0.48,0,0
-La Liga,2026-2027,Espanyol,Rafael Bauza,S,1,13,0,1,0,1,0.0,0.12,0,0.0,0.24,0.12,0,0
-La Liga,2026-2027,Villarreal,Luiz Júnior,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Villarreal,Santiago Mouriño,D,1,90,0,0,1,0,0.23,0.0,0,0.23,0.38,0.15,1,0
-La Liga,2026-2027,Alaves,Youssef Lekhedim,S,1,22,0,0,0,1,0.0,0.04,0,0.0,0.07,0.02,0,0
-La Liga,2026-2027,Getafe,Andrés García,F,1,84,0,0,0,1,0.0,0.03,0,0.0,0.03,0.0,0,0
-La Liga,2026-2027,Espanyol,Roger Hinojo,D,1,90,0,0,0,1,0.0,0.11,0,0.0,0.74,0.74,0,0
+La Liga,2026-2027,Rayo Vallecano,Pelayo Fernández,D S,2,65,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Elche,Buba Sangaré,D,2,180,0,0,0,0,0.0,0.0,0,0.0,0.48,0.48,0,0
+La Liga,2026-2027,Espanyol,Rafael Bauza,S,2,34,0,1,0,1,0.0,0.12,0,0.0,0.24,0.12,0,0
+La Liga,2026-2027,Villarreal,Luiz Júnior,GK,2,180,0,0,0,0,0.0,0.0,0,0.0,0.99,0.99,0,0
+La Liga,2026-2027,Villarreal,Santiago Mouriño,D,2,180,0,0,1,1,0.23,0.57,0,0.23,2.11,1.88,2,0
+La Liga,2026-2027,Real Sociedad,Orri Óskarsson,F,1,90,0,0,3,1,0.81,0.02,0,0.81,0.85,0.02,0,0
+La Liga,2026-2027,Athletic Club,Peio Canales,M,1,90,0,0,3,3,0.12,0.22,0,0.12,0.42,0.32,0,0
+La Liga,2026-2027,Alaves,Youssef Lekhedim,S,2,39,0,0,0,2,0.0,0.07,0,0.0,0.56,0.48,0,0
+La Liga,2026-2027,Alaves,Nicolás Valentini,S,1,7,0,0,1,0,0.02,0.0,0,0.02,0.46,0.46,1,0
+La Liga,2026-2027,Celta Vigo,Jones El Abdellaoui,F,1,67,0,0,1,0,0.25,0.0,0,0.25,0.27,0.02,0,0
+La Liga,2026-2027,Real Betis,Pablo García,S,1,15,0,0,1,1,0.11,0.09,0,0.11,0.29,0.1,0,0
+La Liga,2026-2027,Getafe,Andrés García,D F,2,171,0,0,2,1,0.05,0.03,0,0.05,0.12,0.06,0,0
+La Liga,2026-2027,Athletic Club,Maroan Sannadi,S,1,29,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Real Sociedad,Alex Marchal,S,1,30,0,0,0,1,0.0,0.06,0,0.0,0.06,0.0,0,0
+La Liga,2026-2027,Espanyol,Roger Hinojo,D,2,180,0,0,0,1,0.0,0.11,0,0.0,0.83,0.83,0,0
+La Liga,2026-2027,Real Madrid,Yan Diomande,S,1,23,0,0,0,1,0.0,0.04,0,0.0,0.73,0.73,0,0
+La Liga,2026-2027,Sevilla,Andrés Castrín,D,1,90,0,0,0,1,0.0,0.04,0,0.0,0.07,0.07,0,0
 La Liga,2026-2027,Espanyol,Marcos Fernández,S,1,1,0,0,1,0,0.08,0.0,0,0.08,0.08,0.0,0,0
-La Liga,2026-2027,Sevilla,Oso,M,1,83,0,0,2,0,0.05,0.0,0,0.05,0.09,0.03,0,0
+La Liga,2026-2027,Celta Vigo,Miguel Román,M,1,90,0,0,0,2,0.0,0.16,0,0.0,0.15,0.13,0,0
+La Liga,2026-2027,Rayo Vallecano,Jozhua Vertrouwd,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
 La Liga,2026-2027,Getafe,Jean Valou,S,1,14,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Valencia,Filip Ugrinic,M,1,72,0,0,2,1,0.09,0.05,0,0.09,0.15,0.03,0,0
 La Liga,2026-2027,Levante,Paco Cortés,M,1,51,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
 La Liga,2026-2027,Levante,Nacho Pérez,D,1,81,0,0,0,2,0.0,0.1,0,0.0,0.1,0.0,0,0
 La Liga,2026-2027,Getafe,Davinchi,D,1,49,0,0,0,1,0.0,0.04,0,0.0,0.04,0.0,1,0
-La Liga,2026-2027,Sevilla,Miguel Sierra,M,1,75,0,0,1,2,0.03,0.09,0,0.03,0.14,0.02,0,0
-La Liga,2026-2027,Elche,David Affengruber,D,1,90,0,0,2,0,0.13,0.0,0,0.13,0.06,0.05,0,0
-La Liga,2026-2027,Elche,Ali Houary,M,1,82,0,0,3,3,0.75,0.44,0,0.75,0.57,0.08,0,0
-La Liga,2026-2027,Elche,Martim Neto,M,1,61,0,0,0,2,0.0,0.13,0,0.0,0.17,0.04,0,0
-La Liga,2026-2027,Elche,Federico Redondo,D,1,61,0,0,1,1,0.09,0.62,0,0.09,0.49,0.49,0,0
+La Liga,2026-2027,Sevilla,Miguel Sierra,M,2,124,0,0,2,2,0.07,0.09,0,0.07,0.18,0.02,1,0
+La Liga,2026-2027,Elche,David Affengruber,D,2,180,0,0,3,0,0.47,0.0,0,0.47,0.75,0.73,0,0
+La Liga,2026-2027,Elche,Ali Houary,M,2,151,0,0,4,3,1.11,0.44,0,1.11,0.94,0.08,1,0
+La Liga,2026-2027,Elche,Martim Neto,M S,2,82,0,0,1,2,0.01,0.13,0,0.01,0.24,0.1,0,0
+La Liga,2026-2027,Elche,Federico Redondo,D,2,147,0,0,1,2,0.09,0.67,0,0.09,0.91,0.86,0,0
+La Liga,2026-2027,Villarreal,Tani Oluwaseyi,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Real Betis,Nelson Deossa,S,1,8,0,0,1,1,0.05,0.1,0,0.05,0.19,0.04,0,0
 La Liga,2026-2027,Rayo Vallecano,Alemão,S,1,20,0,0,1,0,0.46,0.0,0,0.46,0.0,0.0,0,0
-La Liga,2026-2027,Espanyol,Javi Hernández,M,1,87,0,1,2,3,0.2,0.58,0,0.2,0.92,0.23,1,0
+La Liga,2026-2027,Espanyol,Javi Hernández,F M,2,165,0,2,2,5,0.2,1.16,0,0.2,1.5,0.71,1,0
 La Liga,2026-2027,Racing Santander,Pedro Felipe,D,1,15,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Villarreal,Carlos Macià,S,1,28,0,0,0,0,0.0,0.0,0,0.0,0.26,0.26,0,0
+La Liga,2026-2027,Barcelona,Xavi Espart,D,1,90,0,1,0,1,0.0,0.49,0,0.0,1.87,1.87,0,0
+La Liga,2026-2027,Villarreal,Carlos Macià,S,2,34,0,0,0,0,0.0,0.0,0,0.0,0.68,0.68,0,0
 La Liga,2026-2027,Alaves,Aitor Mañas,F,1,60,0,0,0,1,0.0,0.08,0,0.0,0.08,0.0,0,0
 La Liga,2026-2027,Atletico Madrid,Dani Martinez,D,1,90,0,0,1,0,0.47,0.0,0,0.47,0.15,0.15,0,0
 La Liga,2026-2027,Levante,Kareem Tunde,S,1,9,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Getafe,Zaid Romero,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.04,0.04,0,0
-La Liga,2026-2027,Getafe,Sebastián Boselli,S,1,6,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Alaves,Ángel Pérez,D,1,68,0,0,1,0,0.05,0.0,0,0.05,0.66,0.61,0,0
+La Liga,2026-2027,Sevilla,Julio Díaz,S,1,9,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Getafe,Zaid Romero,D,2,180,0,0,0,0,0.0,0.0,0,0.0,0.19,0.19,0,0
+La Liga,2026-2027,Getafe,Sebastián Boselli,S,2,9,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Alaves,Ángel Pérez,D,2,151,0,0,2,2,0.1,0.69,0,0.1,1.39,0.61,0,0
 La Liga,2026-2027,Villarreal,Alexander Freeman,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Elche,Lucas Cepeda,S,1,29,0,0,1,0,0.05,0.0,0,0.05,0.05,0.0,0,0
-La Liga,2026-2027,Racing Santander,Yassir Zabiri,S,1,15,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Alaves,Ville Koski,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,0,0
+La Liga,2026-2027,Elche,Lucas Cepeda,S,2,50,0,0,2,1,0.1,0.06,0,0.1,0.17,0.0,0,0
+La Liga,2026-2027,Racing Santander,Yassir Zabiri,S,2,39,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Alaves,Ville Koski,D,2,173,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,0,0
 La Liga,2026-2027,Elche,Javier Morcillo,S,1,8,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Sevilla,Nico Guillén,M,1,51,0,0,1,0,0.03,0.0,0,0.03,0.03,0.0,0,0
-La Liga,2026-2027,Sevilla,Robbie Ure,S,1,39,0,0,1,1,0.08,0.09,0,0.08,0.21,0.04,0,0
-La Liga,2026-2027,Racing Santander,Álvaro Mantilla,D,1,90,0,0,2,0,0.43,0.0,0,0.43,0.43,0.0,0,0
-La Liga,2026-2027,Racing Santander,Jorge Salinas,D,1,90,0,0,0,1,0.0,0.14,0,0.0,0.14,0.0,0,0
-La Liga,2026-2027,Racing Santander,Maguette Gueye,S,1,15,0,0,1,0,0.05,0.0,0,0.05,0.05,0.0,0,0
+La Liga,2026-2027,Sevilla,Nico Guillén,M S,2,92,0,0,1,0,0.03,0.0,0,0.03,0.03,0.0,1,0
+La Liga,2026-2027,Sevilla,Robbie Ure,F S,2,129,0,0,1,2,0.08,0.14,0,0.08,0.26,0.04,0,0
+La Liga,2026-2027,Racing Santander,Álvaro Mantilla,D,2,180,0,0,2,0,0.43,0.0,0,0.43,0.43,0.0,1,0
+La Liga,2026-2027,Racing Santander,Jorge Salinas,D,2,180,0,0,0,2,0.0,0.18,0,0.0,0.18,0.04,1,0
+La Liga,2026-2027,Racing Santander,Maguette Gueye,S,2,39,0,0,1,0,0.05,0.0,0,0.05,0.05,0.0,0,0
 La Liga,2026-2027,Racing Santander,Diego Díaz,S,1,7,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Racing Santander,Facu González,S,1,7,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
-La Liga,2026-2027,Racing Santander,Manu Hernando,S,1,75,0,0,1,0,0.04,0.0,0,0.04,0.0,0.0,0,0
-La Liga,2026-2027,Espanyol,Cala,M,1,77,0,0,2,1,0.14,0.01,0,0.14,0.24,0.1,1,0
+La Liga,2026-2027,Racing Santander,Facu González,S,2,8,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Racing Santander,Manu Hernando,D S,2,165,0,0,2,0,0.09,0.0,0,0.09,0.0,0.0,1,0
 La Liga,2026-2027,Levante,Enzo Bardeli,S,1,39,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
 La Liga,2026-2027,Levante,Marc Santos,S,1,21,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
 La Liga,2026-2027,Deportivo La Coruna,Lucas Noubi,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
@@ -16930,3 +17334,546 @@ La Liga,2026-2027,Malaga,Chupe,F,1,90,0,0,1,0,0.09,0.0,0,0.09,0.09,0.0,0,0
 La Liga,2026-2027,Malaga,Eneko Jauregi,S,1,6,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
 La Liga,2026-2027,Malaga,Ramón Enríquez,S,1,6,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,1,0
 La Liga,2026-2027,Malaga,Rafa Rodríguez,S,1,19,0,0,1,0,0.03,0.0,0,0.03,0.03,0.0,0,0
+La Liga,2026-2027,Real Betis,Facundo Bernal,M,1,60,0,0,1,0,0.05,0.0,0,0.05,0.09,0.04,0,0
+La Liga,2026-2027,Athletic Club,Beñat Gerenabarrena,M,1,86,0,0,1,0,0.03,0.0,0,0.03,0.29,0.26,0,0
+La Liga,2026-2027,Valencia,Justin de Haas,D,1,49,0,0,0,0,0.0,0.0,0,0.0,0.08,0.08,1,0
+La Liga,2026-2027,Valencia,Ryunosuke Sato,M,1,60,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+La Liga,2026-2027,Valencia,Aliou Dieng,S,1,18,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+La Liga,2026-2027,Getafe,Francho Serrano,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.08,0.08,0,0
+Serie A,2026-2027,Inter,Hakan Calhanoglu,M,1,55,1,0,1,1,0.01,0.03,1,0.01,0.09,0.06,1,0
+Serie A,2026-2027,Napoli,Kevin De Bruyne,S,1,23,1,1,1,2,0.45,0.42,1,0.45,0.89,0.55,0,0
+Serie A,2026-2027,Inter,Piotr Zielinski,M,1,84,1,0,1,0,0.33,0.0,1,0.33,0.27,0.27,0,0
+Serie A,2026-2027,AC Milan,Adrien Rabiot,S,1,34,1,1,1,1,0.52,0.03,1,0.52,0.81,0.26,0,0
+Serie A,2026-2027,Udinese,Hassane Kamara,D,1,90,1,0,3,0,0.55,0.0,1,0.55,0.74,0.19,0,0
+Serie A,2026-2027,Inter,Yann Bisseck,D,1,90,1,0,1,1,0.08,0.02,1,0.08,0.16,0.06,0,0
+Serie A,2026-2027,Juventus,Bremer,D,1,90,1,0,2,3,0.62,0.55,1,0.62,0.19,0.12,0,0
+Serie A,2026-2027,Atalanta,Giacomo Raspadori,F,1,83,1,0,3,0,0.25,0.0,1,0.25,0.25,0.08,0,0
+Serie A,2026-2027,Torino,Che Adams,S,1,20,1,0,1,0,0.05,0.0,1,0.05,0.0,0.0,0,0
+Serie A,2026-2027,Napoli,Antonio Vergara,S,1,23,1,1,2,1,0.42,0.45,1,0.42,0.9,0.02,0,0
+Serie A,2026-2027,AC Milan,Alphadjo Cissè,M,1,66,1,0,4,1,0.12,0.03,1,0.12,0.44,0.31,0,0
+Serie A,2026-2027,Atalanta,Nikola Krstovic,S,1,29,1,0,3,1,0.4,0.02,1,0.4,0.42,0.0,0,0
+Serie A,2026-2027,Como,Tasos Douvikas,F,1,90,1,0,4,0,1.36,0.0,1,1.36,0.62,0.03,0,0
+Serie A,2026-2027,Cagliari,Alessandro Romano,M,1,90,1,0,2,1,0.09,0.26,1,0.09,0.29,0.2,0,0
+Serie A,2026-2027,Lecce,Tiago Gabriel,S,1,14,1,0,1,0,0.81,0.0,1,0.81,0.62,0.62,0,0
+Serie A,2026-2027,Lecce,Olaf Gorter,M,1,63,1,0,1,0,0.06,0.0,1,0.06,0.06,0.0,0,0
+Serie A,2026-2027,Inter,Francesco Pio Esposito,F,1,90,1,1,5,2,0.86,0.18,1,0.86,1.08,0.04,0,0
+Serie A,2026-2027,Sassuolo,Cas Odenthal,D,1,90,1,0,1,1,0.52,0.01,1,0.52,0.78,0.25,0,0
+Serie A,2026-2027,Monza,Gustavo Varela,F,1,84,1,0,3,0,0.66,0.0,1,0.66,0.66,0.0,0,0
+Serie A,2026-2027,Atalanta,Sead Kolasinac,S,1,18,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Inter,John Stones,S,1,14,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,AC Milan,Ruben Loftus-Cheek,M,1,56,0,0,4,3,0.27,0.2,0,0.27,0.52,0.08,1,0
+Serie A,2026-2027,Sassuolo,Nemanja Matic,M,1,75,0,0,1,1,0.05,0.06,0,0.05,1.3,1.24,0,0
+Serie A,2026-2027,Cagliari,Harry Winks,M,1,90,0,0,2,0,0.06,0.0,0,0.06,0.3,0.3,0,0
+Serie A,2026-2027,Juventus,Mattia Perin,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Torino,Giovanni Simeone,F,1,70,0,0,2,0,0.16,0.0,0,0.16,0.16,0.0,0,0
+Serie A,2026-2027,Juventus,Manuel Locatelli,M,1,90,0,0,0,1,0.0,0.05,0,0.0,0.27,0.27,0,0
+Serie A,2026-2027,Atalanta,Mario Pasalic,M,1,61,0,0,0,0,0.0,0.0,0,0.0,0.17,0.17,0,0
+Serie A,2026-2027,Atalanta,Davide Zappacosta,D,1,90,0,0,2,0,0.08,0.0,0,0.08,0.24,0.17,0,0
+Serie A,2026-2027,Inter,Federico Dimarco,D,1,90,0,0,1,2,0.03,0.1,0,0.03,0.19,0.17,0,0
+Serie A,2026-2027,Inter,Nicolò Barella,M,1,90,0,0,2,0,0.07,0.0,0,0.07,0.21,0.16,0,0
+Serie A,2026-2027,Napoli,Matteo Politano,F,1,67,0,0,0,0,0.0,0.0,0,0.0,0.05,0.05,1,0
+Serie A,2026-2027,Napoli,Leonardo Spinazzola,D,1,90,0,0,2,1,0.11,0.02,0,0.11,0.6,0.49,0,0
+Serie A,2026-2027,Cagliari,Alessandro Deiola,D,1,90,0,0,1,0,0.26,0.0,0,0.26,0.47,0.47,0,0
+Serie A,2026-2027,Frosinone,Giacomo Calo,M,1,90,0,0,0,3,0.0,0.08,0,0.0,0.05,0.05,0,0
+Serie A,2026-2027,Napoli,Alex Meret,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+Serie A,2026-2027,AC Milan,Luka Modric,S,1,34,0,0,0,1,0.0,0.02,0,0.0,0.91,0.91,0,0
+Serie A,2026-2027,Genoa,Djibril Sow,S,1,15,0,0,1,0,0.1,0.0,0,0.1,0.1,0.0,0,0
+Serie A,2026-2027,Lecce,Lassana Coulibaly,M,1,90,0,1,1,2,0.05,0.08,0,0.05,0.89,0.81,0,0
+Serie A,2026-2027,Juventus,Jeremie Boga,S,1,18,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,AC Milan,Mike Maignan,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.15,0.15,0,0
+Serie A,2026-2027,Frosinone,Alessio Zerbin,S,1,28,0,0,0,1,0.0,0.02,0,0.0,0.02,0.0,0,0
+Serie A,2026-2027,Monza,Patrick Cutrone,S,1,19,0,0,0,1,0.0,0.05,0,0.0,0.07,0.07,0,0
+Serie A,2026-2027,AC Milan,Matteo Gabbia,S,1,14,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Inter,Alessandro Bastoni,D,1,90,0,0,0,1,0.0,0.13,0,0.0,0.39,0.26,0,0
+Serie A,2026-2027,Monza,Filippo Delli Carri,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Lecce,Wladimiro Falcone,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,AC Milan,Estupiñán,D,1,66,0,0,1,2,0.05,0.07,0,0.05,0.38,0.29,0,0
+Serie A,2026-2027,Juventus,Weston McKennie,M,1,90,0,0,2,0,0.16,0.0,0,0.16,0.19,0.12,0,0
+Serie A,2026-2027,Napoli,Scott McTominay,M,1,90,0,0,1,2,0.02,0.11,0,0.02,0.66,0.53,0,0
+Serie A,2026-2027,Como,Jean Butez,GK,1,90,0,0,0,1,0.0,0.0,0,0.0,0.59,0.59,0,0
+Serie A,2026-2027,Juventus,Randal Kolo Muani,F,1,90,0,0,3,1,0.65,0.11,0,0.65,0.74,0.48,0,0
+Serie A,2026-2027,Juventus,Douglas Luiz,M,1,82,0,0,3,2,0.17,0.3,0,0.17,0.29,0.11,0,0
+Serie A,2026-2027,Napoli,Stanislav Lobotka,M,1,90,0,0,2,1,0.08,0.02,0,0.08,0.11,0.09,0,0
+Serie A,2026-2027,Atalanta,Gianluca Scamacca,F,1,61,0,0,0,1,0.0,0.1,0,0.0,0.29,0.19,0,0
+Serie A,2026-2027,Torino,Nikola Vlasic,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.1,0.1,0,0
+Serie A,2026-2027,Lecce,Willem Geubbels,F,1,76,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Napoli,Mathías Olivera,S,1,9,0,0,0,0,0.0,0.0,0,0.0,0.45,0.45,0,0
+Serie A,2026-2027,Napoli,Franck Zambo,M,1,67,0,0,0,1,0.0,0.05,0,0.0,0.08,0.08,0,0
+Serie A,2026-2027,Inter,Manuel Akanji,D,1,76,0,0,1,1,0.06,0.02,0,0.06,0.01,0.01,0,0
+Serie A,2026-2027,Monza,Semuel Pizzignacco,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Como,Trevoh Chalobah,D,1,90,0,0,1,0,0.07,0.0,0,0.07,0.07,0.07,0,0
+Serie A,2026-2027,Udinese,Oumar Solet,D,1,90,0,0,0,1,0.0,0.02,0,0.0,0.15,0.13,0,0
+Serie A,2026-2027,Udinese,Nicolo Zaniolo,M,1,90,0,0,3,2,0.11,0.58,0,0.11,0.75,0.11,0,0
+Serie A,2026-2027,Parma Calcio 1913,Enrico Del Prato,D,1,90,0,0,2,0,0.08,0.0,0,0.08,0.09,0.09,0,0
+Serie A,2026-2027,Sassuolo,Armand Lauriente,F,1,90,0,0,6,2,0.57,0.5,0,0.57,1.27,0.74,0,0
+Serie A,2026-2027,Cagliari,Ndary Adopo,M,1,90,0,1,1,2,0.06,0.08,0,0.06,0.31,0.23,0,0
+Serie A,2026-2027,Monza,Andrea Colpani,F,1,71,0,0,0,0,0.0,0.0,0,0.0,0.37,0.37,0,0
+Serie A,2026-2027,Juventus,Mehmet Zeki Çelik,D,1,72,0,0,0,1,0.0,0.48,0,0.0,0.67,0.2,1,0
+Serie A,2026-2027,Venezia,Toma Basic,M,1,87,0,0,0,3,0.0,0.56,0,0.0,0.28,0.28,0,0
+Serie A,2026-2027,Napoli,Giovanni Di Lorenzo,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.56,0.56,0,0
+Serie A,2026-2027,Inter,Lautaro Martínez,F,1,55,0,0,0,0,0.0,0.0,0,0.0,0.01,0.01,1,0
+Serie A,2026-2027,Sassuolo,Arijanet Muric,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.11,0.11,0,0
+Serie A,2026-2027,Cagliari,Elia Caprile,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.21,0.21,0,0
+Serie A,2026-2027,AC Milan,Samuel Chukwueze,D,1,90,0,1,2,4,0.18,0.69,0,0.18,1.21,0.49,0,0
+Serie A,2026-2027,Venezia,John Yeboah,F,1,90,0,0,2,2,0.54,0.37,0,0.54,1.35,0.5,0,0
+Serie A,2026-2027,Como,Maxence Caqueret,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Atalanta,Gianluca Gaetano,M,1,90,0,1,1,1,0.01,0.07,0,0.01,0.16,0.08,0,0
+Serie A,2026-2027,Frosinone,Aleksa Terzic,S,1,11,0,0,1,0,0.01,0.0,0,0.01,0.03,0.02,0,0
+Serie A,2026-2027,Atalanta,Eljif Elmas,S,1,7,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Napoli,Amir Rrahmani,D,1,90,0,0,2,0,0.02,0.0,0,0.02,0.61,0.59,0,0
+Serie A,2026-2027,Lecce,Antonino Gallo,D,1,48,0,0,1,0,0.01,0.0,0,0.01,0.01,0.0,0,0
+Serie A,2026-2027,Venezia,Thierry Correia,D,1,66,0,0,3,1,0.47,0.04,0,0.47,0.54,0.06,0,0
+Serie A,2026-2027,Juventus,Lloyd Kelly,D,1,90,0,0,1,0,0.12,0.0,0,0.12,0.05,0.05,0,0
+Serie A,2026-2027,Cagliari,Daniel Maldini,M,1,90,0,0,1,3,0.02,0.17,0,0.02,0.43,0.3,0,0
+Serie A,2026-2027,Como,Lucas Da Cunha,S,1,41,0,0,0,1,0.0,0.02,0,0.0,0.12,0.12,0,0
+Serie A,2026-2027,Frosinone,Ilario Monterisi,D,1,70,0,0,1,1,0.04,0.03,0,0.04,0.03,0.0,0,0
+Serie A,2026-2027,Monza,Andrea Carboni,D,1,90,0,0,0,1,0.0,0.3,0,0.0,0.37,0.07,0,0
+Serie A,2026-2027,Parma Calcio 1913,Edoardo Corvi,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,0,0
+Serie A,2026-2027,Parma Calcio 1913,El Bilal Touré,F,1,90,0,0,1,0,0.03,0.0,0,0.03,0.12,0.09,0,0
+Serie A,2026-2027,AC Milan,Alexis Saelemaekers,S,1,24,0,0,1,0,0.12,0.0,0,0.12,0.89,0.78,0,0
+Serie A,2026-2027,Venezia,Filip Stankovic,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.04,0.04,0,0
+Serie A,2026-2027,Juventus,Pierre Kalulu Kyatengwa,D,1,90,0,0,1,1,0.08,0.02,0,0.08,0.19,0.12,0,0
+Serie A,2026-2027,Udinese,Maduka Okoye,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.3,0.3,0,0
+Serie A,2026-2027,Atalanta,Lazar Samardzic,S,1,29,0,0,1,2,0.03,0.08,0,0.03,0.09,0.0,0,0
+Serie A,2026-2027,Venezia,Kike Pérez,M,1,72,0,0,0,1,0.0,0.03,0,0.0,0.17,0.17,0,0
+Serie A,2026-2027,Genoa,Lorenzo Colombo,F,1,74,0,0,0,1,0.0,0.04,0,0.0,0.06,0.02,0,0
+Serie A,2026-2027,Cagliari,Giuseppe Aurelio,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Udinese,Enzo Ebosse,S,1,41,0,0,0,1,0.0,0.26,0,0.0,0.68,0.42,0,0
+Serie A,2026-2027,AC Milan,Strahinja Pavlovic,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.48,0.48,0,0
+Serie A,2026-2027,Como,Luis Milla,M,1,90,0,0,0,5,0.0,0.67,0,0.0,0.04,0.04,0,0
+Serie A,2026-2027,Udinese,Oier Zarraga,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,AC Milan,Yunus Musah,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.26,0.26,0,0
+Serie A,2026-2027,Udinese,Mergim Vojvoda,D,1,90,0,0,2,2,0.07,0.14,0,0.07,1.02,0.95,0,0
+Serie A,2026-2027,Genoa,Junior Messias,S,1,24,0,0,0,1,0.0,0.1,0,0.0,0.1,0.1,0,0
+Serie A,2026-2027,Cagliari,Gabriele Zappa,S,1,21,0,0,0,1,0.0,0.07,0,0.0,0.07,0.07,0,0
+Serie A,2026-2027,Juventus,Guglielmo Vicario,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.09,0.09,0,0
+Serie A,2026-2027,Parma Calcio 1913,Adrián Bernabé,M,1,69,0,0,1,2,0.02,0.05,0,0.02,0.06,0.02,0,0
+Serie A,2026-2027,Atalanta,Marco Carnesecchi,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.4,0.4,0,0
+Serie A,2026-2027,Inter,Luis Henrique,S,1,14,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Atalanta,Nicola Zalewski,F,1,61,0,0,1,2,0.09,0.08,0,0.09,0.35,0.18,0,0
+Serie A,2026-2027,Inter,Josep Martínez,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.01,0.01,0,0
+Serie A,2026-2027,Parma Calcio 1913,Pontus Almqvist,S,1,21,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Frosinone,Romano Schmid,M,1,62,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+Serie A,2026-2027,Torino,Ardian Ismajli,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.38,0.38,0,0
+Serie A,2026-2027,Atalanta,Giorgio Scalvini,D,1,90,0,0,1,0,0.03,0.0,0,0.03,0.16,0.16,0,0
+Serie A,2026-2027,Sassuolo,Riccardo Ciervo,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.01,0.01,0,0
+Serie A,2026-2027,Parma Calcio 1913,Niakhate Ndiaye,D,1,90,0,0,1,0,0.45,0.0,0,0.45,0.02,0.02,0,0
+Serie A,2026-2027,Inter,Andy Diouf,D,1,76,0,2,0,3,0.0,0.27,0,0.0,0.32,0.06,0,0
+Serie A,2026-2027,Frosinone,Antonio Raimondo,F,1,90,0,0,1,1,0.08,0.05,0,0.08,0.13,0.0,0,0
+Serie A,2026-2027,Venezia,Armel Bella Kotchap,D,1,90,0,0,1,0,0.49,0.0,0,0.49,0.27,0.27,0,0
+Serie A,2026-2027,Atalanta,Odilon Kossounou,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.14,0.14,0,0
+Serie A,2026-2027,Monza,Ricardo Mangas,F,1,90,0,0,1,0,0.42,0.0,0,0.42,0.74,0.32,0,0
+Serie A,2026-2027,Juventus,Andrea Cambiaso,S,1,18,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+Serie A,2026-2027,Monza,Nicolas Galazzi,S,1,19,0,0,1,0,0.02,0.0,0,0.02,0.07,0.07,0,0
+Serie A,2026-2027,Lecce,Youssef Maleh,S,1,27,0,0,1,1,0.05,0.15,0,0.05,0.21,0.16,0,0
+Serie A,2026-2027,Venezia,Gianluca Busio,M,1,90,0,0,3,1,0.26,0.02,0,0.26,0.63,0.57,0,0
+Serie A,2026-2027,Genoa,Tommaso Baldanzi,M,1,66,0,0,4,0,0.15,0.0,0,0.15,0.24,0.13,0,0
+Serie A,2026-2027,Venezia,Ridgeciano Haps,S,1,24,0,0,1,1,0.57,0.26,0,0.57,0.83,0.0,0,0
+Serie A,2026-2027,AC Milan,Koni de Winter,D,1,90,0,0,1,0,0.02,0.0,0,0.02,0.4,0.4,0,0
+Serie A,2026-2027,Juventus,Teun Koopmeiners,S,1,8,0,0,1,0,0.04,0.0,0,0.04,0.04,0.0,0,0
+Serie A,2026-2027,Genoa,Johan Vásquez,D,1,87,0,0,0,0,0.0,0.0,0,0.0,0.22,0.22,0,0
+Serie A,2026-2027,Udinese,Jurgen Ekkelenkamp,M,1,88,0,1,2,1,0.14,0.52,0,0.14,0.79,0.15,0,0
+Serie A,2026-2027,Cagliari,Adam Obert,D,1,90,0,0,0,2,0.0,0.13,0,0.0,0.34,0.32,0,0
+Serie A,2026-2027,Sassuolo,Cristian Volpato,F,1,89,0,0,2,5,0.12,0.66,0,0.12,0.6,0.36,0,0
+Serie A,2026-2027,Napoli,Rafa Marín,D,1,81,0,0,0,0,0.0,0.0,0,0.0,0.15,0.15,0,0
+Serie A,2026-2027,Genoa,Leo Østigard,D,1,66,0,0,0,1,0.0,0.02,0,0.0,0.07,0.06,1,0
+Serie A,2026-2027,Frosinone,Giorgio Cittadini,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.07,0.07,0,0
+Serie A,2026-2027,Cagliari,Jacopo Fazzini,M,1,69,0,0,1,1,0.07,0.34,0,0.07,0.09,0.09,1,0
+Serie A,2026-2027,Juventus,Edon Zhegrova,S,1,18,0,0,1,2,0.02,0.12,0,0.02,0.06,0.0,0,0
+Serie A,2026-2027,Genoa,Morten Frendrup,M,1,90,0,0,1,1,0.03,0.02,0,0.03,0.2,0.15,0,0
+Serie A,2026-2027,Atalanta,Éderson,M,1,90,0,0,2,1,0.04,0.08,0,0.04,0.12,0.08,0,0
+Serie A,2026-2027,Torino,Cesare Casadei,M,1,70,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,AC Milan,Mario Gila,D,1,76,0,0,0,1,0.0,0.1,0,0.0,0.46,0.46,0,0
+Serie A,2026-2027,Venezia,Bartol Franjic,D,1,90,0,0,2,0,0.44,0.0,0,0.44,0.48,0.48,0,0
+Serie A,2026-2027,Torino,Zakaria Aboukhlal,S,1,9,0,0,1,0,0.28,0.0,0,0.28,0.28,0.0,0,0
+Serie A,2026-2027,Atalanta,Charles De Ketelaere,S,1,29,0,0,0,1,0.0,0.03,0,0.0,0.03,0.0,0,0
+Serie A,2026-2027,Udinese,James Abankwah,D,1,90,0,0,0,0,0.0,0.0,0,0.0,1.18,1.18,1,0
+Serie A,2026-2027,Monza,Samuele Birindelli,D,1,90,0,0,1,0,0.05,0.0,0,0.05,0.05,0.0,0,0
+Serie A,2026-2027,Como,Yan Couto,D,1,90,0,0,1,2,0.01,0.09,0,0.01,0.16,0.07,0,0
+Serie A,2026-2027,Genoa,Mikael Ellertsson,D,1,90,0,0,1,0,0.04,0.0,0,0.04,0.06,0.02,0,0
+Serie A,2026-2027,Sassuolo,Kristian Thorstvedt,S,1,25,0,0,2,0,0.08,0.0,0,0.08,0.15,0.07,0,0
+Serie A,2026-2027,Sassuolo,Josh Doig,D,1,90,0,0,1,3,0.02,0.13,0,0.02,0.4,0.27,0,0
+Serie A,2026-2027,Parma Calcio 1913,Emanuele Valeri,D,1,90,0,0,2,3,0.04,0.31,0,0.04,0.02,0.0,0,0
+Serie A,2026-2027,Napoli,Rasmus Højlund,F,1,78,0,0,0,1,0.0,0.01,0,0.0,0.01,0.0,0,0
+Serie A,2026-2027,Inter,Aleksandar Stankovic,S,1,6,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Torino,Gvidas Gineitis,M,1,90,0,1,0,1,0.0,0.05,0,0.0,0.28,0.28,0,0
+Serie A,2026-2027,Como,Máximo Perrone,M,1,49,0,0,0,0,0.0,0.0,0,0.0,0.06,0.06,0,0
+Serie A,2026-2027,Genoa,Vitinha,M,1,90,0,0,3,0,0.15,0.0,0,0.15,0.3,0.14,0,0
+Serie A,2026-2027,Atalanta,Lorenzo Bernasconi,D,1,72,0,0,0,0,0.0,0.0,0,0.0,0.08,0.08,0,0
+Serie A,2026-2027,Udinese,Unai Gómez,S,1,2,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+Serie A,2026-2027,Como,Nico Paz,M,1,90,0,0,4,1,0.14,0.05,0,0.14,0.22,0.06,0,0
+Serie A,2026-2027,Torino,Saúl Coco,D,1,90,0,0,1,0,0.06,0.0,0,0.06,0.38,0.38,0,0
+Serie A,2026-2027,AC Milan,Gonçalo Ramos,F,1,90,0,0,5,1,0.47,0.12,0,0.47,0.81,0.22,0,0
+Serie A,2026-2027,Venezia,Akor Adams,F,1,90,0,0,3,0,0.11,0.0,0,0.11,0.55,0.49,0,0
+Serie A,2026-2027,Frosinone,Anthony Oyono,S,1,20,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Frosinone,Giorgi Kvernadze,M,1,90,0,0,3,1,0.1,0.08,0,0.1,0.2,0.1,0,0
+Serie A,2026-2027,Cagliari,Gennaro Borrelli,S,1,21,0,0,1,0,0.07,0.0,0,0.07,0.07,0.0,0,0
+Serie A,2026-2027,Frosinone,Lorenzo Palmisani,GK,1,90,0,0,0,1,0.0,0.03,0,0.0,0.08,0.05,0,0
+Serie A,2026-2027,Torino,Pietro Comuzzo,D,1,85,0,0,1,0,0.28,0.0,0,0.28,0.66,0.38,0,0
+Serie A,2026-2027,Napoli,Lorenzo Lucca,S,1,12,0,0,0,0,0.0,0.0,0,0.0,0.34,0.34,0,0
+Serie A,2026-2027,Juventus,Kenan Yildiz,M,1,72,0,0,2,3,0.13,0.24,0,0.13,0.79,0.6,0,0
+Serie A,2026-2027,AC Milan,Davide Bartesaghi,S,1,24,0,0,0,2,0.0,0.26,0,0.0,0.26,0.14,0,0
+Serie A,2026-2027,Frosinone,Seydou Fini,M,1,62,0,0,1,0,0.05,0.0,0,0.05,0.05,0.0,0,0
+Serie A,2026-2027,Torino,Marcus Pedersen,D,1,70,0,0,0,1,0.0,0.1,0,0.0,0.1,0.1,0,0
+Serie A,2026-2027,Como,Assane Diao,S,1,41,0,0,2,2,0.08,0.61,0,0.08,0.69,0.0,0,0
+Serie A,2026-2027,Cagliari,Kingstone Mutandwa,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Monza,Omari Forson,S,1,19,0,0,0,1,0.0,0.02,0,0.0,0.07,0.05,0,0
+Serie A,2026-2027,Frosinone,Luis Hasa,S,1,20,0,0,1,2,0.02,0.03,0,0.02,0.05,0.0,0,0
+Serie A,2026-2027,Lecce,Santiago Pierotti,F,1,90,0,0,2,1,0.17,0.61,0,0.17,0.84,0.05,0,0
+Serie A,2026-2027,Torino,Alieu Njie,S,1,20,0,0,1,1,0.28,0.28,0,0.28,0.56,0.0,0,0
+Serie A,2026-2027,Como,Jacobo Ramón,D,1,90,0,0,1,1,0.48,0.02,0,0.48,0.17,0.15,0,0
+Serie A,2026-2027,Sassuolo,Darryl Bakola,M,1,90,0,0,1,0,0.05,0.0,0,0.05,0.83,0.77,0,0
+Serie A,2026-2027,Torino,Niccolò Fortini,S,1,20,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Udinese,Matteo Palma,D,1,49,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Frosinone,Patrizio Masini,S,1,28,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,0,0
+Serie A,2026-2027,Inter,Ange-Yoan Bonny,S,1,35,0,0,1,0,0.1,0.0,0,0.1,0.25,0.15,0,0
+Serie A,2026-2027,Venezia,Antoine Hainaut,D,1,87,0,0,2,1,0.29,0.04,0,0.29,0.57,0.24,0,0
+Serie A,2026-2027,Como,Álex Valle,D,1,90,0,0,2,1,0.05,0.04,0,0.05,0.14,0.07,0,0
+Serie A,2026-2027,Udinese,Jesper Karlström,M,1,90,0,0,0,2,0.0,0.05,0,0.0,0.39,0.35,0,0
+Serie A,2026-2027,Cagliari,Mattia Felici,S,1,21,0,0,0,0,0.0,0.0,0,0.0,0.07,0.07,0,0
+Serie A,2026-2027,Venezia,Richie Sagrado,S,1,3,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Monza,Lorenzo Lucchesi,D,1,89,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,1,0
+Serie A,2026-2027,Lecce,Kialonda Gaspar,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.62,0.62,1,0
+Serie A,2026-2027,Genoa,Alessandro Marcandalli,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.13,0.13,0,0
+Serie A,2026-2027,Venezia,Joël Schingtienne,D,1,90,0,0,0,1,0.0,0.09,0,0.0,0.21,0.21,0,0
+Serie A,2026-2027,Monza,Eddy Kouadio,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+Serie A,2026-2027,Juventus,Francisco Conceição,M,1,72,0,1,4,2,0.64,0.46,0,0.64,0.82,0.12,0,0
+Serie A,2026-2027,Como,Jesús Rodriguez,M,1,74,0,0,2,0,0.13,0.0,0,0.13,0.08,0.02,0,0
+Serie A,2026-2027,Sassuolo,Benjamín Domínguez,S,1,15,0,0,1,0,0.01,0.0,0,0.01,0.01,0.0,0,0
+Serie A,2026-2027,Sassuolo,Vasilije Adzic,M,1,65,0,0,4,2,0.66,0.07,0,0.66,0.9,0.35,0,0
+Serie A,2026-2027,Parma Calcio 1913,Mandela Keita,F,1,78,0,0,0,1,0.0,0.06,0,0.0,0.09,0.02,0,0
+Serie A,2026-2027,Genoa,Brooke Norton-Cuffy,D,1,90,0,0,0,1,0.0,0.08,0,0.0,0.13,0.06,0,0
+Serie A,2026-2027,Como,Mattia Liberali,S,1,16,0,0,2,1,0.09,0.07,0,0.09,0.16,0.0,0,0
+Serie A,2026-2027,Lecce,Danilo Veiga,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.01,0.01,1,0
+Serie A,2026-2027,Como,Ivan Smolcic,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Lecce,Konan N’Dri,F,1,76,0,0,1,0,0.05,0.0,0,0.05,0.11,0.06,0,0
+Serie A,2026-2027,Genoa,Sebastian Otoa,S,1,24,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Monza,Jay Robinson,S,1,6,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Torino,Alessio Cacciamani,D,1,81,0,0,0,0,0.0,0.0,0,0.0,0.28,0.28,0,0
+Serie A,2026-2027,Udinese,Idrissa Gueye,F,1,75,0,0,3,2,0.4,0.05,0,0.4,1.03,0.57,0,0
+Serie A,2026-2027,Lecce,Jamil Siebert,D,1,90,0,0,0,2,0.0,0.62,0,0.0,0.62,0.0,0,0
+Serie A,2026-2027,Lecce,Corrie Ndaba,S,1,42,0,0,0,0,0.0,0.0,0,0.0,0.72,0.72,0,0
+Serie A,2026-2027,Napoli,Noa Lang,S,1,24,0,0,0,0,0.0,0.0,0,0.0,0.1,0.1,0,0
+Serie A,2026-2027,AC Milan,Ardon Jashari,M,1,56,0,0,0,2,0.0,0.14,0,0.0,0.46,0.42,0,0
+Serie A,2026-2027,Como,Martin Baturina,M,1,49,0,0,1,0,0.02,0.0,0,0.02,0.0,0.0,0,0
+Serie A,2026-2027,Parma Calcio 1913,Christian Ordóñez,M,1,90,0,0,2,2,0.1,0.04,0,0.1,0.1,0.0,0,0
+Serie A,2026-2027,Udinese,Jakub Piotrowski,M,1,74,0,0,1,1,0.01,0.04,0,0.01,0.11,0.1,1,0
+Serie A,2026-2027,Udinese,Vakoun Bayo,S,1,15,0,0,2,0,0.77,0.0,0,0.77,0.77,0.0,0,0
+Serie A,2026-2027,Udinese,Lennon Miller,S,1,16,0,0,1,0,0.07,0.0,0,0.07,0.33,0.26,0,0
+Serie A,2026-2027,Inter,Petar Sucic,S,1,35,0,0,0,0,0.0,0.0,0,0.0,0.15,0.15,0,0
+Serie A,2026-2027,Lecce,Nikola Stulic,S,1,14,0,0,3,0,1.23,0.0,0,1.23,1.23,0.0,0,0
+Serie A,2026-2027,Parma Calcio 1913,Mariano Troilo,D,1,88,0,0,0,1,0.0,0.05,0,0.0,0.02,0.02,0,0
+Serie A,2026-2027,Cagliari,Zé Pedro,D,1,69,0,0,1,1,0.34,0.04,0,0.34,0.2,0.16,1,0
+Serie A,2026-2027,Parma Calcio 1913,Benjamín Cremaschi,S,1,2,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Cagliari,Juan Rodríguez,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.38,0.38,0,0
+Serie A,2026-2027,Parma Calcio 1913,Abdou-Salam Konate,M,1,87,0,0,1,0,0.01,0.0,0,0.01,0.02,0.02,0,0
+Serie A,2026-2027,Sassuolo,Tommaso Macchioni,D,1,75,0,0,0,0,0.0,0.0,0,0.0,0.18,0.18,0,0
+Serie A,2026-2027,Sassuolo,Simone Cinquegrano,D,1,90,0,0,1,1,0.02,0.05,0,0.02,0.49,0.42,0,0
+Serie A,2026-2027,Lecce,Omri Gandelman,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Lecce,Oumar Ngom,M,1,90,0,0,1,1,0.02,0.01,0,0.02,0.6,0.58,1,0
+Serie A,2026-2027,Genoa,Justin Bijlow,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.09,0.09,0,0
+Serie A,2026-2027,Torino,Sandro Kulenovic,S,1,5,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Parma Calcio 1913,Nesta Elphege,S,1,3,0,0,1,0,0.23,0.0,0,0.23,0.0,0.0,0,0
+Serie A,2026-2027,Sassuolo,Kieron Bowie,F,1,89,0,0,2,3,0.6,0.59,0,0.6,0.68,0.0,0,0
+Serie A,2026-2027,Genoa,Alex Amorim,M,1,75,0,0,1,1,0.02,0.02,0,0.02,0.15,0.13,0,0
+Serie A,2026-2027,Napoli,Alisson Santos,F,1,66,0,0,3,0,0.06,0.0,0,0.06,0.1,0.05,0,0
+Serie A,2026-2027,Cagliari,Paul Mendy,F,1,69,0,0,4,1,0.29,0.06,0,0.29,0.42,0.07,0,0
+Serie A,2026-2027,Monza,Adam Bakoune,D,1,71,0,0,0,0,0.0,0.0,0,0.0,0.07,0.07,0,0
+Serie A,2026-2027,Monza,Manga Foe Ondoa,M,1,90,0,0,0,1,0.0,0.06,0,0.0,0.43,0.37,0,0
+Serie A,2026-2027,Monza,Mathis Mout,M,1,71,0,1,1,1,0.06,0.07,0,0.06,0.43,0.3,0,0
+Serie A,2026-2027,Parma Calcio 1913,Simone Lontani,F,1,78,0,0,1,1,0.06,0.45,0,0.06,0.09,0.02,0,0
+Serie A,2026-2027,Parma Calcio 1913,Rachid Kouda,S,1,12,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Parma Calcio 1913,Ousmane Diallo,S,1,12,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Genoa,Ethan Meichtry,S,1,16,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Genoa,Adam Zulevic,S,1,3,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Venezia,Matteo Dagasso,S,1,18,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,1,0
+Serie A,2026-2027,Venezia,Albion Rrahmani,S,1,3,0,0,2,0,0.09,0.0,0,0.09,0.09,0.0,0,0
+Serie A,2026-2027,Frosinone,Gabriele Calvani,D,1,90,0,0,2,0,0.04,0.0,0,0.04,0.01,0.01,1,0
+Serie A,2026-2027,Frosinone,Gabriele Bracaglia,D,1,79,0,0,1,0,0.03,0.0,0,0.03,0.11,0.08,0,0
+Serie A,2026-2027,Frosinone,Matteo Cichella,M,1,70,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Torino,Diego Mascardi,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Torino,Kian Fitz-Jim,M,1,90,0,0,1,3,0.01,0.62,0,0.01,0.67,0.1,0,0
+Serie A,2026-2027,Sassuolo,Fedde Leysen,S,1,15,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Serie A,2026-2027,Sassuolo,Gabriel Kulla,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Lens,Florian Thauvin,M,1,90,2,1,3,1,1.8,0.61,0,0.28,3.3,2.41,0,0
+Ligue 1,2026-2027,Marseille,Amine Gouiri,F,1,90,2,0,5,1,1.45,0.02,1,0.69,0.71,0.02,0,0
+Ligue 1,2026-2027,Marseille,Pierre-Emile Højbjerg,M,1,90,1,0,3,1,0.07,0.02,1,0.07,0.18,0.11,0,0
+Ligue 1,2026-2027,Lille,Olivier Giroud,F,1,66,1,0,1,0,0.03,0.0,1,0.03,0.03,0.0,0,0
+Ligue 1,2026-2027,Monaco,Eric Dier,D,1,90,1,0,1,0,0.12,0.0,1,0.12,0.2,0.2,0,0
+Ligue 1,2026-2027,Brest,Romain Del Castillo,M,1,74,1,0,1,1,0.22,0.12,1,0.22,0.3,0.08,0,0
+Ligue 1,2026-2027,Brest,Kamory Doumbia,M,1,90,1,1,4,2,1.18,0.33,1,1.18,0.54,0.08,0,0
+Ligue 1,2026-2027,Le Mans,Louis Mafouta,F,1,66,1,1,2,1,0.15,0.46,1,0.15,0.67,0.06,0,0
+Ligue 1,2026-2027,Lens,Pierre Ganiou,D,1,81,1,0,1,1,0.65,0.61,1,0.65,1.42,0.77,0,0
+Ligue 1,2026-2027,Lille,Tiago Santos,D,1,90,1,0,2,0,0.46,0.0,1,0.46,1.05,0.59,0,0
+Ligue 1,2026-2027,Lyon,Malick Fofana,S,1,26,1,0,1,0,0.08,0.0,1,0.08,0.08,0.0,0,0
+Ligue 1,2026-2027,Marseille,Keyliane Abdallah,S,1,7,1,0,1,0,0.06,0.0,1,0.06,0.06,0.0,0,0
+Ligue 1,2026-2027,Lens,Saud Abdulhamid,D,1,64,1,0,1,0,0.61,0.0,1,0.61,1.33,0.73,0,0
+Ligue 1,2026-2027,Auxerre,Lamine Sy,D,1,90,1,0,1,1,0.66,0.08,1,0.66,0.76,0.02,0,0
+Ligue 1,2026-2027,Auxerre,Danny Namaso,F,1,79,1,0,2,2,0.84,0.08,0,0.08,0.16,0.08,0,0
+Ligue 1,2026-2027,Lyon,Noah Nartey,M,1,70,1,0,1,1,0.06,0.05,1,0.06,0.1,0.0,1,0
+Ligue 1,2026-2027,Lens,Franjo Ivanovic,M,1,64,1,0,3,1,0.74,0.28,1,0.74,1.62,1.17,0,0
+Ligue 1,2026-2027,Le Mans,Dame Gueye,F,1,75,1,0,1,0,0.46,0.0,1,0.46,0.6,0.15,0,0
+Ligue 1,2026-2027,Lens,Thorgan Hazard,S,1,26,0,0,1,1,0.55,0.04,0,0.55,1.36,0.81,0,0
+Ligue 1,2026-2027,Monaco,Lukas Hradecky,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Lille,Nabil Bentaleb,M,1,90,0,1,2,2,0.08,0.16,0,0.08,0.72,0.53,0,0
+Ligue 1,2026-2027,Marseille,Emerson,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.57,0.57,0,0
+Ligue 1,2026-2027,Marseille,Geoffrey Kondogbia,D,1,83,0,0,0,0,0.0,0.0,0,0.0,0.57,0.57,0,0
+Ligue 1,2026-2027,Monaco,Thilo Kehrer,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Paris Saint Germain,Dimitri Barinov,M,1,65,0,0,1,1,0.1,0.02,0,0.1,0.22,0.1,0,0
+Ligue 1,2026-2027,Monaco,Aleksandr Golovin,M,1,90,0,0,2,2,0.44,0.11,0,0.44,0.51,0.09,1,0
+Ligue 1,2026-2027,Angers,Anthony Lopes,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.09,0.09,0,0
+Ligue 1,2026-2027,Lille,Gaetan Perrin,S,1,24,0,0,0,0,0.0,0.0,0,0.0,0.13,0.13,0,0
+Ligue 1,2026-2027,Paris FC,Kevin Trapp,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.85,0.85,0,0
+Ligue 1,2026-2027,Lorient,Jean-Victor Makengo,M,1,90,0,0,3,0,0.92,0.0,0,0.92,0.65,0.24,0,0
+Ligue 1,2026-2027,Lyon,Corentin Tolisso,S,1,20,0,1,1,2,0.04,0.19,0,0.04,0.23,0.0,0,0
+Ligue 1,2026-2027,Marseille,Neal Maupay,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Le Mans,Antoine Rabillard,M,1,90,0,0,1,0,0.03,0.0,0,0.03,0.1,0.06,0,0
+Ligue 1,2026-2027,Lens,Odsonne Edouard,S,1,17,0,0,1,0,0.12,0.0,0,0.12,0.12,0.0,0,0
+Ligue 1,2026-2027,Lorient,Alec Georgen,S,1,17,0,0,0,1,0.0,0.04,0,0.0,0.61,0.57,0,0
+Ligue 1,2026-2027,Paris Saint Germain,Milan Gajic,D,1,90,0,0,1,1,0.02,0.04,0,0.02,0.07,0.01,0,0
+Ligue 1,2026-2027,Brest,Lucas Tousart,D,1,90,0,0,2,0,0.4,0.0,0,0.4,0.08,0.08,0,0
+Ligue 1,2026-2027,Paris FC,Maxime Lopez,S,1,27,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Toulouse,Niklas Schmidt,M,1,87,0,0,1,3,0.03,0.17,0,0.03,0.24,0.1,1,0
+Ligue 1,2026-2027,Paris Saint Germain,Ivan Oblyakov,M,1,65,0,0,2,0,0.13,0.0,0,0.13,0.26,0.12,0,0
+Ligue 1,2026-2027,Rennes,Konstantin Kuchaev,M,1,77,0,0,2,0,0.11,0.0,0,0.11,0.15,0.04,0,0
+Ligue 1,2026-2027,Le Havre,Josh Maja,S,1,16,0,0,0,2,0.0,0.07,0,0.0,0.07,0.0,0,0
+Ligue 1,2026-2027,Marseille,Angel Gomes,M,1,90,0,1,3,2,0.7,0.58,0,0.7,1.36,0.08,0,0
+Ligue 1,2026-2027,Paris FC,Pierre Lees-Melou,M,1,90,0,0,1,0,0.02,0.0,0,0.02,0.09,0.07,0,0
+Ligue 1,2026-2027,Marseille,Amine Harit,M,1,83,0,0,1,1,0.02,0.06,0,0.02,0.08,0.03,0,0
+Ligue 1,2026-2027,Nice,Gauthier Hein,M,1,90,0,0,1,0,0.04,0.0,0,0.04,0.17,0.13,0,0
+Ligue 1,2026-2027,Lens,Matthieu Udol,D,1,90,0,0,0,2,0.0,0.24,0,0.0,0.56,0.32,0,0
+Ligue 1,2026-2027,Angers,Carlens Arcus,S,1,3,0,0,0,1,0.0,0.07,0,0.0,0.07,0.07,0,0
+Ligue 1,2026-2027,Lyon,Remy Descamps,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.05,0.05,0,0
+Ligue 1,2026-2027,Brest,Kenny Lala,D,1,90,0,0,0,4,0.0,0.24,0,0.0,0.24,0.0,0,0
+Ligue 1,2026-2027,Lorient,Yvon Mvogo,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Monaco,Denis Zakaria,M,1,90,0,0,1,0,0.01,0.0,0,0.01,0.18,0.17,0,0
+Ligue 1,2026-2027,Lens,Michaël Cuisance,M,1,73,0,0,1,0,0.61,0.0,0,0.61,2.59,1.98,0,0
+Ligue 1,2026-2027,Auxerre,Romain Faivre,F,1,69,0,0,1,1,0.05,0.02,0,0.05,0.07,0.0,0,0
+Ligue 1,2026-2027,Lille,Romain Perraud,D,1,78,0,0,1,1,0.02,0.03,0,0.02,0.05,0.03,1,0
+Ligue 1,2026-2027,Marseille,Timothy Weah,D,1,90,0,0,0,1,0.0,0.03,0,0.0,0.58,0.58,0,0
+Ligue 1,2026-2027,Nice,Yehvann Diouf,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Paris Saint Germain,Daniil Krugovoy,M,1,67,0,0,0,2,0.0,0.03,0,0.0,0.03,0.0,0,0
+Ligue 1,2026-2027,Nice,Sofiane Diop,M,1,82,0,0,1,4,0.36,0.26,0,0.36,0.62,0.13,0,0
+Ligue 1,2026-2027,Troyes,Renaud Ripart,F,1,86,0,0,3,0,0.15,0.0,0,0.15,0.04,0.0,0,0
+Ligue 1,2026-2027,Toulouse,Yann Gboho,M,1,81,0,0,2,2,0.34,0.13,0,0.34,0.49,0.05,0,0
+Ligue 1,2026-2027,Angers,Jordan Lefort,D,1,90,0,0,0,2,0.0,0.22,0,0.0,0.57,0.57,0,0
+Ligue 1,2026-2027,Brest,Ludovic Ajorque,F,1,90,0,0,7,1,0.45,0.08,0,0.45,0.42,0.03,1,0
+Ligue 1,2026-2027,Marseille,Naif Aguerd,S,1,15,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+Ligue 1,2026-2027,Le Mans,Lucas Buades,D,1,90,0,0,1,0,0.03,0.0,0,0.03,0.12,0.1,0,0
+Ligue 1,2026-2027,Paris FC,Moses Simon,S,1,44,0,0,0,2,0.0,0.82,0,0.0,0.82,0.05,0,0
+Ligue 1,2026-2027,Rennes,Alexey Mironov,M,1,89,0,0,2,1,0.05,0.07,0,0.05,0.16,0.04,1,0
+Ligue 1,2026-2027,Lens,Amadou Haidara,S,1,17,0,0,0,0,0.0,0.0,0,0.0,0.12,0.12,0,0
+Ligue 1,2026-2027,Troyes,Iron Gomis,M,1,76,0,0,1,1,0.03,0.05,0,0.03,0.0,0.0,0,0
+Ligue 1,2026-2027,Le Mans,Alexandre Lauray,M,1,66,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,1,0
+Ligue 1,2026-2027,Nice,Nathan N&#039;Goumou Minpol,S,1,8,0,0,1,0,0.12,0.0,0,0.12,0.12,0.0,0,0
+Ligue 1,2026-2027,Rennes,Danila Prokhin,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Brest,Joris Chotard,M,1,90,0,0,2,4,0.03,0.45,0,0.03,0.29,0.26,0,0
+Ligue 1,2026-2027,Brest,Mama Baldé,S,1,16,0,0,2,2,0.15,0.12,0,0.15,0.31,0.12,0,0
+Ligue 1,2026-2027,Rennes,Timur Suleymanov,F,1,90,0,0,0,2,0.0,0.06,0,0.0,0.48,0.42,0,0
+Ligue 1,2026-2027,Paris Saint Germain,Vladislav Torop,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+Ligue 1,2026-2027,Rennes,Maksim Mukhin,F,1,46,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Troyes,Alexandre Phliponeau,S,1,14,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Nice,Melvin Bard,D,1,90,0,0,1,1,0.02,0.01,0,0.02,0.05,0.04,0,0
+Ligue 1,2026-2027,Strasbourg,Giovanni Reyna,S,1,21,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Le Havre,Mbwana Samatta,F,1,74,0,0,2,1,0.13,0.06,0,0.13,0.11,0.0,0,0
+Ligue 1,2026-2027,Rennes,Ivan Komarov,M,1,77,0,0,5,2,0.23,0.44,0,0.23,0.61,0.04,0,0
+Ligue 1,2026-2027,Le Havre,Fodé Doucouré,D,1,74,0,0,2,1,0.07,0.05,0,0.07,0.18,0.11,1,0
+Ligue 1,2026-2027,Nice,Mohamed Ali-Cho,S,1,29,0,0,1,0,0.01,0.0,0,0.01,0.27,0.25,0,0
+Ligue 1,2026-2027,Nice,Jonathan Clauss,D,1,82,0,0,5,1,0.39,0.09,0,0.39,0.35,0.04,0,0
+Ligue 1,2026-2027,Le Havre,Timothee Pembele,D,1,74,0,0,0,1,0.0,0.05,0,0.0,0.05,0.0,0,0
+Ligue 1,2026-2027,Auxerre,Sinaly Diomande,D,1,90,0,0,1,0,0.02,0.0,0,0.02,0.12,0.1,0,0
+Ligue 1,2026-2027,Strasbourg,Sékou Mara,F,1,69,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+Ligue 1,2026-2027,Rennes,Andrey Langovich,D,1,90,0,0,0,1,0.0,0.04,0,0.0,0.16,0.12,0,0
+Ligue 1,2026-2027,Angers,Mamadou Simbakoli,S,1,15,0,0,3,1,0.13,0.03,0,0.13,0.07,0.0,1,0
+Ligue 1,2026-2027,Strasbourg,Filip Jorgensen,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+Ligue 1,2026-2027,Auxerre,Naouirou Ahamada,M,1,79,0,0,1,0,0.02,0.0,0,0.02,0.12,0.1,0,0
+Ligue 1,2026-2027,Lille,Felix Correia,S,1,31,0,0,0,0,0.0,0.0,0,0.0,0.13,0.13,0,0
+Ligue 1,2026-2027,Nice,Antoine Mendy,D,1,90,0,0,2,0,0.11,0.0,0,0.11,0.19,0.17,0,0
+Ligue 1,2026-2027,Paris FC,Mamadou Mbow,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.15,0.15,0,0
+Ligue 1,2026-2027,Rennes,Viktor Melekhin,D,1,90,0,0,1,0,0.03,0.0,0,0.03,0.47,0.45,0,0
+Ligue 1,2026-2027,Angers,Jim Allevinah,M,1,75,0,0,3,0,0.16,0.0,0,0.16,0.52,0.36,0,0
+Ligue 1,2026-2027,Paris FC,Ilan Kebbal,M,1,90,0,0,3,1,0.13,0.02,0,0.13,1.48,1.33,0,0
+Ligue 1,2026-2027,Le Mans,Billal Brahimi,S,1,15,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Brest,Bradley Locko,D,1,90,0,0,0,1,0.0,0.03,0,0.0,0.28,0.25,0,0
+Ligue 1,2026-2027,Lyon,Mads Bidstrup,M,1,81,0,0,1,0,0.12,0.0,0,0.12,0.27,0.16,0,0
+Ligue 1,2026-2027,Le Havre,Kaito Mizuta,S,1,1,0,0,1,0,0.02,0.0,0,0.02,0.02,0.0,0,0
+Ligue 1,2026-2027,Brest,Axel Camblan,S,1,16,0,0,1,0,0.07,0.0,0,0.07,0.07,0.0,0,0
+Ligue 1,2026-2027,Strasbourg,Andrew Omobamidele,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Lorient,Montassar Talbi,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.12,0.12,0,0
+Ligue 1,2026-2027,Lyon,Tanner Tessmann,S,1,9,0,0,0,0,0.0,0.0,0,0.0,0.08,0.08,1,0
+Ligue 1,2026-2027,Lorient,Théo Le Bris,D,1,73,0,0,1,1,0.12,0.0,0,0.12,0.12,0.0,0,0
+Ligue 1,2026-2027,Le Mans,Yasser Larouci,D,1,84,0,0,2,0,0.09,0.0,0,0.09,0.09,0.0,0,0
+Ligue 1,2026-2027,Lyon,Tyler Morton,S,1,20,0,0,0,1,0.0,0.09,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Le Mans,Lucas Calodat,S,1,6,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Paris FC,Diego Coppola,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.96,0.96,0,0
+Ligue 1,2026-2027,Marseille,CJ Egan-Riley,D,1,75,0,0,0,1,0.0,0.09,0,0.0,0.66,0.57,0,0
+Ligue 1,2026-2027,Angers,Jacques Ekomie,D,1,90,0,0,2,0,0.05,0.0,0,0.05,0.11,0.06,0,0
+Ligue 1,2026-2027,Monaco,Vanderson,D,1,90,0,0,1,1,0.02,0.13,0,0.02,0.33,0.31,1,0
+Ligue 1,2026-2027,Paris FC,Pablo Pagis,M,1,81,0,0,3,0,0.2,0.0,0,0.2,0.3,0.1,0,0
+Ligue 1,2026-2027,Monaco,Mika Biereth,S,1,29,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Angers,Yassin Belkhdim,M,1,87,0,0,0,2,0.0,0.09,0,0.0,0.56,0.54,0,0
+Ligue 1,2026-2027,Rennes,Olakunle Olusegun,S,1,44,0,0,0,2,0.0,0.11,0,0.0,0.11,0.0,0,0
+Ligue 1,2026-2027,Le Havre,Junior Mwanga,M,1,90,0,0,0,1,0.0,0.06,0,0.0,0.06,0.0,0,0
+Ligue 1,2026-2027,Paris FC,Luca Koleosho,M,1,46,0,0,1,1,0.02,0.07,0,0.02,0.14,0.05,0,0
+Ligue 1,2026-2027,Rennes,Yaroslav Mikhaylov,S,1,13,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Lens,Robin Risser,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.68,0.68,0,0
+Ligue 1,2026-2027,Toulouse,Rasmus Nicolaisen,D,1,90,0,0,2,0,0.08,0.0,0,0.08,0.1,0.1,0,0
+Ligue 1,2026-2027,Angers,Branco van den Boomen,M,1,90,0,0,0,2,0.0,0.18,0,0.0,0.55,0.55,0,0
+Ligue 1,2026-2027,Lille,Alexsandro Ribeiro,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.56,0.56,0,0
+Ligue 1,2026-2027,Paris FC,Lassine Sinayoko,F,1,79,0,0,1,2,0.42,0.12,0,0.42,0.6,0.05,0,0
+Ligue 1,2026-2027,Auxerre,Kévin Danois,M,1,90,0,0,2,0,0.03,0.0,0,0.03,0.14,0.12,0,0
+Ligue 1,2026-2027,Strasbourg,Guela Doué,D,1,90,0,0,1,0,0.04,0.0,0,0.04,0.0,0.0,0,0
+Ligue 1,2026-2027,Marseille,Himad Abdelli,M,1,83,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Angers,Ousmane Camara,D,1,90,0,0,0,1,0.0,0.02,0,0.0,0.51,0.49,0,0
+Ligue 1,2026-2027,Lens,Abdallah Sima,F,1,73,0,1,0,2,0.0,0.62,0,0.0,1.55,0.93,0,0
+Ligue 1,2026-2027,Troyes,Michel Diaz,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+Ligue 1,2026-2027,Rennes,Daniel Shantaliy,S,1,13,0,0,1,1,0.03,0.02,0,0.03,0.06,0.0,0,0
+Ligue 1,2026-2027,Angers,Lilian Raolisoa,D,1,87,0,0,1,0,0.02,0.0,0,0.02,0.57,0.55,0,0
+Ligue 1,2026-2027,Nice,Youssouf Ndayishimiye,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.16,0.16,0,0
+Ligue 1,2026-2027,Paris Saint Germain,João Victor,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.07,0.07,0,0
+Ligue 1,2026-2027,Paris Saint Germain,Danila Kozlov,S,1,25,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Paris Saint Germain,Kirill Glebov,M,1,59,0,0,2,2,0.12,0.07,0,0.12,0.29,0.1,0,0
+Ligue 1,2026-2027,Paris Saint Germain,Matvey Kislyak,M,1,90,0,0,3,1,0.13,0.01,0,0.13,0.07,0.03,0,0
+Ligue 1,2026-2027,Lyon,Julien Duranville,F,1,64,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Strasbourg,Samuel Amo-Ameyaw,M,1,69,0,0,1,0,0.02,0.0,0,0.02,0.02,0.0,1,0
+Ligue 1,2026-2027,Paris Saint Germain,Tamerlan Musaev,S,1,31,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Le Havre,Amir Richardson,M,1,90,0,0,2,2,0.14,0.1,0,0.14,0.14,0.06,1,0
+Ligue 1,2026-2027,Lille,Hákon Haraldsson,M,1,78,0,0,3,2,0.31,0.53,0,0.31,0.81,0.03,1,0
+Ligue 1,2026-2027,Lorient,Dembo Sylla,D,1,73,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Toulouse,Guillaume Restes,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.05,0.05,0,0
+Ligue 1,2026-2027,Toulouse,Cristian Cásseres Jr.,M,1,90,0,0,1,4,0.02,0.7,0,0.02,0.66,0.05,0,0
+Ligue 1,2026-2027,Auxerre,Josué Casimir,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Le Havre,Rassoul Ndiaye,M,1,90,0,0,3,1,0.12,0.02,0,0.12,0.26,0.14,0,0
+Ligue 1,2026-2027,Monaco,Lamine Camara,M,1,90,0,0,1,1,0.02,0.02,0,0.02,0.44,0.4,0,0
+Ligue 1,2026-2027,Monaco,Sadibou Sané,D,1,90,0,0,0,1,0.0,0.04,0,0.0,0.05,0.02,0,0
+Ligue 1,2026-2027,Lyon,Clinton Mata,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+Ligue 1,2026-2027,Lorient,Aiyegun Tosin,S,1,19,0,0,1,0,0.49,0.0,0,0.49,0.52,0.04,0,0
+Ligue 1,2026-2027,Lille,Ethan Mbappé,M,1,65,0,0,2,1,0.53,0.06,0,0.53,0.59,0.06,0,0
+Ligue 1,2026-2027,Brest,Joseph Nonge,M,1,66,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Troyes,Kandet Diawara,F,1,75,0,0,1,1,0.02,0.1,0,0.02,0.1,0.0,0,0
+Ligue 1,2026-2027,Monaco,Paris Brunner,F,1,61,0,0,4,0,0.69,0.0,0,0.69,0.69,0.0,0,0
+Ligue 1,2026-2027,Strasbourg,Samir El Mourabet,M,1,59,0,0,0,1,0.0,0.04,0,0.0,0.03,0.03,0,1
+Ligue 1,2026-2027,Monaco,Mamadou Coulibaly,M,1,61,0,0,0,0,0.0,0.0,0,0.0,0.3,0.3,0,0
+Ligue 1,2026-2027,Lorient,Arthur Avom,M,1,90,0,0,0,1,0.0,0.49,0,0.0,0.73,0.24,0,0
+Ligue 1,2026-2027,Angers,Anthony Bermont,M,1,59,0,0,2,0,0.21,0.0,0,0.21,0.0,0.0,1,0
+Ligue 1,2026-2027,Lorient,Panos Katseris,S,1,17,0,0,0,1,0.0,0.08,0,0.0,0.57,0.49,0,0
+Ligue 1,2026-2027,Lorient,Nathaniel Adjei,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Monaco,Stanis Idumbo Muzambo,M,1,85,0,0,4,2,0.15,0.1,0,0.15,0.22,0.0,0,0
+Ligue 1,2026-2027,Le Havre,Simon Ebonog,M,1,90,0,0,1,0,0.02,0.0,0,0.02,0.21,0.18,0,0
+Ligue 1,2026-2027,Paris Saint Germain,Matija Popovic,S,1,31,0,0,1,0,0.06,0.0,0,0.06,0.06,0.0,0,0
+Ligue 1,2026-2027,Rennes,Oumar Sako,D,1,90,0,0,1,0,0.05,0.0,0,0.05,0.42,0.42,1,0
+Ligue 1,2026-2027,Rennes,Ronaldo,F,1,90,0,0,2,1,0.4,0.04,0,0.4,0.48,0.08,0,0
+Ligue 1,2026-2027,Le Mans,Rayan Bamba,D,1,90,0,0,0,1,0.0,0.02,0,0.0,0.13,0.1,0,0
+Ligue 1,2026-2027,Toulouse,Rafik Messali,S,1,18,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Rennes,Rustam Yatimov,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Le Havre,Yanis Zouaoui,D,1,39,0,0,0,0,0.0,0.0,0,0.0,0.08,0.08,0,0
+Ligue 1,2026-2027,Marseille,Derek Cornelius,S,1,7,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Marseille,Jeffrey de Lange,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Lille,Ngal&#039;ayel Mukau,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.2,0.2,0,0
+Ligue 1,2026-2027,Lille,Osame Sahraoui,S,1,25,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Auxerre,Clément Akpa,D,1,90,0,0,0,1,0.0,0.01,0,0.0,0.06,0.04,0,0
+Ligue 1,2026-2027,Auxerre,Lasso Coulibaly,S,1,11,0,0,0,1,0.0,0.02,0,0.0,0.02,0.0,0,0
+Ligue 1,2026-2027,Toulouse,Mark McKenzie,D,1,90,0,0,0,1,0.0,0.22,0,0.0,0.4,0.18,0,0
+Ligue 1,2026-2027,Strasbourg,Sebastian Nanasi,M,1,79,0,0,0,1,0.0,0.04,0,0.0,0.04,0.0,0,0
+Ligue 1,2026-2027,Paris Saint Germain,Luciano Gondou,F,1,59,0,0,1,2,0.05,0.2,0,0.05,0.24,0.1,0,0
+Ligue 1,2026-2027,Nice,Mohamed Abdelmonem,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Auxerre,Aristide Zossou,F,1,69,0,0,1,0,0.06,0.0,0,0.06,0.08,0.08,0,0
+Ligue 1,2026-2027,Toulouse,Mathis Saka,S,1,3,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Nice,Everton Pereira,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.04,0.04,0,0
+Ligue 1,2026-2027,Brest,Raphaël Le Guen,D,1,90,0,0,3,1,0.21,0.09,0,0.21,0.21,0.21,0,0
+Ligue 1,2026-2027,Brest,Egil Selvik,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Lille,Isaac Cossier,S,1,12,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Paris FC,Zabi Gueu,S,1,9,0,0,1,0,0.77,0.0,0,0.77,0.77,0.0,0,0
+Ligue 1,2026-2027,Lens,Souleymane Sagnan,D,1,90,0,0,0,0,0.0,0.0,0,0.0,1.54,1.54,0,0
+Ligue 1,2026-2027,Strasbourg,Genesis Antwi,D,1,79,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+Ligue 1,2026-2027,Paris FC,Rudy Matondo,M,1,63,0,0,0,1,0.0,0.03,0,0.0,0.12,0.09,0,0
+Ligue 1,2026-2027,Angers,Prosper Peter,S,1,31,0,0,3,0,0.89,0.0,0,0.89,0.49,0.07,0,0
+Ligue 1,2026-2027,Toulouse,Ilyas Azizi,S,1,18,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Paris Saint Germain,Matheus Alves,S,1,25,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Lens,Andrija Bulatovic,S,1,9,0,0,0,0,0.0,0.0,0,0.0,0.12,0.12,0,0
+Ligue 1,2026-2027,Lyon,Pavel Sulc,S,1,26,0,1,0,2,0.0,0.1,0,0.0,0.17,0.08,0,0
+Ligue 1,2026-2027,Lyon,Mathys de Carvalho,M,1,70,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Le Havre,Ayumu Seko,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.05,0.05,0,0
+Ligue 1,2026-2027,Le Havre,Lionel Mpasi,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Lorient,Gabin Bernardeau,M,1,70,0,0,1,1,0.31,0.51,0,0.31,0.31,0.0,0,0
+Ligue 1,2026-2027,Nice,Djibril Coulibaly,M,1,90,0,0,0,1,0.0,0.12,0,0.0,0.13,0.01,0,0
+Ligue 1,2026-2027,Nice,Hamza Koutoune,S,1,8,0,0,1,0,0.02,0.0,0,0.02,0.0,0.0,0,0
+Ligue 1,2026-2027,Toulouse,Santiago Hidalgo,F,1,72,0,0,3,0,0.23,0.0,0,0.23,0.23,0.0,0,0
+Ligue 1,2026-2027,Lille,Berke Özer,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.49,0.49,0,0
+Ligue 1,2026-2027,Lille,Nathan Ngoy,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.1,0.1,0,0
+Ligue 1,2026-2027,Paris Saint Germain,Kirill Danilov,D,1,90,0,0,1,0,0.01,0.0,0,0.01,0.02,0.01,0,0
+Ligue 1,2026-2027,Lorient,Arsène Kouassi,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Paris FC,Adama Camara,D,1,90,0,0,0,1,0.0,0.02,0,0.0,0.91,0.89,0,0
+Ligue 1,2026-2027,Strasbourg,Lucas Høgsberg,D,1,90,0,0,0,2,0.0,0.05,0,0.0,0.05,0.0,0,0
+Ligue 1,2026-2027,Paris FC,Otávio,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.15,0.15,1,0
+Ligue 1,2026-2027,Lyon,Zachary Athekame,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.15,0.15,0,0
+Ligue 1,2026-2027,Toulouse,Julián Vignolo,M,1,72,0,0,4,1,0.22,0.08,0,0.22,0.36,0.11,0,0
+Ligue 1,2026-2027,Lorient,Noah Cadiou,M,1,90,0,0,2,1,0.06,0.33,0,0.06,0.47,0.08,0,0
+Ligue 1,2026-2027,Auxerre,Elikya Legros,S,1,11,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,0,0
+Ligue 1,2026-2027,Marseille,Igor Paixão,M,1,90,0,0,1,0,0.06,0.0,0,0.06,0.63,0.57,0,0
+Ligue 1,2026-2027,Strasbourg,Fabio Baldé,S,1,11,0,0,0,1,0.0,0.06,0,0.0,0.06,0.0,0,0
+Ligue 1,2026-2027,Lille,Calvin Verdonk,S,1,12,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Brest,Pathé Mboup,M,1,74,0,0,2,1,0.13,0.06,0,0.13,0.42,0.22,0,0
+Ligue 1,2026-2027,Le Havre,Enzo Koffi,S,1,51,0,0,2,1,0.09,0.08,0,0.09,0.1,0.06,0,0
+Ligue 1,2026-2027,Angers,Amine Sbaï,M,1,90,0,0,3,9,0.16,1.21,0,0.16,0.87,0.13,0,0
+Ligue 1,2026-2027,Angers,Djibirin Harouna,S,1,15,0,0,0,0,0.0,0.0,0,0.0,0.07,0.07,0,0
+Ligue 1,2026-2027,Nice,Zoumana Diallo,F,1,61,0,0,1,0,0.03,0.0,0,0.03,0.03,0.0,1,0
+Ligue 1,2026-2027,Monaco,Ilane Touré,S,1,6,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Strasbourg,Pape Diop,S,1,21,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Strasbourg,Gessime Yassine,M,1,90,0,0,2,0,0.1,0.0,0,0.1,0.14,0.03,0,0
+Ligue 1,2026-2027,Lyon,Rémi Himbert,F,1,64,0,0,0,2,0.0,0.1,0,0.0,0.1,0.0,0,0
+Ligue 1,2026-2027,Lorient,Mamadou Koné,F,1,71,0,0,1,1,0.1,0.12,0,0.1,0.22,0.0,0,0
+Ligue 1,2026-2027,Lyon,Kail Boudache,F,1,90,0,0,6,0,0.38,0.0,0,0.38,0.44,0.06,0,0
+Ligue 1,2026-2027,Toulouse,Jacen Russell-Rowe,S,1,18,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Paris Saint Germain,Matheus Reis,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+Ligue 1,2026-2027,Paris Saint Germain,Imran Firov,S,1,23,0,0,1,0,0.01,0.0,0,0.01,0.01,0.0,0,0
+Ligue 1,2026-2027,Marseille,Tochukwu Nnadi,S,1,7,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Angers,Bané Diatta,S,1,3,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Auxerre,Lamfia Dioubaté,S,1,21,0,0,1,0,0.02,0.0,0,0.02,0.02,0.0,1,0
+Ligue 1,2026-2027,Rennes,Ygor Nogueira,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.44,0.44,0,0
+Ligue 1,2026-2027,Strasbourg,Diogo Sousa,M,1,69,0,0,1,0,0.03,0.0,0,0.03,0.03,0.0,0,0
+Ligue 1,2026-2027,Strasbourg,Mateo del Blanco,S,1,11,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Strasbourg,Jacobo Ortega,S,1,21,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Lens,Maik Nawrocki,D,1,90,0,0,1,0,0.04,0.0,0,0.04,0.72,0.72,1,0
+Ligue 1,2026-2027,Lens,Yacine Titraoui,M,1,90,0,0,0,0,0.0,0.0,0,0.0,1.45,1.45,0,0
+Ligue 1,2026-2027,Lens,Michal Skóras,S,1,26,0,1,0,2,0.0,1.2,0,0.0,1.24,0.59,0,0
+Ligue 1,2026-2027,Auxerre,Mamadou Diop,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Auxerre,Christ Makosso,D,1,34,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,0,1
+Ligue 1,2026-2027,Auxerre,Arthur Piedfort,M,1,89,0,0,0,0,0.0,0.0,0,0.0,0.06,0.06,0,0
+Ligue 1,2026-2027,Auxerre,Rayan Mandengue,S,1,21,0,1,0,1,0.0,0.66,0,0.0,0.66,0.0,0,0
+Ligue 1,2026-2027,Nice,Xavier Mandza,D,1,89,0,0,0,2,0.0,0.06,0,0.0,0.53,0.52,0,0
+Ligue 1,2026-2027,Lorient,Souleymane Faye,S,1,20,0,0,1,0,0.08,0.0,0,0.08,0.12,0.04,0,0
+Ligue 1,2026-2027,Le Mans,Nicolas Kocik,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Le Mans,Noa Boissé,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Le Mans,Théo Eyoum,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.1,0.1,0,0
+Ligue 1,2026-2027,Le Mans,Adil Bourabaa,M,1,75,0,1,1,3,0.02,0.2,0,0.02,0.68,0.46,0,0
+Ligue 1,2026-2027,Le Mans,Erwan Colas,S,1,24,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Le Mans,Lucas Bretelle,S,1,24,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Le Mans,William Harhouz,S,1,15,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Brest,Mamady Diambou,S,1,24,0,0,2,0,0.12,0.0,0,0.12,0.28,0.18,0,0
+Ligue 1,2026-2027,Brest,Mathis Lainé,S,1,1,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Troyes,Patrick Beach,GK,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Troyes,Yvann Titi,D,1,55,0,0,1,0,0.01,0.0,0,0.01,0.04,0.04,0,0
+Ligue 1,2026-2027,Troyes,Adrien Monfray,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.02,0.02,0,0
+Ligue 1,2026-2027,Troyes,Anis Ouzenadji,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Troyes,Hugo Picard,M,1,90,0,0,0,2,0.0,0.04,0,0.0,0.04,0.04,0,0
+Ligue 1,2026-2027,Troyes,Mouhamed Diop,M,1,90,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,1,0
+Ligue 1,2026-2027,Troyes,Merwan Ifnaoui,F,1,90,0,0,1,3,0.1,0.12,0,0.1,0.13,0.0,0,0
+Ligue 1,2026-2027,Troyes,Antoine Mille,S,1,15,0,0,2,0,0.04,0.0,0,0.04,0.02,0.0,0,0
+Ligue 1,2026-2027,Troyes,Noah Donkor,S,1,35,0,0,0,1,0.0,0.02,0,0.0,0.02,0.02,0,0
+Ligue 1,2026-2027,Troyes,Yacouba Koné,S,1,4,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Paris FC,Omar Sissoko,S,1,11,0,0,0,0,0.0,0.0,0,0.0,0.77,0.77,0,0
+Ligue 1,2026-2027,Toulouse,Ismaïl Diallo,D,1,72,0,0,0,0,0.0,0.0,0,0.0,0.1,0.1,0,0
+Ligue 1,2026-2027,Toulouse,Christ Tapé,D,1,90,0,0,2,1,0.87,0.13,0,0.87,0.57,0.35,0,0
+Ligue 1,2026-2027,Toulouse,Thomas Jørgensen,M,1,90,0,0,2,3,0.47,0.17,0,0.47,0.85,0.42,0,0
+Ligue 1,2026-2027,Toulouse,Sion Oppong,S,1,9,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Lyon,Felix Bacher,D,1,90,0,0,1,1,0.09,0.03,0,0.09,0.05,0.02,0,0
+Ligue 1,2026-2027,Lyon,Mohamed Ouédraogo,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.07,0.07,0,0
+Ligue 1,2026-2027,Angers,Amine El Ouazzani,F,1,75,0,0,3,0,0.23,0.0,0,0.23,0.55,0.39,0,0
+Ligue 1,2026-2027,Lille,Basar Önal,M,1,59,0,0,0,0,0.0,0.0,0,0.0,0.03,0.03,0,0
+Ligue 1,2026-2027,Le Havre,Vincent Sasso,D,1,90,0,0,0,0,0.0,0.0,0,0.0,0.06,0.06,1,0
+Ligue 1,2026-2027,Le Havre,Elias Jelert,S,1,16,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Le Havre,Sota Nakamura,S,1,16,0,0,1,0,0.08,0.0,0,0.08,0.08,0.0,0,0
+Ligue 1,2026-2027,Monaco,Flávio Nazinho,D,1,84,0,1,0,2,0.0,0.21,0,0.0,0.27,0.18,0,0
+Ligue 1,2026-2027,Monaco,Oumar Konaté,S,1,5,0,0,0,0,0.0,0.0,0,0.0,0.0,0.0,0,0
+Ligue 1,2026-2027,Monaco,Anis Soubeir,S,1,29,0,0,1,0,0.33,0.0,0,0.33,0.33,0.0,0,0

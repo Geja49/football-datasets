@@ -357,7 +357,10 @@ La Liga,2025-2026,"Sevilla,Villarreal"
 La Liga,2025-2026,Valencia
 La Liga,2025-2026,Villarreal
 La Liga,2026-2027,Alaves
+La Liga,2026-2027,Athletic Club
 La Liga,2026-2027,Atletico Madrid
+La Liga,2026-2027,Barcelona
+La Liga,2026-2027,Celta Vigo
 La Liga,2026-2027,Deportivo La Coruna
 La Liga,2026-2027,Elche
 La Liga,2026-2027,Espanyol
@@ -366,7 +369,11 @@ La Liga,2026-2027,Levante
 La Liga,2026-2027,Malaga
 La Liga,2026-2027,Racing Santander
 La Liga,2026-2027,Rayo Vallecano
+La Liga,2026-2027,Real Betis
+La Liga,2026-2027,Real Madrid
+La Liga,2026-2027,Real Sociedad
 La Liga,2026-2027,Sevilla
+La Liga,2026-2027,Valencia
 La Liga,2026-2027,Villarreal
 Ligue 1,2020-2021,Angers
 Ligue 1,2020-2021,Bordeaux
@@ -556,6 +563,24 @@ Ligue 1,2025-2026,Paris Saint Germain
 Ligue 1,2025-2026,Rennes
 Ligue 1,2025-2026,Strasbourg
 Ligue 1,2025-2026,Toulouse
+Ligue 1,2026-2027,Angers
+Ligue 1,2026-2027,Auxerre
+Ligue 1,2026-2027,Brest
+Ligue 1,2026-2027,Le Havre
+Ligue 1,2026-2027,Le Mans
+Ligue 1,2026-2027,Lens
+Ligue 1,2026-2027,Lille
+Ligue 1,2026-2027,Lorient
+Ligue 1,2026-2027,Lyon
+Ligue 1,2026-2027,Marseille
+Ligue 1,2026-2027,Monaco
+Ligue 1,2026-2027,Nice
+Ligue 1,2026-2027,Paris FC
+Ligue 1,2026-2027,Paris Saint Germain
+Ligue 1,2026-2027,Rennes
+Ligue 1,2026-2027,Strasbourg
+Ligue 1,2026-2027,Toulouse
+Ligue 1,2026-2027,Troyes
 Premier League,2020-2021,Arsenal
 Premier League,2020-2021,"Arsenal,Brighton"
 Premier League,2020-2021,"Arsenal,Newcastle United"
@@ -741,6 +766,24 @@ Premier League,2025-2026,Sunderland
 Premier League,2025-2026,Tottenham
 Premier League,2025-2026,West Ham
 Premier League,2025-2026,Wolverhampton Wanderers
+Premier League,2026-2027,Arsenal
+Premier League,2026-2027,Aston Villa
+Premier League,2026-2027,Bournemouth
+Premier League,2026-2027,Brentford
+Premier League,2026-2027,Brighton
+Premier League,2026-2027,Coventry
+Premier League,2026-2027,Crystal Palace
+Premier League,2026-2027,Everton
+Premier League,2026-2027,Hull
+Premier League,2026-2027,Ipswich
+Premier League,2026-2027,Leeds
+Premier League,2026-2027,Liverpool
+Premier League,2026-2027,Manchester City
+Premier League,2026-2027,Manchester United
+Premier League,2026-2027,Newcastle United
+Premier League,2026-2027,Nottingham Forest
+Premier League,2026-2027,Sunderland
+Premier League,2026-2027,Tottenham
 Serie A,2020-2021,AC Milan
 Serie A,2020-2021,"AC Milan,Lazio"
 Serie A,2020-2021,"AC Milan,Parma Calcio 1913"
@@ -1004,6 +1047,22 @@ Serie A,2025-2026,"Torino,Verona"
 Serie A,2025-2026,Udinese
 Serie A,2025-2026,"Udinese,Verona"
 Serie A,2025-2026,Verona
+Serie A,2026-2027,AC Milan
+Serie A,2026-2027,Atalanta
+Serie A,2026-2027,Cagliari
+Serie A,2026-2027,Como
+Serie A,2026-2027,Frosinone
+Serie A,2026-2027,Genoa
+Serie A,2026-2027,Inter
+Serie A,2026-2027,Juventus
+Serie A,2026-2027,Lecce
+Serie A,2026-2027,Monza
+Serie A,2026-2027,Napoli
+Serie A,2026-2027,Parma Calcio 1913
+Serie A,2026-2027,Sassuolo
+Serie A,2026-2027,Torino
+Serie A,2026-2027,Udinese
+Serie A,2026-2027,Venezia
 Ligue des champions,2011-2012,Man City
 Ligue des champions,2011-2012,Napoli
 Ligue des champions,2011-2012,Villarreal
