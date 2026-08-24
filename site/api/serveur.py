@@ -43,6 +43,7 @@ CHAMPIONNATS = (
 )
 NOM_LDC = "Ligue des champions"
 PHASE_LIGUE = "phase de ligue"
+SAISON_COURANTE = "2026-2027"
 MOTIF_SAISON = re.compile(r"^\d{4}-\d{4}$")
 
 app = FastAPI(title="Stats championnats")
@@ -254,7 +255,8 @@ def calculer_classement(matchs):
 
 
 def saisons_disponibles(connexion, championnat=None):
-    saisons = set()
+    """Liste les saisons en base ; la saison en cours apparait meme si peu de donnees."""
+    saisons = {SAISON_COURANTE}
     for table in ("matchs", "calendrier"):
         try:
             if championnat:
