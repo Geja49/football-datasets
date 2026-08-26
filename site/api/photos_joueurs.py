@@ -181,11 +181,11 @@ def url_wikipedia(nom, langue="en"):
     return ""
 
 
-def obtenir_photo(connexion, nom, equipe=""):
+def obtenir_photo(connexion, nom, equipe="", forcer=False):
     deja = photo_en_cache(connexion, nom)
     if deja:
         return deja
-    if deja_cherche(connexion, nom):
+    if not forcer and deja_cherche(connexion, nom):
         return ""
     slug = slug_joueur(nom)
     for source, chercheur in (

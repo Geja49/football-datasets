@@ -1,4 +1,12 @@
 championnat,saison,source,nb_matchs,complet,commentaire
+Ligue des champions,2013-2014,openml_ldc,0,0,"806 joueurs (OpenML 43510 CC0, agregats saison ; pas de xG ; 2013-2020)"
+Ligue des champions,2014-2015,openml_ldc,0,0,"854 joueurs (OpenML 43510 CC0, agregats saison ; pas de xG ; 2013-2020)"
+Ligue des champions,2015-2016,openml_ldc,0,0,"675 joueurs (OpenML 43510 CC0, agregats saison ; pas de xG ; 2013-2020)"
+Ligue des champions,2016-2017,openml_ldc,0,0,"693 joueurs (OpenML 43510 CC0, agregats saison ; pas de xG ; 2013-2020)"
+Ligue des champions,2017-2018,openml_ldc,0,0,"689 joueurs (OpenML 43510 CC0, agregats saison ; pas de xG ; 2013-2020)"
+Ligue des champions,2018-2019,openml_ldc,0,0,"699 joueurs (OpenML 43510 CC0, agregats saison ; pas de xG ; 2013-2020)"
+Ligue des champions,2019-2020,openml_ldc,0,0,"682 joueurs (OpenML 43510 CC0, agregats saison ; pas de xG ; 2013-2020)"
+Ligue des champions,2020-2021,openml_ldc,0,0,"610 joueurs (OpenML 43510 CC0, agregats saison ; pas de xG ; 2013-2020)"
 Premier League,2017-2018,wyscout,380,1,"Saison 2017-2018 complete. Pas de xG, pressions ni recoveries dans ce jeu."
 La Liga,2017-2018,wyscout,380,1,"Saison 2017-2018 complete. Pas de xG, pressions ni recoveries dans ce jeu."
 Bundesliga,2017-2018,wyscout,306,1,"Saison 2017-2018 complete. Pas de xG, pressions ni recoveries dans ce jeu."

@@ -50,6 +50,13 @@ COLONNES_ENTIER = {
     "arrets",
     "nb_matchs",
     "complet",
+    "rang",
+    "niveau",
+    "age",
+    "valeur_marche_eur",
+    "valeur_max_eur",
+    "derniere_saison_dump",
+    "frais_eur",
 }
 COLONNES_REEL = {
     "xg",
@@ -60,6 +67,7 @@ COLONNES_REEL = {
     "xg_domicile",
     "xg_exterieur",
     "xg_tirs_subis",
+    "elo",
 }
 
 TABLES = {
@@ -71,6 +79,9 @@ TABLES = {
     "calendrier": "calendrier.csv",
     "actions_defensives": "actions_defensives.csv",
     "couverture_sources": "couverture_sources.csv",
+    "classements_elo": "classements_elo.csv",
+    "valeurs_marche_joueurs": "valeurs_marche_joueurs.csv",
+    "transferts_joueurs": "transferts_joueurs.csv",
 }
 
 INDEXS = [
@@ -84,6 +95,10 @@ INDEXS = [
     "CREATE INDEX IF NOT EXISTS idx_defense_saison ON actions_defensives (championnat, saison)",
     "CREATE INDEX IF NOT EXISTS idx_defense_equipe ON actions_defensives (equipe)",
     "CREATE INDEX IF NOT EXISTS idx_defense_joueur ON actions_defensives (joueur)",
+    "CREATE INDEX IF NOT EXISTS idx_elo_pays ON classements_elo (pays, niveau)",
+    "CREATE INDEX IF NOT EXISTS idx_elo_club ON classements_elo (club)",
+    "CREATE INDEX IF NOT EXISTS idx_valeurs_joueur ON valeurs_marche_joueurs (joueur)",
+    "CREATE INDEX IF NOT EXISTS idx_transferts_joueur ON transferts_joueurs (joueur)",
 ]
 
 

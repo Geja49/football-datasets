@@ -1,0 +1,6 @@
+# Dépendances API site (site/api)
+fastapi>=0.115
+uvicorn[standard]>=0.32
+requests>=2.32
+passlib[bcrypt]>=1.7
+python-multipart>=0.0.9

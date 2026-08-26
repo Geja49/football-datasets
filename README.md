@@ -24,6 +24,8 @@ You need to have Python version >=3.5:
 - Install requirements using `pip install -r scripts/requirements.txt`
 - Fetch and process league data: `python scripts/process.py`
 - Generate datapackage.json for each dataset: `python scripts/package.py`
+- Site API : `pip install -r site/api/requirements.txt` puis `python -m uvicorn site.api.serveur:app --reload --port 8001`
+- Site API tests : `pip install -r site/api/requirements-tests.txt` then `cd site/api && pytest` ; frontend: `cd site/frontend && npm test`
 
 ## Automation
 

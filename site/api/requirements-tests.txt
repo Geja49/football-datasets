@@ -1,0 +1,4 @@
+# Dépendances pour les tests API (site/api)
+pytest>=8.0
+httpx>=0.27
+tzdata>=2024.1

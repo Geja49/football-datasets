@@ -367,6 +367,7 @@ La Liga,2026-2027,Espanyol
 La Liga,2026-2027,Getafe
 La Liga,2026-2027,Levante
 La Liga,2026-2027,Malaga
+La Liga,2026-2027,Osasuna
 La Liga,2026-2027,Racing Santander
 La Liga,2026-2027,Rayo Vallecano
 La Liga,2026-2027,Real Betis
@@ -771,9 +772,11 @@ Premier League,2026-2027,Aston Villa
 Premier League,2026-2027,Bournemouth
 Premier League,2026-2027,Brentford
 Premier League,2026-2027,Brighton
+Premier League,2026-2027,Chelsea
 Premier League,2026-2027,Coventry
 Premier League,2026-2027,Crystal Palace
 Premier League,2026-2027,Everton
+Premier League,2026-2027,Fulham
 Premier League,2026-2027,Hull
 Premier League,2026-2027,Ipswich
 Premier League,2026-2027,Leeds
@@ -1049,16 +1052,20 @@ Serie A,2025-2026,"Udinese,Verona"
 Serie A,2025-2026,Verona
 Serie A,2026-2027,AC Milan
 Serie A,2026-2027,Atalanta
+Serie A,2026-2027,Bologna
 Serie A,2026-2027,Cagliari
 Serie A,2026-2027,Como
+Serie A,2026-2027,Fiorentina
 Serie A,2026-2027,Frosinone
 Serie A,2026-2027,Genoa
 Serie A,2026-2027,Inter
 Serie A,2026-2027,Juventus
+Serie A,2026-2027,Lazio
 Serie A,2026-2027,Lecce
 Serie A,2026-2027,Monza
 Serie A,2026-2027,Napoli
 Serie A,2026-2027,Parma Calcio 1913
+Serie A,2026-2027,Roma
 Serie A,2026-2027,Sassuolo
 Serie A,2026-2027,Torino
 Serie A,2026-2027,Udinese
@@ -1076,13 +1083,13 @@ Ligue des champions,2011-2012,Oţelul Galaţi
 Ligue des champions,2011-2012,Benfica
 Ligue des champions,2011-2012,Man United
 Ligue des champions,2011-2012,Ajax
-Ligue des champions,2011-2012,Olympique Lyonnais
+Ligue des champions,2011-2012,Lyon
 Ligue des champions,2011-2012,Dinamo Zagreb
 Ligue des champions,2011-2012,Real Madrid
 Ligue des champions,2011-2012,Chelsea
 Ligue des champions,2011-2012,Leverkusen
 Ligue des champions,2011-2012,KRC Genk
-Ligue des champions,2011-2012,Valencia CF
+Ligue des champions,2011-2012,Valencia
 Ligue des champions,2011-2012,Dortmund
 Ligue des champions,2011-2012,Arsenal
 Ligue des champions,2011-2012,Olympiakos Piraeus
@@ -1101,7 +1108,7 @@ Ligue des champions,2012-2013,Dinamo Zagreb
 Ligue des champions,2012-2013,FC Porto
 Ligue des champions,2012-2013,Olympiakos Piraeus
 Ligue des champions,2012-2013,Schalke 04
-Ligue des champions,2012-2013,Montpellier HSC
+Ligue des champions,2012-2013,Montpellier
 Ligue des champions,2012-2013,Arsenal
 Ligue des champions,2012-2013,Milan
 Ligue des champions,2012-2013,RSC Anderlecht
@@ -1116,7 +1123,7 @@ Ligue des champions,2012-2013,Juventus
 Ligue des champions,2012-2013,Shakhtar Donetsk
 Ligue des champions,2012-2013,FC Nordsjælland
 Ligue des champions,2012-2013,Bayern Munich
-Ligue des champions,2012-2013,Valencia CF
+Ligue des champions,2012-2013,Valencia
 Ligue des champions,2012-2013,Lille
 Ligue des champions,2012-2013,BATE Borisov
 Ligue des champions,2012-2013,Barcelona
@@ -1219,10 +1226,10 @@ Ligue des champions,2015-2016,Dinamo Kiev
 Ligue des champions,2015-2016,FC Porto
 Ligue des champions,2015-2016,Chelsea
 Ligue des champions,2015-2016,Maccabi Tel Aviv
-Ligue des champions,2015-2016,Valencia CF
+Ligue des champions,2015-2016,Valencia
 Ligue des champions,2015-2016,Zenit St. Petersburg
 Ligue des champions,2015-2016,KAA Gent
-Ligue des champions,2015-2016,Olympique Lyonnais
+Ligue des champions,2015-2016,Lyon
 Ligue des champions,2016-2017,FC Basel 1893
 Ligue des champions,2016-2017,PFC Ludogorets Razgrad
 Ligue des champions,2016-2017,Paris SG
@@ -1253,7 +1260,7 @@ Ligue des champions,2016-2017,FC Porto
 Ligue des champions,2016-2017,Copenhagen
 Ligue des champions,2016-2017,Juventus
 Ligue des champions,2016-2017,Sevilla
-Ligue des champions,2016-2017,Olympique Lyonnais
+Ligue des champions,2016-2017,Lyon
 Ligue des champions,2016-2017,Dinamo Zagreb
 Ligue des champions,2017-2018,Man United
 Ligue des champions,2017-2018,FC Basel 1893
@@ -1310,12 +1317,12 @@ Ligue des champions,2018-2019,Bayern Munich
 Ligue des champions,2018-2019,Shakhtar Donetsk
 Ligue des champions,2018-2019,1899 Hoffenheim
 Ligue des champions,2018-2019,Man City
-Ligue des champions,2018-2019,Olympique Lyonnais
+Ligue des champions,2018-2019,Lyon
 Ligue des champions,2018-2019,Real Madrid
 Ligue des champions,2018-2019,Roma
 Ligue des champions,2018-2019,Viktoria Plzeň
 Ligue des champions,2018-2019,CSKA Moskva
-Ligue des champions,2018-2019,Valencia CF
+Ligue des champions,2018-2019,Valencia
 Ligue des champions,2018-2019,Juventus
 Ligue des champions,2018-2019,BSC Young Boys
 Ligue des champions,2018-2019,Man United
@@ -1343,12 +1350,12 @@ Ligue des champions,2019-2020,Inter
 Ligue des champions,2019-2020,Slavia Prague
 Ligue des champions,2019-2020,Dortmund
 Ligue des champions,2019-2020,Barcelona
-Ligue des champions,2019-2020,Olympique Lyonnais
+Ligue des champions,2019-2020,Lyon
 Ligue des champions,2019-2020,Zenit St. Petersburg
 Ligue des champions,2019-2020,Benfica
 Ligue des champions,2019-2020,RB Leipzig
 Ligue des champions,2019-2020,Chelsea
-Ligue des champions,2019-2020,Valencia CF
+Ligue des champions,2019-2020,Valencia
 Ligue des champions,2019-2020,Ajax
 Ligue des champions,2019-2020,Lille
 Ligue des champions,2020-2021,RB Salzburg
@@ -1451,7 +1458,7 @@ Ligue des champions,2023-2024,Milan
 Ligue des champions,2023-2024,Newcastle
 Ligue des champions,2023-2024,BSC Young Boys
 Ligue des champions,2023-2024,RB Leipzig
-Ligue des champions,2023-2024,SS Lazio
+Ligue des champions,2023-2024,Lazio
 Ligue des champions,2023-2024,Ath Madrid
 Ligue des champions,2023-2024,Feyenoord Rotterdam
 Ligue des champions,2023-2024,Celtic FC
@@ -1464,11 +1471,11 @@ Ligue des champions,2023-2024,Royal Antwerp FC
 Ligue des champions,2023-2024,FK Shakhtar Donetsk
 Ligue des champions,2023-2024,FC Porto
 Ligue des champions,2023-2024,Real Madrid
-Ligue des champions,2023-2024,1. FC Union Berlin
+Ligue des champions,2023-2024,Union Berlin
 Ligue des champions,2023-2024,Galatasaray
 Ligue des champions,2023-2024,Copenhagen
 Ligue des champions,2023-2024,Sevilla
-Ligue des champions,2023-2024,Racing Club de Lens
+Ligue des champions,2023-2024,Lens
 Ligue des champions,2023-2024,Sporting Clube de Braga
 Ligue des champions,2023-2024,Napoli
 Ligue des champions,2023-2024,Real Sociedad de Fútbol
@@ -1491,7 +1498,7 @@ Ligue des champions,2024-2025,Real Madrid
 Ligue des champions,2024-2025,Stuttgart
 Ligue des champions,2024-2025,Milan
 Ligue des champions,2024-2025,Liverpool
-Ligue des champions,2024-2025,Bologna FC 1909
+Ligue des champions,2024-2025,Bologna
 Ligue des champions,2024-2025,FK Shakhtar Donetsk
 Ligue des champions,2024-2025,AC Sparta Praha
 Ligue des champions,2024-2025,FC Red Bull Salzburg

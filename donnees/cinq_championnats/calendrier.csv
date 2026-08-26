@@ -1,8 +1,310 @@
 championnat,saison,date,heure,domicile,exterieur,journee
-La Liga,2026-2027,2026-08-24,17:30,Osasuna,Levante,
-La Liga,2026-2027,2026-08-24,19:30,Malaga,Dep. A Coruna,
-La Liga,2026-2027,2026-08-24,20:30,Malaga,La Coruna,
-La Liga,2026-2027,2026-08-25,19:00,Valencia,Betis,
+Bundesliga,2026-2027,2026-08-28,20:30,Bayern Munich,Stuttgart,1
+Bundesliga,2026-2027,2026-08-29,15:30,FC Koln,Hoffenheim,1
+Bundesliga,2026-2027,2026-08-29,15:30,Mainz,SC Paderborn 07,1
+Bundesliga,2026-2027,2026-08-29,15:30,RB Leipzig,M'gladbach,1
+Bundesliga,2026-2027,2026-08-29,15:30,SV 07 Elversberg,Leverkusen,1
+Bundesliga,2026-2027,2026-08-29,15:30,Union Berlin,Ein Frankfurt,1
+Bundesliga,2026-2027,2026-08-29,18:30,Dortmund,Hamburg,1
+Bundesliga,2026-2027,2026-08-30,15:30,Freiburg,Werder Bremen,1
+Bundesliga,2026-2027,2026-08-30,17:30,Augsburg,Schalke 04,1
+Bundesliga,2026-2027,2026-09-04,20:30,Stuttgart,FC Koln,2
+Bundesliga,2026-2027,2026-09-05,15:30,Hoffenheim,Dortmund,2
+Bundesliga,2026-2027,2026-09-05,15:30,Leverkusen,Union Berlin,2
+Bundesliga,2026-2027,2026-09-05,15:30,M'gladbach,SV 07 Elversberg,2
+Bundesliga,2026-2027,2026-09-05,15:30,SC Paderborn 07,Freiburg,2
+Bundesliga,2026-2027,2026-09-05,15:30,Werder Bremen,RB Leipzig,2
+Bundesliga,2026-2027,2026-09-05,18:30,Schalke 04,Bayern Munich,2
+Bundesliga,2026-2027,2026-09-06,15:30,Hamburg,Mainz,2
+Bundesliga,2026-2027,2026-09-06,17:30,Ein Frankfurt,Augsburg,2
+Bundesliga,2026-2027,2026-09-11,20:30,Union Berlin,Schalke 04,3
+Bundesliga,2026-2027,2026-09-12,15:30,Augsburg,Leverkusen,3
+Bundesliga,2026-2027,2026-09-12,15:30,Dortmund,SC Paderborn 07,3
+Bundesliga,2026-2027,2026-09-12,15:30,Freiburg,M'gladbach,3
+Bundesliga,2026-2027,2026-09-12,15:30,Hoffenheim,Stuttgart,3
+Bundesliga,2026-2027,2026-09-12,15:30,Mainz,Ein Frankfurt,3
+Bundesliga,2026-2027,2026-09-12,18:30,FC Koln,Werder Bremen,3
+Bundesliga,2026-2027,2026-09-13,15:30,RB Leipzig,Hamburg,3
+Bundesliga,2026-2027,2026-09-13,17:30,SV 07 Elversberg,Bayern Munich,3
+Bundesliga,2026-2027,2026-09-18,20:30,Bayern Munich,Union Berlin,4
+Bundesliga,2026-2027,2026-09-19,15:30,Ein Frankfurt,Freiburg,4
+Bundesliga,2026-2027,2026-09-19,15:30,Hamburg,FC Koln,4
+Bundesliga,2026-2027,2026-09-19,15:30,M'gladbach,Mainz,4
+Bundesliga,2026-2027,2026-09-19,15:30,Werder Bremen,Augsburg,4
+Bundesliga,2026-2027,2026-09-19,18:30,Stuttgart,Dortmund,4
+Bundesliga,2026-2027,2026-09-20,15:30,Leverkusen,RB Leipzig,4
+Bundesliga,2026-2027,2026-09-20,17:30,Schalke 04,SV 07 Elversberg,4
+Bundesliga,2026-2027,2026-09-20,19:30,SC Paderborn 07,Hoffenheim,4
+Bundesliga,2026-2027,2026-10-10,,Augsburg,Bayern Munich,5
+Bundesliga,2026-2027,2026-10-10,,Dortmund,Werder Bremen,5
+Bundesliga,2026-2027,2026-10-10,,FC Koln,M'gladbach,5
+Bundesliga,2026-2027,2026-10-10,,Freiburg,Schalke 04,5
+Bundesliga,2026-2027,2026-10-10,,Hoffenheim,Hamburg,5
+Bundesliga,2026-2027,2026-10-10,,Mainz,Leverkusen,5
+Bundesliga,2026-2027,2026-10-10,,RB Leipzig,Ein Frankfurt,5
+Bundesliga,2026-2027,2026-10-10,,SC Paderborn 07,Stuttgart,5
+Bundesliga,2026-2027,2026-10-10,,Union Berlin,SV 07 Elversberg,5
+Bundesliga,2026-2027,2026-10-17,,Bayern Munich,RB Leipzig,6
+Bundesliga,2026-2027,2026-10-17,,Ein Frankfurt,FC Koln,6
+Bundesliga,2026-2027,2026-10-17,,Hamburg,Stuttgart,6
+Bundesliga,2026-2027,2026-10-17,,Leverkusen,Freiburg,6
+Bundesliga,2026-2027,2026-10-17,,M'gladbach,Hoffenheim,6
+Bundesliga,2026-2027,2026-10-17,,SV 07 Elversberg,Augsburg,6
+Bundesliga,2026-2027,2026-10-17,,Schalke 04,Mainz,6
+Bundesliga,2026-2027,2026-10-17,,Union Berlin,Dortmund,6
+Bundesliga,2026-2027,2026-10-17,,Werder Bremen,SC Paderborn 07,6
+Bundesliga,2026-2027,2026-10-24,,Augsburg,Union Berlin,7
+Bundesliga,2026-2027,2026-10-24,,Dortmund,Ein Frankfurt,7
+Bundesliga,2026-2027,2026-10-24,,FC Koln,Schalke 04,7
+Bundesliga,2026-2027,2026-10-24,,Freiburg,Bayern Munich,7
+Bundesliga,2026-2027,2026-10-24,,Hoffenheim,Leverkusen,7
+Bundesliga,2026-2027,2026-10-24,,Mainz,Werder Bremen,7
+Bundesliga,2026-2027,2026-10-24,,RB Leipzig,SV 07 Elversberg,7
+Bundesliga,2026-2027,2026-10-24,,SC Paderborn 07,Hamburg,7
+Bundesliga,2026-2027,2026-10-24,,Stuttgart,M'gladbach,7
+Bundesliga,2026-2027,2026-10-31,,Augsburg,Freiburg,8
+Bundesliga,2026-2027,2026-10-31,,Bayern Munich,Dortmund,8
+Bundesliga,2026-2027,2026-10-31,,Ein Frankfurt,Hamburg,8
+Bundesliga,2026-2027,2026-10-31,,Leverkusen,Stuttgart,8
+Bundesliga,2026-2027,2026-10-31,,M'gladbach,SC Paderborn 07,8
+Bundesliga,2026-2027,2026-10-31,,SV 07 Elversberg,Mainz,8
+Bundesliga,2026-2027,2026-10-31,,Schalke 04,RB Leipzig,8
+Bundesliga,2026-2027,2026-10-31,,Union Berlin,FC Koln,8
+Bundesliga,2026-2027,2026-10-31,,Werder Bremen,Hoffenheim,8
+Bundesliga,2026-2027,2026-11-07,,Dortmund,SV 07 Elversberg,9
+Bundesliga,2026-2027,2026-11-07,,FC Koln,Leverkusen,9
+Bundesliga,2026-2027,2026-11-07,,Freiburg,Union Berlin,9
+Bundesliga,2026-2027,2026-11-07,,Hamburg,M'gladbach,9
+Bundesliga,2026-2027,2026-11-07,,Hoffenheim,Schalke 04,9
+Bundesliga,2026-2027,2026-11-07,,Mainz,Bayern Munich,9
+Bundesliga,2026-2027,2026-11-07,,RB Leipzig,Augsburg,9
+Bundesliga,2026-2027,2026-11-07,,SC Paderborn 07,Ein Frankfurt,9
+Bundesliga,2026-2027,2026-11-07,,Stuttgart,Werder Bremen,9
+Bundesliga,2026-2027,2026-11-21,,Augsburg,Mainz,10
+Bundesliga,2026-2027,2026-11-21,,Bayern Munich,FC Koln,10
+Bundesliga,2026-2027,2026-11-21,,Ein Frankfurt,Hoffenheim,10
+Bundesliga,2026-2027,2026-11-21,,Leverkusen,SC Paderborn 07,10
+Bundesliga,2026-2027,2026-11-21,,M'gladbach,Dortmund,10
+Bundesliga,2026-2027,2026-11-21,,SV 07 Elversberg,Freiburg,10
+Bundesliga,2026-2027,2026-11-21,,Schalke 04,Stuttgart,10
+Bundesliga,2026-2027,2026-11-21,,Union Berlin,RB Leipzig,10
+Bundesliga,2026-2027,2026-11-21,,Werder Bremen,Hamburg,10
+Bundesliga,2026-2027,2026-11-28,,Dortmund,Leverkusen,11
+Bundesliga,2026-2027,2026-11-28,,FC Koln,SV 07 Elversberg,11
+Bundesliga,2026-2027,2026-11-28,,Freiburg,RB Leipzig,11
+Bundesliga,2026-2027,2026-11-28,,Hamburg,Bayern Munich,11
+Bundesliga,2026-2027,2026-11-28,,Hoffenheim,Augsburg,11
+Bundesliga,2026-2027,2026-11-28,,Mainz,Union Berlin,11
+Bundesliga,2026-2027,2026-11-28,,SC Paderborn 07,Schalke 04,11
+Bundesliga,2026-2027,2026-11-28,,Stuttgart,Ein Frankfurt,11
+Bundesliga,2026-2027,2026-11-28,,Werder Bremen,M'gladbach,11
+Bundesliga,2026-2027,2026-12-05,,Augsburg,FC Koln,12
+Bundesliga,2026-2027,2026-12-05,,Bayern Munich,SC Paderborn 07,12
+Bundesliga,2026-2027,2026-12-05,,Ein Frankfurt,Werder Bremen,12
+Bundesliga,2026-2027,2026-12-05,,Freiburg,Hoffenheim,12
+Bundesliga,2026-2027,2026-12-05,,Leverkusen,M'gladbach,12
+Bundesliga,2026-2027,2026-12-05,,RB Leipzig,Mainz,12
+Bundesliga,2026-2027,2026-12-05,,SV 07 Elversberg,Stuttgart,12
+Bundesliga,2026-2027,2026-12-05,,Schalke 04,Dortmund,12
+Bundesliga,2026-2027,2026-12-05,,Union Berlin,Hamburg,12
+Bundesliga,2026-2027,2026-12-12,,Dortmund,Augsburg,13
+Bundesliga,2026-2027,2026-12-12,,FC Koln,RB Leipzig,13
+Bundesliga,2026-2027,2026-12-12,,Hamburg,Schalke 04,13
+Bundesliga,2026-2027,2026-12-12,,Hoffenheim,Bayern Munich,13
+Bundesliga,2026-2027,2026-12-12,,M'gladbach,Ein Frankfurt,13
+Bundesliga,2026-2027,2026-12-12,,Mainz,Freiburg,13
+Bundesliga,2026-2027,2026-12-12,,SC Paderborn 07,SV 07 Elversberg,13
+Bundesliga,2026-2027,2026-12-12,,Stuttgart,Union Berlin,13
+Bundesliga,2026-2027,2026-12-12,,Werder Bremen,Leverkusen,13
+Bundesliga,2026-2027,2026-12-19,,Augsburg,SC Paderborn 07,14
+Bundesliga,2026-2027,2026-12-19,,Bayern Munich,Werder Bremen,14
+Bundesliga,2026-2027,2026-12-19,,Freiburg,Stuttgart,14
+Bundesliga,2026-2027,2026-12-19,,Leverkusen,Ein Frankfurt,14
+Bundesliga,2026-2027,2026-12-19,,Mainz,FC Koln,14
+Bundesliga,2026-2027,2026-12-19,,RB Leipzig,Dortmund,14
+Bundesliga,2026-2027,2026-12-19,,SV 07 Elversberg,Hamburg,14
+Bundesliga,2026-2027,2026-12-19,,Schalke 04,M'gladbach,14
+Bundesliga,2026-2027,2026-12-19,,Union Berlin,Hoffenheim,14
+Bundesliga,2026-2027,2027-01-09,,Dortmund,Mainz,15
+Bundesliga,2026-2027,2027-01-09,,Ein Frankfurt,Schalke 04,15
+Bundesliga,2026-2027,2027-01-09,,FC Koln,Freiburg,15
+Bundesliga,2026-2027,2027-01-09,,Hamburg,Leverkusen,15
+Bundesliga,2026-2027,2027-01-09,,Hoffenheim,SV 07 Elversberg,15
+Bundesliga,2026-2027,2027-01-09,,M'gladbach,Bayern Munich,15
+Bundesliga,2026-2027,2027-01-09,,SC Paderborn 07,RB Leipzig,15
+Bundesliga,2026-2027,2027-01-09,,Stuttgart,Augsburg,15
+Bundesliga,2026-2027,2027-01-09,,Werder Bremen,Union Berlin,15
+Bundesliga,2026-2027,2027-01-13,,Augsburg,M'gladbach,16
+Bundesliga,2026-2027,2027-01-13,,Bayern Munich,Leverkusen,16
+Bundesliga,2026-2027,2027-01-13,,FC Koln,Dortmund,16
+Bundesliga,2026-2027,2027-01-13,,Freiburg,Hamburg,16
+Bundesliga,2026-2027,2027-01-13,,Mainz,Hoffenheim,16
+Bundesliga,2026-2027,2027-01-13,,RB Leipzig,Stuttgart,16
+Bundesliga,2026-2027,2027-01-13,,SV 07 Elversberg,Ein Frankfurt,16
+Bundesliga,2026-2027,2027-01-13,,Schalke 04,Werder Bremen,16
+Bundesliga,2026-2027,2027-01-13,,Union Berlin,SC Paderborn 07,16
+Bundesliga,2026-2027,2027-01-16,,Dortmund,Freiburg,17
+Bundesliga,2026-2027,2027-01-16,,Ein Frankfurt,Bayern Munich,17
+Bundesliga,2026-2027,2027-01-16,,Hamburg,Augsburg,17
+Bundesliga,2026-2027,2027-01-16,,Hoffenheim,RB Leipzig,17
+Bundesliga,2026-2027,2027-01-16,,Leverkusen,Schalke 04,17
+Bundesliga,2026-2027,2027-01-16,,M'gladbach,Union Berlin,17
+Bundesliga,2026-2027,2027-01-16,,SC Paderborn 07,FC Koln,17
+Bundesliga,2026-2027,2027-01-16,,Stuttgart,Mainz,17
+Bundesliga,2026-2027,2027-01-16,,Werder Bremen,SV 07 Elversberg,17
+Bundesliga,2026-2027,2027-01-23,,Ein Frankfurt,Union Berlin,18
+Bundesliga,2026-2027,2027-01-23,,Hamburg,Dortmund,18
+Bundesliga,2026-2027,2027-01-23,,Hoffenheim,FC Koln,18
+Bundesliga,2026-2027,2027-01-23,,Leverkusen,SV 07 Elversberg,18
+Bundesliga,2026-2027,2027-01-23,,M'gladbach,RB Leipzig,18
+Bundesliga,2026-2027,2027-01-23,,SC Paderborn 07,Mainz,18
+Bundesliga,2026-2027,2027-01-23,,Schalke 04,Augsburg,18
+Bundesliga,2026-2027,2027-01-23,,Stuttgart,Bayern Munich,18
+Bundesliga,2026-2027,2027-01-23,,Werder Bremen,Freiburg,18
+Bundesliga,2026-2027,2027-01-30,,Augsburg,Ein Frankfurt,19
+Bundesliga,2026-2027,2027-01-30,,Bayern Munich,Schalke 04,19
+Bundesliga,2026-2027,2027-01-30,,Dortmund,Hoffenheim,19
+Bundesliga,2026-2027,2027-01-30,,FC Koln,Stuttgart,19
+Bundesliga,2026-2027,2027-01-30,,Freiburg,SC Paderborn 07,19
+Bundesliga,2026-2027,2027-01-30,,Mainz,Hamburg,19
+Bundesliga,2026-2027,2027-01-30,,RB Leipzig,Werder Bremen,19
+Bundesliga,2026-2027,2027-01-30,,SV 07 Elversberg,M'gladbach,19
+Bundesliga,2026-2027,2027-01-30,,Union Berlin,Leverkusen,19
+Bundesliga,2026-2027,2027-02-06,,Bayern Munich,SV 07 Elversberg,20
+Bundesliga,2026-2027,2027-02-06,,Ein Frankfurt,Mainz,20
+Bundesliga,2026-2027,2027-02-06,,Hamburg,RB Leipzig,20
+Bundesliga,2026-2027,2027-02-06,,Leverkusen,Augsburg,20
+Bundesliga,2026-2027,2027-02-06,,M'gladbach,Freiburg,20
+Bundesliga,2026-2027,2027-02-06,,SC Paderborn 07,Dortmund,20
+Bundesliga,2026-2027,2027-02-06,,Schalke 04,Union Berlin,20
+Bundesliga,2026-2027,2027-02-06,,Stuttgart,Hoffenheim,20
+Bundesliga,2026-2027,2027-02-06,,Werder Bremen,FC Koln,20
+Bundesliga,2026-2027,2027-02-13,,Augsburg,Werder Bremen,21
+Bundesliga,2026-2027,2027-02-13,,Dortmund,Stuttgart,21
+Bundesliga,2026-2027,2027-02-13,,FC Koln,Hamburg,21
+Bundesliga,2026-2027,2027-02-13,,Freiburg,Ein Frankfurt,21
+Bundesliga,2026-2027,2027-02-13,,Hoffenheim,SC Paderborn 07,21
+Bundesliga,2026-2027,2027-02-13,,Mainz,M'gladbach,21
+Bundesliga,2026-2027,2027-02-13,,RB Leipzig,Leverkusen,21
+Bundesliga,2026-2027,2027-02-13,,SV 07 Elversberg,Schalke 04,21
+Bundesliga,2026-2027,2027-02-13,,Union Berlin,Bayern Munich,21
+Bundesliga,2026-2027,2027-02-20,,Bayern Munich,Augsburg,22
+Bundesliga,2026-2027,2027-02-20,,Ein Frankfurt,RB Leipzig,22
+Bundesliga,2026-2027,2027-02-20,,Hamburg,Hoffenheim,22
+Bundesliga,2026-2027,2027-02-20,,Leverkusen,Mainz,22
+Bundesliga,2026-2027,2027-02-20,,M'gladbach,FC Koln,22
+Bundesliga,2026-2027,2027-02-20,,SV 07 Elversberg,Union Berlin,22
+Bundesliga,2026-2027,2027-02-20,,Schalke 04,Freiburg,22
+Bundesliga,2026-2027,2027-02-20,,Stuttgart,SC Paderborn 07,22
+Bundesliga,2026-2027,2027-02-20,,Werder Bremen,Dortmund,22
+Bundesliga,2026-2027,2027-02-27,,Augsburg,SV 07 Elversberg,23
+Bundesliga,2026-2027,2027-02-27,,Dortmund,Union Berlin,23
+Bundesliga,2026-2027,2027-02-27,,FC Koln,Ein Frankfurt,23
+Bundesliga,2026-2027,2027-02-27,,Freiburg,Leverkusen,23
+Bundesliga,2026-2027,2027-02-27,,Hoffenheim,M'gladbach,23
+Bundesliga,2026-2027,2027-02-27,,Mainz,Schalke 04,23
+Bundesliga,2026-2027,2027-02-27,,RB Leipzig,Bayern Munich,23
+Bundesliga,2026-2027,2027-02-27,,SC Paderborn 07,Werder Bremen,23
+Bundesliga,2026-2027,2027-02-27,,Stuttgart,Hamburg,23
+Bundesliga,2026-2027,2027-03-03,,Bayern Munich,Freiburg,24
+Bundesliga,2026-2027,2027-03-03,,Ein Frankfurt,Dortmund,24
+Bundesliga,2026-2027,2027-03-03,,Hamburg,SC Paderborn 07,24
+Bundesliga,2026-2027,2027-03-03,,Leverkusen,Hoffenheim,24
+Bundesliga,2026-2027,2027-03-03,,M'gladbach,Stuttgart,24
+Bundesliga,2026-2027,2027-03-03,,SV 07 Elversberg,RB Leipzig,24
+Bundesliga,2026-2027,2027-03-03,,Schalke 04,FC Koln,24
+Bundesliga,2026-2027,2027-03-03,,Union Berlin,Augsburg,24
+Bundesliga,2026-2027,2027-03-03,,Werder Bremen,Mainz,24
+Bundesliga,2026-2027,2027-03-06,,Dortmund,Bayern Munich,25
+Bundesliga,2026-2027,2027-03-06,,FC Koln,Union Berlin,25
+Bundesliga,2026-2027,2027-03-06,,Freiburg,Augsburg,25
+Bundesliga,2026-2027,2027-03-06,,Hamburg,Ein Frankfurt,25
+Bundesliga,2026-2027,2027-03-06,,Hoffenheim,Werder Bremen,25
+Bundesliga,2026-2027,2027-03-06,,Mainz,SV 07 Elversberg,25
+Bundesliga,2026-2027,2027-03-06,,RB Leipzig,Schalke 04,25
+Bundesliga,2026-2027,2027-03-06,,SC Paderborn 07,M'gladbach,25
+Bundesliga,2026-2027,2027-03-06,,Stuttgart,Leverkusen,25
+Bundesliga,2026-2027,2027-03-13,,Augsburg,RB Leipzig,26
+Bundesliga,2026-2027,2027-03-13,,Bayern Munich,Mainz,26
+Bundesliga,2026-2027,2027-03-13,,Ein Frankfurt,SC Paderborn 07,26
+Bundesliga,2026-2027,2027-03-13,,Leverkusen,FC Koln,26
+Bundesliga,2026-2027,2027-03-13,,M'gladbach,Hamburg,26
+Bundesliga,2026-2027,2027-03-13,,SV 07 Elversberg,Dortmund,26
+Bundesliga,2026-2027,2027-03-13,,Schalke 04,Hoffenheim,26
+Bundesliga,2026-2027,2027-03-13,,Union Berlin,Freiburg,26
+Bundesliga,2026-2027,2027-03-13,,Werder Bremen,Stuttgart,26
+Bundesliga,2026-2027,2027-03-20,,Dortmund,M'gladbach,27
+Bundesliga,2026-2027,2027-03-20,,FC Koln,Bayern Munich,27
+Bundesliga,2026-2027,2027-03-20,,Freiburg,SV 07 Elversberg,27
+Bundesliga,2026-2027,2027-03-20,,Hamburg,Werder Bremen,27
+Bundesliga,2026-2027,2027-03-20,,Hoffenheim,Ein Frankfurt,27
+Bundesliga,2026-2027,2027-03-20,,Mainz,Augsburg,27
+Bundesliga,2026-2027,2027-03-20,,RB Leipzig,Union Berlin,27
+Bundesliga,2026-2027,2027-03-20,,SC Paderborn 07,Leverkusen,27
+Bundesliga,2026-2027,2027-03-20,,Stuttgart,Schalke 04,27
+Bundesliga,2026-2027,2027-04-03,,Augsburg,Hoffenheim,28
+Bundesliga,2026-2027,2027-04-03,,Bayern Munich,Hamburg,28
+Bundesliga,2026-2027,2027-04-03,,Ein Frankfurt,Stuttgart,28
+Bundesliga,2026-2027,2027-04-03,,Leverkusen,Dortmund,28
+Bundesliga,2026-2027,2027-04-03,,M'gladbach,Werder Bremen,28
+Bundesliga,2026-2027,2027-04-03,,RB Leipzig,Freiburg,28
+Bundesliga,2026-2027,2027-04-03,,SV 07 Elversberg,FC Koln,28
+Bundesliga,2026-2027,2027-04-03,,Schalke 04,SC Paderborn 07,28
+Bundesliga,2026-2027,2027-04-03,,Union Berlin,Mainz,28
+Bundesliga,2026-2027,2027-04-10,,Dortmund,Schalke 04,29
+Bundesliga,2026-2027,2027-04-10,,FC Koln,Augsburg,29
+Bundesliga,2026-2027,2027-04-10,,Hamburg,Union Berlin,29
+Bundesliga,2026-2027,2027-04-10,,Hoffenheim,Freiburg,29
+Bundesliga,2026-2027,2027-04-10,,M'gladbach,Leverkusen,29
+Bundesliga,2026-2027,2027-04-10,,Mainz,RB Leipzig,29
+Bundesliga,2026-2027,2027-04-10,,SC Paderborn 07,Bayern Munich,29
+Bundesliga,2026-2027,2027-04-10,,Stuttgart,SV 07 Elversberg,29
+Bundesliga,2026-2027,2027-04-10,,Werder Bremen,Ein Frankfurt,29
+Bundesliga,2026-2027,2027-04-17,,Augsburg,Dortmund,30
+Bundesliga,2026-2027,2027-04-17,,Bayern Munich,Hoffenheim,30
+Bundesliga,2026-2027,2027-04-17,,Ein Frankfurt,M'gladbach,30
+Bundesliga,2026-2027,2027-04-17,,Freiburg,Mainz,30
+Bundesliga,2026-2027,2027-04-17,,Leverkusen,Werder Bremen,30
+Bundesliga,2026-2027,2027-04-17,,RB Leipzig,FC Koln,30
+Bundesliga,2026-2027,2027-04-17,,SV 07 Elversberg,SC Paderborn 07,30
+Bundesliga,2026-2027,2027-04-17,,Schalke 04,Hamburg,30
+Bundesliga,2026-2027,2027-04-17,,Union Berlin,Stuttgart,30
+Bundesliga,2026-2027,2027-04-24,,Dortmund,RB Leipzig,31
+Bundesliga,2026-2027,2027-04-24,,Ein Frankfurt,Leverkusen,31
+Bundesliga,2026-2027,2027-04-24,,FC Koln,Mainz,31
+Bundesliga,2026-2027,2027-04-24,,Hamburg,SV 07 Elversberg,31
+Bundesliga,2026-2027,2027-04-24,,Hoffenheim,Union Berlin,31
+Bundesliga,2026-2027,2027-04-24,,M'gladbach,Schalke 04,31
+Bundesliga,2026-2027,2027-04-24,,SC Paderborn 07,Augsburg,31
+Bundesliga,2026-2027,2027-04-24,,Stuttgart,Freiburg,31
+Bundesliga,2026-2027,2027-04-24,,Werder Bremen,Bayern Munich,31
+Bundesliga,2026-2027,2027-05-08,,Augsburg,Stuttgart,32
+Bundesliga,2026-2027,2027-05-08,,Bayern Munich,M'gladbach,32
+Bundesliga,2026-2027,2027-05-08,,Freiburg,FC Koln,32
+Bundesliga,2026-2027,2027-05-08,,Leverkusen,Hamburg,32
+Bundesliga,2026-2027,2027-05-08,,Mainz,Dortmund,32
+Bundesliga,2026-2027,2027-05-08,,RB Leipzig,SC Paderborn 07,32
+Bundesliga,2026-2027,2027-05-08,,SV 07 Elversberg,Hoffenheim,32
+Bundesliga,2026-2027,2027-05-08,,Schalke 04,Ein Frankfurt,32
+Bundesliga,2026-2027,2027-05-08,,Union Berlin,Werder Bremen,32
+Bundesliga,2026-2027,2027-05-15,,Dortmund,FC Koln,33
+Bundesliga,2026-2027,2027-05-15,,Ein Frankfurt,SV 07 Elversberg,33
+Bundesliga,2026-2027,2027-05-15,,Hamburg,Freiburg,33
+Bundesliga,2026-2027,2027-05-15,,Hoffenheim,Mainz,33
+Bundesliga,2026-2027,2027-05-15,,Leverkusen,Bayern Munich,33
+Bundesliga,2026-2027,2027-05-15,,M'gladbach,Augsburg,33
+Bundesliga,2026-2027,2027-05-15,,SC Paderborn 07,Union Berlin,33
+Bundesliga,2026-2027,2027-05-15,,Stuttgart,RB Leipzig,33
+Bundesliga,2026-2027,2027-05-15,,Werder Bremen,Schalke 04,33
+Bundesliga,2026-2027,2027-05-22,15:30,Augsburg,Hamburg,34
+Bundesliga,2026-2027,2027-05-22,15:30,Bayern Munich,Ein Frankfurt,34
+Bundesliga,2026-2027,2027-05-22,15:30,FC Koln,SC Paderborn 07,34
+Bundesliga,2026-2027,2027-05-22,15:30,Freiburg,Dortmund,34
+Bundesliga,2026-2027,2027-05-22,15:30,Mainz,Stuttgart,34
+Bundesliga,2026-2027,2027-05-22,15:30,RB Leipzig,Hoffenheim,34
+Bundesliga,2026-2027,2027-05-22,15:30,SV 07 Elversberg,Werder Bremen,34
+Bundesliga,2026-2027,2027-05-22,15:30,Schalke 04,Leverkusen,34
+Bundesliga,2026-2027,2027-05-22,15:30,Union Berlin,M'gladbach,34
 La Liga,2026-2027,2026-08-26,19:00,Real Madrid,Sociedad,
 La Liga,2026-2027,2026-08-27,18:30,Celta,Osasuna,
 La Liga,2026-2027,2026-08-27,19:00,Barcelona,Ath Bilbao,
@@ -10,10 +312,12 @@ La Liga,2026-2027,2026-08-28,17:00,Santander,Elche,
 La Liga,2026-2027,2026-08-28,19:30,Alaves,Villarreal,
 La Liga,2026-2027,2026-08-29,15:00,Levante,Betis,
 La Liga,2026-2027,2026-08-29,17:00,Sociedad,Espanol,
+La Liga,2026-2027,2026-08-29,19:00,Sociedad,Barcelona,3
 La Liga,2026-2027,2026-08-29,19:30,Sevilla,Ath Madrid,
 La Liga,2026-2027,2026-08-30,15:00,Real Madrid,Malaga,
 La Liga,2026-2027,2026-08-30,17:30,Dep. A Coruna,Valencia,
 La Liga,2026-2027,2026-08-30,19:30,Celta,Ath Bilbao,
+La Liga,2026-2027,2026-08-30,19:30,La Coruna,Valencia,3
 La Liga,2026-2027,2026-08-31,17:30,Osasuna,Getafe,
 La Liga,2026-2027,2026-08-31,19:30,Barcelona,Vallecano,
 La Liga,2026-2027,2026-09-03,19:00,Sociedad,Celta,
@@ -21,12 +325,16 @@ La Liga,2026-2027,2026-09-04,19:00,Betis,Real Madrid,
 La Liga,2026-2027,2026-09-05,14:15,Ath Bilbao,Ath Madrid,
 La Liga,2026-2027,2026-09-05,16:30,Vallecano,Santander,
 La Liga,2026-2027,2026-09-05,19:00,Villarreal,Dep. A Coruna,
+La Liga,2026-2027,2026-09-05,21:00,Villarreal,La Coruna,4
 La Liga,2026-2027,2026-09-06,14:15,Valencia,Barcelona,
 La Liga,2026-2027,2026-09-06,16:30,Alaves,Osasuna,
 La Liga,2026-2027,2026-09-06,16:30,Malaga,Levante,
 La Liga,2026-2027,2026-09-06,19:00,Espanol,Sevilla,
+La Liga,2026-2027,2026-09-06,21:00,Barcelona,Sevilla,4
 La Liga,2026-2027,2026-09-07,17:00,Getafe,Celta,
 La Liga,2026-2027,2026-09-07,19:30,Elche,Sociedad,
+La Liga,2026-2027,2026-09-13,,Getafe,La Coruna,5
+La Liga,2026-2027,2026-09-13,,Osasuna,Barcelona,5
 La Liga,2026-2027,2026-09-13,15:00,Ath Bilbao,Elche,
 La Liga,2026-2027,2026-09-13,15:00,Celta,Malaga,
 La Liga,2026-2027,2026-09-13,15:00,Getafe,Dep. A Coruna,
@@ -37,6 +345,8 @@ La Liga,2026-2027,2026-09-13,15:00,Santander,Alaves,
 La Liga,2026-2027,2026-09-13,15:00,Sevilla,Valencia,
 La Liga,2026-2027,2026-09-13,15:00,Sociedad,Ath Madrid,
 La Liga,2026-2027,2026-09-13,15:00,Villarreal,Betis,
+La Liga,2026-2027,2026-09-16,,La Coruna,Sevilla,6
+La Liga,2026-2027,2026-09-16,,Vallecano,Barcelona,6
 La Liga,2026-2027,2026-09-16,15:00,Alaves,Valencia,
 La Liga,2026-2027,2026-09-16,15:00,Ath Madrid,Osasuna,
 La Liga,2026-2027,2026-09-16,15:00,Barcelona,Santander,
@@ -46,6 +356,8 @@ La Liga,2026-2027,2026-09-16,15:00,Elche,Real Madrid,
 La Liga,2026-2027,2026-09-16,15:00,Levante,Ath Bilbao,
 La Liga,2026-2027,2026-09-16,15:00,Malaga,Villarreal,
 La Liga,2026-2027,2026-09-16,15:00,Vallecano,Espanol,
+La Liga,2026-2027,2026-09-20,,Barcelona,Elche,7
+La Liga,2026-2027,2026-09-20,,La Coruna,Betis,7
 La Liga,2026-2027,2026-09-20,15:00,Ath Bilbao,Alaves,
 La Liga,2026-2027,2026-09-20,15:00,Ath Madrid,Real Madrid,
 La Liga,2026-2027,2026-09-20,15:00,Celta,Santander,
@@ -56,6 +368,8 @@ La Liga,2026-2027,2026-09-20,15:00,Osasuna,Vallecano,
 La Liga,2026-2027,2026-09-20,15:00,Sevilla,Barcelona,
 La Liga,2026-2027,2026-09-20,15:00,Valencia,Sociedad,
 La Liga,2026-2027,2026-09-20,15:00,Villarreal,Levante,
+La Liga,2026-2027,2026-10-11,,Malaga,Barcelona,8
+La Liga,2026-2027,2026-10-11,,Sociedad,La Coruna,8
 La Liga,2026-2027,2026-10-11,15:00,Alaves,Ath Madrid,
 La Liga,2026-2027,2026-10-11,15:00,Barcelona,Getafe,
 La Liga,2026-2027,2026-10-11,15:00,Betis,Osasuna,
@@ -66,6 +380,8 @@ La Liga,2026-2027,2026-10-11,15:00,Real Madrid,Villarreal,
 La Liga,2026-2027,2026-10-11,15:00,Santander,Valencia,
 La Liga,2026-2027,2026-10-11,15:00,Sociedad,Dep. A Coruna,
 La Liga,2026-2027,2026-10-11,15:00,Vallecano,Ath Bilbao,
+La Liga,2026-2027,2026-10-18,,Barcelona,Ath Madrid,9
+La Liga,2026-2027,2026-10-18,,La Coruna,Levante,9
 La Liga,2026-2027,2026-10-18,15:00,Betis,Barcelona,
 La Liga,2026-2027,2026-10-18,15:00,Celta,Alaves,
 La Liga,2026-2027,2026-10-18,15:00,Dep. A Coruna,Levante,
@@ -76,6 +392,8 @@ La Liga,2026-2027,2026-10-18,15:00,Osasuna,Santander,
 La Liga,2026-2027,2026-10-18,15:00,Real Madrid,Sevilla,
 La Liga,2026-2027,2026-10-18,15:00,Valencia,Ath Bilbao,
 La Liga,2026-2027,2026-10-18,15:00,Villarreal,Elche,
+La Liga,2026-2027,2026-10-25,,Ath Madrid,La Coruna,10
+La Liga,2026-2027,2026-10-25,,Santander,Barcelona,10
 La Liga,2026-2027,2026-10-25,16:00,Alaves,Malaga,
 La Liga,2026-2027,2026-10-25,16:00,Ath Bilbao,Getafe,
 La Liga,2026-2027,2026-10-25,16:00,Ath Madrid,Dep. A Coruna,
@@ -86,6 +404,8 @@ La Liga,2026-2027,2026-10-25,16:00,Sevilla,Osasuna,
 La Liga,2026-2027,2026-10-25,16:00,Sociedad,Levante,
 La Liga,2026-2027,2026-10-25,16:00,Valencia,Villarreal,
 La Liga,2026-2027,2026-10-25,16:00,Vallecano,Elche,
+La Liga,2026-2027,2026-11-01,,La Coruna,Osasuna,11
+La Liga,2026-2027,2026-11-01,,Villarreal,Barcelona,11
 La Liga,2026-2027,2026-11-01,16:00,Ath Bilbao,Sociedad,
 La Liga,2026-2027,2026-11-01,16:00,Barcelona,Alaves,
 La Liga,2026-2027,2026-11-01,16:00,Betis,Malaga,
@@ -96,6 +416,7 @@ La Liga,2026-2027,2026-11-01,16:00,Levante,Ath Madrid,
 La Liga,2026-2027,2026-11-01,16:00,Santander,Real Madrid,
 La Liga,2026-2027,2026-11-01,16:00,Vallecano,Celta,
 La Liga,2026-2027,2026-11-01,16:00,Villarreal,Espanol,
+La Liga,2026-2027,2026-11-08,,Barcelona,La Coruna,12
 La Liga,2026-2027,2026-11-08,16:00,Ath Madrid,Barcelona,
 La Liga,2026-2027,2026-11-08,16:00,Celta,Levante,
 La Liga,2026-2027,2026-11-08,16:00,Elche,Betis,
@@ -106,6 +427,8 @@ La Liga,2026-2027,2026-11-08,16:00,Sevilla,Alaves,
 La Liga,2026-2027,2026-11-08,16:00,Sociedad,Vallecano,
 La Liga,2026-2027,2026-11-08,16:00,Valencia,Real Madrid,
 La Liga,2026-2027,2026-11-08,16:00,Villarreal,Getafe,
+La Liga,2026-2027,2026-11-22,,Alaves,La Coruna,13
+La Liga,2026-2027,2026-11-22,,Ath Bilbao,Barcelona,13
 La Liga,2026-2027,2026-11-22,16:00,Alaves,Dep. A Coruna,
 La Liga,2026-2027,2026-11-22,16:00,Ath Bilbao,Espanol,
 La Liga,2026-2027,2026-11-22,16:00,Barcelona,Villarreal,
@@ -116,6 +439,8 @@ La Liga,2026-2027,2026-11-22,16:00,Real Madrid,Celta,
 La Liga,2026-2027,2026-11-22,16:00,Santander,Sociedad,
 La Liga,2026-2027,2026-11-22,16:00,Sevilla,Betis,
 La Liga,2026-2027,2026-11-22,16:00,Vallecano,Valencia,
+La Liga,2026-2027,2026-11-29,,Barcelona,Getafe,14
+La Liga,2026-2027,2026-11-29,,La Coruna,Barcelona,14
 La Liga,2026-2027,2026-11-29,16:00,Betis,Vallecano,
 La Liga,2026-2027,2026-11-29,16:00,Celta,Villarreal,
 La Liga,2026-2027,2026-11-29,16:00,Dep. A Coruna,Barcelona,
@@ -126,6 +451,8 @@ La Liga,2026-2027,2026-11-29,16:00,Malaga,Ath Bilbao,
 La Liga,2026-2027,2026-11-29,16:00,Real Madrid,Alaves,
 La Liga,2026-2027,2026-11-29,16:00,Sociedad,Sevilla,
 La Liga,2026-2027,2026-11-29,16:00,Valencia,Osasuna,
+La Liga,2026-2027,2026-12-06,,Alaves,Barcelona,15
+La Liga,2026-2027,2026-12-06,,Santander,La Coruna,15
 La Liga,2026-2027,2026-12-06,16:00,Alaves,Espanol,
 La Liga,2026-2027,2026-12-06,16:00,Ath Bilbao,Real Madrid,
 La Liga,2026-2027,2026-12-06,16:00,Ath Madrid,Betis,
@@ -136,6 +463,8 @@ La Liga,2026-2027,2026-12-06,16:00,Santander,Dep. A Coruna,
 La Liga,2026-2027,2026-12-06,16:00,Sevilla,Malaga,
 La Liga,2026-2027,2026-12-06,16:00,Vallecano,Levante,
 La Liga,2026-2027,2026-12-06,16:00,Villarreal,Sociedad,
+La Liga,2026-2027,2026-12-13,,Barcelona,Celta,16
+La Liga,2026-2027,2026-12-13,,La Coruna,Ath Bilbao,16
 La Liga,2026-2027,2026-12-13,16:00,Ath Madrid,Valencia,
 La Liga,2026-2027,2026-12-13,16:00,Betis,Santander,
 La Liga,2026-2027,2026-12-13,16:00,Dep. A Coruna,Ath Bilbao,
@@ -146,6 +475,8 @@ La Liga,2026-2027,2026-12-13,16:00,Malaga,Barcelona,
 La Liga,2026-2027,2026-12-13,16:00,Real Madrid,Osasuna,
 La Liga,2026-2027,2026-12-13,16:00,Sociedad,Getafe,
 La Liga,2026-2027,2026-12-13,16:00,Villarreal,Vallecano,
+La Liga,2026-2027,2026-12-20,,La Coruna,Real Madrid,17
+La Liga,2026-2027,2026-12-20,,Valencia,Barcelona,17
 La Liga,2026-2027,2026-12-20,16:00,Alaves,Elche,
 La Liga,2026-2027,2026-12-20,16:00,Ath Bilbao,Betis,
 La Liga,2026-2027,2026-12-20,16:00,Barcelona,Sociedad,
@@ -156,6 +487,7 @@ La Liga,2026-2027,2026-12-20,16:00,Osasuna,Villarreal,
 La Liga,2026-2027,2026-12-20,16:00,Sevilla,Santander,
 La Liga,2026-2027,2026-12-20,16:00,Valencia,Espanol,
 La Liga,2026-2027,2026-12-20,16:00,Vallecano,Malaga,
+La Liga,2026-2027,2027-01-03,,Celta,La Coruna,18
 La Liga,2026-2027,2027-01-03,16:00,Betis,Alaves,
 La Liga,2026-2027,2027-01-03,16:00,Celta,Dep. A Coruna,
 La Liga,2026-2027,2027-01-03,16:00,Espanol,Barcelona,
@@ -166,6 +498,8 @@ La Liga,2026-2027,2027-01-03,16:00,Santander,Ath Bilbao,
 La Liga,2026-2027,2027-01-03,16:00,Sociedad,Osasuna,
 La Liga,2026-2027,2027-01-03,16:00,Vallecano,Ath Madrid,
 La Liga,2026-2027,2027-01-03,16:00,Villarreal,Sevilla,
+La Liga,2026-2027,2027-01-10,,Barcelona,Betis,19
+La Liga,2026-2027,2027-01-10,,La Coruna,Vallecano,19
 La Liga,2026-2027,2027-01-10,16:00,Alaves,Sociedad,
 La Liga,2026-2027,2027-01-10,16:00,Ath Bilbao,Villarreal,
 La Liga,2026-2027,2027-01-10,16:00,Ath Madrid,Santander,
@@ -176,6 +510,8 @@ La Liga,2026-2027,2027-01-10,16:00,Osasuna,Barcelona,
 La Liga,2026-2027,2027-01-10,16:00,Real Madrid,Levante,
 La Liga,2026-2027,2027-01-10,16:00,Sevilla,Celta,
 La Liga,2026-2027,2027-01-10,16:00,Valencia,Malaga,
+La Liga,2026-2027,2027-01-17,,Betis,La Coruna,20
+La Liga,2026-2027,2027-01-17,,Levante,Barcelona,20
 La Liga,2026-2027,2027-01-17,16:00,Ath Madrid,Sociedad,
 La Liga,2026-2027,2027-01-17,16:00,Barcelona,Elche,
 La Liga,2026-2027,2027-01-17,16:00,Betis,Dep. A Coruna,
@@ -186,6 +522,8 @@ La Liga,2026-2027,2027-01-17,16:00,Malaga,Real Madrid,
 La Liga,2026-2027,2027-01-17,16:00,Santander,Osasuna,
 La Liga,2026-2027,2027-01-17,16:00,Vallecano,Sevilla,
 La Liga,2026-2027,2027-01-17,16:00,Villarreal,Alaves,
+La Liga,2026-2027,2027-01-24,,Barcelona,Villarreal,21
+La Liga,2026-2027,2027-01-24,,La Coruna,Ath Madrid,21
 La Liga,2026-2027,2027-01-24,16:00,Alaves,Barcelona,
 La Liga,2026-2027,2027-01-24,16:00,Ath Bilbao,Levante,
 La Liga,2026-2027,2027-01-24,16:00,Dep. A Coruna,Ath Madrid,
@@ -196,6 +534,8 @@ La Liga,2026-2027,2027-01-24,16:00,Real Madrid,Betis,
 La Liga,2026-2027,2027-01-24,16:00,Santander,Celta,
 La Liga,2026-2027,2027-01-24,16:00,Sociedad,Malaga,
 La Liga,2026-2027,2027-01-24,16:00,Valencia,Sevilla,
+La Liga,2026-2027,2027-01-31,,Ath Madrid,Barcelona,22
+La Liga,2026-2027,2027-01-31,,Osasuna,La Coruna,22
 La Liga,2026-2027,2027-01-31,16:00,Ath Madrid,Espanol,
 La Liga,2026-2027,2027-01-31,16:00,Barcelona,Valencia,
 La Liga,2026-2027,2027-01-31,16:00,Betis,Elche,
@@ -206,6 +546,8 @@ La Liga,2026-2027,2027-01-31,16:00,Osasuna,Dep. A Coruna,
 La Liga,2026-2027,2027-01-31,16:00,Sevilla,Ath Bilbao,
 La Liga,2026-2027,2027-01-31,16:00,Vallecano,Real Madrid,
 La Liga,2026-2027,2027-01-31,16:00,Villarreal,Santander,
+La Liga,2026-2027,2027-02-07,,Barcelona,Vallecano,23
+La Liga,2026-2027,2027-02-07,,La Coruna,Malaga,23
 La Liga,2026-2027,2027-02-07,16:00,Alaves,Celta,
 La Liga,2026-2027,2027-02-07,16:00,Ath Bilbao,Osasuna,
 La Liga,2026-2027,2027-02-07,16:00,Barcelona,Ath Madrid,
@@ -216,6 +558,8 @@ La Liga,2026-2027,2027-02-07,16:00,Espanol,Vallecano,
 La Liga,2026-2027,2027-02-07,16:00,Getafe,Villarreal,
 La Liga,2026-2027,2027-02-07,16:00,Sociedad,Real Madrid,
 La Liga,2026-2027,2027-02-07,16:00,Valencia,Santander,
+La Liga,2026-2027,2027-02-14,,Elche,La Coruna,24
+La Liga,2026-2027,2027-02-14,,Sevilla,Barcelona,24
 La Liga,2026-2027,2027-02-14,16:00,Celta,Vallecano,
 La Liga,2026-2027,2027-02-14,16:00,Elche,Dep. A Coruna,
 La Liga,2026-2027,2027-02-14,16:00,Levante,Malaga,
@@ -226,6 +570,8 @@ La Liga,2026-2027,2027-02-14,16:00,Sevilla,Espanol,
 La Liga,2026-2027,2027-02-14,16:00,Sociedad,Betis,
 La Liga,2026-2027,2027-02-14,16:00,Valencia,Alaves,
 La Liga,2026-2027,2027-02-14,16:00,Villarreal,Barcelona,
+La Liga,2026-2027,2027-02-21,,Barcelona,Osasuna,25
+La Liga,2026-2027,2027-02-21,,La Coruna,Sociedad,25
 La Liga,2026-2027,2027-02-21,16:00,Alaves,Santander,
 La Liga,2026-2027,2027-02-21,16:00,Ath Bilbao,Celta,
 La Liga,2026-2027,2027-02-21,16:00,Ath Madrid,Elche,
@@ -236,6 +582,8 @@ La Liga,2026-2027,2027-02-21,16:00,Malaga,Betis,
 La Liga,2026-2027,2027-02-21,16:00,Sevilla,Real Madrid,
 La Liga,2026-2027,2027-02-21,16:00,Vallecano,Getafe,
 La Liga,2026-2027,2027-02-21,16:00,Villarreal,Valencia,
+La Liga,2026-2027,2027-02-28,,Celta,Barcelona,26
+La Liga,2026-2027,2027-02-28,,Levante,La Coruna,26
 La Liga,2026-2027,2027-02-28,16:00,Ath Bilbao,Barcelona,
 La Liga,2026-2027,2027-02-28,16:00,Betis,Villarreal,
 La Liga,2026-2027,2027-02-28,16:00,Celta,Espanol,
@@ -246,6 +594,8 @@ La Liga,2026-2027,2027-02-28,16:00,Osasuna,Sevilla,
 La Liga,2026-2027,2027-02-28,16:00,Real Madrid,Valencia,
 La Liga,2026-2027,2027-02-28,16:00,Santander,Vallecano,
 La Liga,2026-2027,2027-02-28,16:00,Sociedad,Elche,
+La Liga,2026-2027,2027-03-07,,Barcelona,Santander,27
+La Liga,2026-2027,2027-03-07,,La Coruna,Getafe,27
 La Liga,2026-2027,2027-03-07,16:00,Alaves,Ath Bilbao,
 La Liga,2026-2027,2027-03-07,16:00,Ath Madrid,Celta,
 La Liga,2026-2027,2027-03-07,16:00,Barcelona,Betis,
@@ -256,6 +606,8 @@ La Liga,2026-2027,2027-03-07,16:00,Sevilla,Sociedad,
 La Liga,2026-2027,2027-03-07,16:00,Valencia,Levante,
 La Liga,2026-2027,2027-03-07,16:00,Vallecano,Osasuna,
 La Liga,2026-2027,2027-03-07,16:00,Villarreal,Real Madrid,
+La Liga,2026-2027,2027-03-14,,Barcelona,La Coruna,28
+La Liga,2026-2027,2027-03-14,,Real Madrid,Barcelona,28
 La Liga,2026-2027,2027-03-14,16:00,Alaves,Sevilla,
 La Liga,2026-2027,2027-03-14,16:00,Ath Bilbao,Valencia,
 La Liga,2026-2027,2027-03-14,16:00,Barcelona,Dep. A Coruna,
@@ -266,6 +618,8 @@ La Liga,2026-2027,2027-03-14,16:00,Malaga,Vallecano,
 La Liga,2026-2027,2027-03-14,16:00,Osasuna,Celta,
 La Liga,2026-2027,2027-03-14,16:00,Real Madrid,Espanol,
 La Liga,2026-2027,2027-03-14,16:00,Santander,Ath Madrid,
+La Liga,2026-2027,2027-03-21,,Barcelona,Ath Bilbao,29
+La Liga,2026-2027,2027-03-21,,Valencia,La Coruna,29
 La Liga,2026-2027,2027-03-21,16:00,Ath Madrid,Getafe,
 La Liga,2026-2027,2027-03-21,16:00,Celta,Real Madrid,
 La Liga,2026-2027,2027-03-21,16:00,Espanol,Ath Bilbao,
@@ -276,6 +630,8 @@ La Liga,2026-2027,2027-03-21,16:00,Sociedad,Alaves,
 La Liga,2026-2027,2027-03-21,16:00,Valencia,Dep. A Coruna,
 La Liga,2026-2027,2027-03-21,16:00,Vallecano,Barcelona,
 La Liga,2026-2027,2027-03-21,16:00,Villarreal,Malaga,
+La Liga,2026-2027,2027-04-04,,Getafe,Barcelona,30
+La Liga,2026-2027,2027-04-04,,La Coruna,Villarreal,30
 La Liga,2026-2027,2027-04-04,15:00,Ath Bilbao,Santander,
 La Liga,2026-2027,2027-04-04,15:00,Barcelona,Sevilla,
 La Liga,2026-2027,2027-04-04,15:00,Betis,Celta,
@@ -286,6 +642,8 @@ La Liga,2026-2027,2027-04-04,15:00,Levante,Vallecano,
 La Liga,2026-2027,2027-04-04,15:00,Malaga,Osasuna,
 La Liga,2026-2027,2027-04-04,15:00,Real Madrid,Ath Madrid,
 La Liga,2026-2027,2027-04-04,15:00,Sociedad,Valencia,
+La Liga,2026-2027,2027-04-11,,Barcelona,Malaga,31
+La Liga,2026-2027,2027-04-11,,Sevilla,La Coruna,31
 La Liga,2026-2027,2027-04-11,15:00,Alaves,Betis,
 La Liga,2026-2027,2027-04-11,15:00,Ath Madrid,Levante,
 La Liga,2026-2027,2027-04-11,15:00,Celta,Elche,
@@ -296,6 +654,7 @@ La Liga,2026-2027,2027-04-11,15:00,Sevilla,Dep. A Coruna,
 La Liga,2026-2027,2027-04-11,15:00,Valencia,Getafe,
 La Liga,2026-2027,2027-04-11,15:00,Vallecano,Sociedad,
 La Liga,2026-2027,2027-04-11,15:00,Villarreal,Ath Bilbao,
+La Liga,2026-2027,2027-04-18,,La Coruna,Celta,32
 La Liga,2026-2027,2027-04-18,15:00,Alaves,Vallecano,
 La Liga,2026-2027,2027-04-18,15:00,Ath Madrid,Sevilla,
 La Liga,2026-2027,2027-04-18,15:00,Barcelona,Espanol,
@@ -306,6 +665,8 @@ La Liga,2026-2027,2027-04-18,15:00,Getafe,Real Madrid,
 La Liga,2026-2027,2027-04-18,15:00,Levante,Villarreal,
 La Liga,2026-2027,2027-04-18,15:00,Malaga,Valencia,
 La Liga,2026-2027,2027-04-18,15:00,Sociedad,Santander,
+La Liga,2026-2027,2027-04-21,,Ath Bilbao,La Coruna,33
+La Liga,2026-2027,2027-04-21,,Barcelona,Sociedad,33
 La Liga,2026-2027,2027-04-21,15:00,Ath Bilbao,Dep. A Coruna,
 La Liga,2026-2027,2027-04-21,15:00,Celta,Barcelona,
 La Liga,2026-2027,2027-04-21,15:00,Espanol,Sociedad,
@@ -316,6 +677,8 @@ La Liga,2026-2027,2027-04-21,15:00,Santander,Malaga,
 La Liga,2026-2027,2027-04-21,15:00,Sevilla,Levante,
 La Liga,2026-2027,2027-04-21,15:00,Valencia,Vallecano,
 La Liga,2026-2027,2027-04-21,15:00,Villarreal,Ath Madrid,
+La Liga,2026-2027,2027-05-02,,Elche,Barcelona,34
+La Liga,2026-2027,2027-05-02,,La Coruna,Santander,34
 La Liga,2026-2027,2027-05-02,15:00,Ath Madrid,Alaves,
 La Liga,2026-2027,2027-05-02,15:00,Barcelona,Osasuna,
 La Liga,2026-2027,2027-05-02,15:00,Betis,Valencia,
@@ -326,6 +689,8 @@ La Liga,2026-2027,2027-05-02,15:00,Levante,Real Madrid,
 La Liga,2026-2027,2027-05-02,15:00,Malaga,Getafe,
 La Liga,2026-2027,2027-05-02,15:00,Sociedad,Ath Bilbao,
 La Liga,2026-2027,2027-05-02,15:00,Vallecano,Villarreal,
+La Liga,2026-2027,2027-05-09,,Betis,Barcelona,35
+La Liga,2026-2027,2027-05-09,,Vallecano,La Coruna,35
 La Liga,2026-2027,2027-05-09,15:00,Alaves,Levante,
 La Liga,2026-2027,2027-05-09,15:00,Ath Bilbao,Malaga,
 La Liga,2026-2027,2027-05-09,15:00,Betis,Espanol,
@@ -336,6 +701,8 @@ La Liga,2026-2027,2027-05-09,15:00,Santander,Sevilla,
 La Liga,2026-2027,2027-05-09,15:00,Valencia,Ath Madrid,
 La Liga,2026-2027,2027-05-09,15:00,Vallecano,Dep. A Coruna,
 La Liga,2026-2027,2027-05-09,15:00,Villarreal,Celta,
+La Liga,2026-2027,2027-05-16,,Barcelona,Valencia,36
+La Liga,2026-2027,2027-05-16,,La Coruna,Alaves,36
 La Liga,2026-2027,2027-05-16,15:00,Ath Madrid,Vallecano,
 La Liga,2026-2027,2027-05-16,15:00,Dep. A Coruna,Alaves,
 La Liga,2026-2027,2027-05-16,15:00,Elche,Ath Bilbao,
@@ -346,6 +713,7 @@ La Liga,2026-2027,2027-05-16,15:00,Osasuna,Betis,
 La Liga,2026-2027,2027-05-16,15:00,Real Madrid,Santander,
 La Liga,2026-2027,2027-05-16,15:00,Sevilla,Villarreal,
 La Liga,2026-2027,2027-05-16,15:00,Sociedad,Barcelona,
+La Liga,2026-2027,2027-05-23,,La Coruna,Barcelona,37
 La Liga,2026-2027,2027-05-23,15:00,Alaves,Real Madrid,
 La Liga,2026-2027,2027-05-23,15:00,Ath Madrid,Ath Bilbao,
 La Liga,2026-2027,2027-05-23,15:00,Barcelona,Malaga,
@@ -356,6 +724,8 @@ La Liga,2026-2027,2027-05-23,15:00,Sevilla,Getafe,
 La Liga,2026-2027,2027-05-23,15:00,Valencia,Elche,
 La Liga,2026-2027,2027-05-23,15:00,Vallecano,Betis,
 La Liga,2026-2027,2027-05-23,15:00,Villarreal,Osasuna,
+La Liga,2026-2027,2027-05-30,,Barcelona,Alaves,38
+La Liga,2026-2027,2027-05-30,,Real Madrid,La Coruna,38
 La Liga,2026-2027,2027-05-30,15:00,Ath Bilbao,Vallecano,
 La Liga,2026-2027,2027-05-30,15:00,Betis,Ath Madrid,
 La Liga,2026-2027,2027-05-30,15:00,Elche,Santander,
@@ -374,6 +744,7 @@ Ligue 1,2026-2027,2026-08-29,18:45,Lorient,Troyes,
 Ligue 1,2026-2027,2026-08-29,18:45,Lyon,Le Havre,
 Ligue 1,2026-2027,2026-08-30,13:00,Paris FC,Nice,
 Ligue 1,2026-2027,2026-08-30,15:15,Rennes,Le Mans,
+Ligue 1,2026-2027,2026-08-30,17:15,Stade Rennais FC 1901,Le Mans,2
 Ligue 1,2026-2027,2026-08-30,18:45,Monaco,Marseille,
 Ligue 1,2026-2027,2026-09-03,18:45,Toulouse,Lille,
 Ligue 1,2026-2027,2026-09-04,17:00,Lyon,Auxerre,
@@ -383,8 +754,10 @@ Ligue 1,2026-2027,2026-09-05,18:45,Le Havre,Brest,
 Ligue 1,2026-2027,2026-09-05,18:45,Nice,Le Mans,
 Ligue 1,2026-2027,2026-09-06,13:00,Troyes,Strasbourg,
 Ligue 1,2026-2027,2026-09-06,15:15,Angers,Rennes,
+Ligue 1,2026-2027,2026-09-06,17:15,Angers,Stade Rennais FC 1901,3
 Ligue 1,2026-2027,2026-09-06,18:45,Marseille,Paris FC,
 Ligue 1,2026-2027,2026-09-11,18:45,Rennes,Marseille,
+Ligue 1,2026-2027,2026-09-11,20:45,Stade Rennais FC 1901,Marseille,4
 Ligue 1,2026-2027,2026-09-12,15:15,Strasbourg,Monaco,
 Ligue 1,2026-2027,2026-09-12,18:45,Auxerre,Nice,
 Ligue 1,2026-2027,2026-09-12,18:45,Le Havre,Angers,
@@ -393,6 +766,7 @@ Ligue 1,2026-2027,2026-09-12,18:45,Paris FC,Lyon,
 Ligue 1,2026-2027,2026-09-13,13:00,Lille,Troyes,
 Ligue 1,2026-2027,2026-09-13,15:15,Le Mans,Lens,
 Ligue 1,2026-2027,2026-09-13,18:45,Brest,Paris SG,
+Ligue 1,2026-2027,2026-09-19,,Lyon,Stade Rennais FC 1901,5
 Ligue 1,2026-2027,2026-09-19,13:00,Angers,Troyes,
 Ligue 1,2026-2027,2026-09-19,13:00,Auxerre,Brest,
 Ligue 1,2026-2027,2026-09-19,13:00,Le Mans,Lorient,
@@ -402,6 +776,7 @@ Ligue 1,2026-2027,2026-09-19,13:00,Nice,Lille,
 Ligue 1,2026-2027,2026-09-19,13:00,Paris FC,Strasbourg,
 Ligue 1,2026-2027,2026-09-19,13:00,Toulouse,Le Havre,
 Ligue 1,2026-2027,2026-09-20,18:45,Marseille,Paris SG,
+Ligue 1,2026-2027,2026-10-10,,Stade Rennais FC 1901,Auxerre,6
 Ligue 1,2026-2027,2026-10-10,13:00,Brest,Angers,
 Ligue 1,2026-2027,2026-10-10,13:00,Lens,Lyon,
 Ligue 1,2026-2027,2026-10-10,13:00,Lille,Le Havre,
@@ -411,6 +786,7 @@ Ligue 1,2026-2027,2026-10-10,13:00,Nice,Strasbourg,
 Ligue 1,2026-2027,2026-10-10,13:00,Paris SG,Le Mans,
 Ligue 1,2026-2027,2026-10-10,13:00,Rennes,Auxerre,
 Ligue 1,2026-2027,2026-10-10,13:00,Troyes,Marseille,
+Ligue 1,2026-2027,2026-10-17,,Paris FC,Stade Rennais FC 1901,7
 Ligue 1,2026-2027,2026-10-17,13:00,Angers,Marseille,
 Ligue 1,2026-2027,2026-10-17,13:00,Le Havre,Auxerre,
 Ligue 1,2026-2027,2026-10-17,13:00,Le Mans,Toulouse,
@@ -420,6 +796,7 @@ Ligue 1,2026-2027,2026-10-17,13:00,Lyon,Nice,
 Ligue 1,2026-2027,2026-10-17,13:00,Paris FC,Rennes,
 Ligue 1,2026-2027,2026-10-17,13:00,Strasbourg,Paris SG,
 Ligue 1,2026-2027,2026-10-17,13:00,Troyes,Lens,
+Ligue 1,2026-2027,2026-10-24,,Stade Rennais FC 1901,Strasbourg,8
 Ligue 1,2026-2027,2026-10-24,13:00,Angers,Lorient,
 Ligue 1,2026-2027,2026-10-24,13:00,Auxerre,Le Mans,
 Ligue 1,2026-2027,2026-10-24,13:00,Brest,Nice,
@@ -429,6 +806,7 @@ Ligue 1,2026-2027,2026-10-24,13:00,Monaco,Lille,
 Ligue 1,2026-2027,2026-10-24,13:00,Rennes,Strasbourg,
 Ligue 1,2026-2027,2026-10-24,13:00,Toulouse,Troyes,
 Ligue 1,2026-2027,2026-10-25,19:45,Paris SG,Lyon,
+Ligue 1,2026-2027,2026-10-31,,Nice,Stade Rennais FC 1901,9
 Ligue 1,2026-2027,2026-10-31,14:00,Le Havre,Paris SG,
 Ligue 1,2026-2027,2026-10-31,14:00,Lille,Lens,
 Ligue 1,2026-2027,2026-10-31,14:00,Lorient,Brest,
@@ -438,6 +816,7 @@ Ligue 1,2026-2027,2026-10-31,14:00,Nice,Rennes,
 Ligue 1,2026-2027,2026-10-31,14:00,Paris FC,Monaco,
 Ligue 1,2026-2027,2026-10-31,14:00,Strasbourg,Auxerre,
 Ligue 1,2026-2027,2026-10-31,14:00,Troyes,Le Mans,
+Ligue 1,2026-2027,2026-11-07,,Stade Rennais FC 1901,Lille,10
 Ligue 1,2026-2027,2026-11-07,14:00,Angers,Nice,
 Ligue 1,2026-2027,2026-11-07,14:00,Auxerre,Paris FC,
 Ligue 1,2026-2027,2026-11-07,14:00,Brest,Lyon,
@@ -447,6 +826,7 @@ Ligue 1,2026-2027,2026-11-07,14:00,Paris SG,Troyes,
 Ligue 1,2026-2027,2026-11-07,14:00,Rennes,Lille,
 Ligue 1,2026-2027,2026-11-07,14:00,Toulouse,Strasbourg,
 Ligue 1,2026-2027,2026-11-07,19:45,Lens,Marseille,
+Ligue 1,2026-2027,2026-11-21,,Lorient,Stade Rennais FC 1901,11
 Ligue 1,2026-2027,2026-11-21,14:00,Lens,Toulouse,
 Ligue 1,2026-2027,2026-11-21,14:00,Lille,Lyon,
 Ligue 1,2026-2027,2026-11-21,14:00,Lorient,Rennes,
@@ -456,6 +836,7 @@ Ligue 1,2026-2027,2026-11-21,14:00,Nice,Paris SG,
 Ligue 1,2026-2027,2026-11-21,14:00,Paris FC,Angers,
 Ligue 1,2026-2027,2026-11-21,14:00,Strasbourg,Brest,
 Ligue 1,2026-2027,2026-11-21,14:00,Troyes,Le Havre,
+Ligue 1,2026-2027,2026-11-28,,Toulouse,Stade Rennais FC 1901,12
 Ligue 1,2026-2027,2026-11-28,14:00,Angers,Lens,
 Ligue 1,2026-2027,2026-11-28,14:00,Auxerre,Marseille,
 Ligue 1,2026-2027,2026-11-28,14:00,Brest,Paris FC,
@@ -465,6 +846,7 @@ Ligue 1,2026-2027,2026-11-28,14:00,Lyon,Monaco,
 Ligue 1,2026-2027,2026-11-28,14:00,Nice,Troyes,
 Ligue 1,2026-2027,2026-11-28,14:00,Paris SG,Lorient,
 Ligue 1,2026-2027,2026-11-28,14:00,Toulouse,Rennes,
+Ligue 1,2026-2027,2026-12-05,,Stade Rennais FC 1901,Brest,13
 Ligue 1,2026-2027,2026-12-05,14:00,Lens,Le Havre,
 Ligue 1,2026-2027,2026-12-05,14:00,Lille,Auxerre,
 Ligue 1,2026-2027,2026-12-05,14:00,Marseille,Nice,
@@ -474,6 +856,7 @@ Ligue 1,2026-2027,2026-12-05,14:00,Rennes,Brest,
 Ligue 1,2026-2027,2026-12-05,14:00,Strasbourg,Lorient,
 Ligue 1,2026-2027,2026-12-05,14:00,Toulouse,Paris SG,
 Ligue 1,2026-2027,2026-12-05,14:00,Troyes,Lyon,
+Ligue 1,2026-2027,2026-12-12,,Stade Rennais FC 1901,Monaco,14
 Ligue 1,2026-2027,2026-12-12,14:00,Angers,Strasbourg,
 Ligue 1,2026-2027,2026-12-12,14:00,Auxerre,Toulouse,
 Ligue 1,2026-2027,2026-12-12,14:00,Brest,Troyes,
@@ -483,6 +866,7 @@ Ligue 1,2026-2027,2026-12-12,14:00,Nice,Lens,
 Ligue 1,2026-2027,2026-12-12,14:00,Paris SG,Paris FC,
 Ligue 1,2026-2027,2026-12-12,14:00,Rennes,Monaco,
 Ligue 1,2026-2027,2026-12-13,19:45,Lyon,Marseille,
+Ligue 1,2026-2027,2027-01-02,,Troyes,Stade Rennais FC 1901,15
 Ligue 1,2026-2027,2027-01-02,14:00,Brest,Marseille,
 Ligue 1,2026-2027,2027-01-02,14:00,Le Mans,Lyon,
 Ligue 1,2026-2027,2027-01-02,14:00,Lille,Strasbourg,
@@ -492,6 +876,7 @@ Ligue 1,2026-2027,2027-01-02,14:00,Paris FC,Le Havre,
 Ligue 1,2026-2027,2027-01-02,14:00,Toulouse,Angers,
 Ligue 1,2026-2027,2027-01-02,14:00,Troyes,Rennes,
 Ligue 1,2026-2027,2027-01-03,19:45,Lens,Paris SG,
+Ligue 1,2026-2027,2027-01-16,,Stade Rennais FC 1901,Lens,16
 Ligue 1,2026-2027,2027-01-16,14:00,Angers,Paris SG,
 Ligue 1,2026-2027,2027-01-16,14:00,Auxerre,Troyes,
 Ligue 1,2026-2027,2027-01-16,14:00,Lyon,Lorient,
@@ -501,6 +886,7 @@ Ligue 1,2026-2027,2027-01-16,14:00,Nice,Le Havre,
 Ligue 1,2026-2027,2027-01-16,14:00,Paris FC,Toulouse,
 Ligue 1,2026-2027,2027-01-16,14:00,Rennes,Lens,
 Ligue 1,2026-2027,2027-01-16,14:00,Strasbourg,Le Mans,
+Ligue 1,2026-2027,2027-01-23,,Le Havre,Stade Rennais FC 1901,17
 Ligue 1,2026-2027,2027-01-23,14:00,Le Havre,Rennes,
 Ligue 1,2026-2027,2027-01-23,14:00,Le Mans,Angers,
 Ligue 1,2026-2027,2027-01-23,14:00,Lens,Brest,
@@ -510,6 +896,7 @@ Ligue 1,2026-2027,2027-01-23,14:00,Paris SG,Auxerre,
 Ligue 1,2026-2027,2027-01-23,14:00,Strasbourg,Lyon,
 Ligue 1,2026-2027,2027-01-23,14:00,Toulouse,Nice,
 Ligue 1,2026-2027,2027-01-23,14:00,Troyes,Monaco,
+Ligue 1,2026-2027,2027-01-30,,Stade Rennais FC 1901,Lorient,18
 Ligue 1,2026-2027,2027-01-30,14:00,Angers,Le Havre,
 Ligue 1,2026-2027,2027-01-30,14:00,Brest,Strasbourg,
 Ligue 1,2026-2027,2027-01-30,14:00,Le Mans,Nice,
@@ -519,6 +906,7 @@ Ligue 1,2026-2027,2027-01-30,14:00,Monaco,Paris SG,
 Ligue 1,2026-2027,2027-01-30,14:00,Paris FC,Auxerre,
 Ligue 1,2026-2027,2027-01-30,14:00,Rennes,Lorient,
 Ligue 1,2026-2027,2027-01-30,14:00,Toulouse,Lens,
+Ligue 1,2026-2027,2027-02-06,,Stade Rennais FC 1901,Lyon,19
 Ligue 1,2026-2027,2027-02-06,14:00,Auxerre,Monaco,
 Ligue 1,2026-2027,2027-02-06,14:00,Le Havre,Toulouse,
 Ligue 1,2026-2027,2027-02-06,14:00,Lens,Angers,
@@ -528,6 +916,7 @@ Ligue 1,2026-2027,2027-02-06,14:00,Rennes,Lyon,
 Ligue 1,2026-2027,2027-02-06,14:00,Strasbourg,Paris FC,
 Ligue 1,2026-2027,2027-02-06,14:00,Troyes,Lille,
 Ligue 1,2026-2027,2027-02-07,19:45,Paris SG,Marseille,
+Ligue 1,2026-2027,2027-02-13,,Brest,Stade Rennais FC 1901,20
 Ligue 1,2026-2027,2027-02-13,14:00,Auxerre,Strasbourg,
 Ligue 1,2026-2027,2027-02-13,14:00,Brest,Rennes,
 Ligue 1,2026-2027,2027-02-13,14:00,Le Mans,Paris SG,
@@ -537,6 +926,7 @@ Ligue 1,2026-2027,2027-02-13,14:00,Lyon,Lens,
 Ligue 1,2026-2027,2027-02-13,14:00,Marseille,Angers,
 Ligue 1,2026-2027,2027-02-13,14:00,Paris FC,Troyes,
 Ligue 1,2026-2027,2027-02-13,14:00,Toulouse,Monaco,
+Ligue 1,2026-2027,2027-02-20,,Stade Rennais FC 1901,Toulouse,21
 Ligue 1,2026-2027,2027-02-20,14:00,Angers,Paris FC,
 Ligue 1,2026-2027,2027-02-20,14:00,Le Havre,Lyon,
 Ligue 1,2026-2027,2027-02-20,14:00,Lens,Troyes,
@@ -546,6 +936,7 @@ Ligue 1,2026-2027,2027-02-20,14:00,Nice,Auxerre,
 Ligue 1,2026-2027,2027-02-20,14:00,Paris SG,Brest,
 Ligue 1,2026-2027,2027-02-20,14:00,Rennes,Toulouse,
 Ligue 1,2026-2027,2027-02-20,14:00,Strasbourg,Marseille,
+Ligue 1,2026-2027,2027-02-27,,Marseille,Stade Rennais FC 1901,22
 Ligue 1,2026-2027,2027-02-27,14:00,Auxerre,Lille,
 Ligue 1,2026-2027,2027-02-27,14:00,Brest,Monaco,
 Ligue 1,2026-2027,2027-02-27,14:00,Le Mans,Paris FC,
@@ -555,15 +946,16 @@ Ligue 1,2026-2027,2027-02-27,14:00,Marseille,Rennes,
 Ligue 1,2026-2027,2027-02-27,14:00,Strasbourg,Le Havre,
 Ligue 1,2026-2027,2027-02-27,14:00,Troyes,Nice,
 Ligue 1,2026-2027,2027-02-28,19:45,Paris SG,Lens,
+Ligue 1,2026-2027,2027-03-06,,Paris SG,Stade Rennais FC 1901,23
 Ligue 1,2026-2027,2027-03-06,14:00,Angers,Auxerre,
 Ligue 1,2026-2027,2027-03-06,14:00,Le Havre,Nice,
 Ligue 1,2026-2027,2027-03-06,14:00,Lens,Strasbourg,
 Ligue 1,2026-2027,2027-03-06,14:00,Lille,Marseille,
 Ligue 1,2026-2027,2027-03-06,14:00,Monaco,Lyon,
 Ligue 1,2026-2027,2027-03-06,14:00,Paris FC,Brest,
-Ligue 1,2026-2027,2027-03-06,14:00,Rennes,Paris SG,
 Ligue 1,2026-2027,2027-03-06,14:00,Toulouse,Le Mans,
 Ligue 1,2026-2027,2027-03-06,14:00,Troyes,Lorient,
+Ligue 1,2026-2027,2027-03-13,,Le Mans,Stade Rennais FC 1901,24
 Ligue 1,2026-2027,2027-03-13,14:00,Auxerre,Paris SG,
 Ligue 1,2026-2027,2027-03-13,14:00,Brest,Lille,
 Ligue 1,2026-2027,2027-03-13,14:00,Le Havre,Lens,
@@ -573,6 +965,7 @@ Ligue 1,2026-2027,2027-03-13,14:00,Marseille,Monaco,
 Ligue 1,2026-2027,2027-03-13,14:00,Nice,Toulouse,
 Ligue 1,2026-2027,2027-03-13,14:00,Paris FC,Lorient,
 Ligue 1,2026-2027,2027-03-13,14:00,Strasbourg,Angers,
+Ligue 1,2026-2027,2027-03-20,,Stade Rennais FC 1901,Paris FC,25
 Ligue 1,2026-2027,2027-03-20,14:00,Angers,Le Mans,
 Ligue 1,2026-2027,2027-03-20,14:00,Lens,Lille,
 Ligue 1,2026-2027,2027-03-20,14:00,Lorient,Nice,
@@ -582,6 +975,7 @@ Ligue 1,2026-2027,2027-03-20,14:00,Rennes,Paris FC,
 Ligue 1,2026-2027,2027-03-20,14:00,Toulouse,Brest,
 Ligue 1,2026-2027,2027-03-20,14:00,Troyes,Auxerre,
 Ligue 1,2026-2027,2027-03-21,19:45,Marseille,Lyon,
+Ligue 1,2026-2027,2027-04-03,,Lille,Stade Rennais FC 1901,26
 Ligue 1,2026-2027,2027-04-03,13:00,Angers,Monaco,
 Ligue 1,2026-2027,2027-04-03,13:00,Auxerre,Lens,
 Ligue 1,2026-2027,2027-04-03,13:00,Brest,Lorient,
@@ -591,6 +985,7 @@ Ligue 1,2026-2027,2027-04-03,13:00,Lille,Rennes,
 Ligue 1,2026-2027,2027-04-03,13:00,Nice,Lyon,
 Ligue 1,2026-2027,2027-04-03,13:00,Paris FC,Paris SG,
 Ligue 1,2026-2027,2027-04-03,13:00,Strasbourg,Toulouse,
+Ligue 1,2026-2027,2027-04-10,,Monaco,Stade Rennais FC 1901,27
 Ligue 1,2026-2027,2027-04-10,13:00,Le Mans,Auxerre,
 Ligue 1,2026-2027,2027-04-10,13:00,Lille,Toulouse,
 Ligue 1,2026-2027,2027-04-10,13:00,Lorient,Lens,
@@ -600,6 +995,7 @@ Ligue 1,2026-2027,2027-04-10,13:00,Monaco,Rennes,
 Ligue 1,2026-2027,2027-04-10,13:00,Nice,Paris FC,
 Ligue 1,2026-2027,2027-04-10,13:00,Paris SG,Le Havre,
 Ligue 1,2026-2027,2027-04-10,13:00,Troyes,Angers,
+Ligue 1,2026-2027,2027-04-17,,Stade Rennais FC 1901,Troyes,28
 Ligue 1,2026-2027,2027-04-17,13:00,Angers,Lyon,
 Ligue 1,2026-2027,2027-04-17,13:00,Auxerre,Lorient,
 Ligue 1,2026-2027,2027-04-17,13:00,Brest,Le Mans,
@@ -609,6 +1005,7 @@ Ligue 1,2026-2027,2027-04-17,13:00,Monaco,Strasbourg,
 Ligue 1,2026-2027,2027-04-17,13:00,Paris SG,Lille,
 Ligue 1,2026-2027,2027-04-17,13:00,Rennes,Troyes,
 Ligue 1,2026-2027,2027-04-17,13:00,Toulouse,Paris FC,
+Ligue 1,2026-2027,2027-04-24,,Strasbourg,Stade Rennais FC 1901,29
 Ligue 1,2026-2027,2027-04-24,13:00,Le Mans,Le Havre,
 Ligue 1,2026-2027,2027-04-24,13:00,Lille,Monaco,
 Ligue 1,2026-2027,2027-04-24,13:00,Lorient,Paris SG,
@@ -618,6 +1015,7 @@ Ligue 1,2026-2027,2027-04-24,13:00,Nice,Angers,
 Ligue 1,2026-2027,2027-04-24,13:00,Paris FC,Lens,
 Ligue 1,2026-2027,2027-04-24,13:00,Strasbourg,Rennes,
 Ligue 1,2026-2027,2027-04-24,13:00,Troyes,Toulouse,
+Ligue 1,2026-2027,2027-05-01,,Stade Rennais FC 1901,Nice,30
 Ligue 1,2026-2027,2027-05-01,13:00,Auxerre,Lyon,
 Ligue 1,2026-2027,2027-05-01,13:00,Le Havre,Paris FC,
 Ligue 1,2026-2027,2027-05-01,13:00,Lens,Le Mans,
@@ -627,6 +1025,7 @@ Ligue 1,2026-2027,2027-05-01,13:00,Rennes,Nice,
 Ligue 1,2026-2027,2027-05-01,13:00,Strasbourg,Lille,
 Ligue 1,2026-2027,2027-05-01,13:00,Toulouse,Marseille,
 Ligue 1,2026-2027,2027-05-01,13:00,Troyes,Brest,
+Ligue 1,2026-2027,2027-05-08,,Stade Rennais FC 1901,Le Havre,31
 Ligue 1,2026-2027,2027-05-08,13:00,Angers,Toulouse,
 Ligue 1,2026-2027,2027-05-08,13:00,Brest,Auxerre,
 Ligue 1,2026-2027,2027-05-08,13:00,Le Mans,Troyes,
@@ -636,6 +1035,7 @@ Ligue 1,2026-2027,2027-05-08,13:00,Nice,Marseille,
 Ligue 1,2026-2027,2027-05-08,13:00,Paris FC,Lille,
 Ligue 1,2026-2027,2027-05-08,13:00,Rennes,Le Havre,
 Ligue 1,2026-2027,2027-05-09,18:45,Lyon,Paris SG,
+Ligue 1,2026-2027,2027-05-16,,Auxerre,Stade Rennais FC 1901,32
 Ligue 1,2026-2027,2027-05-16,13:00,Auxerre,Rennes,
 Ligue 1,2026-2027,2027-05-16,13:00,Brest,Le Havre,
 Ligue 1,2026-2027,2027-05-16,13:00,Lille,Angers,
@@ -645,6 +1045,7 @@ Ligue 1,2026-2027,2027-05-16,13:00,Monaco,Paris FC,
 Ligue 1,2026-2027,2027-05-16,13:00,Paris SG,Nice,
 Ligue 1,2026-2027,2027-05-16,13:00,Strasbourg,Troyes,
 Ligue 1,2026-2027,2027-05-16,13:00,Toulouse,Lorient,
+Ligue 1,2026-2027,2027-05-22,,Lens,Stade Rennais FC 1901,33
 Ligue 1,2026-2027,2027-05-22,13:00,Angers,Brest,
 Ligue 1,2026-2027,2027-05-22,13:00,Le Havre,Lille,
 Ligue 1,2026-2027,2027-05-22,13:00,Le Mans,Strasbourg,
@@ -654,6 +1055,7 @@ Ligue 1,2026-2027,2027-05-22,13:00,Nice,Monaco,
 Ligue 1,2026-2027,2027-05-22,13:00,Paris FC,Marseille,
 Ligue 1,2026-2027,2027-05-22,13:00,Toulouse,Auxerre,
 Ligue 1,2026-2027,2027-05-22,13:00,Troyes,Paris SG,
+Ligue 1,2026-2027,2027-05-29,,Stade Rennais FC 1901,Angers,34
 Ligue 1,2026-2027,2027-05-29,13:00,Auxerre,Le Havre,
 Ligue 1,2026-2027,2027-05-29,13:00,Brest,Lens,
 Ligue 1,2026-2027,2027-05-29,13:00,Lille,Le Mans,
@@ -663,7 +1065,6 @@ Ligue 1,2026-2027,2027-05-29,13:00,Monaco,Troyes,
 Ligue 1,2026-2027,2027-05-29,13:00,Paris SG,Toulouse,
 Ligue 1,2026-2027,2027-05-29,13:00,Rennes,Angers,
 Ligue 1,2026-2027,2027-05-29,13:00,Strasbourg,Nice,
-Premier League,2026-2027,2026-08-24,19:00,Fulham,Chelsea,
 Premier League,2026-2027,2026-08-28,19:00,Crystal Palace,Man City,
 Premier League,2026-2027,2026-08-29,11:30,Liverpool,Nott'm Forest,
 Premier League,2026-2027,2026-08-29,14:00,Bournemouth,Everton,
@@ -1034,8 +1435,6 @@ Premier League,2026-2027,2027-05-30,15:00,Ipswich,Everton,
 Premier League,2026-2027,2027-05-30,15:00,Liverpool,Bournemouth,
 Premier League,2026-2027,2027-05-30,15:00,Man United,Fulham,
 Premier League,2026-2027,2027-05-30,15:00,Sunderland,Man City,
-Serie A,2026-2027,2026-08-24,16:30,Bologna,Lazio,
-Serie A,2026-2027,2026-08-24,18:45,Roma,Fiorentina,
 Serie A,2026-2027,2026-08-28,18:45,Milan,Venezia,
 Serie A,2026-2027,2026-08-29,16:30,Fiorentina,Frosinone,
 Serie A,2026-2027,2026-08-29,16:30,Monza,Udinese,
@@ -1096,6 +1495,16 @@ Serie A,2026-2027,2026-10-17,13:00,Parma,Torino,
 Serie A,2026-2027,2026-10-17,13:00,Roma,Genoa,
 Serie A,2026-2027,2026-10-17,13:00,Udinese,Lecce,
 Serie A,2026-2027,2026-10-17,13:00,Venezia,Napoli,
+Serie A,2026-2027,2026-10-18,,Bologna,Inter,7
+Serie A,2026-2027,2026-10-18,,Fiorentina,Como,7
+Serie A,2026-2027,2026-10-18,,Frosinone,Sassuolo,7
+Serie A,2026-2027,2026-10-18,,Juventus,Lazio,7
+Serie A,2026-2027,2026-10-18,,Milan,Atalanta,7
+Serie A,2026-2027,2026-10-18,,Monza,Cagliari,7
+Serie A,2026-2027,2026-10-18,,Parma,Torino,7
+Serie A,2026-2027,2026-10-18,,Roma,Genoa,7
+Serie A,2026-2027,2026-10-18,,Udinese,Lecce,7
+Serie A,2026-2027,2026-10-18,,Venezia,Napoli,7
 Serie A,2026-2027,2026-10-25,14:00,Atalanta,Frosinone,
 Serie A,2026-2027,2026-10-25,14:00,Cagliari,Bologna,
 Serie A,2026-2027,2026-10-25,14:00,Como,Sassuolo,

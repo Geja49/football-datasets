@@ -4,10 +4,14 @@ import pytest
 from fastapi import HTTPException
 
 from serveur import (
+    NOM_LDC,
+    SAISON_COURANTE,
     calculer_classement,
     filtrer_matchs_a_venir,
     histogramme_simple,
     matchs_classement,
+    mediane_liste,
+    moyenne_liste,
     nombre_ok,
     saisons_disponibles,
     verifier_filtres,
@@ -24,6 +28,14 @@ def test_histogramme_simple():
     histo = histogramme_simple([0, 5, 10], 10, nb_classes=5)
     assert len(histo) == 5
     assert sum(case["n"] for case in histo) == 3
+
+
+def test_moyenne_et_mediane_liste():
+    assert moyenne_liste([1, 2, 3]) == 2.0
+    assert mediane_liste([1, 2, 3]) == 2.0
+    assert mediane_liste([1, 2, 3, 4]) == 2.5
+    assert moyenne_liste([]) == 0.0
+    assert mediane_liste([]) == 0.0
 
 
 def test_calculer_classement():
@@ -58,17 +70,17 @@ def test_matchs_classement_filtre_ldc():
         {"phase": "barrages", "domicile": "B"},
         {"phase": "", "domicile": "C"},
     ]
-    filtres = matchs_classement(matchs, "Ligue des champions")
+    filtres = matchs_classement(matchs, NOM_LDC)
     assert len(filtres) == 1
     assert filtres[0]["domicile"] == "A"
     assert matchs_classement(matchs, "La Liga") == matchs
 
 
-def test_saisons_disponibles(connexion_memoire):
+def test_saisons_disponibles_inclut_saison_courante(connexion_memoire):
     saisons = saisons_disponibles(connexion_memoire, "La Liga")
-    assert "2026-2027" in saisons
+    assert SAISON_COURANTE in saisons
     assert "2025-2026" in saisons
-    assert saisons[0] == "2026-2027"
+    assert saisons[0] == SAISON_COURANTE
 
 
 def test_filtrer_matchs_a_venir():

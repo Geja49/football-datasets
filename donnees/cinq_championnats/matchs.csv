@@ -12703,6 +12703,16 @@ Premier League,2025-2026,2026-05-24,Nott'm Forest,Bournemouth,1,1,D,1,0,H,C Paws
 Premier League,2025-2026,2026-05-24,Sunderland,Chelsea,2,1,H,1,0,H,C Kavanagh,20,10,2,1,15,18,7,7,3,2,0,0,
 Premier League,2025-2026,2026-05-24,Tottenham,Everton,1,0,H,1,0,H,M Oliver,21,8,6,3,15,12,6,2,5,3,0,1,
 Premier League,2025-2026,2026-05-24,West Ham,Leeds,3,0,H,0,0,D,A Taylor,16,13,9,3,11,14,6,4,0,3,0,0,
+Premier League,2026-2027,2026-08-21,Arsenal,Coventry,3,0,H,2,0,H,T Bramall,20,4,6,1,10,13,8,2,1,1,0,0,
+Premier League,2026-2027,2026-08-22,Hull,Man United,2,0,H,2,0,H,D England,8,21,4,5,10,9,1,6,2,1,0,0,
+Premier League,2026-2027,2026-08-22,Everton,Crystal Palace,2,0,H,1,0,H,P Tierney,16,11,5,4,5,15,4,0,0,1,0,0,
+Premier League,2026-2027,2026-08-22,Ipswich,Sunderland,2,1,H,1,1,D,F Hallam,10,11,3,4,12,14,3,5,0,3,0,0,
+Premier League,2026-2027,2026-08-22,Nott'm Forest,Leeds,0,1,A,0,0,D,R Jones,12,11,2,3,15,14,3,2,2,1,0,0,
+Premier League,2026-2027,2026-08-22,Brentford,Tottenham,3,0,H,2,0,H,M Oliver,26,9,8,4,17,14,7,3,1,1,0,0,
+Premier League,2026-2027,2026-08-23,Brighton,Aston Villa,4,0,H,4,0,H,P Bankes,21,6,6,0,12,11,5,2,2,3,0,1,
+Premier League,2026-2027,2026-08-23,Man City,Bournemouth,2,1,H,0,1,A,J Gillett,13,5,6,4,11,11,8,3,1,2,0,0,
+Premier League,2026-2027,2026-08-23,Newcastle,Liverpool,2,2,D,1,0,H,S Attwell,13,27,4,7,16,15,2,6,5,3,0,0,
+Premier League,2026-2027,2026-08-24,Fulham,Chelsea,2,3,A,1,2,A,J Brooks,14,18,6,6,12,7,6,4,2,3,0,0,
 La Liga,1993-1994,1993-09-05,Ath Bilbao,Albacete,4,1,H,,,,,,,,,,,,,,,,,
 La Liga,1993-1994,1993-09-05,Ath Madrid,Logrones,1,0,H,,,,,,,,,,,,,,,,,
 La Liga,1993-1994,1993-09-05,Barcelona,Sociedad,3,0,H,,,,,,,,,,,,,,,,,
@@ -25411,9 +25421,18 @@ La Liga,2026-2027,2026-08-15,Alaves,Getafe,3,0,H,0,0,D,,18,6,8,2,16,13,5,3,4,3,0
 La Liga,2026-2027,2026-08-15,Sevilla,Vallecano,2,1,H,0,1,A,,13,6,4,3,18,18,1,2,4,4,1,0,
 La Liga,2026-2027,2026-08-16,Santander,Villarreal,2,2,D,2,2,D,,17,12,3,7,14,14,6,10,2,4,0,0,
 La Liga,2026-2027,2026-08-16,Espanol,Levante,3,0,H,2,0,H,,16,4,6,0,17,7,0,1,3,0,0,0,
-La Liga,2026-2027,2026-08-17,Dep. A Coruna,Elche,1,1,D,1,0,H,,8,11,3,6,17,12,2,6,2,2,0,0,
-La Liga,2026-2027,2026-08-19,Atl. Madrid,Malaga,2,0,H,0,0,D,,15,5,6,1,17,11,6,1,2,3,0,0,
-La Liga,2026-2027,2026-08-20,Rayo Vallecano,Alaves,1,1,D,0,0,D,,8,15,3,3,14,13,9,7,1,2,0,0,
+La Liga,2026-2027,2026-08-17,La Coruna,Elche,1,1,D,1,0,H,,8,11,3,6,17,12,2,6,2,2,0,0,
+La Liga,2026-2027,2026-08-19,Ath Madrid,Malaga,2,0,H,0,0,D,,15,5,6,1,17,11,6,1,2,3,0,0,
+La Liga,2026-2027,2026-08-20,Vallecano,Alaves,1,1,D,0,0,D,,8,15,3,3,14,13,9,7,1,2,0,0,
+La Liga,2026-2027,2026-08-21,Betis,Sociedad,1,0,H,0,0,D,,18,9,7,3,9,12,4,5,3,3,0,0,
+La Liga,2026-2027,2026-08-22,Ath Bilbao,Sevilla,1,3,A,0,1,A,,18,7,8,4,11,16,10,3,2,5,1,0,
+La Liga,2026-2027,2026-08-22,Valencia,Celta,0,0,D,0,0,D,,8,7,2,3,17,17,1,2,2,3,0,0,
+La Liga,2026-2027,2026-08-22,Espanol,Real Madrid,1,2,A,1,1,D,,8,21,3,8,19,7,0,8,5,1,0,0,
+La Liga,2026-2027,2026-08-23,Ath Madrid,Villarreal,2,2,D,0,0,D,,19,13,4,6,12,13,5,3,3,2,1,0,
+La Liga,2026-2027,2026-08-23,Getafe,Santander,1,0,H,0,0,D,,12,6,1,3,14,17,8,6,1,3,0,0,
+La Liga,2026-2027,2026-08-23,Elche,Barcelona,0,5,A,0,2,A,,7,11,2,7,13,12,3,1,1,0,0,0,
+La Liga,2026-2027,2026-08-24,Osasuna,Levante,0,0,D,0,0,D,,12,11,7,1,9,12,9,4,2,1,0,0,
+La Liga,2026-2027,2026-08-24,Malaga,La Coruna,1,1,D,1,1,D,,13,6,2,4,12,12,7,4,1,4,0,0,
 Bundesliga,1993-1994,1993-08-07,Bayern Munich,Freiburg,3,1,H,,,,,,,,,,,,,,,,,
 Bundesliga,1993-1994,1993-08-07,Dortmund,Karlsruhe,2,1,H,,,,,,,,,,,,,,,,,
 Bundesliga,1993-1994,1993-08-07,Duisburg,Leverkusen,2,2,D,,,,,,,,,,,,,,,,,
@@ -47238,6 +47257,16 @@ Serie A,2025-2026,2026-05-24,Lecce,Genoa,1,0,H,1,0,H,,9,8,4,1,11,6,1,6,2,0,0,0,
 Serie A,2025-2026,2026-05-24,Milan,Cagliari,1,2,A,1,1,D,,16,25,3,10,8,9,5,5,2,2,0,0,
 Serie A,2025-2026,2026-05-24,Torino,Juventus,2,2,D,0,1,A,,12,17,5,4,10,10,6,6,1,2,0,0,
 Serie A,2025-2026,2026-05-24,Verona,Roma,0,2,A,0,0,D,,8,19,3,7,12,10,6,6,3,1,1,0,
+Serie A,2026-2027,2026-08-22,Inter,Monza,4,1,H,1,1,D,,13,7,5,3,5,14,3,3,2,2,0,0,
+Serie A,2026-2027,2026-08-22,Udinese,Como,1,1,D,1,0,H,,17,20,3,6,13,11,1,10,3,0,0,0,
+Serie A,2026-2027,2026-08-22,Genoa,Napoli,0,2,A,0,0,D,,11,13,2,4,10,8,5,5,2,1,0,0,
+Serie A,2026-2027,2026-08-22,Parma,Cagliari,0,1,A,0,0,D,,13,14,2,5,6,20,3,2,0,2,0,0,
+Serie A,2026-2027,2026-08-23,Frosinone,Juventus,0,1,A,0,1,A,,11,20,2,5,15,18,3,12,2,2,0,0,
+Serie A,2026-2027,2026-08-23,Venezia,Lecce,0,2,A,0,0,D,,19,12,7,5,8,12,5,3,1,3,0,0,
+Serie A,2026-2027,2026-08-23,Atalanta,Sassuolo,2,1,H,1,0,H,,14,22,7,8,9,10,4,4,0,0,0,0,
+Serie A,2026-2027,2026-08-23,Torino,Milan,1,2,A,0,0,D,,8,19,1,4,10,9,2,4,0,1,0,0,
+Serie A,2026-2027,2026-08-24,Bologna,Lazio,0,1,A,0,0,D,,14,10,5,3,18,19,8,6,4,4,0,0,
+Serie A,2026-2027,2026-08-24,Roma,Fiorentina,4,0,H,1,0,H,,17,9,8,4,15,11,2,3,2,2,0,0,
 Ligue 1,1993-1994,1993-07-23,Nantes,Monaco,1,0,H,,,,,,,,,,,,,,,,,
 Ligue 1,1993-1994,1993-07-24,Bordeaux,Paris SG,1,0,H,,,,,,,,,,,,,,,,,
 Ligue 1,1993-1994,1993-07-24,Caen,Metz,1,1,D,,,,,,,,,,,,,,,,,
@@ -59085,40 +59114,18 @@ Ligue 1,2025-2026,2026-05-17,Nantes,Toulouse,0,0,D,0,0,D,,2,2,1,1,3,5,2,2,0,0,0,
 Ligue 1,2025-2026,2026-05-17,Nice,Metz,0,0,D,0,0,D,,22,16,4,4,11,15,10,4,2,1,0,0,
 Ligue 1,2025-2026,2026-05-17,Paris FC,Paris SG,2,1,H,0,0,D,,17,9,9,2,8,9,3,3,2,1,0,0,
 Ligue 1,2025-2026,2026-05-17,Strasbourg,Monaco,5,4,H,1,3,A,,15,21,7,8,7,11,4,6,1,2,0,0,
-Premier League,2026-2027,2026-08-21,Arsenal,Coventry,3,0,H,,,,,,,,,,,,,,,,,
-Premier League,2026-2027,2026-08-22,Hull,Man United,2,0,H,,,,,,,,,,,,,,,,,
-Premier League,2026-2027,2026-08-22,Everton,Crystal Palace,2,0,H,,,,,,,,,,,,,,,,,
-Premier League,2026-2027,2026-08-22,Ipswich,Sunderland,2,1,H,,,,,,,,,,,,,,,,,
-Premier League,2026-2027,2026-08-22,Nott'm Forest,Leeds,0,1,A,,,,,,,,,,,,,,,,,
-Premier League,2026-2027,2026-08-22,Brentford,Tottenham,3,0,H,,,,,,,,,,,,,,,,,
-Premier League,2026-2027,2026-08-23,Brighton,Aston Villa,4,0,H,,,,,,,,,,,,,,,,,
-Premier League,2026-2027,2026-08-23,Man City,Bournemouth,2,1,H,,,,,,,,,,,,,,,,,
-Premier League,2026-2027,2026-08-23,Newcastle,Liverpool,2,2,D,,,,,,,,,,,,,,,,,
-La Liga,2026-2027,2026-08-19,Ath Madrid,Malaga,2,0,H,,,,,,,,,,,,,,,,,
-La Liga,2026-2027,2026-08-20,Vallecano,Alaves,1,1,D,,,,,,,,,,,,,,,,,
-La Liga,2026-2027,2026-08-21,Betis,Sociedad,1,0,H,,,,,,,,,,,,,,,,,
-La Liga,2026-2027,2026-08-22,Ath Bilbao,Sevilla,1,3,A,,,,,,,,,,,,,,,,,
-La Liga,2026-2027,2026-08-22,Valencia,Celta,0,0,D,,,,,,,,,,,,,,,,,
-La Liga,2026-2027,2026-08-22,Espanol,Real Madrid,1,2,A,,,,,,,,,,,,,,,,,
-La Liga,2026-2027,2026-08-23,Ath Madrid,Villarreal,2,2,D,,,,,,,,,,,,,,,,,
-La Liga,2026-2027,2026-08-23,Getafe,Santander,1,0,H,,,,,,,,,,,,,,,,,
-La Liga,2026-2027,2026-08-23,Elche,Barcelona,0,5,A,,,,,,,,,,,,,,,,,
-Serie A,2026-2027,2026-08-22,Inter,Monza,4,1,H,,,,,,,,,,,,,,,,,
-Serie A,2026-2027,2026-08-22,Udinese,Como,1,1,D,,,,,,,,,,,,,,,,,
-Serie A,2026-2027,2026-08-22,Parma,Cagliari,0,1,A,,,,,,,,,,,,,,,,,
-Serie A,2026-2027,2026-08-22,Genoa,Napoli,0,2,A,,,,,,,,,,,,,,,,,
-Serie A,2026-2027,2026-08-23,Frosinone,Juventus,0,1,A,,,,,,,,,,,,,,,,,
-Serie A,2026-2027,2026-08-23,Venezia,Lecce,0,2,A,,,,,,,,,,,,,,,,,
-Serie A,2026-2027,2026-08-23,Torino,Milan,1,2,A,,,,,,,,,,,,,,,,,
-Serie A,2026-2027,2026-08-23,Atalanta,Sassuolo,2,1,H,,,,,,,,,,,,,,,,,
-Ligue 1,2026-2027,2026-08-21,Marseille,Strasbourg,4,0,H,,,,,,,,,,,,,,,,,
-Ligue 1,2026-2027,2026-08-22,Lens,Auxerre,5,2,H,,,,,,,,,,,,,,,,,
-Ligue 1,2026-2027,2026-08-22,Toulouse,Lyon,0,2,A,,,,,,,,,,,,,,,,,
-Ligue 1,2026-2027,2026-08-22,Troyes,Paris FC,0,0,D,,,,,,,,,,,,,,,,,
-Ligue 1,2026-2027,2026-08-22,Le Mans,Brest,2,2,D,,,,,,,,,,,,,,,,,
-Ligue 1,2026-2027,2026-08-22,Nice,Lorient,0,0,D,,,,,,,,,,,,,,,,,
-Ligue 1,2026-2027,2026-08-23,Angers,Lille,0,2,A,,,,,,,,,,,,,,,,,
-Ligue 1,2026-2027,2026-08-23,Le Havre,Monaco,0,1,A,,,,,,,,,,,,,,,,,
+Ligue 1,2026-2027,2026-08-21,Marseille,Strasbourg,4,0,H,0,0,D,,14,5,8,2,6,12,3,4,1,2,0,1,
+Ligue 1,2026-2027,2026-08-22,Lens,Auxerre,5,2,H,1,0,H,,12,10,9,4,6,21,4,7,1,1,0,1,
+Ligue 1,2026-2027,2026-08-22,Le Mans,Brest,2,2,D,1,1,D,,8,26,5,7,14,12,1,10,1,1,0,0,
+Ligue 1,2026-2027,2026-08-22,Nice,Lorient,0,0,D,0,0,D,,14,10,1,2,15,8,9,3,1,0,0,0,
+Ligue 1,2026-2027,2026-08-22,Toulouse,Lyon,0,2,A,0,0,D,,17,11,2,3,15,15,6,5,1,2,0,0,
+Ligue 1,2026-2027,2026-08-22,Troyes,Paris FC,0,0,D,0,0,D,,9,10,2,1,8,14,6,2,2,1,0,0,
+Ligue 1,2026-2027,2026-08-23,Angers,Lille,0,2,A,0,2,A,,20,11,2,8,11,13,8,3,2,2,0,0,
+Ligue 1,2026-2027,2026-08-23,Le Havre,Monaco,0,1,A,0,1,A,,15,15,4,7,13,12,7,4,3,2,0,0,
+Ligue 1,2026-2027,2026-08-23,Rennes,Paris SG,2,2,D,2,0,H,,9,19,3,5,7,6,0,10,2,2,0,0,
+La Liga,2026-2027,2026-08-17,Dep. A Coruna,Elche,1,1,D,,,,,,,,,,,,,,,,,
+La Liga,2026-2027,2026-08-24,Malaga,Dep. A Coruna,1,1,D,,,,,,,,,,,,,,,,,
+La Liga,2026-2027,2026-08-25,Valencia,Betis,0,1,A,,,,,,,,,,,,,,,,,
 Ligue 1,2026-2027,2026-08-23,Paris SG,Rennes,0,0,D,,,,,,,,,,,,,,,,,
 Ligue des champions,2011-2012,2011-09-14,Man City,Napoli,1,1,D,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-09-14,Villarreal,Bayern Munich,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
@@ -59156,29 +59163,29 @@ Ligue des champions,2011-2012,2011-11-22,Man United,Benfica,2,2,D,1,1,D,,,,,,,,,
 Ligue des champions,2011-2012,2011-11-22,Oţelul Galaţi,FC Basel 1893,2,3,A,0,3,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-12-07,FC Basel 1893,Man United,2,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-12-07,Benfica,Oţelul Galaţi,1,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2011-2012,2011-09-14,Ajax,Olympique Lyonnais,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2011-2012,2011-09-14,Ajax,Lyon,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-09-14,Dinamo Zagreb,Real Madrid,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2011-2012,2011-09-27,Olympique Lyonnais,Dinamo Zagreb,2,0,H,2,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2011-2012,2011-09-27,Lyon,Dinamo Zagreb,2,0,H,2,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-09-27,Real Madrid,Ajax,3,0,H,2,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-10-18,Dinamo Zagreb,Ajax,0,2,A,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2011-2012,2011-10-18,Real Madrid,Olympique Lyonnais,4,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2011-2012,2011-10-18,Real Madrid,Lyon,4,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-11-02,Ajax,Dinamo Zagreb,4,0,H,2,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2011-2012,2011-11-02,Olympique Lyonnais,Real Madrid,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2011-2012,2011-11-22,Olympique Lyonnais,Ajax,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2011-2012,2011-11-02,Lyon,Real Madrid,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2011-2012,2011-11-22,Lyon,Ajax,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-11-22,Real Madrid,Dinamo Zagreb,6,2,H,4,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-12-07,Ajax,Real Madrid,0,3,A,0,2,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2011-2012,2011-12-07,Dinamo Zagreb,Olympique Lyonnais,1,7,A,1,1,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2011-2012,2011-12-07,Dinamo Zagreb,Lyon,1,7,A,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-09-13,Chelsea,Leverkusen,2,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2011-2012,2011-09-13,KRC Genk,Valencia CF,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2011-2012,2011-09-13,KRC Genk,Valencia,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-09-28,Leverkusen,KRC Genk,2,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2011-2012,2011-09-28,Valencia CF,Chelsea,1,1,D,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2011-2012,2011-10-19,Leverkusen,Valencia CF,2,1,H,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2011-2012,2011-09-28,Valencia,Chelsea,1,1,D,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2011-2012,2011-10-19,Leverkusen,Valencia,2,1,H,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-10-19,Chelsea,KRC Genk,5,0,H,4,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-11-01,KRC Genk,Chelsea,1,1,D,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2011-2012,2011-11-01,Valencia CF,Leverkusen,3,1,H,1,1,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2011-2012,2011-11-01,Valencia,Leverkusen,3,1,H,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-11-23,Leverkusen,Chelsea,2,1,H,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2011-2012,2011-11-23,Valencia CF,KRC Genk,7,0,H,4,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2011-2012,2011-12-06,Chelsea,Valencia CF,3,0,H,2,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2011-2012,2011-11-23,Valencia,KRC Genk,7,0,H,4,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2011-2012,2011-12-06,Chelsea,Valencia,3,0,H,2,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-12-06,KRC Genk,Leverkusen,1,1,D,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-09-13,Dortmund,Arsenal,1,1,D,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-09-13,Olympiakos Piraeus,Olympique Marseille,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
@@ -59216,7 +59223,7 @@ Ligue des champions,2011-2012,2011-11-23,BATE Borisov,Viktoria Plzeň,0,1,A,0,1,
 Ligue des champions,2011-2012,2011-11-23,Milan,Barcelona,2,3,A,1,2,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-12-06,Barcelona,BATE Borisov,4,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2011-2012,2011-12-06,Viktoria Plzeň,Milan,2,2,D,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2011-2012,2012-02-14,Olympique Lyonnais,APOEL Nikosia,1,0,H,0,0,D,,,,,,,,,,,,,,huitiemes
+Ligue des champions,2011-2012,2012-02-14,Lyon,APOEL Nikosia,1,0,H,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2011-2012,2012-02-14,Leverkusen,Barcelona,1,3,A,0,1,A,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2011-2012,2012-02-15,Zenit St. Petersburg,Benfica,3,2,H,1,1,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2011-2012,2012-02-15,Milan,Arsenal,4,0,H,2,0,H,,,,,,,,,,,,,,huitiemes
@@ -59226,7 +59233,7 @@ Ligue des champions,2011-2012,2012-02-22,FC Basel 1893,Bayern Munich,1,0,H,0,0,D
 Ligue des champions,2011-2012,2012-02-22,Olympique Marseille,Inter,1,0,H,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2011-2012,2012-03-06,Arsenal,Milan,3,0,H,3,0,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2011-2012,2012-03-06,Benfica,Zenit St. Petersburg,2,0,H,1,0,H,,,,,,,,,,,,,,huitiemes
-Ligue des champions,2011-2012,2012-03-07,APOEL Nikosia,Olympique Lyonnais,1,0,H,,,,,,,,,,,,,,,,,huitiemes
+Ligue des champions,2011-2012,2012-03-07,APOEL Nikosia,Lyon,1,0,H,,,,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2011-2012,2012-03-07,Barcelona,Leverkusen,7,1,H,2,0,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2011-2012,2012-03-13,Bayern Munich,FC Basel 1893,7,0,H,3,0,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2011-2012,2012-03-13,Inter,Olympique Marseille,2,1,H,0,0,D,,,,,,,,,,,,,,huitiemes
@@ -59258,17 +59265,17 @@ Ligue des champions,2012-2013,2012-11-21,FC Porto,Dinamo Zagreb,3,0,H,1,0,H,,,,,
 Ligue des champions,2012-2013,2012-12-04,Paris SG,FC Porto,2,1,H,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-12-04,Dinamo Zagreb,Dinamo Kiev,1,1,D,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-09-18,Olympiakos Piraeus,Schalke 04,1,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2012-2013,2012-09-18,Montpellier HSC,Arsenal,1,2,A,1,2,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2012-2013,2012-09-18,Montpellier,Arsenal,1,2,A,1,2,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-10-03,Arsenal,Olympiakos Piraeus,3,1,H,1,1,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2012-2013,2012-10-03,Schalke 04,Montpellier HSC,2,2,D,1,1,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2012-2013,2012-10-03,Schalke 04,Montpellier,2,2,D,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-10-24,Arsenal,Schalke 04,0,2,A,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2012-2013,2012-10-24,Montpellier HSC,Olympiakos Piraeus,1,2,A,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2012-2013,2012-10-24,Montpellier,Olympiakos Piraeus,1,2,A,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-11-06,Schalke 04,Arsenal,2,2,D,1,2,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2012-2013,2012-11-06,Olympiakos Piraeus,Montpellier HSC,3,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2012-2013,2012-11-06,Olympiakos Piraeus,Montpellier,3,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-11-21,Schalke 04,Olympiakos Piraeus,1,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2012-2013,2012-11-21,Arsenal,Montpellier HSC,2,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2012-2013,2012-11-21,Arsenal,Montpellier,2,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-12-04,Olympiakos Piraeus,Arsenal,2,1,H,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2012-2013,2012-12-04,Montpellier HSC,Schalke 04,1,1,D,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2012-2013,2012-12-04,Montpellier,Schalke 04,1,1,D,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-09-18,Milan,RSC Anderlecht,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-09-18,Málaga CF,Zenit St. Petersburg,3,0,H,2,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-10-03,Zenit St. Petersburg,Milan,2,3,A,1,2,A,,,,,,,,,,,,,,phase de groupes
@@ -59305,17 +59312,17 @@ Ligue des champions,2012-2013,2012-11-20,Juventus,Chelsea,3,0,H,1,0,H,,,,,,,,,,,
 Ligue des champions,2012-2013,2012-11-20,FC Nordsjælland,Shakhtar Donetsk,2,5,A,2,2,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-12-05,Shakhtar Donetsk,Juventus,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-12-05,Chelsea,FC Nordsjælland,6,1,H,2,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2012-2013,2012-09-19,Bayern Munich,Valencia CF,2,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2012-2013,2012-09-19,Bayern Munich,Valencia,2,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-09-19,Lille,BATE Borisov,1,3,A,0,3,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2012-2013,2012-10-02,Valencia CF,Lille,2,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2012-2013,2012-10-02,Valencia,Lille,2,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-10-02,BATE Borisov,Bayern Munich,3,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-10-23,Lille,Bayern Munich,0,1,A,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2012-2013,2012-10-23,BATE Borisov,Valencia CF,0,3,A,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2012-2013,2012-10-23,BATE Borisov,Valencia,0,3,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-11-07,Bayern Munich,Lille,6,1,H,5,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2012-2013,2012-11-07,Valencia CF,BATE Borisov,4,2,H,2,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2012-2013,2012-11-07,Valencia,BATE Borisov,4,2,H,2,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-11-20,BATE Borisov,Lille,0,2,A,0,2,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2012-2013,2012-11-20,Valencia CF,Bayern Munich,1,1,D,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2012-2013,2012-12-05,Lille,Valencia CF,0,1,A,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2012-2013,2012-11-20,Valencia,Bayern Munich,1,1,D,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2012-2013,2012-12-05,Lille,Valencia,0,1,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-12-05,Bayern Munich,BATE Borisov,4,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-09-19,Barcelona,Spartak Moskva,3,2,H,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-09-19,Celtic FC,Benfica,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
@@ -59342,7 +59349,7 @@ Ligue des champions,2012-2013,2012-11-20,CFR Cluj,Sporting Braga,3,1,H,3,1,H,,,,
 Ligue des champions,2012-2013,2012-12-05,Sporting Braga,Galatasaray,1,2,A,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2012-12-05,Man United,CFR Cluj,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2012-2013,2013-02-12,Celtic FC,Juventus,0,3,A,0,1,A,,,,,,,,,,,,,,huitiemes
-Ligue des champions,2012-2013,2013-02-12,Valencia CF,Paris SG,1,2,A,0,2,A,,,,,,,,,,,,,,huitiemes
+Ligue des champions,2012-2013,2013-02-12,Valencia,Paris SG,1,2,A,0,2,A,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2012-2013,2013-02-13,Shakhtar Donetsk,Dortmund,2,2,D,1,1,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2012-2013,2013-02-13,Real Madrid,Man United,1,1,D,1,1,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2012-2013,2013-02-19,Arsenal,Bayern Munich,1,3,A,0,2,A,,,,,,,,,,,,,,huitiemes
@@ -59352,7 +59359,7 @@ Ligue des champions,2012-2013,2013-02-20,Milan,Barcelona,2,0,H,0,0,D,,,,,,,,,,,,
 Ligue des champions,2012-2013,2013-03-05,Dortmund,Shakhtar Donetsk,3,0,H,2,0,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2012-2013,2013-03-05,Man United,Real Madrid,1,2,A,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2012-2013,2013-03-06,Juventus,Celtic FC,2,0,H,1,0,H,,,,,,,,,,,,,,huitiemes
-Ligue des champions,2012-2013,2013-03-06,Paris SG,Valencia CF,1,1,D,0,0,D,,,,,,,,,,,,,,huitiemes
+Ligue des champions,2012-2013,2013-03-06,Paris SG,Valencia,1,1,D,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2012-2013,2013-03-12,Schalke 04,Galatasaray,2,3,A,1,2,A,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2012-2013,2013-03-12,Barcelona,Milan,4,0,H,2,0,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2012-2013,2013-03-13,Bayern Munich,Arsenal,0,2,A,0,1,A,,,,,,,,,,,,,,huitiemes
@@ -59704,17 +59711,17 @@ Ligue des champions,2015-2016,2015-11-24,Maccabi Tel Aviv,Chelsea,0,4,A,0,1,A,,,
 Ligue des champions,2015-2016,2015-11-24,FC Porto,Dinamo Kiev,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2015-2016,2015-12-09,Chelsea,FC Porto,2,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2015-2016,2015-12-09,Dinamo Kiev,Maccabi Tel Aviv,1,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2015-2016,2015-09-16,Valencia CF,Zenit St. Petersburg,2,3,A,0,2,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2015-2016,2015-09-16,KAA Gent,Olympique Lyonnais,1,1,D,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2015-2016,2015-09-29,Olympique Lyonnais,Valencia CF,0,1,A,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2015-2016,2015-09-16,Valencia,Zenit St. Petersburg,2,3,A,0,2,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2015-2016,2015-09-16,KAA Gent,Lyon,1,1,D,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2015-2016,2015-09-29,Lyon,Valencia,0,1,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2015-2016,2015-09-29,Zenit St. Petersburg,KAA Gent,2,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2015-2016,2015-10-20,Valencia CF,KAA Gent,2,1,H,1,1,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2015-2016,2015-10-20,Zenit St. Petersburg,Olympique Lyonnais,3,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2015-2016,2015-11-04,Olympique Lyonnais,Zenit St. Petersburg,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2015-2016,2015-11-04,KAA Gent,Valencia CF,1,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2015-2016,2015-11-24,Zenit St. Petersburg,Valencia CF,2,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2015-2016,2015-11-24,Olympique Lyonnais,KAA Gent,1,2,A,1,1,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2015-2016,2015-12-09,Valencia CF,Olympique Lyonnais,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2015-2016,2015-10-20,Valencia,KAA Gent,2,1,H,1,1,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2015-2016,2015-10-20,Zenit St. Petersburg,Lyon,3,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2015-2016,2015-11-04,Lyon,Zenit St. Petersburg,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2015-2016,2015-11-04,KAA Gent,Valencia,1,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2015-2016,2015-11-24,Zenit St. Petersburg,Valencia,2,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2015-2016,2015-11-24,Lyon,KAA Gent,1,2,A,1,1,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2015-2016,2015-12-09,Valencia,Lyon,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2015-2016,2015-12-09,KAA Gent,Zenit St. Petersburg,2,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2015-2016,2016-02-16,Paris SG,Chelsea,2,1,H,1,1,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2015-2016,2016-02-16,Benfica,Zenit St. Petersburg,1,0,H,0,0,D,,,,,,,,,,,,,,huitiemes
@@ -59830,17 +59837,17 @@ Ligue des champions,2016-2017,2016-11-22,Leicester City,Club Brugge,2,1,H,2,0,H,
 Ligue des champions,2016-2017,2016-12-07,Club Brugge,Copenhagen,0,2,A,0,2,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2016-2017,2016-12-07,FC Porto,Leicester City,5,0,H,3,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2016-2017,2016-09-14,Juventus,Sevilla,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2016-2017,2016-09-14,Olympique Lyonnais,Dinamo Zagreb,3,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2016-2017,2016-09-14,Lyon,Dinamo Zagreb,3,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2016-2017,2016-09-27,Dinamo Zagreb,Juventus,0,4,A,0,2,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2016-2017,2016-09-27,Sevilla,Olympique Lyonnais,1,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2016-2017,2016-09-27,Sevilla,Lyon,1,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2016-2017,2016-10-18,Dinamo Zagreb,Sevilla,0,1,A,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2016-2017,2016-10-18,Olympique Lyonnais,Juventus,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2016-2017,2016-11-02,Juventus,Olympique Lyonnais,1,1,D,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2016-2017,2016-10-18,Lyon,Juventus,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2016-2017,2016-11-02,Juventus,Lyon,1,1,D,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2016-2017,2016-11-02,Sevilla,Dinamo Zagreb,4,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2016-2017,2016-11-22,Dinamo Zagreb,Olympique Lyonnais,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2016-2017,2016-11-22,Dinamo Zagreb,Lyon,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2016-2017,2016-11-22,Sevilla,Juventus,1,3,A,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2016-2017,2016-12-07,Juventus,Dinamo Zagreb,2,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2016-2017,2016-12-07,Olympique Lyonnais,Sevilla,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2016-2017,2016-12-07,Lyon,Sevilla,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2016-2017,2017-02-14,Benfica,Dortmund,1,0,H,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2016-2017,2017-02-14,Paris SG,Barcelona,4,0,H,2,0,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2016-2017,2017-02-15,Real Madrid,Napoli,3,1,H,1,1,D,,,,,,,,,,,,,,huitiemes
@@ -60056,16 +60063,16 @@ Ligue des champions,2018-2019,2018-11-27,Bayern Munich,Benfica,5,1,H,3,0,H,,,,,,
 Ligue des champions,2018-2019,2018-12-12,Ajax,Bayern Munich,3,3,D,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-12-12,Benfica,AEK Athen,1,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-09-19,Shakhtar Donetsk,1899 Hoffenheim,2,2,D,1,2,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2018-2019,2018-09-19,Man City,Olympique Lyonnais,1,2,A,0,2,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2018-2019,2018-09-19,Man City,Lyon,1,2,A,0,2,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-10-02,1899 Hoffenheim,Man City,1,2,A,1,1,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2018-2019,2018-10-02,Olympique Lyonnais,Shakhtar Donetsk,2,2,D,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2018-2019,2018-10-02,Lyon,Shakhtar Donetsk,2,2,D,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-10-23,Shakhtar Donetsk,Man City,0,3,A,0,2,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2018-2019,2018-10-23,1899 Hoffenheim,Olympique Lyonnais,3,3,D,1,1,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2018-2019,2018-10-23,1899 Hoffenheim,Lyon,3,3,D,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-11-07,Man City,Shakhtar Donetsk,6,0,H,2,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2018-2019,2018-11-07,Olympique Lyonnais,1899 Hoffenheim,2,2,D,2,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2018-2019,2018-11-27,Olympique Lyonnais,Man City,2,2,D,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2018-2019,2018-11-07,Lyon,1899 Hoffenheim,2,2,D,2,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2018-2019,2018-11-27,Lyon,Man City,2,2,D,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-11-27,1899 Hoffenheim,Shakhtar Donetsk,2,3,A,2,2,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2018-2019,2018-12-12,Shakhtar Donetsk,Olympique Lyonnais,1,1,D,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2018-2019,2018-12-12,Shakhtar Donetsk,Lyon,1,1,D,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-12-12,Man City,1899 Hoffenheim,2,1,H,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-09-19,Real Madrid,Roma,3,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-09-19,Viktoria Plzeň,CSKA Moskva,2,2,D,2,0,H,,,,,,,,,,,,,,phase de groupes
@@ -60079,23 +60086,23 @@ Ligue des champions,2018-2019,2018-11-27,CSKA Moskva,Viktoria Plzeň,1,2,A,1,0,H
 Ligue des champions,2018-2019,2018-11-27,Roma,Real Madrid,0,2,A,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-12-12,Real Madrid,CSKA Moskva,0,3,A,0,2,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-12-12,Viktoria Plzeň,Roma,2,1,H,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2018-2019,2018-09-19,Valencia CF,Juventus,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2018-2019,2018-09-19,Valencia,Juventus,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-09-19,BSC Young Boys,Man United,0,3,A,0,2,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-10-02,Juventus,BSC Young Boys,3,0,H,2,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2018-2019,2018-10-02,Man United,Valencia CF,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2018-2019,2018-10-23,BSC Young Boys,Valencia CF,1,1,D,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2018-2019,2018-10-02,Man United,Valencia,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2018-2019,2018-10-23,BSC Young Boys,Valencia,1,1,D,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-10-23,Man United,Juventus,0,1,A,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2018-2019,2018-11-07,Valencia CF,BSC Young Boys,3,1,H,2,1,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2018-2019,2018-11-07,Valencia,BSC Young Boys,3,1,H,2,1,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-11-07,Juventus,Man United,1,2,A,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2018-2019,2018-11-27,Juventus,Valencia CF,1,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2018-2019,2018-11-27,Juventus,Valencia,1,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-11-27,Man United,BSC Young Boys,1,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2018-2019,2018-12-12,Valencia CF,Man United,2,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2018-2019,2018-12-12,Valencia,Man United,2,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2018-12-12,BSC Young Boys,Juventus,2,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2018-2019,2019-02-12,Man United,Paris SG,0,2,A,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2018-2019,2019-02-12,Roma,FC Porto,2,1,H,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2018-2019,2019-02-13,Tottenham,Dortmund,3,0,H,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2018-2019,2019-02-13,Ajax,Real Madrid,1,2,A,0,0,D,,,,,,,,,,,,,,huitiemes
-Ligue des champions,2018-2019,2019-02-19,Olympique Lyonnais,Barcelona,0,0,D,,,,,,,,,,,,,,,,,huitiemes
+Ligue des champions,2018-2019,2019-02-19,Lyon,Barcelona,0,0,D,,,,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2018-2019,2019-02-19,Liverpool,Bayern Munich,0,0,D,,,,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2018-2019,2019-02-20,Schalke 04,Man City,2,3,A,2,1,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2018-2019,2019-02-20,Ath Madrid,Juventus,2,0,H,0,0,D,,,,,,,,,,,,,,huitiemes
@@ -60105,7 +60112,7 @@ Ligue des champions,2018-2019,2019-03-06,Paris SG,Man United,1,3,A,1,2,A,,,,,,,,
 Ligue des champions,2018-2019,2019-03-06,FC Porto,Roma,3,1,H,,,,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2018-2019,2019-03-12,Man City,Schalke 04,7,0,H,3,0,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2018-2019,2019-03-12,Juventus,Ath Madrid,3,0,H,1,0,H,,,,,,,,,,,,,,huitiemes
-Ligue des champions,2018-2019,2019-03-13,Barcelona,Olympique Lyonnais,5,1,H,2,0,H,,,,,,,,,,,,,,huitiemes
+Ligue des champions,2018-2019,2019-03-13,Barcelona,Lyon,5,1,H,2,0,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2018-2019,2019-03-13,Bayern Munich,Liverpool,1,3,A,1,1,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2018-2019,2019-04-09,Liverpool,FC Porto,2,0,H,2,0,H,,,,,,,,,,,,,,quarts
 Ligue des champions,2018-2019,2019-04-09,Tottenham,Man City,1,0,H,0,0,D,,,,,,,,,,,,,,quarts
@@ -60192,52 +60199,52 @@ Ligue des champions,2019-2020,2019-11-27,Barcelona,Dortmund,3,1,H,2,0,H,,,,,,,,,
 Ligue des champions,2019-2020,2019-11-27,Slavia Prague,Inter,1,3,A,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2019-12-10,Dortmund,Slavia Prague,2,1,H,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2019-12-10,Inter,Barcelona,1,2,A,1,1,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2019-2020,2019-09-17,Olympique Lyonnais,Zenit St. Petersburg,1,1,D,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2019-2020,2019-09-17,Lyon,Zenit St. Petersburg,1,1,D,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2019-09-17,Benfica,RB Leipzig,1,2,A,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2019-10-02,Zenit St. Petersburg,Benfica,3,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2019-2020,2019-10-02,RB Leipzig,Olympique Lyonnais,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2019-2020,2019-10-02,RB Leipzig,Lyon,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2019-10-23,RB Leipzig,Zenit St. Petersburg,2,1,H,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2019-2020,2019-10-23,Benfica,Olympique Lyonnais,2,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2019-2020,2019-10-23,Benfica,Lyon,2,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2019-11-05,Zenit St. Petersburg,RB Leipzig,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2019-2020,2019-11-05,Olympique Lyonnais,Benfica,3,1,H,2,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2019-2020,2019-11-27,Zenit St. Petersburg,Olympique Lyonnais,2,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2019-2020,2019-11-05,Lyon,Benfica,3,1,H,2,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2019-2020,2019-11-27,Zenit St. Petersburg,Lyon,2,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2019-11-27,RB Leipzig,Benfica,2,2,D,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2019-12-10,Benfica,Zenit St. Petersburg,3,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2019-2020,2019-12-10,Olympique Lyonnais,RB Leipzig,2,2,D,0,2,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2019-2020,2019-09-17,Chelsea,Valencia CF,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2019-2020,2019-12-10,Lyon,RB Leipzig,2,2,D,0,2,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2019-2020,2019-09-17,Chelsea,Valencia,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2019-09-17,Ajax,Lille,3,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2019-2020,2019-10-02,Valencia CF,Ajax,0,3,A,0,2,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2019-2020,2019-10-02,Valencia,Ajax,0,3,A,0,2,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2019-10-02,Lille,Chelsea,1,2,A,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2019-10-23,Ajax,Chelsea,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2019-2020,2019-10-23,Lille,Valencia CF,1,1,D,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2019-2020,2019-10-23,Lille,Valencia,1,1,D,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2019-11-05,Chelsea,Ajax,4,4,D,1,3,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2019-2020,2019-11-05,Valencia CF,Lille,4,1,H,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2019-2020,2019-11-27,Valencia CF,Chelsea,2,2,D,1,1,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2019-2020,2019-11-05,Valencia,Lille,4,1,H,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2019-2020,2019-11-27,Valencia,Chelsea,2,2,D,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2019-11-27,Lille,Ajax,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2019-12-10,Chelsea,Lille,2,1,H,2,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2019-2020,2019-12-10,Ajax,Valencia CF,0,1,A,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2019-2020,2019-12-10,Ajax,Valencia,0,1,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2019-2020,2020-02-18,Dortmund,Paris SG,2,1,H,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2019-2020,2020-02-18,Ath Madrid,Liverpool,1,0,H,1,0,H,,,,,,,,,,,,,,huitiemes
-Ligue des champions,2019-2020,2020-02-19,Atalanta,Valencia CF,4,1,H,2,0,H,,,,,,,,,,,,,,huitiemes
+Ligue des champions,2019-2020,2020-02-19,Atalanta,Valencia,4,1,H,2,0,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2019-2020,2020-02-19,Tottenham,RB Leipzig,0,1,A,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2019-2020,2020-02-25,Chelsea,Bayern Munich,0,3,A,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2019-2020,2020-02-25,Napoli,Barcelona,1,1,D,1,0,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2019-2020,2020-02-26,Real Madrid,Man City,1,2,A,0,0,D,,,,,,,,,,,,,,huitiemes
-Ligue des champions,2019-2020,2020-02-26,Olympique Lyonnais,Juventus,1,0,H,1,0,H,,,,,,,,,,,,,,huitiemes
-Ligue des champions,2019-2020,2020-03-10,Valencia CF,Atalanta,3,4,A,1,2,A,,,,,,,,,,,,,,huitiemes
+Ligue des champions,2019-2020,2020-02-26,Lyon,Juventus,1,0,H,1,0,H,,,,,,,,,,,,,,huitiemes
+Ligue des champions,2019-2020,2020-03-10,Valencia,Atalanta,3,4,A,1,2,A,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2019-2020,2020-03-10,RB Leipzig,Tottenham,3,0,H,2,0,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2019-2020,2020-03-11,Paris SG,Dortmund,2,0,H,2,0,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2019-2020,2020-03-11,Liverpool,Ath Madrid,2,3,A,,,,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2019-2020,2020-08-07,Man City,Real Madrid,2,1,H,1,1,D,,,,,,,,,,,,,,huitiemes
-Ligue des champions,2019-2020,2020-08-07,Juventus,Olympique Lyonnais,2,1,H,1,1,D,,,,,,,,,,,,,,huitiemes
+Ligue des champions,2019-2020,2020-08-07,Juventus,Lyon,2,1,H,1,1,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2019-2020,2020-08-08,Bayern Munich,Chelsea,4,1,H,2,1,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2019-2020,2020-08-08,Barcelona,Napoli,3,1,H,3,1,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2019-2020,2020-08-12,Atalanta,Paris SG,1,2,A,1,0,H,,,,,,,,,,,,,,quarts
 Ligue des champions,2019-2020,2020-08-13,RB Leipzig,Ath Madrid,2,1,H,0,0,D,,,,,,,,,,,,,,quarts
 Ligue des champions,2019-2020,2020-08-14,Barcelona,Bayern Munich,2,8,A,1,4,A,,,,,,,,,,,,,,quarts
-Ligue des champions,2019-2020,2020-08-15,Man City,Olympique Lyonnais,1,3,A,0,1,A,,,,,,,,,,,,,,quarts
+Ligue des champions,2019-2020,2020-08-15,Man City,Lyon,1,3,A,0,1,A,,,,,,,,,,,,,,quarts
 Ligue des champions,2019-2020,2020-08-18,RB Leipzig,Paris SG,0,3,A,0,2,A,,,,,,,,,,,,,,demies
-Ligue des champions,2019-2020,2020-08-19,Olympique Lyonnais,Bayern Munich,0,3,A,0,2,A,,,,,,,,,,,,,,demies
+Ligue des champions,2019-2020,2020-08-19,Lyon,Bayern Munich,0,3,A,0,2,A,,,,,,,,,,,,,,demies
 Ligue des champions,2019-2020,2020-08-23,Paris SG,Bayern Munich,0,1,A,0,0,D,,,,,,,,,,,,,,finale
 Ligue des champions,2020-2021,2020-10-21,RB Salzburg,Lokomotiv Moskva,2,2,D,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2020-2021,2020-10-21,Bayern Munich,Ath Madrid,4,0,H,2,0,H,,,,,,,,,,,,,,phase de groupes
@@ -60616,31 +60623,31 @@ Ligue des champions,2022-2023,2023-05-17,Man City,Real Madrid,4,0,H,2,0,H,,,,,,,
 Ligue des champions,2022-2023,2023-06-10,Man City,Inter,1,0,H,0,0,D,,,,,,,,,,,,,,finale
 Ligue des champions,2023-2024,2023-09-19,Milan,Newcastle,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-09-19,BSC Young Boys,RB Leipzig,1,3,A,1,1,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-09-19,SS Lazio,Ath Madrid,1,1,D,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-09-19,Lazio,Ath Madrid,1,1,D,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-09-19,Feyenoord Rotterdam,Celtic FC,2,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-09-19,Paris SG,Dortmund,2,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-09-19,Man City,FK Crvena Zvezda,3,1,H,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-09-19,Barcelona,Royal Antwerp FC,5,0,H,3,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-09-19,FK Shakhtar Donetsk,FC Porto,1,3,A,1,3,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-09-20,Real Madrid,1. FC Union Berlin,1,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-09-20,Real Madrid,Union Berlin,1,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-09-20,Galatasaray,Copenhagen,2,2,D,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-09-20,Sevilla,Racing Club de Lens,1,1,D,1,1,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-09-20,Sevilla,Lens,1,1,D,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-09-20,Sporting Clube de Braga,Napoli,1,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-09-20,Real Sociedad de Fútbol,Inter,1,1,D,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-09-20,Benfica,FC Red Bull Salzburg,0,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-09-20,Bayern Munich,Man United,4,3,H,2,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-09-20,Arsenal,PSV,4,0,H,3,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-10-03,1. FC Union Berlin,Sporting Clube de Braga,2,3,A,2,1,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-10-03,Union Berlin,Sporting Clube de Braga,2,3,A,2,1,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-03,FC Red Bull Salzburg,Real Sociedad de Fútbol,0,2,A,0,2,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-03,Napoli,Real Madrid,2,3,A,1,2,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-03,Inter,Benfica,1,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-03,Copenhagen,Bayern Munich,1,2,A,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-03,Man United,Galatasaray,2,3,A,1,1,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-10-03,Racing Club de Lens,Arsenal,2,1,H,1,1,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-10-03,Lens,Arsenal,2,1,H,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-03,PSV,Sevilla,2,2,D,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-04,Ath Madrid,Feyenoord Rotterdam,3,2,H,2,2,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-04,Royal Antwerp FC,FK Shakhtar Donetsk,2,3,A,2,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-10-04,Celtic FC,SS Lazio,1,2,A,1,1,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-10-04,Celtic FC,Lazio,1,2,A,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-04,Dortmund,Milan,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-04,Newcastle,Paris SG,4,1,H,2,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-04,FK Crvena Zvezda,BSC Young Boys,2,2,D,1,0,H,,,,,,,,,,,,,,phase de groupes
@@ -60648,13 +60655,13 @@ Ligue des champions,2023-2024,2023-10-04,RB Leipzig,Man City,1,3,A,0,1,A,,,,,,,,
 Ligue des champions,2023-2024,2023-10-04,FC Porto,Barcelona,0,1,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-24,Inter,FC Red Bull Salzburg,2,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-24,Galatasaray,Bayern Munich,1,3,A,1,1,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-10-24,1. FC Union Berlin,Napoli,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-10-24,Union Berlin,Napoli,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-24,Sporting Clube de Braga,Real Madrid,1,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-24,Benfica,Real Sociedad de Fútbol,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-24,Man United,Copenhagen,1,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-24,Sevilla,Arsenal,1,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-10-24,Racing Club de Lens,PSV,1,1,D,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-10-25,Feyenoord Rotterdam,SS Lazio,3,1,H,2,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-10-24,Lens,PSV,1,1,D,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-10-25,Feyenoord Rotterdam,Lazio,3,1,H,2,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-25,Barcelona,FK Shakhtar Donetsk,2,1,H,2,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-25,Celtic FC,Ath Madrid,2,2,D,2,1,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-10-25,Paris SG,Milan,3,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
@@ -60665,20 +60672,20 @@ Ligue des champions,2023-2024,2023-10-25,Royal Antwerp FC,FC Porto,1,4,A,1,0,H,,
 Ligue des champions,2023-2024,2023-11-07,Dortmund,Newcastle,2,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-07,FK Shakhtar Donetsk,Barcelona,1,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-07,Ath Madrid,Celtic FC,6,0,H,2,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-11-07,SS Lazio,Feyenoord Rotterdam,1,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-11-07,Lazio,Feyenoord Rotterdam,1,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-07,Milan,Paris SG,2,1,H,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-07,Man City,BSC Young Boys,3,0,H,2,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-07,FK Crvena Zvezda,RB Leipzig,1,2,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-07,FC Porto,Royal Antwerp FC,2,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-11-08,Napoli,1. FC Union Berlin,1,1,D,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-11-08,Napoli,Union Berlin,1,1,D,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-08,Real Sociedad de Fútbol,Benfica,3,1,H,3,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-08,Real Madrid,Sporting Clube de Braga,3,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-08,FC Red Bull Salzburg,Inter,0,1,A,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-08,Bayern Munich,Galatasaray,2,1,H,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-08,Copenhagen,Man United,4,3,H,2,2,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-08,Arsenal,Sevilla,2,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-11-08,PSV,Racing Club de Lens,1,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-11-28,SS Lazio,Celtic FC,2,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-11-08,PSV,Lens,1,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-11-28,Lazio,Celtic FC,2,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-28,FK Shakhtar Donetsk,Royal Antwerp FC,1,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-28,Feyenoord Rotterdam,Ath Madrid,1,3,A,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-28,Milan,Dortmund,1,3,A,1,1,D,,,,,,,,,,,,,,phase de groupes
@@ -60688,15 +60695,15 @@ Ligue des champions,2023-2024,2023-11-28,Man City,RB Leipzig,3,2,H,0,2,A,,,,,,,,
 Ligue des champions,2023-2024,2023-11-28,Barcelona,FC Porto,2,1,H,1,1,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-29,Galatasaray,Man United,3,3,D,1,2,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-29,Sevilla,PSV,2,3,A,1,0,H,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-11-29,Sporting Clube de Braga,1. FC Union Berlin,1,1,D,0,1,A,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-11-29,Sporting Clube de Braga,Union Berlin,1,1,D,0,1,A,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-29,Real Madrid,Napoli,4,2,H,2,1,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-29,Benfica,Inter,3,3,D,3,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-29,Real Sociedad de Fútbol,FC Red Bull Salzburg,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-11-29,Bayern Munich,Copenhagen,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-11-29,Arsenal,Racing Club de Lens,6,0,H,5,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-11-29,Arsenal,Lens,6,0,H,5,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-12-12,PSV,Arsenal,1,1,D,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-12-12,Racing Club de Lens,Sevilla,2,1,H,0,0,D,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-12-12,1. FC Union Berlin,Real Madrid,2,3,A,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-12-12,Lens,Sevilla,2,1,H,0,0,D,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-12-12,Union Berlin,Real Madrid,2,3,A,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-12-12,Napoli,Sporting Clube de Braga,2,0,H,2,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-12-12,Inter,Real Sociedad de Fútbol,0,0,D,,,,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-12-12,FC Red Bull Salzburg,Benfica,1,3,A,0,2,A,,,,,,,,,,,,,,phase de groupes
@@ -60704,7 +60711,7 @@ Ligue des champions,2023-2024,2023-12-12,Man United,Bayern Munich,0,1,A,0,0,D,,,
 Ligue des champions,2023-2024,2023-12-12,Copenhagen,Galatasaray,1,0,H,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-12-13,RB Leipzig,BSC Young Boys,2,1,H,0,0,D,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-12-13,FK Crvena Zvezda,Man City,2,3,A,0,1,A,,,,,,,,,,,,,,phase de groupes
-Ligue des champions,2023-2024,2023-12-13,Ath Madrid,SS Lazio,2,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
+Ligue des champions,2023-2024,2023-12-13,Ath Madrid,Lazio,2,0,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-12-13,Celtic FC,Feyenoord Rotterdam,2,1,H,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-12-13,Newcastle,Milan,1,2,A,1,0,H,,,,,,,,,,,,,,phase de groupes
 Ligue des champions,2023-2024,2023-12-13,Dortmund,Paris SG,1,1,D,0,0,D,,,,,,,,,,,,,,phase de groupes
@@ -60713,13 +60720,13 @@ Ligue des champions,2023-2024,2023-12-13,FC Porto,FK Shakhtar Donetsk,5,3,H,2,1,
 Ligue des champions,2023-2024,2024-02-13,Copenhagen,Man City,1,3,A,1,2,A,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2023-2024,2024-02-13,RB Leipzig,Real Madrid,0,1,A,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2023-2024,2024-02-14,Paris SG,Real Sociedad de Fútbol,2,0,H,0,0,D,,,,,,,,,,,,,,huitiemes
-Ligue des champions,2023-2024,2024-02-14,SS Lazio,Bayern Munich,1,0,H,0,0,D,,,,,,,,,,,,,,huitiemes
+Ligue des champions,2023-2024,2024-02-14,Lazio,Bayern Munich,1,0,H,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2023-2024,2024-02-20,Inter,Ath Madrid,1,0,H,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2023-2024,2024-02-20,PSV,Dortmund,1,1,D,0,1,A,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2023-2024,2024-02-21,FC Porto,Arsenal,1,0,H,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2023-2024,2024-02-21,Napoli,Barcelona,1,1,D,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2023-2024,2024-03-05,Real Sociedad de Fútbol,Paris SG,1,2,A,0,1,A,,,,,,,,,,,,,,huitiemes
-Ligue des champions,2023-2024,2024-03-05,Bayern Munich,SS Lazio,3,0,H,2,0,H,,,,,,,,,,,,,,huitiemes
+Ligue des champions,2023-2024,2024-03-05,Bayern Munich,Lazio,3,0,H,2,0,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2023-2024,2024-03-06,Man City,Copenhagen,3,1,H,3,1,H,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2023-2024,2024-03-06,Real Madrid,RB Leipzig,1,1,D,0,0,D,,,,,,,,,,,,,,huitiemes
 Ligue des champions,2023-2024,2024-03-12,Arsenal,FC Porto,1,0,H,,,,,,,,,,,,,,,,,huitiemes
@@ -60745,7 +60752,7 @@ Ligue des champions,2024-2025,2024-09-17,Sporting,Lille,2,0,H,1,0,H,,,,,,,,,,,,,
 Ligue des champions,2024-2025,2024-09-17,Bayern Munich,GNK Dinamo Zagreb,9,2,H,3,0,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-09-17,Real Madrid,Stuttgart,3,1,H,0,0,D,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-09-17,Milan,Liverpool,1,3,A,1,2,A,,,,,,,,,,,,,,phase de ligue
-Ligue des champions,2024-2025,2024-09-18,Bologna FC 1909,FK Shakhtar Donetsk,0,0,D,,,,,,,,,,,,,,,,,phase de ligue
+Ligue des champions,2024-2025,2024-09-18,Bologna,FK Shakhtar Donetsk,0,0,D,,,,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-09-18,AC Sparta Praha,FC Red Bull Salzburg,3,0,H,2,0,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-09-18,Man City,Inter,0,0,D,,,,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-09-18,Paris SG,Girona,1,0,H,0,0,D,,,,,,,,,,,,,,phase de ligue
@@ -60770,14 +60777,14 @@ Ligue des champions,2024-2025,2024-10-02,Girona,Feyenoord Rotterdam,2,3,A,1,2,A,
 Ligue des champions,2024-2025,2024-10-02,FK Shakhtar Donetsk,Atalanta,0,3,A,0,2,A,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-10-02,Aston Villa,Bayern Munich,1,0,H,0,0,D,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-10-02,SK Sturm Graz,Club Brugge,0,1,A,0,1,A,,,,,,,,,,,,,,phase de ligue
-Ligue des champions,2024-2025,2024-10-02,Liverpool,Bologna FC 1909,2,0,H,1,0,H,,,,,,,,,,,,,,phase de ligue
+Ligue des champions,2024-2025,2024-10-02,Liverpool,Bologna,2,0,H,1,0,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-10-02,RB Leipzig,Juventus,2,3,A,1,0,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-10-02,Benfica,Ath Madrid,4,0,H,1,0,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-10-02,GNK Dinamo Zagreb,Monaco,2,2,D,1,0,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-10-02,Lille,Real Madrid,1,0,H,1,0,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-10-22,Monaco,FK Crvena Zvezda,5,1,H,2,1,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-10-22,Milan,Club Brugge,3,1,H,1,0,H,,,,,,,,,,,,,,phase de ligue
-Ligue des champions,2024-2025,2024-10-22,Aston Villa,Bologna FC 1909,2,0,H,0,0,D,,,,,,,,,,,,,,phase de ligue
+Ligue des champions,2024-2025,2024-10-22,Aston Villa,Bologna,2,0,H,0,0,D,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-10-22,Girona,ŠK Slovan Bratislava,2,0,H,1,0,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-10-22,SK Sturm Graz,Sporting,0,2,A,0,1,A,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-10-22,Paris SG,PSV,1,1,D,0,1,A,,,,,,,,,,,,,,phase de ligue
@@ -60796,7 +60803,7 @@ Ligue des champions,2024-2025,2024-10-23,FC Red Bull Salzburg,GNK Dinamo Zagreb,
 Ligue des champions,2024-2025,2024-11-05,ŠK Slovan Bratislava,GNK Dinamo Zagreb,1,4,A,1,2,A,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-11-05,PSV,Girona,4,0,H,2,0,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-11-05,Sporting,Man City,4,1,H,1,1,D,,,,,,,,,,,,,,phase de ligue
-Ligue des champions,2024-2025,2024-11-05,Bologna FC 1909,Monaco,0,1,A,0,0,D,,,,,,,,,,,,,,phase de ligue
+Ligue des champions,2024-2025,2024-11-05,Bologna,Monaco,0,1,A,0,0,D,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-11-05,Dortmund,SK Sturm Graz,1,0,H,0,0,D,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-11-05,Liverpool,Leverkusen,4,0,H,0,0,D,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-11-05,Real Madrid,Milan,1,3,A,1,2,A,,,,,,,,,,,,,,phase de ligue
@@ -60824,7 +60831,7 @@ Ligue des champions,2024-2025,2024-11-27,SK Sturm Graz,Girona,1,0,H,0,0,D,,,,,,,
 Ligue des champions,2024-2025,2024-11-27,FK Crvena Zvezda,Stuttgart,5,1,H,2,1,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-11-27,Monaco,Benfica,2,3,A,1,0,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-11-27,Aston Villa,Juventus,0,0,D,,,,,,,,,,,,,,,,,phase de ligue
-Ligue des champions,2024-2025,2024-11-27,Bologna FC 1909,Lille,1,2,A,0,1,A,,,,,,,,,,,,,,phase de ligue
+Ligue des champions,2024-2025,2024-11-27,Bologna,Lille,1,2,A,0,1,A,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-11-27,Liverpool,Real Madrid,2,0,H,0,0,D,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-11-27,Celtic FC,Club Brugge,1,1,D,0,1,A,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-11-27,GNK Dinamo Zagreb,Dortmund,0,3,A,0,1,A,,,,,,,,,,,,,,phase de ligue
@@ -60843,13 +60850,13 @@ Ligue des champions,2024-2025,2024-12-11,Lille,SK Sturm Graz,3,2,H,2,1,H,,,,,,,,
 Ligue des champions,2024-2025,2024-12-11,Stuttgart,BSC Young Boys,5,1,H,1,1,D,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-12-11,Dortmund,Barcelona,2,3,A,0,0,D,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-12-11,Milan,FK Crvena Zvezda,2,1,H,1,0,H,,,,,,,,,,,,,,phase de ligue
-Ligue des champions,2024-2025,2024-12-11,Benfica,Bologna FC 1909,0,0,D,,,,,,,,,,,,,,,,,phase de ligue
+Ligue des champions,2024-2025,2024-12-11,Benfica,Bologna,0,0,D,,,,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-12-11,Arsenal,Monaco,3,0,H,1,0,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-12-11,Juventus,Man City,2,0,H,0,0,D,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2024-12-11,Feyenoord Rotterdam,AC Sparta Praha,4,2,H,3,1,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2025-01-21,Monaco,Aston Villa,1,0,H,1,0,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2025-01-21,Atalanta,SK Sturm Graz,5,0,H,1,0,H,,,,,,,,,,,,,,phase de ligue
-Ligue des champions,2024-2025,2025-01-21,Bologna FC 1909,Dortmund,2,1,H,0,1,A,,,,,,,,,,,,,,phase de ligue
+Ligue des champions,2024-2025,2025-01-21,Bologna,Dortmund,2,1,H,0,1,A,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2025-01-21,ŠK Slovan Bratislava,Stuttgart,1,3,A,0,2,A,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2025-01-21,Liverpool,Lille,2,1,H,1,0,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2025-01-21,Ath Madrid,Leverkusen,2,1,H,0,1,A,,,,,,,,,,,,,,phase de ligue
@@ -60865,7 +60872,7 @@ Ligue des champions,2024-2025,2025-01-22,Milan,Girona,1,0,H,1,0,H,,,,,,,,,,,,,,p
 Ligue des champions,2024-2025,2025-01-22,Arsenal,GNK Dinamo Zagreb,3,0,H,1,0,H,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2025-01-22,Celtic FC,BSC Young Boys,1,0,H,0,0,D,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2025-01-22,Feyenoord Rotterdam,Bayern Munich,3,0,H,2,0,H,,,,,,,,,,,,,,phase de ligue
-Ligue des champions,2024-2025,2025-01-29,Sporting,Bologna FC 1909,1,1,D,0,1,A,,,,,,,,,,,,,,phase de ligue
+Ligue des champions,2024-2025,2025-01-29,Sporting,Bologna,1,1,D,0,1,A,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2025-01-29,BSC Young Boys,FK Crvena Zvezda,0,1,A,0,0,D,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2025-01-29,Aston Villa,Celtic FC,4,2,H,2,2,D,,,,,,,,,,,,,,phase de ligue
 Ligue des champions,2024-2025,2025-01-29,Girona,Arsenal,1,2,A,1,2,A,,,,,,,,,,,,,,phase de ligue

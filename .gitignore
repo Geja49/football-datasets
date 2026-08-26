@@ -19,3 +19,5 @@ donnees/football-nouveau.db
 donnees/cache_statsbomb/
 donnees/cache_wyscout/
 donnees/cache_api_football/
+donnees/cache_valeurs_marche/
+donnees/cache_openml_ldc/

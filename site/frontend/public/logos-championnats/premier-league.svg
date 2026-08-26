@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Premier League">
+  <rect width="64" height="64" rx="10" fill="#37003c"/>
+  <path fill="#00ff87" d="M18 46V18h10.5c7.2 0 11.5 3.6 11.5 9.2 0 4.1-2.3 7.1-6.1 8.4L42 46h-8.2l-7.1-9.6H26V46H18zm8-15.4h2.2c3.1 0 4.9-1.5 4.9-3.9s-1.8-3.8-4.9-3.8H26v7.7z"/>
+  <circle cx="48" cy="18" r="4" fill="#00ff87"/>
+</svg>

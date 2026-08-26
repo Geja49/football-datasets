@@ -1,8 +1,17 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { aujourdhuiIso, formaterDate } from "../dates.js";
-import { chargerAccueil } from "../services/api.js";
+import {
+  CLASSES_CARTES,
+  CODES_CARTES,
+  LOGOS_CARTES,
+  libelleTypeCompetition,
+} from "../championnats.js";
+import PortraitJoueur from "../composants/PortraitJoueur.vue";
+import { aujourdhuiIso, formaterDate, formaterHeureLocale } from "../dates.js";
+import { chargerAccueil, chargerMatchsSansProno, chargerUtilisateurConnecte } from "../services/api.js";
+
+defineOptions({ name: "Accueil" });
 
 const routeur = useRouter();
 const championnats = ref([]);
@@ -11,17 +20,19 @@ const saison = ref("");
 const jour = ref("");
 const matchsJour = ref([]);
 const buteurs = ref([]);
+const passeurs = ref([]);
 const erreur = ref("");
+const utilisateur = ref(null);
+const nbMatchsSansProno = ref(0);
 const aujourd = aujourdhuiIso();
 
-const classesCartes = {
-  "Premier League": "carte-pl",
-  "La Liga": "carte-laliga",
-  Bundesliga: "carte-bundesliga",
-  "Serie A": "carte-seriea",
-  "Ligue 1": "carte-ligue1",
-  "Ligue des champions": "carte-ldc",
-};
+const classesCartes = CLASSES_CARTES;
+const codesCartes = CODES_CARTES;
+const logosCartes = LOGOS_CARTES;
+
+function libelleType(nom) {
+  return libelleTypeCompetition(nom);
+}
 
 onMounted(async () => {
   try {
@@ -32,8 +43,18 @@ onMounted(async () => {
     jour.value = data.jour || "";
     matchsJour.value = data.matchs_jour || [];
     buteurs.value = data.buteurs || [];
+    passeurs.value = data.passeurs || [];
   } catch (e) {
     erreur.value = e.message;
+  }
+  try {
+    const session = await chargerUtilisateurConnecte();
+    utilisateur.value = session.utilisateur;
+    const rappels = await chargerMatchsSansProno();
+    nbMatchsSansProno.value = rappels.nb || 0;
+  } catch {
+    utilisateur.value = null;
+    nbMatchsSansProno.value = 0;
   }
 });
 
@@ -81,19 +102,51 @@ function ouvrirJoueur(nom, ligue) {
   </section>
   <div class="page">
     <p v-if="erreur" class="erreur">{{ erreur }}</p>
-    <div class="grille">
-      <router-link
-        v-for="champ in championnats"
-        :key="champ.nom"
-        class="carte cliquable"
-        :class="classesCartes[champ.nom]"
-        :to="{ path: `/championnat/${encodeURIComponent(champ.nom)}`, query: { saison } }"
-      >
-        <p class="tag">{{ champ.nom === "Ligue des champions" ? "Coupe d'Europe" : "Championnat" }}</p>
-        <h2>{{ champ.nom }}</h2>
-        <p class="doux">Classement + calendrier</p>
-      </router-link>
-    </div>
+
+    <aside
+      v-if="utilisateur && nbMatchsSansProno > 0"
+      class="bandeau-rappel-pronos"
+      role="status"
+    >
+      <p>
+        <strong>{{ nbMatchsSansProno }}</strong>
+        match{{ nbMatchsSansProno > 1 ? "s" : "" }} à pronostiquer dans les 7 prochains jours.
+        <router-link to="/mes-pronos">Voir nos pronos</router-link>
+      </p>
+    </aside>
+
+    <section class="bloc-competitions" aria-label="Compétitions">
+      <header class="entete-competitions">
+        <p class="tag-section">Compétitions</p>
+        <h2 class="titre-section-competitions">Choisir une ligue</h2>
+      </header>
+      <div class="grille grille-competitions">
+        <router-link
+          v-for="champ in championnats"
+          :key="champ.nom"
+          class="tuile-competition cliquable"
+          :class="classesCartes[champ.nom]"
+          :to="{ path: `/championnat/${encodeURIComponent(champ.nom)}`, query: { saison } }"
+        >
+          <img
+            v-if="logosCartes[champ.nom]"
+            class="tuile-logo"
+            :src="logosCartes[champ.nom]"
+            alt=""
+            width="88"
+            height="88"
+            loading="lazy"
+            aria-hidden="true"
+          />
+          <span v-else class="tuile-code" aria-hidden="true">{{ codesCartes[champ.nom] || "" }}</span>
+          <div class="tuile-contenu">
+            <p class="tag">{{ libelleType(champ.nom) }}</p>
+            <h2 class="tuile-titre">{{ champ.nom }}</h2>
+            <p class="tuile-action">Classement + calendrier</p>
+          </div>
+        </router-link>
+      </div>
+    </section>
 
     <div class="bloc" v-if="jour">
       <h2>{{ jour === aujourd ? "Matchs du jour" : "Prochains matchs" }}</h2>
@@ -107,7 +160,7 @@ function ouvrirJoueur(nom, ligue) {
         @click="ouvrirMatch(match)"
       >
         <div class="heure-match">
-          {{ match.heure || (match.joue ? "FT" : "—") }}
+          {{ formaterHeureLocale(match) }}
         </div>
         <div class="club-match club-domicile">
           <span>{{ match.domicile }}</span>
@@ -120,7 +173,16 @@ function ouvrirJoueur(nom, ligue) {
         </div>
         <div class="milieu-match">
           <strong v-if="match.joue" class="score-match">{{ score(match) }}</strong>
-          <strong v-else class="versus">vs</strong>
+          <template v-else>
+            <strong class="versus">vs</strong>
+            <button
+              type="button"
+              class="bouton-analyse bouton-analyse-milieu"
+              @click.stop="ouvrirMatch(match)"
+            >
+              Analyser
+            </button>
+          </template>
           <small class="ligue-match">{{ match.championnat }}</small>
         </div>
         <div class="club-match club-exterieur">
@@ -135,38 +197,96 @@ function ouvrirJoueur(nom, ligue) {
       </article>
     </div>
 
-    <div class="bloc" v-if="buteurs.length">
-      <h2>Meilleurs buteurs</h2>
-      <div class="grille">
-        <div
+    <section class="bloc bloc-buteurs" v-if="buteurs.length" aria-label="Meilleurs buteurs">
+      <header class="entete-buteurs">
+        <p class="tag-section">Statistiques</p>
+        <h2 class="titre-section-buteurs">Meilleurs buteurs</h2>
+      </header>
+      <div class="grille grille-buteurs">
+        <router-link
           v-for="ligue in buteurs"
           :key="ligue.championnat"
-          class="carte"
+          class="carte carte-buteur cliquable"
           :class="classesCartes[ligue.championnat]"
+          :to="{
+            path: `/championnat/${encodeURIComponent(ligue.championnat)}`,
+            query: {
+              ...(ligue.saison ? { saison: ligue.saison } : {}),
+              onglet: 'buteurs',
+            },
+          }"
         >
-          <p class="tag">{{ ligue.championnat }}</p>
-          <p class="doux">{{ ligue.saison }}</p>
-          <ol class="liste-buteurs">
+          <div class="carte-buteur-entete">
+            <p class="tag carte-buteur-ligue">{{ ligue.championnat }}</p>
+            <p class="carte-buteur-saison">{{ ligue.saison || "Pas encore de stats" }}</p>
+          </div>
+          <ol v-if="ligue.joueurs.length" class="liste-buteurs">
             <li
-              v-for="joueur in ligue.joueurs"
+              v-for="(joueur, rang) in ligue.joueurs"
               :key="joueur.joueur"
-              @click="ouvrirJoueur(joueur.joueur, ligue.championnat)"
+              @click.prevent.stop="ouvrirJoueur(joueur.joueur, ligue.championnat)"
             >
+              <span class="rang-buteur" aria-hidden="true">{{ rang + 1 }}</span>
               <span class="joueur-cellule">
-                <img
-                  v-if="joueur.url_photo"
-                  :src="joueur.url_photo"
-                  :alt="joueur.joueur"
-                  class="portrait-mini"
+                <PortraitJoueur
+                  :nom="joueur.joueur"
+                  :url-photo="joueur.url_photo"
+                  classe-css="portrait-buteur"
                 />
-                {{ joueur.joueur }}
+                <span class="nom-buteur">{{ joueur.joueur }}</span>
               </span>
               <span class="buteurs-buts">{{ joueur.buts }}</span>
             </li>
           </ol>
-          <p v-if="!ligue.joueurs.length" class="doux">Pas encore de stats.</p>
-        </div>
+          <p v-else class="carte-buteur-vide">Pas encore de stats.</p>
+        </router-link>
       </div>
-    </div>
+    </section>
+
+    <section class="bloc bloc-passeurs" v-if="passeurs.length" aria-label="Meilleurs passeurs">
+      <header class="entete-passeurs">
+        <p class="tag-section">Statistiques</p>
+        <h2 class="titre-section-passeurs">Meilleurs passeurs</h2>
+      </header>
+      <div class="grille grille-passeurs">
+        <router-link
+          v-for="ligue in passeurs"
+          :key="ligue.championnat"
+          class="carte carte-passeur cliquable"
+          :class="classesCartes[ligue.championnat]"
+          :to="{
+            path: `/championnat/${encodeURIComponent(ligue.championnat)}`,
+            query: {
+              ...(ligue.saison ? { saison: ligue.saison } : {}),
+              onglet: 'passeurs',
+            },
+          }"
+        >
+          <div class="carte-passeur-entete">
+            <p class="tag carte-passeur-ligue">{{ ligue.championnat }}</p>
+            <p class="carte-passeur-saison">{{ ligue.saison || "Pas encore de stats" }}</p>
+          </div>
+          <ol v-if="ligue.joueurs.length" class="liste-passeurs">
+            <li
+              v-for="(joueur, rang) in ligue.joueurs"
+              :key="joueur.joueur"
+              @click.prevent.stop="ouvrirJoueur(joueur.joueur, ligue.championnat)"
+            >
+              <span class="rang-passeur" aria-hidden="true">{{ rang + 1 }}</span>
+              <span class="joueur-cellule">
+                <PortraitJoueur
+                  :nom="joueur.joueur"
+                  :url-photo="joueur.url_photo"
+                  classe-css="portrait-passeur"
+                />
+                <span class="nom-passeur">{{ joueur.joueur }}</span>
+              </span>
+              <span class="passeurs-pd">{{ joueur.passes_decisives }}</span>
+            </li>
+          </ol>
+          <p v-else class="carte-passeur-vide">Pas encore de stats.</p>
+        </router-link>
+      </div>
+    </section>
   </div>
 </template>

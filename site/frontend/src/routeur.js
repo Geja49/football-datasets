@@ -1,11 +1,21 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Accueil from "./pages/Accueil.vue";
-import PageAnalyse from "./pages/PageAnalyse.vue";
-import PageChampionnat from "./pages/PageChampionnat.vue";
-import PageChoisirMatch from "./pages/PageChoisirMatch.vue";
-import PageCotes from "./pages/PageCotes.vue";
-import PageEquipe from "./pages/PageEquipe.vue";
-import PageJoueur from "./pages/PageJoueur.vue";
+
+const Accueil = () => import("./pages/Accueil.vue");
+const PageAnalyse = () => import("./pages/PageAnalyse.vue");
+const PageChampionnat = () => import("./pages/PageChampionnat.vue");
+const PageChoisirMatch = () => import("./pages/PageChoisirMatch.vue");
+const PageComparer = () => import("./pages/PageComparer.vue");
+const PageConditions = () => import("./pages/PageConditions.vue");
+const PageAuthAnimee = () => import("./pages/PageAuthAnimee.vue");
+const PageCotes = () => import("./pages/PageCotes.vue");
+const PageEquipe = () => import("./pages/PageEquipe.vue");
+const PageGlossaire = () => import("./pages/PageGlossaire.vue");
+const PageJoueur = () => import("./pages/PageJoueur.vue");
+const PageMesPronos = () => import("./pages/PageMesPronos.vue");
+const PageClassementPronos = () => import("./pages/PageClassementPronos.vue");
+const PagePronosJournee = () => import("./pages/PagePronosJournee.vue");
+const PageLigues = () => import("./pages/PageLigues.vue");
+const PageIntrouvable = () => import("./pages/PageIntrouvable.vue");
 
 export default createRouter({
   history: createWebHistory(),
@@ -13,6 +23,17 @@ export default createRouter({
     { path: "/", component: Accueil },
     { path: "/cotes", component: PageCotes },
     { path: "/match", component: PageAnalyse },
+    { path: "/connexion", component: PageAuthAnimee },
+    { path: "/inscription", component: PageAuthAnimee },
+    { path: "/mes-pronos", component: PageMesPronos },
+    { path: "/nos-pronos", redirect: "/mes-pronos" },
+    { path: "/classement-pronos", component: PageClassementPronos },
+    { path: "/pronos-journee", component: PagePronosJournee },
+    { path: "/ligues", component: PageLigues },
+    { path: "/ligue/:code", component: PageLigues },
+    { path: "/conditions", component: PageConditions },
+    { path: "/glossaire", component: PageGlossaire },
+    { path: "/comparer", component: PageComparer },
     { path: "/championnat/:championnat", component: PageChampionnat },
     {
       path: "/championnat/:championnat/equipe/:equipe/analyser",
@@ -23,5 +44,6 @@ export default createRouter({
       component: PageEquipe,
     },
     { path: "/joueur/:joueur", component: PageJoueur },
+    { path: "/:pathMatch(.*)*", name: "introuvable", component: PageIntrouvable },
   ],
 });

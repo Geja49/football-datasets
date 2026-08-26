@@ -3,15 +3,21 @@ import { computed } from "vue";
 
 const props = defineProps({
   lignes: { type: Array, default: () => [] },
+  /** « Club » ou « Joueur » — légende du marqueur plein. */
+  libelleSujet: { type: String, default: "Valeur" },
+  /** Légende du losange (moyenne ligue ou adversaire). */
+  libelleComparaison: { type: String, default: "Moyenne ligue" },
 });
 
-const largeur = 280;
-const margeHaut = 16;
-const hauteur = 48;
-const margeGauche = 4;
-const piste = largeur - 8;
+const largeur = 320;
+const margeGauche = 8;
+const margeDroite = 8;
+const piste = largeur - margeGauche - margeDroite;
+const margeHaut = 8;
+const hauteur = 36;
 const yAxe = margeHaut + hauteur;
-const hauteurSvg = yAxe + 6;
+const hauteurLabels = 14;
+const hauteurSvg = yAxe + hauteurLabels;
 
 function pointsDensite(histogramme) {
   const bins = histogramme || [];
@@ -20,7 +26,7 @@ function pointsDensite(histogramme) {
   const pas = piste / Math.max(bins.length - 1, 1);
   return bins.map((b, i) => ({
     x: margeGauche + i * pas,
-    y: yAxe - ((b.n || 0) / maxN) * (hauteur - 10),
+    y: yAxe - ((b.n || 0) / maxN) * (hauteur - 6),
   }));
 }
 
@@ -48,7 +54,7 @@ function cheminCrete(points) {
 }
 
 function ySurCourbe(points, xMarqueur) {
-  if (!points.length) return yAxe;
+  if (!points.length) return yAxe - 4;
   if (xMarqueur <= points[0].x) return points[0].y;
   if (xMarqueur >= points[points.length - 1].x) return points[points.length - 1].y;
   let i = 0;
@@ -60,24 +66,37 @@ function ySurCourbe(points, xMarqueur) {
   return u * u * (1 + 2 * t) * prec.y + t * t * (3 - 2 * t) * cur.y;
 }
 
+const aReferenceLigue = computed(() =>
+  props.lignes.some((l) => l.scoreLigue != null || l.valeurLigue != null),
+);
+
 const rangees = computed(() =>
-  props.lignes.map((ligne, i) => {
+  props.lignes.map((ligne) => {
     const score = Math.max(0, Math.min(1, ligne.score || 0));
+    const scoreLigue =
+      ligne.scoreLigue != null
+        ? Math.max(0, Math.min(1, ligne.scoreLigue))
+        : Math.max(0, Math.min(1, ligne.scoreMedian ?? 0.5));
     const points = pointsDensite(ligne.histogramme);
     const xMarqueur = margeGauche + score * piste;
+    const xLigue = margeGauche + scoreLigue * piste;
     const yMarqueur = ySurCourbe(points, xMarqueur);
-    const etiquetteADroite = xMarqueur < largeur - 56;
+    const yLigue = ySurCourbe(points, xLigue);
     return {
-      i,
       libelle: ligne.libelle,
       texte: ligne.texte,
+      texteLigue: ligne.texteLigue || "",
+      texteEcart: ligne.texteEcart || "",
+      textePosition: ligne.textePosition || "",
       score,
+      scoreLigue,
       xMarqueur,
+      xLigue,
       yMarqueur,
+      yLigue,
       chemin: cheminAire(points),
       crete: cheminCrete(points),
-      xEtiquette: etiquetteADroite ? xMarqueur + 10 : xMarqueur - 10,
-      ancreEtiquette: etiquetteADroite ? "start" : "end",
+      aLigue: ligne.scoreLigue != null || ligne.valeurLigue != null,
     };
   }),
 );
@@ -85,13 +104,46 @@ const rangees = computed(() =>
 
 <template>
   <div class="diagramme-densites" v-if="rangees.length">
-    <p class="legende-densite">Gauche = plus faible, droite = plus fort dans la ligue</p>
+    <p class="legende-densite">
+        Courbe = répartition dans le championnat.
+      <template v-if="aReferenceLigue">
+        Trait pointillé + losange = {{ libelleComparaison.toLowerCase() }} · point = {{ libelleSujet.toLowerCase() }}.
+      </template>
+      <template v-else>
+        Trait pointillé = médiane · point = {{ libelleSujet.toLowerCase() }}.
+      </template>
+    </p>
+    <div v-if="aReferenceLigue" class="puces-legende" aria-hidden="true">
+      <span class="puce-sujet">{{ libelleSujet }}</span>
+      <span class="puce-ligue">{{ libelleComparaison }}</span>
+    </div>
+    <div class="echelle-densite" aria-hidden="true">
+      <span>Faible</span>
+      <span>{{ aReferenceLigue ? libelleComparaison : "Médiane" }}</span>
+      <span>Fort</span>
+    </div>
     <div v-for="rangee in rangees" :key="rangee.libelle" class="rangee-densite">
       <div class="entete-densite">
-        <span>{{ rangee.libelle }}</span>
-        <strong>{{ rangee.texte }}</strong>
+        <span class="libelle-densite">{{ rangee.libelle }}</span>
+        <div class="infos-densite">
+          <strong class="valeur-ligne">{{ rangee.texte }}</strong>
+          <span v-if="rangee.texteLigue" class="ligue-ligne">{{ libelleComparaison.toLowerCase().startsWith('moy') ? 'moy.' : 'vs' }} {{ rangee.texteLigue }}</span>
+          <span v-if="rangee.textePosition" class="position-ligne">{{ rangee.textePosition }}</span>
+        </div>
       </div>
-      <svg :viewBox="`0 0 ${largeur} ${hauteurSvg}`" role="img" :aria-label="rangee.libelle">
+      <p v-if="rangee.texteEcart" class="ecart-densite">{{ rangee.texteEcart }}</p>
+      <svg
+        :viewBox="`0 0 ${largeur} ${hauteurSvg}`"
+        role="img"
+        :aria-label="`${rangee.libelle} : ${rangee.texte}${rangee.texteEcart ? ', ' + rangee.texteEcart : ''}${rangee.textePosition ? ', ' + rangee.textePosition : ''}`"
+      >
+        <line
+          class="median-densite"
+          :x1="rangee.xLigue"
+          :y1="margeHaut"
+          :x2="rangee.xLigue"
+          :y2="yAxe"
+        />
         <path class="aire-densite" :d="rangee.chemin" />
         <path class="crete-densite" :d="rangee.crete" />
         <line
@@ -101,6 +153,21 @@ const rangees = computed(() =>
           :x2="margeGauche + piste"
           :y2="yAxe"
         />
+        <!-- Repère moyenne ligue (losange) -->
+        <line
+          v-if="rangee.aLigue"
+          class="tige-ligue"
+          :x1="rangee.xLigue"
+          :y1="yAxe"
+          :x2="rangee.xLigue"
+          :y2="rangee.yLigue"
+        />
+        <polygon
+          v-if="rangee.aLigue"
+          class="marqueur-ligue"
+          :points="`${rangee.xLigue},${rangee.yLigue - 5.5} ${rangee.xLigue + 5.5},${rangee.yLigue} ${rangee.xLigue},${rangee.yLigue + 5.5} ${rangee.xLigue - 5.5},${rangee.yLigue}`"
+        />
+        <!-- Repère club / joueur (point) -->
         <line
           class="tige-densite"
           :x1="rangee.xMarqueur"
@@ -112,15 +179,16 @@ const rangees = computed(() =>
           class="marqueur-densite"
           :cx="rangee.xMarqueur"
           :cy="rangee.yMarqueur"
-          r="6.5"
+          r="5.5"
         />
+        <text class="label-axe-densite" :x="margeGauche" :y="yAxe + 11" text-anchor="start">faible</text>
         <text
-          class="valeur-densite"
-          :x="rangee.xEtiquette"
-          :y="rangee.yMarqueur + 4"
-          :text-anchor="rangee.ancreEtiquette"
+          class="label-axe-densite"
+          :x="margeGauche + piste"
+          :y="yAxe + 11"
+          text-anchor="end"
         >
-          {{ rangee.texte }}
+          fort
         </text>
       </svg>
     </div>

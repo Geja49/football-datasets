@@ -16,17 +16,23 @@ COLUMNS_ORDER = [
     "AST", "HF", "AF", "HC", "AC", "HY", "AY", "HR", "AR"
 ]
 
+# Nombre de saisons a parcourir depuis les pages football-data.co.uk
+# (1993-94 pour l'Angleterre ; un peu moins pour les autres ligues).
+# Dynamique : evite de figer un plafond trop bas (ex. 22/23 saisons).
+_ANNEE = datetime.datetime.now().year
+_NB_SAISONS = max(30, _ANNEE - 1993 + 1)
+
 LEAGUES = [
-    {'name': 'premier-league', 'path': 'englandm.php', 'key': 'E0', 'links': [], 'range': 23},
-    {'name': 'la-liga', 'path': 'spainm.php', 'key': 'SP1', 'links': [], 'range': 22},
-    {'name': 'bundesliga', 'path': 'germanym.php', 'key': 'D1', 'links': [], 'range': 22},
-    {'name': 'serie-a', 'path': 'italym.php', 'key': 'I1', 'links': [], 'range': 22},
-    {'name': 'ligue-1', 'path': 'francem.php', 'key': 'F1', 'links': [], 'range': 22}
+    {'name': 'premier-league', 'path': 'englandm.php', 'key': 'E0', 'links': [], 'range': _NB_SAISONS},
+    {'name': 'la-liga', 'path': 'spainm.php', 'key': 'SP1', 'links': [], 'range': _NB_SAISONS - 1},
+    {'name': 'bundesliga', 'path': 'germanym.php', 'key': 'D1', 'links': [], 'range': _NB_SAISONS - 1},
+    {'name': 'serie-a', 'path': 'italym.php', 'key': 'I1', 'links': [], 'range': _NB_SAISONS - 1},
+    {'name': 'ligue-1', 'path': 'francem.php', 'key': 'F1', 'links': [], 'range': _NB_SAISONS - 1}
 ]
 
 def fetch_league_links(league):
     headers = {'User-Agent': generate_user_agent(device_type="desktop", os=('mac', 'linux'))}
-    response = requests.get(BASE_URL + league['path'], headers=headers, verify=False)  # Disable SSL verification
+    response = requests.get(BASE_URL + league['path'], headers=headers, timeout=60)
     soup = BeautifulSoup(response.text, 'html.parser')
     file_links = soup.find_all('a', href=re.compile(r"mmz4281"))
     for link in file_links:
@@ -36,9 +42,13 @@ def fetch_league_links(league):
 def download_and_save_data(league):
     """Download data from league links and save in specified format."""
     for link in league['links']:
+        url = BASE_URL + link
+        # HTTPS only : évite file:// et autres schémas risqués via urllib.
+        if not url.startswith("https://"):
+            raise ValueError(f"URL non HTTPS refusee: {url[:80]}")
         headers = {'User-Agent': generate_user_agent(device_type="desktop", os=('mac', 'linux'))}
-        req = urllib.request.Request(BASE_URL + link, headers=headers)
-        with urllib.request.urlopen(req) as response:
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=60) as response:
             header = True
             raw_data = response.read()
             # Detect encoding

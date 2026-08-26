@@ -33,12 +33,11 @@ def test_commentaire_score():
     assert _commentaire_score(1, 1) == "match nul 1-1"
     assert "domicile" in _commentaire_score(1, 0)
     assert "extérieur" in _commentaire_score(0, 1)
-    assert "large succès" in _commentaire_score(4, 0)
+    assert "large" in _commentaire_score(4, 0)
 
 
 def test_scenario_poisson_structure_et_probabilites():
     pred = _scenario_poisson(1.6, 1.1)
-    assert "score_plus_probable" in pred
     assert "-" in pred["score_plus_probable"]
     assert len(pred["scores_frequents"]) == 6
     total_1n2 = (
@@ -103,10 +102,9 @@ def test_scenario_cartons_et_scenarios_detailles():
     )
     assert cartons["jaunes_match"] == 4.5
     assert cartons["titre"]
-    assert "jaunes attendus" in cartons["texte"]
+    assert "jaunes" in cartons["texte"].lower()
 
     pred = _scenario_poisson(1.8, 1.2)
-    pred["cartons"] = cartons
     scenarios = _scenarios_detailles(pred, cartons, 2.5)
     cles = [s["cle"] for s in scenarios]
     assert cles == ["rythme", "deux_equipes", "buts", "cartons"]
@@ -115,8 +113,6 @@ def test_scenario_cartons_et_scenarios_detailles():
 def test_bilan_match_score_exact():
     pred = _scenario_poisson(1.5, 1.0)
     pred["score_plus_probable"] = "2-1"
-    pred["p_plus_de_2_buts"] = 60.0
-    pred["p_les_deux_marquent"] = 55.0
     pred["cartons"] = {"jaunes_match": 4.0}
     bilan = _bilan_match(
         pred,

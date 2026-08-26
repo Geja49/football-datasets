@@ -2,7 +2,7 @@
 import { computed, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { definirExtraNavigation, viderExtraNavigation } from "../contexteNavigation.js";
-import { formaterDate } from "../dates.js";
+import { cleJourLocale, formaterDate, formaterHeureLocale } from "../dates.js";
 import { chargerCotes } from "../services/api.js";
 
 const route = useRoute();
@@ -15,26 +15,12 @@ const erreur = ref("");
 const chargement = ref(false);
 const filtre = ref(typeof route.query.championnat === "string" ? route.query.championnat : "");
 
-function dateLocale(match) {
-  if (match.commence_at) {
-    const instant = new Date(match.commence_at);
-    if (!Number.isNaN(instant.getTime())) {
-      const mois = String(instant.getMonth() + 1).padStart(2, "0");
-      const jour = String(instant.getDate()).padStart(2, "0");
-      return `${instant.getFullYear()}-${mois}-${jour}`;
-    }
-  }
-  return match.date || "";
+function cotesAffichees(match) {
+  return match.cotes && match.cotes.moyenne ? match.cotes.moyenne : null;
 }
 
 function heureLocale(match) {
-  if (match.commence_at) {
-    const instant = new Date(match.commence_at);
-    if (!Number.isNaN(instant.getTime())) {
-      return instant.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
-    }
-  }
-  return match.heure || "—";
+  return formaterHeureLocale(match);
 }
 
 function texteCote(valeur) {
@@ -42,10 +28,6 @@ function texteCote(valeur) {
   const nombre = Number(valeur);
   if (Number.isNaN(nombre)) return "—";
   return nombre.toFixed(2).replace(".", ",");
-}
-
-function cotesAffichees(match) {
-  return match.cotes && match.cotes.moyenne ? match.cotes.moyenne : null;
 }
 
 async function charger() {
@@ -121,7 +103,7 @@ const groupes = computed(() => {
     if (!liste || !liste.length) continue;
     const parDate = new Map();
     for (const match of liste) {
-      const jour = dateLocale(match);
+      const jour = cleJourLocale(match);
       const duJour = parDate.get(jour) || [];
       duJour.push(match);
       parDate.set(jour, duJour);

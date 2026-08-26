@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { lireContexteRoute } from "../contexteNavigation.js";
+import { prechargerLien } from "../services/api.js";
 
 const route = useRoute();
 
@@ -15,7 +16,7 @@ const liens = computed(() => {
       libelle: "Championnat",
       to: {
         path: `/championnat/${encodeURIComponent(ctx.championnat)}`,
-        query: { ...querySaison, vue: "classement" },
+        query: { ...querySaison, onglet: "classement" },
       },
     });
   }
@@ -35,14 +36,14 @@ const liens = computed(() => {
       libelle: "Calendrier",
       to: {
         path: `/championnat/${encodeURIComponent(ctx.championnat)}`,
-        query: { ...querySaison, vue: "calendrier" },
+        query: { ...querySaison, onglet: "calendrier" },
       },
     });
     liste.push({
       libelle: "Classement",
       to: {
         path: `/championnat/${encodeURIComponent(ctx.championnat)}`,
-        query: { ...querySaison, vue: "classement" },
+        query: { ...querySaison, onglet: "classement" },
       },
     });
   }
@@ -72,9 +73,10 @@ function estActif(lien) {
   if (!lien.to) return false;
   const path = typeof lien.to === "string" ? lien.to : lien.to.path;
   if (route.path !== path) return false;
-  const vue = typeof lien.to === "object" ? lien.to.query && lien.to.query.vue : "";
-  if (vue) {
-    return (route.query.vue || "classement") === vue;
+  const onglet =
+    typeof lien.to === "object" ? lien.to.query && lien.to.query.onglet : "";
+  if (onglet) {
+    return (route.query.onglet || "classement") === onglet;
   }
   return true;
 }
@@ -96,6 +98,7 @@ function estActif(lien) {
         class="puce-raccourci"
         :class="{ actif: estActif(lien) }"
         :to="lien.to"
+        @mouseenter="prechargerLien(lien.to)"
       >
         {{ lien.libelle }}
       </router-link>

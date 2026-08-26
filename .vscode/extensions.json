@@ -1,0 +1,7 @@
+﻿{
+  "recommendations": [
+    "snyk-security.snyk-vulnerability-scanner",
+    "Semgrep.semgrep",
+    "gitguardian-secret-security.gitguardian"
+  ]
+}

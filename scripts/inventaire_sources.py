@@ -54,11 +54,35 @@ def main():
                 print(f"      {row[5]}")
     except sqlite3.OperationalError:
         print("  table couverture_sources absente")
+    print("=== Elo ClubElo ===")
+    try:
+        n = connexion.execute("SELECT COUNT(*) FROM classements_elo").fetchone()[0]
+        print(f"  {n} clubs")
+        for row in connexion.execute(
+            "SELECT pays, COUNT(*), ROUND(AVG(elo),1) FROM classements_elo GROUP BY pays"
+        ):
+            print(f"  {row[0]}: {row[1]} clubs, elo moyen {row[2]}")
+    except sqlite3.OperationalError:
+        print("  table classements_elo absente (lancer collecter_clubelo.py)")
+    print("=== Valeurs de marche (dump CC0) ===")
+    try:
+        n = connexion.execute("SELECT COUNT(*) FROM valeurs_marche_joueurs").fetchone()[0]
+        avec = connexion.execute(
+            "SELECT COUNT(*) FROM valeurs_marche_joueurs WHERE valeur_marche_eur IS NOT NULL"
+        ).fetchone()[0]
+        print(f"  {n} joueurs matches ({avec} avec valeur)")
+        nt = connexion.execute("SELECT COUNT(*) FROM transferts_joueurs").fetchone()[0]
+        print(f"  {nt} lignes transferts")
+    except sqlite3.OperationalError:
+        print("  tables absentes (lancer collecter_valeurs_marche.py)")
     print("=== Toujours manquant (open data) ===")
     print("  5 ligues 2025-2026 : pas de tacles/interceptions/blocs/pressions/xG concédés joueur.")
-    print("  LDC : scores openfootball ; pas de joueurs ni xG (sauf finales StatsBomb).")
+    print(
+        "  LDC : scores openfootball ; joueurs/defense 2013-2020 OpenML CC0 ; "
+        "pas de xG recente (sauf finales StatsBomb)."
+    )
     print("  PSxG gardien : absent (on a xG des tirs subis StatsBomb, pre-tir).")
-    print("  Calendrier 38 journees : Understat ne le publie pas toujours en aout.")
+    print("  Calendrier 38 journees : Understat partiel en aout ; openfootball en complement.")
     connexion.close()
 
 

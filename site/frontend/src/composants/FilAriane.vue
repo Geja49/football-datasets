@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { lireContexteRoute } from "../contexteNavigation.js";
+import { prechargerLien } from "../services/api.js";
 
 const route = useRoute();
 
@@ -57,7 +58,11 @@ const miettes = computed(() => {
       <span v-if="index === miettes.length - 1" class="actuel" aria-current="page">
         {{ miette.libelle }}
       </span>
-      <router-link v-else-if="miette.to" :to="miette.to">
+      <router-link
+        v-else-if="miette.to"
+        :to="miette.to"
+        @mouseenter="prechargerLien(miette.to)"
+      >
         {{ miette.libelle }}
       </router-link>
       <span v-else>{{ miette.libelle }}</span>

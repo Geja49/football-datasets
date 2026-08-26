@@ -2,11 +2,12 @@
 import { computed, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import CalendrierMatchs from "../composants/CalendrierMatchs.vue";
+import PortraitJoueur from "../composants/PortraitJoueur.vue";
 import DiagrammeDensites from "../composants/DiagrammeDensites.vue";
 import DiagrammeRadar from "../composants/DiagrammeRadar.vue";
-import { axesDepuisEquipe } from "../composants/axesDiagramme.js";
+import { axesComparaisonLigue, axesDepuisEquipe } from "../composants/axesDiagramme.js";
 import { definirExtraNavigation, viderExtraNavigation } from "../contexteNavigation.js";
-import { chargerEquipe } from "../services/api.js";
+import { chargerElo, chargerEquipe } from "../services/api.js";
 
 const route = useRoute();
 const routeur = useRouter();
@@ -19,6 +20,9 @@ const data = ref({
   matchs_radar: [],
   alias_equipe: [],
   buts: null,
+  reperes: null,
+  elo: null,
+  mention_sources: "",
   site: {},
   defense: {
     disponible: false,
@@ -29,6 +33,7 @@ const data = ref({
   },
 });
 const erreur = ref("");
+const eloRetry = ref(false);
 
 async function charger() {
   erreur.value = "";
@@ -37,6 +42,27 @@ async function charger() {
   } catch (e) {
     erreur.value = e.message;
   }
+}
+
+async function reessayerElo() {
+  eloRetry.value = true;
+  try {
+    data.value.elo = await chargerElo(equipe.value, { forcer: true });
+  } catch {
+    data.value.elo = {
+      disponible: false,
+      message: "Nouvelle tentative ClubElo échouée (timeout / réseau).",
+    };
+  } finally {
+    eloRetry.value = false;
+  }
+}
+
+const blocElo = computed(() => data.value.elo || null);
+
+function texteForce(force) {
+  if (force == null || !Number.isFinite(Number(force))) return "—";
+  return `${Math.round(Number(force) * 100)} %`;
 }
 
 watch([championnat, equipe, saison], charger, { immediate: true });
@@ -70,13 +96,33 @@ function ouvrirEquipe(nom) {
   });
 }
 
+/** Matchs du championnat de la page (même périmètre que la médiane ligue). */
+const matchsPourAxes = computed(() => {
+  const locaux = (data.value.matchs || []).filter(
+    (m) => m.joue && m.buts_domicile != null && m.buts_exterieur != null,
+  );
+  if (locaux.length) return locaux;
+  return data.value.matchs_radar || [];
+});
+
 const axesEquipe = computed(() =>
   axesDepuisEquipe(
-    data.value.matchs_radar?.length ? data.value.matchs_radar : data.value.matchs,
+    matchsPourAxes.value,
     equipe.value,
     data.value.alias_equipe,
+    data.value.reperes,
   ),
 );
+
+const comparaisonLigue = computed(() => axesComparaisonLigue(axesEquipe.value));
+
+const messageReperes = computed(() => {
+  const r = data.value.reperes;
+  if (!r) return "";
+  if (r.message) return r.message;
+  if (!r.axes?.length) return "Pas assez de données ligue pour comparer.";
+  return "";
+});
 
 const butsEquipe = computed(() => data.value.buts || null);
 
@@ -123,6 +169,34 @@ function analyserMatch(match) {
             <strong>{{ butsEquipe.total }}</strong>
           </div>
         </div>
+        <div v-if="blocElo && blocElo.disponible" class="cartes-stats">
+          <div class="carte-stat">
+            <span>Elo ClubElo</span>
+            <strong>{{ blocElo.elo }}</strong>
+          </div>
+          <div class="carte-stat">
+            <span>Force relative</span>
+            <strong>{{ texteForce(blocElo.force_relative) }}</strong>
+          </div>
+        </div>
+        <p v-if="blocElo && blocElo.disponible" class="mention-ldc">
+          Elo {{ blocElo.club_elo || equipe }}
+          <template v-if="blocElo.rang"> · rang {{ blocElo.rang }}</template>
+          <template v-if="blocElo.date"> · au {{ blocElo.date }}</template>
+          (source ClubElo, pas un classement officiel).
+        </p>
+        <p v-else-if="blocElo && blocElo.message" class="mention-ldc">
+          {{ blocElo.message }}
+          <button
+            type="button"
+            class="lien-retry"
+            :disabled="eloRetry"
+            @click="reessayerElo"
+          >
+            {{ eloRetry ? "Nouvelle tentative…" : "Réessayer" }}
+          </button>
+        </p>
+        <p v-if="data.mention_sources" class="mention-ldc">{{ data.mention_sources }}</p>
         <router-link
           class="bouton-analyse"
           :to="{
@@ -131,6 +205,20 @@ function analyserMatch(match) {
           }"
         >
           Analyser un match
+        </router-link>
+        <router-link
+          class="lien-comparer"
+          :to="{
+            path: '/comparer',
+            query: {
+              type: 'clubs',
+              championnat,
+              saison,
+              a: equipe,
+            },
+          }"
+        >
+          Comparer ce club
         </router-link>
       </div>
     </div>
@@ -145,21 +233,47 @@ function analyserMatch(match) {
       <h2>Forces de l’équipe</h2>
       <p class="doux">
         Moyennes par match (buts, xG, tirs), forme sur 5 matchs, solidité et xG encaissés (inversés).
+        Comparaison à la moyenne du championnat (même saison) : polygone pointillé sur le radar,
+        losange sur les densités.
         <template v-if="butsEquipe && (butsEquipe.matchs_championnat || butsEquipe.matchs_ldc)">
-          Buts : championnat + Ligue des champions
+          Totaux buts (cartes) : championnat + Ligue des champions
           ({{ butsEquipe.matchs_championnat }} + {{ butsEquipe.matchs_ldc }} matchs).
         </template>
       </p>
+      <p v-if="messageReperes" class="mention">{{ messageReperes }}</p>
       <div class="grille-diagrammes">
         <div class="cadre-diagramme">
           <p class="titre-cadre">Radar</p>
-          <DiagrammeRadar :axes="axesEquipe" />
+          <DiagrammeRadar
+            :axes="axesEquipe"
+            :comparaison="comparaisonLigue"
+            libelle-sujet="Club"
+            libelle-comparaison="Moyenne ligue"
+          />
         </div>
         <div class="cadre-diagramme">
-          <p class="titre-cadre">Densités</p>
-          <DiagrammeDensites :lignes="axesEquipe" />
+          <p class="titre-cadre">Densités (vs championnat)</p>
+          <DiagrammeDensites :lignes="axesEquipe" libelle-sujet="Club" />
         </div>
       </div>
+      <table v-if="comparaisonLigue.length" class="table-vs-ligue">
+        <thead>
+          <tr>
+            <th>Métrique</th>
+            <th class="droit">Club</th>
+            <th class="droit">Moyenne ligue</th>
+            <th>Écart</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="axe in axesEquipe" :key="'vs-' + axe.cle">
+            <td>{{ axe.libelle }}</td>
+            <td class="droit pts">{{ axe.texte }}</td>
+            <td class="droit">{{ axe.texteLigue || "—" }}</td>
+            <td class="ecart-cellule">{{ axe.texteEcart || "—" }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="bloc" v-if="data.joueurs.length">
@@ -190,11 +304,9 @@ function analyserMatch(match) {
           >
             <td>
               <span class="joueur-cellule">
-                <img
-                  v-if="joueur.url_photo"
-                  :src="joueur.url_photo"
-                  :alt="joueur.joueur"
-                  class="portrait-mini"
+                <PortraitJoueur
+                  :nom="joueur.joueur"
+                  :url-photo="joueur.url_photo"
                 />
                 {{ joueur.joueur }}
               </span>

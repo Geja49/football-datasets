@@ -9,6 +9,19 @@ def test_accueil(client_api):
     assert "saisons" in data
     assert "2026-2027" in data["saisons"]
     assert len(data["championnats"]) >= 5
+    assert "buteurs" in data
+    assert "passeurs" in data
+    assert len(data["buteurs"]) >= 1
+    assert len(data["passeurs"]) >= 1
+    la_liga_buteurs = next(l for l in data["buteurs"] if l["championnat"] == "La Liga")
+    assert la_liga_buteurs["saison"] == "2026-2027"
+    assert len(la_liga_buteurs["joueurs"]) >= 1
+    assert la_liga_buteurs["joueurs"][0]["joueur"] == "Lewandowski"
+    la_liga_passeurs = next(l for l in data["passeurs"] if l["championnat"] == "La Liga")
+    assert la_liga_passeurs["saison"] == "2026-2027"
+    assert len(la_liga_passeurs["joueurs"]) >= 1
+    assert la_liga_passeurs["joueurs"][0]["joueur"] == "Yamal"
+    assert la_liga_passeurs["joueurs"][0]["passes_decisives"] == 2
 
 
 def test_classement_la_liga(client_api):
@@ -110,3 +123,60 @@ def test_cotes_sans_cle(client_api):
     for match in data["matchs"]:
         assert match.get("cotes") is None
         assert match.get("bookmakers") == []
+
+
+def test_meilleurs_buteurs_saison_courante(client_api):
+    reponse = client_api.get(
+        "/api/meilleurs",
+        params={
+            "championnat": "La Liga",
+            "saison": "2026-2027",
+            "type": "buts",
+        },
+    )
+    assert reponse.status_code == 200
+    data = reponse.json()
+    assert data["disponible"] is True
+    assert data["saison_de_secours"] is False
+    assert data["saison_utilisee"] == "2026-2027"
+    assert len(data["joueurs"]) >= 1
+    assert data["joueurs"][0]["joueur"] == "Lewandowski"
+    assert "url_photo" in data["joueurs"][0]
+    assert isinstance(data["joueurs"][0]["url_photo"], str)
+
+
+def test_meilleurs_passeurs_saison_courante(client_api):
+    reponse = client_api.get(
+        "/api/meilleurs",
+        params={
+            "championnat": "La Liga",
+            "saison": "2026-2027",
+            "type": "passes",
+        },
+    )
+    assert reponse.status_code == 200
+    data = reponse.json()
+    assert data["disponible"] is True
+    assert data["saison_utilisee"] == "2026-2027"
+    assert len(data["joueurs"]) >= 1
+    assert data["joueurs"][0]["joueur"] == "Yamal"
+    assert data["joueurs"][0]["passes_decisives"] == 2
+
+
+def test_meilleurs_fallback_saison_si_vide(client_api):
+    """Saison sans joueurs → dernière saison non vide + message clair."""
+    reponse = client_api.get(
+        "/api/meilleurs",
+        params={
+            "championnat": "Bundesliga",
+            "saison": "2026-2027",
+            "type": "buts",
+        },
+    )
+    assert reponse.status_code == 200
+    data = reponse.json()
+    assert data["saison"] == "2026-2027"
+    assert data["saison_de_secours"] is True
+    assert data["saison_utilisee"] == "2025-2026"
+    assert "Aucun buteur" in data["message"]
+    assert data["joueurs"][0]["joueur"] == "Kane"

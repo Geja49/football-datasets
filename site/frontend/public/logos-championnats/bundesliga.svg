@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Bundesliga">
+  <rect width="64" height="64" rx="10" fill="#1a0e12"/>
+  <path fill="#e2001a" d="M14 14h36v8H28v8h18v8H28v12H14V14z"/>
+  <rect x="40" y="42" width="10" height="8" fill="#fff" opacity="0.85"/>
+</svg>

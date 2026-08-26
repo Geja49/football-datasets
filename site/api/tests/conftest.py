@@ -370,6 +370,23 @@ def _remplir_base(connexion):
         ('Real Madrid', 'Real Madrid CF', 'https://www.realmadrid.com', '', 'Bernabeu')
         """
     )
+    # Joueurs : saison précédente Bundesliga (pour tester le fallback 2026-2027 vide).
+    connexion.execute(
+        """
+        INSERT INTO joueurs (
+            joueur, equipe, championnat, saison, poste,
+            matchs, minutes, buts, passes_decisives, tirs, xg, xa
+        ) VALUES
+        ('Kane', 'Bayern Munich', 'Bundesliga', '2025-2026', 'F',
+         30, 2700, 26, 8, 90, 22.5, 6.1),
+        ('Musiala', 'Bayern Munich', 'Bundesliga', '2025-2026', 'M',
+         28, 2400, 12, 10, 55, 10.2, 8.4),
+        ('Lewandowski', 'Barcelona', 'La Liga', '2026-2027', 'F',
+         2, 180, 2, 0, 8, 1.8, 0.1),
+        ('Yamal', 'Barcelona', 'La Liga', '2026-2027', 'F',
+         2, 170, 1, 2, 5, 0.8, 1.2)
+        """
+    )
     connexion.commit()
 
 

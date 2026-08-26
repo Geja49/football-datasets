@@ -1,12 +1,12 @@
 """
-API lecture seule pour le site de stats.
-Usage (a la racine du projet) : python -m uvicorn site.api.serveur:app --reload --port 8000
-Les endpoints sont en GET uniquement.
+API pour le site de stats (lecture + communauté Phases 1–2).
+Usage (a la racine du projet) : python -m uvicorn site.api.serveur:app --reload --port 8001
 """
 
 from collections import defaultdict
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 import re
 import sqlite3
 
@@ -28,8 +28,10 @@ from correspondances import (
     normaliser,
 )
 from photos_joueurs import DOSSIER_PHOTOS, obtenir_photo, photo_en_cache
+from elo_clubs import elo_pour_equipe, enrichir_classement_elo
 from sites_officiels import SITES_CHAMPIONNATS, SITES_EQUIPES
 from cotes import lecture_marche_pour_analyse, routeur_cotes
+from communaute import initialiser_base, routeur_communaute
 
 RACINE = Path(__file__).resolve().parents[2]
 FICHIER_BASE = RACINE / "donnees" / "football.db"
@@ -46,14 +48,87 @@ PHASE_LIGUE = "phase de ligue"
 SAISON_COURANTE = "2026-2027"
 MOTIF_SAISON = re.compile(r"^\d{4}-\d{4}$")
 
+# Heures du calendrier = coup d'envoi local de la compétition (openfootball / sources).
+FUSEAU_PAR_CHAMPIONNAT = {
+    "Premier League": "Europe/London",
+    "La Liga": "Europe/Madrid",
+    "Bundesliga": "Europe/Berlin",
+    "Serie A": "Europe/Rome",
+    "Ligue 1": "Europe/Paris",
+    "Ligue des champions": "Europe/Paris",
+}
+
+
+def commence_at_iso(date_str, heure_str, championnat=None):
+    """Convertit date+heure locales de ligue en instant UTC ISO (Z)."""
+    if not date_str or not heure_str:
+        return ""
+    texte_heure = str(heure_str).strip()
+    if len(texte_heure) < 4 or ":" not in texte_heure:
+        return ""
+    try:
+        parties = texte_heure.split(":")
+        heures = int(parties[0])
+        minutes = int(parties[1][:2])
+        annee, mois, jour = (int(x) for x in str(date_str)[:10].split("-"))
+        nom_fuseau = FUSEAU_PAR_CHAMPIONNAT.get(championnat) or "Europe/Paris"
+        local = datetime(
+            annee, mois, jour, heures, minutes, tzinfo=ZoneInfo(nom_fuseau)
+        )
+        return local.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    except (TypeError, ValueError, OSError, ZoneInfoNotFoundError):
+        return ""
+
+
+def enrichir_horaires(matchs, championnat_defaut=None):
+    """Ajoute commence_at (UTC) pour affichage fuseau navigateur."""
+    for match in matchs:
+        champ = match.get("championnat") or championnat_defaut
+        match["commence_at"] = commence_at_iso(
+            match.get("date"), match.get("heure"), champ
+        )
+        match["fuseau_source"] = FUSEAU_PAR_CHAMPIONNAT.get(
+            champ, "Europe/Paris"
+        )
+    return matchs
+
+
 app = FastAPI(title="Stats championnats")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
-    allow_methods=["GET"],
+    allow_methods=["GET", "POST", "DELETE"],
     allow_headers=["*"],
+    allow_credentials=True,
 )
 app.include_router(routeur_cotes)
+app.include_router(routeur_communaute)
+initialiser_base()
+
+
+def lire_horaire_match(connexion, championnat, saison, domicile, exterieur):
+    """Date, heure locale et commence_at UTC pour un match du calendrier."""
+    try:
+        ligne = connexion.execute(
+            """
+            SELECT date, heure FROM calendrier
+            WHERE championnat = ? AND saison = ?
+              AND domicile = ? AND exterieur = ?
+            ORDER BY date ASC
+            LIMIT 1
+            """,
+            (championnat, saison, domicile, exterieur),
+        ).fetchone()
+    except sqlite3.OperationalError:
+        ligne = None
+    if not ligne:
+        return None
+    heure = ligne["heure"] or ""
+    return {
+        "date": ligne["date"],
+        "heure": heure,
+        "commence_at": commence_at_iso(ligne["date"], heure, championnat),
+    }
 
 
 def ouvrir_base():
@@ -113,6 +188,60 @@ def lignes_dict(curseur):
     return [dict(ligne) for ligne in curseur.fetchall()]
 
 
+def charger_transferts_joueur(connexion, nom_joueur, limite=20):
+    """Historique transferts (dump communautaire), matching exact sur le nom."""
+    try:
+        return lignes_dict(
+            connexion.execute(
+                """
+                SELECT date_transfert, saison_transfert, club_depart,
+                       club_arrivee, frais_eur, valeur_marche_eur
+                FROM transferts_joueurs
+                WHERE joueur = ?
+                ORDER BY date_transfert DESC
+                LIMIT ?
+                """,
+                (nom_joueur, limite),
+            )
+        )
+    except sqlite3.OperationalError:
+        return []
+
+
+def charger_valeur_marche(connexion, nom_joueur):
+    """Dump communautaire transfermarkt-datasets (CC0), matching best-effort."""
+    try:
+        lignes = lignes_dict(
+            connexion.execute(
+                """
+                SELECT joueur, joueur_dump, age, club_dump, poste,
+                       valeur_marche_eur, valeur_max_eur, derniere_saison_dump,
+                       qualite_match, source, mention
+                FROM valeurs_marche_joueurs
+                WHERE joueur = ?
+                LIMIT 1
+                """,
+                (nom_joueur,),
+            )
+        )
+    except sqlite3.OperationalError:
+        return None
+    if not lignes:
+        return None
+    profil = lignes[0]
+    profil["transferts_recents"] = charger_transferts_joueur(connexion, nom_joueur)
+    return profil
+
+
+MESSAGE_LDC_PAGE = (
+    "Ligue des champions : scores et calendrier via openfootball ; "
+    "buteurs joueur par joueur via OpenML (saisons 2013-2014 a 2020-2021). "
+    "Pas de xG ni de stats defensives completes pour les saisons recentes ; "
+    "les effectifs actuels reprennent souvent la ligue nationale du club."
+)
+
+
+
 AXES_JOUEUR = (
     ("buts", "Buts"),
     ("xg", "xG"),
@@ -122,6 +251,12 @@ AXES_JOUEUR = (
     ("minutes", "Minutes"),
 )
 NB_CLASSES_HISTO = 12
+# Trop peu d'équipes / joueurs : pas de comparaison ligue fiable.
+MIN_ECHANTILLON_LIGUE = 4
+PLAFOND_BUTS_MATCH = 3.0
+PLAFOND_XG_MATCH = 2.5
+PLAFOND_TIRS_MATCH = 18.0
+PLAFOND_FORME = 15.0
 
 
 def nombre_ok(valeur):
@@ -132,6 +267,23 @@ def nombre_ok(valeur):
     if n != n:
         return 0.0
     return n
+
+
+def moyenne_liste(valeurs):
+    if not valeurs:
+        return 0.0
+    return sum(valeurs) / len(valeurs)
+
+
+def mediane_liste(valeurs):
+    if not valeurs:
+        return 0.0
+    triees = sorted(valeurs)
+    n = len(triees)
+    milieu = n // 2
+    if n % 2:
+        return triees[milieu]
+    return (triees[milieu - 1] + triees[milieu]) / 2
 
 
 def histogramme_simple(valeurs, plafond, nb_classes=NB_CLASSES_HISTO):
@@ -154,7 +306,7 @@ def saison_pour_radar(saisons):
 
 
 def reperes_joueur_ligue(connexion, championnat, saison):
-    """Max et histogrammes de la ligue pour normaliser le radar joueur."""
+    """Max, moyenne, médiane et histogrammes de la ligue pour le radar joueur."""
     try:
         lignes = lignes_dict(
             connexion.execute(
@@ -168,8 +320,18 @@ def reperes_joueur_ligue(connexion, championnat, saison):
         )
     except sqlite3.OperationalError:
         return None
-    if not lignes:
-        return None
+    if len(lignes) < MIN_ECHANTILLON_LIGUE:
+        return {
+            "championnat": championnat,
+            "saison": saison,
+            "nb_joueurs": len(lignes),
+            "reference": "moyenne",
+            "axes": [],
+            "message": (
+                "Pas assez de joueurs dans le championnat pour comparer "
+                f"(minimum {MIN_ECHANTILLON_LIGUE})."
+            ),
+        }
     axes = []
     for cle, libelle in AXES_JOUEUR:
         valeurs = [nombre_ok(ligne.get(cle)) for ligne in lignes]
@@ -179,12 +341,165 @@ def reperes_joueur_ligue(connexion, championnat, saison):
                 "cle": cle,
                 "libelle": libelle,
                 "plafond": round(plafond, 2),
+                "moyenne": round(moyenne_liste(valeurs), 2),
+                "mediane": round(mediane_liste(valeurs), 2),
                 "histogramme": histogramme_simple(valeurs, plafond),
             }
         )
     return {
         "championnat": championnat,
         "saison": saison,
+        "nb_joueurs": len(lignes),
+        "reference": "moyenne",
+        "axes": axes,
+    }
+
+
+def _cote_match_equipe(match, nom_equipe):
+    domicile = match.get("domicile") == nom_equipe
+    a_xg = match.get("xg_domicile") is not None and match.get("xg_exterieur") is not None
+    a_tirs = match.get("tirs_domicile") is not None and match.get("tirs_exterieur") is not None
+    buts = nombre_ok(match.get("buts_domicile") if domicile else match.get("buts_exterieur"))
+    contre = nombre_ok(match.get("buts_exterieur") if domicile else match.get("buts_domicile"))
+    return {
+        "date": match.get("date") or "",
+        "buts": buts,
+        "contre": contre,
+        "xg": nombre_ok(match.get("xg_domicile") if domicile else match.get("xg_exterieur"))
+        if a_xg
+        else None,
+        "xg_contre": nombre_ok(
+            match.get("xg_exterieur") if domicile else match.get("xg_domicile")
+        )
+        if a_xg
+        else None,
+        "tirs": nombre_ok(match.get("tirs_domicile") if domicile else match.get("tirs_exterieur"))
+        if a_tirs
+        else None,
+        "points": 3 if buts > contre else (1 if buts == contre else 0),
+    }
+
+
+def _stats_equipes_ligue(matchs):
+    """Moyennes par match et forme (5 derniers) pour chaque équipe de la ligue."""
+    par_equipe = defaultdict(list)
+    for match in matchs:
+        if match.get("buts_domicile") is None or match.get("buts_exterieur") is None:
+            continue
+        for nom in (match.get("domicile"), match.get("exterieur")):
+            if nom:
+                par_equipe[nom].append(_cote_match_equipe(match, nom))
+
+    stats = []
+    for nom, cotes in par_equipe.items():
+        if not cotes:
+            continue
+        nb = len(cotes)
+        avec_xg = [c for c in cotes if c["xg"] is not None]
+        avec_tirs = [c for c in cotes if c["tirs"] is not None]
+        recents = sorted(cotes, key=lambda c: c["date"], reverse=True)[:5]
+        forme = sum(c["points"] for c in recents)
+        ligne = {
+            "equipe": nom,
+            "buts": moyenne_liste([c["buts"] for c in cotes]),
+            "defense": moyenne_liste([c["contre"] for c in cotes]),
+            "forme": float(forme),
+            "nb_matchs": nb,
+        }
+        if avec_xg:
+            ligne["xg_match"] = moyenne_liste([c["xg"] for c in avec_xg])
+            ligne["xg_encaisse"] = moyenne_liste([c["xg_contre"] for c in avec_xg])
+        if avec_tirs:
+            ligne["tirs"] = moyenne_liste([c["tirs"] for c in avec_tirs])
+        stats.append(ligne)
+    return stats
+
+
+def reperes_equipe_ligue(connexion, championnat, saison):
+    """Moyenne / médiane / histogrammes des équipes du championnat (même saison)."""
+    try:
+        matchs = lignes_dict(
+            connexion.execute(
+                """
+                SELECT date, domicile, exterieur, buts_domicile, buts_exterieur,
+                       tirs_domicile, tirs_exterieur
+                FROM matchs
+                WHERE championnat = ? AND saison = ?
+                  AND buts_domicile IS NOT NULL
+                  AND buts_exterieur IS NOT NULL
+                ORDER BY date
+                """,
+                (championnat, saison),
+            )
+        )
+    except sqlite3.OperationalError:
+        return None
+    if not matchs:
+        return {
+            "championnat": championnat,
+            "saison": saison,
+            "nb_equipes": 0,
+            "reference": "moyenne",
+            "axes": [],
+            "message": "Pas assez de matchs joués dans le championnat pour comparer.",
+        }
+    joindre_xg(connexion, championnat, saison, matchs)
+    stats = _stats_equipes_ligue(matchs)
+    if len(stats) < MIN_ECHANTILLON_LIGUE:
+        return {
+            "championnat": championnat,
+            "saison": saison,
+            "nb_equipes": len(stats),
+            "reference": "moyenne",
+            "axes": [],
+            "message": (
+                "Pas assez d'équipes avec des matchs joués pour comparer "
+                f"(minimum {MIN_ECHANTILLON_LIGUE})."
+            ),
+        }
+
+    series = (
+        ("buts", "Buts", False, PLAFOND_BUTS_MATCH),
+        ("xg_match", "xG", False, PLAFOND_XG_MATCH),
+        ("tirs", "Tirs", False, PLAFOND_TIRS_MATCH),
+        ("forme", "Forme", False, PLAFOND_FORME),
+        ("defense", "Solidité", True, PLAFOND_BUTS_MATCH),
+        ("xg_encaisse", "xG encaissés", True, PLAFOND_XG_MATCH),
+    )
+    axes = []
+    for cle, libelle, inverser, plafond_defaut in series:
+        bruts = [nombre_ok(s[cle]) for s in stats if cle in s]
+        if len(bruts) < MIN_ECHANTILLON_LIGUE:
+            continue
+        plafond = max(max(bruts), plafond_defaut)
+        pour_histo = (
+            [plafond - min(v, plafond) for v in bruts] if inverser else bruts
+        )
+        axes.append(
+            {
+                "cle": cle,
+                "libelle": libelle,
+                "plafond": round(plafond, 2),
+                "moyenne": round(moyenne_liste(bruts), 3),
+                "mediane": round(mediane_liste(bruts), 3),
+                "inverser": inverser,
+                "histogramme": histogramme_simple(pour_histo, plafond),
+            }
+        )
+    if not axes:
+        return {
+            "championnat": championnat,
+            "saison": saison,
+            "nb_equipes": len(stats),
+            "reference": "moyenne",
+            "axes": [],
+            "message": "Données ligue insuffisantes pour les métriques du radar.",
+        }
+    return {
+        "championnat": championnat,
+        "saison": saison,
+        "nb_equipes": len(stats),
+        "reference": "moyenne",
         "axes": axes,
     }
 
@@ -317,7 +632,7 @@ def ajouter_logos_programme(connexion, programme):
     return programme
 
 
-def fusionner_programme(joues, avenir):
+def fusionner_programme(joues, avenir, championnat=None):
     vus = set()
     programme = []
     for match in joues:
@@ -327,6 +642,7 @@ def fusionner_programme(joues, avenir):
                 "date": match.get("date", ""),
                 "heure": match.get("heure") or "",
                 "journee": match.get("journee") or "",
+                "championnat": match.get("championnat") or championnat or "",
                 "domicile": match["domicile"],
                 "exterieur": match["exterieur"],
                 "buts_domicile": match.get("buts_domicile"),
@@ -346,6 +662,7 @@ def fusionner_programme(joues, avenir):
                 "date": match.get("date", ""),
                 "heure": match.get("heure") or "",
                 "journee": match.get("journee") or "",
+                "championnat": match.get("championnat") or championnat or "",
                 "domicile": match["domicile"],
                 "exterieur": match["exterieur"],
                 "buts_domicile": None,
@@ -356,7 +673,28 @@ def fusionner_programme(joues, avenir):
             }
         )
     programme.sort(key=lambda m: (m["date"] or "", m["heure"] or "", m["domicile"]))
+    enrichir_horaires(programme, championnat)
     return programme
+
+
+def joindre_journee(connexion, championnat, saison, matchs):
+    """Ajoute le numero de journee depuis le calendrier (best-effort)."""
+    if not matchs:
+        return matchs
+    index = {}
+    for ligne in lire_calendrier(connexion, championnat, saison):
+        cle = (ligne.get("domicile"), ligne.get("exterieur"))
+        if ligne.get("journee"):
+            index[cle] = ligne["journee"]
+    for match in matchs:
+        if match.get("journee"):
+            continue
+        cle = (match.get("domicile"), match.get("exterieur"))
+        if cle in index:
+            match["journee"] = index[cle]
+        else:
+            match["journee"] = match.get("journee") or ""
+    return matchs
 
 
 def joindre_xg(connexion, championnat, saison, matchs):
@@ -475,7 +813,10 @@ def annoter_pour_equipe(matchs, nom_equipe):
     return annotes
 
 
-MESSAGE_LDC_JOUEUR = "Ligue des champions : non disponible par joueur"
+MESSAGE_LDC_JOUEUR = (
+    "Ligue des champions : buts par joueur disponibles seulement pour "
+    "OpenML 2013-2021. Les saisons recentes n'ont pas de stats joueur LDC ici."
+)
 MESSAGE_DEFENSE_ABSENT = (
     "Non disponible pour cette saison/compétition. "
     "Les tacles, interceptions, duels et arrêts viennent de StatsBomb Open Data "
@@ -952,7 +1293,8 @@ def charger_programme_saison(connexion, championnat, saison):
         )
     )
     avenir = lire_calendrier(connexion, championnat, saison)
-    programme = fusionner_programme(joues, avenir)
+    programme = fusionner_programme(joues, avenir, championnat)
+    joindre_journee(connexion, championnat, saison, programme)
     joindre_xg(connexion, championnat, saison, programme)
     return programme
 
@@ -974,7 +1316,7 @@ def saison_avec_joueurs(connexion, championnat):
     return ligne[0] if ligne else None
 
 
-def buteurs_par_ligue(connexion):
+def top_joueurs_accueil_par_ligue(connexion, colonne_tri, champs_stats):
     resultats = []
     for ligue in LIGUES_NATIONALES:
         saison = saison_avec_joueurs(connexion, ligue)
@@ -982,12 +1324,12 @@ def buteurs_par_ligue(connexion):
         if saison:
             joueurs = lignes_dict(
                 connexion.execute(
-                    """
-                    SELECT joueur, equipe, poste, matchs, minutes, buts, xg
+                    f"""
+                    SELECT joueur, equipe, poste, matchs, minutes, {champs_stats}
                     FROM joueurs
                     WHERE championnat = ? AND saison = ? AND minutes > 0
-                    ORDER BY buts DESC, minutes DESC
-                    LIMIT 3
+                    ORDER BY {colonne_tri} DESC, minutes DESC
+                    LIMIT 5
                     """,
                     (ligue, saison),
                 )
@@ -1002,6 +1344,16 @@ def buteurs_par_ligue(connexion):
             }
         )
     return resultats
+
+
+def buteurs_par_ligue(connexion):
+    return top_joueurs_accueil_par_ligue(connexion, "buts", "buts, xg")
+
+
+def passeurs_par_ligue(connexion):
+    return top_joueurs_accueil_par_ligue(
+        connexion, "passes_decisives", "passes_decisives, xa"
+    )
 
 
 def choisir_jour_matchs(connexion, aujourd_hui):
@@ -1088,6 +1440,7 @@ def charger_matchs_jour(connexion, jour):
     programme.sort(
         key=lambda m: (m.get("heure") or "", m["championnat"], m["domicile"])
     )
+    enrichir_horaires(programme)
     ajouter_logos_programme(connexion, programme)
     return programme
 
@@ -1105,6 +1458,7 @@ def accueil():
             "jour": jour or aujourd_hui,
             "matchs_jour": matchs_jour,
             "buteurs": buteurs_par_ligue(connexion),
+            "passeurs": passeurs_par_ligue(connexion),
         }
     finally:
         connexion.close()
@@ -1114,6 +1468,7 @@ def accueil():
 def classement(
     championnat: str = Query(...),
     saison: str = Query(...),
+    elo: int = Query(0, ge=0, le=1),
 ):
     verifier_filtres(championnat, saison)
     connexion = ouvrir_base()
@@ -1144,12 +1499,34 @@ def classement(
         for ligne in classement:
             ligne["forme"] = serie_forme_matchs(matchs, ligne["equipe"])
             ligne.update(infos_site_equipe(connexion, ligne["equipe"]))
-        return {
+        elo_meta = {"disponible": False, "message": "", "date": "", "source": ""}
+        if elo:
+            elo_meta = enrichir_classement_elo(connexion, classement, force_api=False)
+        payload = {
             "classement": classement,
             "championnat": infos_championnat(championnat),
             "saisons": saisons_disponibles(connexion, championnat),
             "format": "phase_de_ligue" if championnat == NOM_LDC else "ligue",
+            "elo": elo_meta,
         }
+        if championnat == NOM_LDC:
+            payload["mention_sources"] = MESSAGE_LDC_PAGE
+        return payload
+    finally:
+        connexion.close()
+
+
+@app.get("/api/elo")
+def elo_api(
+    equipe: str = Query(...),
+    forcer: int = Query(0, ge=0, le=1),
+):
+    """Force relative ClubElo pour un club (retry soft via forcer=1)."""
+    nom = limiter_texte(equipe)
+    connexion = ouvrir_base()
+    try:
+        alias = alias_noms_equipe(nom)
+        return elo_pour_equipe(connexion, alias, force_api=bool(forcer))
     finally:
         connexion.close()
 
@@ -1164,13 +1541,16 @@ def calendrier_api(
     try:
         programme = charger_programme_saison(connexion, championnat, saison)
         ajouter_logos_programme(connexion, programme)
-        return {
+        payload = {
             "programme": programme,
             "championnat": infos_championnat(championnat),
             "saison": saison,
             "saisons": saisons_disponibles(connexion, championnat),
             "format": "phase_de_ligue" if championnat == NOM_LDC else "ligue",
         }
+        if championnat == NOM_LDC:
+            payload["mention_sources"] = MESSAGE_LDC_PAGE
+        return payload
     finally:
         connexion.close()
 
@@ -1223,6 +1603,7 @@ def fiche_equipe(
         for match in matchs:
             match["joue"] = True
             match["heure"] = match.get("heure") or ""
+            match["journee"] = match.get("journee") or ""
         vus = {(m["domicile"], m["exterieur"]) for m in matchs}
         for ligne in lire_calendrier(connexion, championnat, saison, nom_matchs):
             cle = (ligne["domicile"], ligne["exterieur"])
@@ -1233,6 +1614,7 @@ def fiche_equipe(
                 {
                     "date": ligne["date"],
                     "heure": ligne.get("heure") or "",
+                    "journee": ligne.get("journee") or "",
                     "domicile": ligne["domicile"],
                     "exterieur": ligne["exterieur"],
                     "buts_domicile": None,
@@ -1252,7 +1634,9 @@ def fiche_equipe(
                 }
             )
         matchs.sort(key=lambda m: (m["date"] or "", m.get("heure") or ""))
+        joindre_journee(connexion, championnat, saison, matchs)
         joindre_xg(connexion, championnat, saison, matchs)
+        enrichir_horaires(matchs, championnat)
         ajouter_logos_programme(connexion, matchs)
         noms_understat = [
             row[0]
@@ -1293,7 +1677,9 @@ def fiche_equipe(
         defense = charger_defense_equipe(
             connexion, championnat, saison, nom_matchs, alias_radar
         )
-        return {
+        reperes = reperes_equipe_ligue(connexion, championnat, saison)
+        elo = elo_pour_equipe(connexion, alias_radar, force_api=False)
+        payload = {
             "equipe": nom_matchs,
             "nom_stats": nom_stats,
             "matchs": matchs,
@@ -1302,9 +1688,14 @@ def fiche_equipe(
             "buts": resume_buts,
             "joueurs": joueurs,
             "defense": defense,
+            "reperes": reperes,
+            "elo": elo,
             "site": infos_site_equipe(connexion, nom_matchs),
             "championnat": infos_championnat(championnat),
         }
+        if championnat == NOM_LDC:
+            payload["mention_sources"] = MESSAGE_LDC_PAGE
+        return payload
     finally:
         connexion.close()
 
@@ -1366,6 +1757,8 @@ def fiche_joueur(nom: str = Query(...), championnat: str | None = None):
                 saisons, ldc_par_joueur_en_base(connexion, nom_joueur)
             ),
             "defense": charger_defense_joueur(connexion, nom_joueur),
+            "valeur_marche": charger_valeur_marche(connexion, nom_joueur),
+            "transferts": charger_transferts_joueur(connexion, nom_joueur),
         }
     finally:
         connexion.close()
@@ -1511,6 +1904,12 @@ def analyse_rencontre_api(
             date_match=date_match,
             prediction=resultat.get("prediction"),
         )
+        if not match_joue.get("joue"):
+            resultat["match_a_venir"] = lire_horaire_match(
+                connexion, championnat, saison, nom_domicile, nom_exterieur
+            )
+        else:
+            resultat["match_a_venir"] = None
         return resultat
     finally:
         connexion.close()
@@ -1520,6 +1919,23 @@ COLONNES_MEILLEURS = {
     "buts": "buts",
     "passes": "passes_decisives",
 }
+
+
+def lister_meilleurs(connexion, championnat, saison, colonne):
+    """Top 20 joueurs pour une colonne (buts ou passes_decisives)."""
+    return lignes_dict(
+        connexion.execute(
+            f"""
+            SELECT joueur, equipe, poste, matchs, minutes,
+                   buts, passes_decisives, tirs, xg, xa
+            FROM joueurs
+            WHERE championnat = ? AND saison = ? AND minutes > 0
+            ORDER BY {colonne} DESC, minutes DESC
+            LIMIT 20
+            """,
+            (championnat, saison),
+        )
+    )
 
 
 @app.get("/api/meilleurs")
@@ -1542,33 +1958,51 @@ def meilleurs_api(
             "joueurs": [],
             "championnat": infos_championnat(championnat),
             "saison": saison,
+            "saison_utilisee": saison,
+            "saison_de_secours": False,
+            "message": "",
         }
     colonne = COLONNES_MEILLEURS.get(type_classement)
     if not colonne:
         raise HTTPException(400, "Type inconnu (buts, passes ou dribbles)")
     connexion = ouvrir_base()
     try:
-        joueurs = lignes_dict(
-            connexion.execute(
-                f"""
-                SELECT joueur, equipe, poste, matchs, minutes,
-                       buts, passes_decisives, tirs, xg, xa
-                FROM joueurs
-                WHERE championnat = ? AND saison = ? AND minutes > 0
-                ORDER BY {colonne} DESC, minutes DESC
-                LIMIT 20
-                """,
-                (championnat, saison),
-            )
-        )
+        joueurs = lister_meilleurs(connexion, championnat, saison, colonne)
+        saison_utilisee = saison
+        message = ""
+        if not joueurs:
+            autre = saison_avec_joueurs(connexion, championnat)
+            if autre and autre != saison:
+                joueurs = lister_meilleurs(connexion, championnat, autre, colonne)
+                if joueurs:
+                    saison_utilisee = autre
+                    libelle = "buteur" if type_classement == "buts" else "passeur"
+                    message = (
+                        f"Aucun {libelle} pour {saison}. "
+                        f"Affichage de la saison {autre}."
+                    )
         for joueur in joueurs:
             joueur["url_photo"] = photo_en_cache(connexion, joueur["joueur"])
+        if not joueurs:
+            libelle = "buteur" if type_classement == "buts" else "passeur"
+            message = f"Aucun {libelle} pour {championnat} en {saison}."
+        if championnat == NOM_LDC and not message:
+            message = (
+                "Buteurs LDC : OpenML 2013-2021. "
+                "Pas de xG ni de saisons recentes cote joueurs."
+            )
+        elif championnat == NOM_LDC and message:
+            message = f"{message} Sources : openfootball (scores) + OpenML 2013-2021 (buteurs)."
         return {
             "type": type_classement,
             "disponible": True,
             "joueurs": joueurs,
             "championnat": infos_championnat(championnat),
             "saison": saison,
+            "saison_utilisee": saison_utilisee,
+            "saison_de_secours": saison_utilisee != saison,
+            "message": message,
+            "mention_sources": MESSAGE_LDC_PAGE if championnat == NOM_LDC else "",
         }
     finally:
         connexion.close()

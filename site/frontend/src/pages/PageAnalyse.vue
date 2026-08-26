@@ -1,40 +1,30 @@
 <script setup>
 import { computed, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { CHAMPIONNATS_DEFAUT } from "../championnats.js";
+import { formaterDate, formaterHeureLocale } from "../dates.js";
 import {
   chargerAccueil,
   chargerAnalyse,
+  chargerCommentairesMatch,
   chargerEquipesAnalyse,
+  chargerPronosticMatch,
   chargerProchainsMatchs,
+  chargerUtilisateurConnecte,
+  deconnecterUtilisateur,
+  deposerPronostic,
+  publierCommentaireMatch,
+  signalerCommentaireMatch,
+  supprimerCommentaireMatch,
+  basculerReactionCommentaire,
 } from "../services/api.js";
 import { definirExtraNavigation, viderExtraNavigation } from "../contexteNavigation.js";
-
-const MOIS = [
-  "janvier",
-  "février",
-  "mars",
-  "avril",
-  "mai",
-  "juin",
-  "juillet",
-  "août",
-  "septembre",
-  "octobre",
-  "novembre",
-  "décembre",
-];
+import AnimationJoueurBallon from "../composants/AnimationJoueurBallon.vue";
 
 const route = useRoute();
 const routeur = useRouter();
 
-const championnats = ref([
-  "Premier League",
-  "La Liga",
-  "Bundesliga",
-  "Serie A",
-  "Ligue 1",
-  "Ligue des champions",
-]);
+const championnats = ref([...CHAMPIONNATS_DEFAUT]);
 const saisons = ref([]);
 const equipes = ref([]);
 const championnat = ref(route.query.championnat || "La Liga");
@@ -47,6 +37,31 @@ const erreur = ref("");
 const chargement = ref(false);
 const matchsEquipe = ref([]);
 const matchsLigue = ref([]);
+const utilisateur = ref(null);
+const commentaires = ref([]);
+const disclaimerCommunaute = ref("");
+const nouveauCommentaire = ref("");
+const erreurCommentaire = ref("");
+const messageCommentaire = ref("");
+const chargementCommentaires = ref(false);
+const envoiCommentaire = ref(false);
+const reponseParentId = ref(null);
+const texteReponse = ref("");
+const TYPES_REACTION = [
+  { cle: "pouce", libelle: "👍" },
+  { cle: "coeur", libelle: "❤️" },
+];
+const pronostic = ref(null);
+const commenceAtMatch = ref("");
+const matchDejaJoueProno = ref(false);
+const typePronostic = ref("score");
+const butsDomicileProno = ref(0);
+const butsExterieurProno = ref(0);
+const resultat1x2Prono = ref("1");
+const erreurPronostic = ref("");
+const messagePronostic = ref("");
+const chargementPronostic = ref(false);
+const envoiPronostic = ref(false);
 
 async function chargerSaisons() {
   const meta = await chargerAccueil();
@@ -98,6 +113,8 @@ async function lancerAnalyse() {
       domicile.value,
       exterieur.value,
     );
+    await chargerCommentaires();
+    await chargerPronostic();
     routeur.replace({
       path: "/match",
       query: {
@@ -142,15 +159,6 @@ function surChoixClub() {
       ...(club.value ? { equipe: club.value } : {}),
     },
   });
-}
-
-function formaterDate(iso) {
-  if (!iso || iso.length < 10) return iso || "";
-  const jour = Number(iso.slice(8, 10));
-  const mois = Number(iso.slice(5, 7));
-  const annee = iso.slice(0, 4);
-  if (!mois || mois < 1 || mois > 12) return iso;
-  return `${jour} ${MOIS[mois - 1]} ${annee}`;
 }
 
 watch(
@@ -206,9 +214,16 @@ watch([domicile, exterieur], () => {
   }
 });
 
+watch(utilisateur, () => {
+  if (data.value) {
+    chargerPronostic();
+  }
+});
+
 chargerSaisons().then(async () => {
   await chargerListe();
   await chargerSuggestions();
+  await chargerSession();
   if (domicile.value && exterieur.value) {
     await lancerAnalyse();
   }
@@ -219,6 +234,24 @@ const suggestionsVisibles = computed(() => !data.value);
 const matchJoue = computed(() => {
   const bloc = data.value && data.value.match_joue;
   return bloc && bloc.joue ? bloc : null;
+});
+const matchAVenir = computed(() => {
+  const bloc = data.value && data.value.match_a_venir;
+  return bloc || null;
+});
+const pronosticPossible = computed(() => {
+  if (!utilisateur.value || matchJoue.value) return false;
+  if (matchDejaJoueProno.value) return false;
+  const instant = commenceAtMatch.value || (matchAVenir.value && matchAVenir.value.commence_at);
+  if (!instant) return false;
+  return new Date(instant).getTime() > Date.now();
+});
+const pronosticVerrouille = computed(() => {
+  if (matchJoue.value || matchDejaJoueProno.value) return true;
+  if (pronostic.value && pronostic.value.verrouille) return true;
+  const instant = commenceAtMatch.value || (matchAVenir.value && matchAVenir.value.commence_at);
+  if (!instant) return false;
+  return new Date(instant).getTime() <= Date.now();
 });
 const confrontations = computed(() => (data.value && data.value.confrontations) || null);
 const scenarios = computed(() => pred.value.scenarios || []);
@@ -253,6 +286,250 @@ function resumeCartons(forme) {
   const motJaune = jaunes === 1 ? "jaune" : "jaunes";
   const motRouge = rouges === 1 ? "rouge" : "rouges";
   return `${jaunes} ${motJaune}, ${rouges} ${motRouge}`;
+}
+
+function lienConnexionMatch() {
+  return {
+    path: "/connexion",
+    query: {
+      retour: route.fullPath,
+    },
+  };
+}
+
+function formaterDateCommentaire(iso) {
+  if (!iso) return "";
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return iso;
+  return date.toLocaleString("fr-FR", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+async function chargerSession() {
+  try {
+    const reponse = await chargerUtilisateurConnecte();
+    utilisateur.value = reponse.utilisateur;
+  } catch {
+    utilisateur.value = null;
+  }
+}
+
+async function chargerCommentaires() {
+  if (!domicile.value || !exterieur.value || domicile.value === exterieur.value) {
+    commentaires.value = [];
+    return;
+  }
+  chargementCommentaires.value = true;
+  erreurCommentaire.value = "";
+  try {
+    const reponse = await chargerCommentairesMatch(
+      championnat.value,
+      saison.value,
+      domicile.value,
+      exterieur.value,
+    );
+    commentaires.value = reponse.commentaires || [];
+    disclaimerCommunaute.value = reponse.disclaimer || "";
+  } catch (e) {
+    commentaires.value = [];
+    erreurCommentaire.value = e.message;
+  } finally {
+    chargementCommentaires.value = false;
+  }
+}
+
+async function envoyerCommentaire() {
+  erreurCommentaire.value = "";
+  messageCommentaire.value = "";
+  envoiCommentaire.value = true;
+  try {
+    await publierCommentaireMatch({
+      championnat: championnat.value,
+      saison: saison.value,
+      domicile: domicile.value,
+      exterieur: exterieur.value,
+      contenu: nouveauCommentaire.value,
+    });
+    await chargerCommentaires();
+    nouveauCommentaire.value = "";
+    messageCommentaire.value = "Commentaire publié.";
+  } catch (e) {
+    erreurCommentaire.value = e.message;
+  } finally {
+    envoiCommentaire.value = false;
+  }
+}
+
+function ouvrirReponse(id) {
+  if (!utilisateur.value) return;
+  reponseParentId.value = reponseParentId.value === id ? null : id;
+  texteReponse.value = "";
+}
+
+async function envoyerReponse(parentId) {
+  erreurCommentaire.value = "";
+  messageCommentaire.value = "";
+  envoiCommentaire.value = true;
+  try {
+    await publierCommentaireMatch({
+      championnat: championnat.value,
+      saison: saison.value,
+      domicile: domicile.value,
+      exterieur: exterieur.value,
+      contenu: texteReponse.value,
+      commentaire_parent_id: parentId,
+    });
+    reponseParentId.value = null;
+    texteReponse.value = "";
+    messageCommentaire.value = "Réponse publiée.";
+    await chargerCommentaires();
+  } catch (e) {
+    erreurCommentaire.value = e.message;
+  } finally {
+    envoiCommentaire.value = false;
+  }
+}
+
+function appliquerReactionsSiId(item, reponse) {
+  if (item.id === reponse.commentaire_id) {
+    return {
+      ...item,
+      reactions: reponse.reactions || item.reactions,
+      mes_reactions: reponse.mes_reactions || [],
+      nb_reactions: reponse.nb_reactions,
+      utilisateur_a_reagi: reponse.utilisateur_a_reagi,
+    };
+  }
+  return {
+    ...item,
+    reponses: (item.reponses || []).map((r) => appliquerReactionsSiId(r, reponse)),
+  };
+}
+
+async function signalerCommentaire(id) {
+  erreurCommentaire.value = "";
+  messageCommentaire.value = "";
+  try {
+    await signalerCommentaireMatch(id);
+    messageCommentaire.value = "Signalement envoyé. Merci.";
+  } catch (e) {
+    erreurCommentaire.value = e.message;
+  }
+}
+
+async function supprimerCommentaire(id) {
+  erreurCommentaire.value = "";
+  messageCommentaire.value = "";
+  try {
+    await supprimerCommentaireMatch(id);
+    await chargerCommentaires();
+    messageCommentaire.value = "Commentaire supprimé.";
+  } catch (e) {
+    erreurCommentaire.value = e.message;
+  }
+}
+
+async function basculerReaction(id, typeReaction = "pouce") {
+  if (!utilisateur.value) return;
+  erreurCommentaire.value = "";
+  try {
+    const reponse = await basculerReactionCommentaire(id, typeReaction);
+    commentaires.value = commentaires.value.map((item) =>
+      appliquerReactionsSiId(item, reponse),
+    );
+  } catch (e) {
+    erreurCommentaire.value = e.message;
+  }
+}
+
+function aReagi(item, typeReaction) {
+  return (item.mes_reactions || []).includes(typeReaction);
+}
+
+function nbReaction(item, typeReaction) {
+  return (item.reactions && item.reactions[typeReaction]) || 0;
+}
+
+async function chargerPronostic() {
+  if (!domicile.value || !exterieur.value || domicile.value === exterieur.value) {
+    pronostic.value = null;
+    return;
+  }
+  commenceAtMatch.value = (matchAVenir.value && matchAVenir.value.commence_at) || "";
+  matchDejaJoueProno.value = false;
+  if (!utilisateur.value) {
+    pronostic.value = null;
+    return;
+  }
+  chargementPronostic.value = true;
+  erreurPronostic.value = "";
+  try {
+    const reponse = await chargerPronosticMatch(
+      championnat.value,
+      saison.value,
+      domicile.value,
+      exterieur.value,
+    );
+    pronostic.value = reponse.pronostic;
+    matchDejaJoueProno.value = Boolean(reponse.match_deja_joue);
+    if (reponse.commence_at) {
+      commenceAtMatch.value = reponse.commence_at;
+    }
+    if (pronostic.value) {
+      typePronostic.value = pronostic.value.type_pronostic;
+      if (pronostic.value.type_pronostic === "score") {
+        butsDomicileProno.value = pronostic.value.buts_domicile ?? 0;
+        butsExterieurProno.value = pronostic.value.buts_exterieur ?? 0;
+      } else {
+        resultat1x2Prono.value = pronostic.value.resultat_1x2 || "1";
+      }
+    }
+  } catch (e) {
+    pronostic.value = null;
+    erreurPronostic.value = e.message;
+  } finally {
+    chargementPronostic.value = false;
+  }
+}
+
+async function envoyerPronostic() {
+  erreurPronostic.value = "";
+  messagePronostic.value = "";
+  envoiPronostic.value = true;
+  try {
+    const corps = {
+      championnat: championnat.value,
+      saison: saison.value,
+      domicile: domicile.value,
+      exterieur: exterieur.value,
+      type_pronostic: typePronostic.value,
+    };
+    if (typePronostic.value === "score") {
+      corps.buts_domicile = Number(butsDomicileProno.value);
+      corps.buts_exterieur = Number(butsExterieurProno.value);
+    } else {
+      corps.resultat_1x2 = resultat1x2Prono.value;
+    }
+    const reponse = await deposerPronostic(corps);
+    pronostic.value = reponse.pronostic;
+    messagePronostic.value = pronostic.value.verrouille
+      ? "Pronostic enregistré (verrouillé)."
+      : "Pronostic enregistré.";
+  } catch (e) {
+    erreurPronostic.value = e.message;
+  } finally {
+    envoiPronostic.value = false;
+  }
+}
+
+async function seDeconnecter() {
+  await deconnecterUtilisateur();
+  utilisateur.value = null;
 }
 </script>
 
@@ -321,7 +598,10 @@ function resumeCartons(forme) {
 
   <div class="page">
     <p v-if="erreur" class="erreur">{{ erreur }}</p>
-    <p v-if="chargement" class="doux">Calcul en cours…</p>
+    <AnimationJoueurBallon
+      v-if="chargement"
+      message="Calcul du scénario en cours…"
+    />
 
     <template v-if="suggestionsVisibles">
       <div class="bloc" v-if="club">
@@ -333,7 +613,7 @@ function resumeCartons(forme) {
           <li v-for="match in matchsEquipe" :key="match.date + match.domicile + match.exterieur">
             <button type="button" class="suggestion-match" @click="choisirMatch(match)">
               <span class="suggestion-date">{{ formaterDate(match.date) }}</span>
-              <span class="suggestion-heure">{{ match.heure || "—" }}</span>
+              <span class="suggestion-heure">{{ formaterHeureLocale(match) }}</span>
               <span class="suggestion-lieu">{{ match.lieu }}</span>
               <span class="equipe-ligne">
                 <img
@@ -358,7 +638,7 @@ function resumeCartons(forme) {
           <li v-for="match in matchsLigue" :key="'l' + match.date + match.domicile + match.exterieur">
             <button type="button" class="suggestion-match" @click="choisirMatch(match)">
               <span class="suggestion-date">{{ formaterDate(match.date) }}</span>
-              <span class="suggestion-heure">{{ match.heure || "—" }}</span>
+              <span class="suggestion-heure">{{ formaterHeureLocale(match) }}</span>
               <span class="equipe-ligne">
                 <img
                   v-if="match.url_logo_domicile"
@@ -599,6 +879,286 @@ function resumeCartons(forme) {
             </li>
           </ul>
         </template>
+      </div>
+
+      <div class="bloc bloc-pronostics" v-if="data && utilisateur">
+        <h2>Mon pronostic privé</h2>
+
+        <p v-if="chargementPronostic" class="doux">Chargement du pronostic…</p>
+        <p v-if="erreurPronostic" class="erreur">{{ erreurPronostic }}</p>
+        <p v-if="messagePronostic" class="message-ok">{{ messagePronostic }}</p>
+
+        <div v-if="pronosticVerrouille && pronostic" class="carte-prono-existant">
+          <p class="doux">Votre pronostic (verrouillé)</p>
+          <p class="score-gros">{{ pronostic.libelle }}</p>
+          <p class="doux petit">
+            {{ pronostic.type_pronostic === "score" ? "Score exact" : "1X2" }}
+            · déposé le {{ formaterDateCommentaire(pronostic.cree_le) }}
+          </p>
+          <p v-if="pronostic.evaluation" class="doux">
+            Score réel : {{ pronostic.evaluation.score_reel }}
+            —
+            <strong :class="pronostic.evaluation.exact ? 'texte-exact' : 'texte-rate'">
+              {{ pronostic.evaluation.exact ? "Exact" : "Raté" }}
+            </strong>
+          </p>
+        </div>
+
+        <p v-else-if="matchJoue || matchDejaJoueProno" class="doux">
+          Match terminé — pronostic non disponible.
+        </p>
+
+        <p v-else-if="!matchAVenir && !commenceAtMatch" class="doux">
+          Horaire du match inconnu — pronostic indisponible pour l'instant.
+        </p>
+
+        <form
+          v-else-if="pronosticPossible"
+          class="formulaire-pronostic"
+          @submit.prevent="envoyerPronostic"
+        >
+          <fieldset class="groupe-type-prono">
+            <legend class="doux">Type de pronostic</legend>
+            <label class="case-a-cocher">
+              <input v-model="typePronostic" type="radio" value="score" />
+              Score exact
+            </label>
+            <label class="case-a-cocher">
+              <input v-model="typePronostic" type="radio" value="1x2" />
+              Résultat 1X2
+            </label>
+          </fieldset>
+
+          <div v-if="typePronostic === 'score'" class="rangee-score-prono">
+            <label class="champ-filtre">
+              {{ data.domicile.nom }}
+              <input
+                v-model.number="butsDomicileProno"
+                type="number"
+                min="0"
+                max="15"
+                required
+              />
+            </label>
+            <span class="versus-filtre" aria-hidden="true">–</span>
+            <label class="champ-filtre">
+              {{ data.exterieur.nom }}
+              <input
+                v-model.number="butsExterieurProno"
+                type="number"
+                min="0"
+                max="15"
+                required
+              />
+            </label>
+          </div>
+
+          <div v-else class="groupe-1x2">
+            <label class="case-a-cocher">
+              <input v-model="resultat1x2Prono" type="radio" value="1" />
+              {{ data.domicile.nom }} gagne
+            </label>
+            <label class="case-a-cocher">
+              <input v-model="resultat1x2Prono" type="radio" value="N" />
+              Match nul
+            </label>
+            <label class="case-a-cocher">
+              <input v-model="resultat1x2Prono" type="radio" value="2" />
+              {{ data.exterieur.nom }} gagne
+            </label>
+          </div>
+
+          <p v-if="pronostic && !pronosticVerrouille" class="doux">
+            Vous pouvez modifier votre pronostic avant le coup d'envoi.
+          </p>
+
+          <button type="submit" class="bouton-principal" :disabled="envoiPronostic">
+            {{ envoiPronostic ? "Enregistrement…" : pronostic ? "Mettre à jour" : "Déposer mon pronostic" }}
+          </button>
+        </form>
+
+        <p v-else-if="pronosticVerrouille && !pronostic" class="doux">
+          Coup d'envoi passé — dépôt de pronostic fermé.
+        </p>
+
+        <p class="doux">
+          <router-link to="/mes-pronos">Voir tous nos pronostics</router-link>
+        </p>
+      </div>
+
+      <div class="bloc bloc-pronostics" v-else-if="data && !utilisateur && !matchJoue">
+        <h2>Mon pronostic privé</h2>
+        <p class="doux">
+          <router-link :to="lienConnexionMatch()">Connectez-vous</router-link>
+          pour déposer un pronostic privé avant le coup d'envoi.
+        </p>
+      </div>
+
+      <div class="bloc bloc-commentaires" v-if="data">
+        <h2>Commentaires</h2>
+        <p class="mention mention-communaute">
+          {{
+            disclaimerCommunaute ||
+            "Contenu informatif uniquement — pas un conseil en paris sportifs. 18+."
+          }}
+        </p>
+
+        <p v-if="chargementCommentaires" class="doux">Chargement des commentaires…</p>
+        <p v-if="erreurCommentaire" class="erreur">{{ erreurCommentaire }}</p>
+        <p v-if="messageCommentaire" class="message-ok">{{ messageCommentaire }}</p>
+
+        <ul v-if="commentaires.length" class="liste-commentaires">
+          <li v-for="item in commentaires" :key="item.id" class="carte-commentaire">
+            <header class="entete-commentaire">
+              <strong>{{ item.pseudo }}</strong>
+              <time class="doux petit">{{ formaterDateCommentaire(item.cree_le) }}</time>
+            </header>
+            <p class="texte-commentaire">{{ item.contenu }}</p>
+            <div class="actions-commentaire">
+              <button
+                v-for="typeR in TYPES_REACTION"
+                :key="typeR.cle"
+                type="button"
+                class="bouton-reaction"
+                :class="{ actif: aReagi(item, typeR.cle) }"
+                :disabled="!utilisateur"
+                :title="
+                  utilisateur
+                    ? aReagi(item, typeR.cle)
+                      ? 'Retirer la réaction'
+                      : `Réagir ${typeR.libelle}`
+                    : 'Connectez-vous pour réagir'
+                "
+                @click="basculerReaction(item.id, typeR.cle)"
+              >
+                <span aria-hidden="true">{{ typeR.libelle }}</span>
+                <span class="compteur-reaction">{{ nbReaction(item, typeR.cle) }}</span>
+              </button>
+              <button
+                v-if="utilisateur"
+                type="button"
+                class="lien-action"
+                @click="ouvrirReponse(item.id)"
+              >
+                {{ reponseParentId === item.id ? "Annuler" : "Répondre" }}
+              </button>
+              <button
+                v-if="utilisateur"
+                type="button"
+                class="lien-action"
+                @click="signalerCommentaire(item.id)"
+              >
+                Signaler
+              </button>
+              <button
+                v-if="utilisateur && utilisateur.est_admin"
+                type="button"
+                class="lien-action lien-danger"
+                @click="supprimerCommentaire(item.id)"
+              >
+                Supprimer
+              </button>
+            </div>
+
+            <form
+              v-if="reponseParentId === item.id"
+              class="formulaire-reponse"
+              @submit.prevent="envoyerReponse(item.id)"
+            >
+              <label class="champ-filtre">
+                Votre réponse
+                <textarea
+                  v-model="texteReponse"
+                  rows="2"
+                  maxlength="500"
+                  required
+                  placeholder="Répondre (informatif, pas un conseil de pari)…"
+                ></textarea>
+              </label>
+              <button type="submit" class="bouton-principal" :disabled="envoiCommentaire">
+                {{ envoiCommentaire ? "Envoi…" : "Publier la réponse" }}
+              </button>
+            </form>
+
+            <ul v-if="item.reponses?.length" class="liste-reponses">
+              <li
+                v-for="reponse in item.reponses"
+                :key="reponse.id"
+                class="carte-commentaire carte-reponse"
+              >
+                <header class="entete-commentaire">
+                  <strong>{{ reponse.pseudo }}</strong>
+                  <time class="doux petit">{{ formaterDateCommentaire(reponse.cree_le) }}</time>
+                </header>
+                <p class="texte-commentaire">{{ reponse.contenu }}</p>
+                <div class="actions-commentaire">
+                  <button
+                    v-for="typeR in TYPES_REACTION"
+                    :key="typeR.cle"
+                    type="button"
+                    class="bouton-reaction"
+                    :class="{ actif: aReagi(reponse, typeR.cle) }"
+                    :disabled="!utilisateur"
+                    @click="basculerReaction(reponse.id, typeR.cle)"
+                  >
+                    <span aria-hidden="true">{{ typeR.libelle }}</span>
+                    <span class="compteur-reaction">{{ nbReaction(reponse, typeR.cle) }}</span>
+                  </button>
+                  <button
+                    v-if="utilisateur"
+                    type="button"
+                    class="lien-action"
+                    @click="signalerCommentaire(reponse.id)"
+                  >
+                    Signaler
+                  </button>
+                  <button
+                    v-if="utilisateur && utilisateur.est_admin"
+                    type="button"
+                    class="lien-action lien-danger"
+                    @click="supprimerCommentaire(reponse.id)"
+                  >
+                    Supprimer
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <p v-else-if="!chargementCommentaires" class="doux">
+          Aucun commentaire pour ce match. Soyez le premier à réagir.
+        </p>
+
+        <form
+          v-if="utilisateur"
+          class="formulaire-commentaire"
+          @submit.prevent="envoyerCommentaire"
+        >
+          <label class="champ-filtre">
+            Votre commentaire
+            <textarea
+              v-model="nouveauCommentaire"
+              rows="3"
+              maxlength="500"
+              required
+              placeholder="Partagez votre lecture du match (informatif, pas un conseil de pari)…"
+            ></textarea>
+          </label>
+          <button type="submit" class="bouton-principal" :disabled="envoiCommentaire">
+            {{ envoiCommentaire ? "Envoi…" : "Publier" }}
+          </button>
+        </form>
+
+        <p v-else class="doux">
+          <router-link :to="lienConnexionMatch()">Connectez-vous</router-link>
+          pour commenter, ou
+          <router-link to="/inscription">créez un compte</router-link>.
+        </p>
+
+        <p v-if="utilisateur" class="doux session-utilisateur">
+          Connecté en tant que <strong>{{ utilisateur.pseudo }}</strong>
+          <button type="button" class="lien-action" @click="seDeconnecter">Se déconnecter</button>
+        </p>
       </div>
 
       <div class="bloc" v-if="matchsEquipe.length">

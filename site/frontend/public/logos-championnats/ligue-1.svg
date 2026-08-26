@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Ligue 1">
+  <rect width="64" height="64" rx="10" fill="#0a1a24"/>
+  <path fill="#e8b923" d="M18 14h10v28h16v8H18V14z"/>
+  <circle cx="46" cy="20" r="7" fill="#e8b923"/>
+  <path fill="#0a1a24" d="M44.2 15.5h2.2v7.2h2.4V25h-4.6V15.5z"/>
+</svg>

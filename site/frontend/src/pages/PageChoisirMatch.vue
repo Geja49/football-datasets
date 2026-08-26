@@ -2,7 +2,7 @@
 import { computed, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { definirExtraNavigation, viderExtraNavigation } from "../contexteNavigation.js";
-import { formaterDate } from "../dates.js";
+import { formaterDate, formaterHeureLocale } from "../dates.js";
 import { chargerEquipe } from "../services/api.js";
 
 const route = useRoute();
@@ -128,7 +128,7 @@ const lienEquipe = computed(() => ({
           >
             <button type="button" class="suggestion-match" @click="ouvrirAnalyse(match)">
               <span class="suggestion-date">{{ formaterDate(match.date) }}</span>
-              <span class="suggestion-heure">{{ match.heure || "—" }}</span>
+              <span class="suggestion-heure">{{ formaterHeureLocale(match) }}</span>
               <span class="suggestion-lieu">{{ lieu(match) }}</span>
               <span class="equipe-ligne">
                 <img

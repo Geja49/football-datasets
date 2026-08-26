@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Serie A">
+  <rect width="64" height="64" rx="10" fill="#0a1624"/>
+  <path fill="#00a3e0" d="M32 12c-11 0-20 9-20 20s9 20 20 20 20-9 20-20-9-20-20-20zm0 8c7.2 0 13 5.8 13 13s-5.8 13-13 13-13-5.8-13-13 5.8-13 13-13z"/>
+  <path fill="#00a3e0" d="M24 40l8-20 8 20h-4.2l-1.4-3.6h-4.8L28.2 40H24zm7.1-8.2h2.6L32 26.4l-.9 5.4z"/>
+</svg>

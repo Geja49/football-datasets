@@ -2,8 +2,11 @@
 import { computed, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import CalendrierMatchs from "../composants/CalendrierMatchs.vue";
+import PortraitJoueur from "../composants/PortraitJoueur.vue";
 import { definirExtraNavigation, viderExtraNavigation } from "../contexteNavigation.js";
 import { chargerAccueil, chargerCalendrier, chargerClassement, chargerMeilleurs } from "../services/api.js";
+
+defineOptions({ name: "PageChampionnat" });
 
 const route = useRoute();
 const routeur = useRouter();
@@ -13,49 +16,108 @@ const saison = ref(route.query.saison || "");
 const classement = ref([]);
 const programme = ref([]);
 const formatClassement = ref("ligue");
+const mentionSources = ref("");
+const eloMeta = ref({ disponible: false, message: "" });
 const ONGLET_VALIDES = ["classement", "calendrier", "buteurs", "passeurs"];
 const onglet = ref(
-  ONGLET_VALIDES.includes(route.query.vue) ? route.query.vue : "classement",
+  ONGLET_VALIDES.includes(route.query.onglet)
+    ? route.query.onglet
+    : "classement",
 );
 const meilleurs = ref([]);
+const messageMeilleurs = ref("");
+const saisonMeilleurs = ref("");
+const chargement = ref(false);
 const erreur = ref("");
+let cleClassement = "";
+let cleCalendrier = "";
+let cleMeilleurs = "";
+let generationChargement = 0;
 
-async function charger() {
-  erreur.value = "";
-  try {
-    if (!saison.value) {
-      const meta = await chargerAccueil();
-      saisons.value = meta.saisons;
-      saison.value = meta.saisons[0];
-    } else if (!saisons.value.length) {
-      saisons.value = (await chargerAccueil()).saisons;
-    }
-    const [dataClassement, dataCalendrier] = await Promise.all([
-      chargerClassement(championnat.value, saison.value),
-      chargerCalendrier(championnat.value, saison.value),
-    ]);
-    if (dataClassement.saisons && dataClassement.saisons.length) {
-      saisons.value = dataClassement.saisons;
-      if (!saisons.value.includes(saison.value)) {
-        saison.value = saisons.value[0];
-        return;
-      }
-    }
-    classement.value = dataClassement.classement;
-    formatClassement.value = dataClassement.format || "ligue";
-    programme.value = dataCalendrier.programme || [];
-  } catch (e) {
-    erreur.value = e.message;
+async function assurerSaisons() {
+  if (!saison.value) {
+    const meta = await chargerAccueil();
+    saisons.value = meta.saisons;
+    saison.value = meta.saisons[0];
+  } else if (!saisons.value.length) {
+    saisons.value = (await chargerAccueil()).saisons;
   }
 }
 
-watch([championnat, saison], charger, { immediate: true });
+async function chargerClassementSeul() {
+  const cle = `${championnat.value}|${saison.value}`;
+  if (cle === cleClassement && classement.value.length) {
+    return;
+  }
+  const avecElo = championnat.value !== "Ligue des champions";
+  const data = await chargerClassement(championnat.value, saison.value, {
+    elo: avecElo,
+  });
+  if (data.saisons && data.saisons.length) {
+    saisons.value = data.saisons;
+    if (!saisons.value.includes(saison.value)) {
+      saison.value = saisons.value[0];
+      return;
+    }
+  }
+  classement.value = data.classement;
+  formatClassement.value = data.format || "ligue";
+  mentionSources.value = data.mention_sources || "";
+  eloMeta.value = data.elo || { disponible: false, message: "" };
+  cleClassement = cle;
+}
+
+async function chargerCalendrierSeul() {
+  const cle = `${championnat.value}|${saison.value}`;
+  if (cle === cleCalendrier && programme.value.length) {
+    return;
+  }
+  const data = await chargerCalendrier(championnat.value, saison.value);
+  programme.value = data.programme || [];
+  if (data.saisons && data.saisons.length) {
+    saisons.value = data.saisons;
+  }
+  if (data.mention_sources) {
+    mentionSources.value = data.mention_sources;
+  }
+  cleCalendrier = cle;
+}
+
+async function chargerSelonOnglet() {
+  if (!championnat.value) return;
+  erreur.value = "";
+  const ongletActuel = onglet.value;
+  if (ongletActuel === "buteurs" || ongletActuel === "passeurs") {
+    return;
+  }
+  const generation = ++generationChargement;
+  chargement.value = true;
+  try {
+    await assurerSaisons();
+    if (generation !== generationChargement) return;
+    if (onglet.value === "classement") {
+      await chargerClassementSeul();
+    } else if (onglet.value === "calendrier") {
+      await chargerCalendrierSeul();
+    }
+  } catch (e) {
+    if (generation === generationChargement) {
+      erreur.value = e.message;
+    }
+  } finally {
+    if (generation === generationChargement) {
+      chargement.value = false;
+    }
+  }
+}
+
+watch([championnat, saison, onglet], chargerSelonOnglet, { immediate: true });
 
 watch(
-  () => route.query.vue,
-  (vue) => {
-    if (ONGLET_VALIDES.includes(vue) && vue !== onglet.value) {
-      onglet.value = vue;
+  () => route.query.onglet,
+  (nom) => {
+    if (ONGLET_VALIDES.includes(nom) && nom !== onglet.value) {
+      onglet.value = nom;
     }
   },
 );
@@ -63,6 +125,9 @@ watch(
 watch(
   [championnat, saison],
   () => {
+    cleClassement = "";
+    cleCalendrier = "";
+    cleMeilleurs = "";
     definirExtraNavigation({
       championnat: championnat.value,
       saison: saison.value,
@@ -76,28 +141,40 @@ onUnmounted(viderExtraNavigation);
 
 function choisirOnglet(nom) {
   onglet.value = nom;
-  routeur.replace({
-    query: {
-      ...route.query,
-      ...(saison.value ? { saison: saison.value } : {}),
-      vue: nom,
-    },
-  });
+  const query = {
+    ...route.query,
+    ...(saison.value ? { saison: saison.value } : {}),
+    onglet: nom,
+  };
+  delete query.vue;
+  routeur.replace({ query });
 }
 
 async function chargerClassementJoueurs() {
   if (onglet.value !== "buteurs" && onglet.value !== "passeurs") {
     return;
   }
-  if (!saison.value || !championnat.value) {
+  if (!championnat.value) {
     return;
   }
-  const type = onglet.value === "buteurs" ? "buts" : "passes";
-  const ligue = championnat.value;
-  const annee = saison.value;
-  meilleurs.value = [];
+  const generation = ++generationChargement;
+  chargement.value = true;
+  erreur.value = "";
   try {
+    await assurerSaisons();
+    if (generation !== generationChargement) return;
+    if (!saison.value) {
+      return;
+    }
+    const type = onglet.value === "buteurs" ? "buts" : "passes";
+    const ligue = championnat.value;
+    const annee = saison.value;
+    const cle = `${ligue}|${annee}|${type}`;
+    if (cle === cleMeilleurs && meilleurs.value.length) {
+      return;
+    }
     const data = await chargerMeilleurs(ligue, annee, type);
+    if (generation !== generationChargement) return;
     if (onglet.value !== (type === "buts" ? "buteurs" : "passeurs")) {
       return;
     }
@@ -105,14 +182,26 @@ async function chargerClassementJoueurs() {
       return;
     }
     meilleurs.value = data.joueurs || [];
+    messageMeilleurs.value = data.message || "";
+    if (data.mention_sources) {
+      mentionSources.value = data.mention_sources;
+    }
+    saisonMeilleurs.value = data.saison_utilisee || annee;
+    cleMeilleurs = cle;
   } catch (e) {
-    if (championnat.value === ligue && saison.value === annee) {
+    if (generation === generationChargement) {
       meilleurs.value = [];
+      messageMeilleurs.value = "";
+        erreur.value = e.message;
+    }
+  } finally {
+    if (generation === generationChargement) {
+      chargement.value = false;
     }
   }
 }
 
-watch([championnat, saison, onglet], chargerClassementJoueurs);
+watch([championnat, saison, onglet], chargerClassementJoueurs, { immediate: true });
 
 function ouvrirEquipe(equipe) {
   routeur.push({
@@ -213,8 +302,12 @@ function serieForme(serie) {
         </button>
       </div>
 
+      <p v-if="mentionSources" class="mention">{{ mentionSources }}</p>
+
+      <p v-if="chargement" class="doux">Chargement…</p>
+
       <template v-if="onglet === 'classement'">
-        <p v-if="!classement.length" class="doux">
+        <p v-if="!chargement && !classement.length" class="doux">
           Aucun match joué pour {{ championnat }} en {{ saison }}.
         </p>
         <p v-if="classement.length && formatClassement === 'phase_de_ligue'" class="legende-classement">
@@ -222,6 +315,7 @@ function serieForme(serie) {
           <span class="legende-barrages"><i></i> 9-24 : barrages</span>
           <span class="legende-hors"><i></i> 25-36 : éliminés</span>
         </p>
+        <p v-if="eloMeta.message && !eloMeta.disponible" class="doux">{{ eloMeta.message }}</p>
         <table v-if="classement.length">
           <thead>
             <tr>
@@ -235,6 +329,7 @@ function serieForme(serie) {
               <th class="droit">BP</th>
               <th class="droit">BC</th>
               <th class="droit">Diff</th>
+              <th v-if="eloMeta.disponible" class="droit">Elo</th>
               <th>Forme</th>
             </tr>
           </thead>
@@ -266,6 +361,9 @@ function serieForme(serie) {
               <td class="droit">{{ ligne.bp }}</td>
               <td class="droit">{{ ligne.bc }}</td>
               <td class="droit">{{ ligne.diff }}</td>
+              <td v-if="eloMeta.disponible" class="droit">
+                {{ ligne.elo != null ? ligne.elo : "—" }}
+              </td>
               <td>
                 <span class="forme forme-classement">
                   <span
@@ -281,11 +379,11 @@ function serieForme(serie) {
       </template>
 
       <template v-else-if="onglet === 'calendrier'">
-        <p v-if="!programme.length" class="doux">
+        <p v-if="!chargement && !programme.length" class="doux">
           Pas encore de calendrier pour {{ championnat }} en {{ saison }}.
         </p>
         <CalendrierMatchs
-          v-else
+          v-else-if="programme.length"
           :matchs="programme"
           @ouvrir-equipe="ouvrirEquipe"
           @analyser="analyserMatch"
@@ -293,10 +391,12 @@ function serieForme(serie) {
       </template>
 
       <template v-else-if="onglet === 'buteurs' || onglet === 'passeurs'">
-        <p v-if="!meilleurs.length" class="doux">
-          Pas encore de stats joueurs pour {{ championnat }} en {{ saison }}.
+        <p v-if="messageMeilleurs" class="doux">{{ messageMeilleurs }}</p>
+        <p v-else-if="!chargement && !meilleurs.length" class="doux">
+          Aucun {{ onglet === 'buteurs' ? 'buteur' : 'passeur' }} pour
+          {{ championnat }} en {{ saison }}.
         </p>
-        <table v-else>
+        <table v-if="meilleurs.length">
           <thead>
             <tr>
               <th>#</th>
@@ -313,18 +413,16 @@ function serieForme(serie) {
           <tbody>
             <tr
               v-for="(joueur, index) in meilleurs"
-              :key="joueur.joueur + joueur.equipe"
+              :key="joueur.joueur + joueur.equipe + (saisonMeilleurs || '')"
               class="cliquable"
               @click="ouvrirJoueur(joueur.joueur)"
             >
               <td>{{ index + 1 }}</td>
               <td>
                 <span class="joueur-cellule">
-                  <img
-                    v-if="joueur.url_photo"
-                    :src="joueur.url_photo"
-                    :alt="joueur.joueur"
-                    class="portrait-mini"
+                  <PortraitJoueur
+                    :nom="joueur.joueur"
+                    :url-photo="joueur.url_photo"
                   />
                   {{ joueur.joueur }}
                 </span>
