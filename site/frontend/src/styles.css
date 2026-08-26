@@ -92,6 +92,7 @@
 }
 
 html {
+  color-scheme: dark;
   overflow-x: clip;
 }
 
@@ -501,7 +502,7 @@ a.bouton-nav-groupe {
   display: flex;
   align-items: flex-end;
   min-height: 168px;
-  padding: 22px 20px;
+  padding: 22px 108px 22px 20px;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--carte-accent) 28%, var(--ligne));
   border-radius: 2px;
@@ -540,7 +541,7 @@ a.bouton-nav-groupe {
 }
 
 .tuile-code,
-.tuile-logo {
+.tuile-competition .logo-championnat {
   position: absolute;
   right: 12px;
   top: 50%;
@@ -559,14 +560,82 @@ a.bouton-nav-groupe {
   color: color-mix(in srgb, var(--carte-accent) 22%, transparent);
 }
 
-.tuile-logo {
-  width: clamp(64px, 12vw, 96px);
-  height: clamp(64px, 12vw, 96px);
+/* Logos compétitions : fond transparent + ancrage à droite dans la tuile */
+.tuile-competition .logo-championnat {
+  width: clamp(72px, 13vw, 104px);
+  height: clamp(72px, 13vw, 104px);
+  max-height: 82%;
   object-fit: contain;
-  border-radius: 12px;
+  object-position: right center;
+  border-radius: 0;
   opacity: 0.92;
   filter: drop-shadow(0 4px 12px color-mix(in srgb, #000 40%, transparent));
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+/* Logos sombres (violet PL, navy UCL) : éclaircir pour lisibilité sur fond sombre */
+.tuile-competition.carte-pl .logo-championnat {
+  filter:
+    brightness(1.45)
+    drop-shadow(0 4px 12px color-mix(in srgb, #000 40%, transparent));
+  opacity: 0.95;
+}
+
+/* LDC : logo déjà recoloré clair — léger contraste + halo cyan */
+.tuile-competition.carte-ldc .logo-championnat {
+  filter:
+    brightness(1.08)
+    contrast(1.06)
+    drop-shadow(0 0 10px color-mix(in srgb, #7ec8ff 45%, transparent))
+    drop-shadow(0 4px 12px color-mix(in srgb, #000 40%, transparent));
+  opacity: 0.96;
+}
+
+/* Logos verticaux (Serie A, Ligue 1) */
+.tuile-competition.carte-seriea .logo-championnat {
+  width: clamp(56px, 11vw, 88px);
+  height: clamp(88px, 17vw, 128px);
+  filter:
+    brightness(1.35)
+    contrast(1.14)
+    drop-shadow(0 0 8px color-mix(in srgb, #00a3e0 35%, transparent))
+    drop-shadow(0 4px 12px color-mix(in srgb, #000 40%, transparent));
+  opacity: 0.96;
+}
+
+.tuile-competition.carte-ligue1 .logo-championnat {
+  width: clamp(56px, 11vw, 88px);
+  height: clamp(88px, 17vw, 128px);
+  filter:
+    brightness(1.08)
+    drop-shadow(0 4px 12px color-mix(in srgb, #000 40%, transparent));
+  opacity: 0.94;
+}
+
+/* La Liga : coral vif — halo léger + contraste sur tuile sombre */
+.tuile-competition.carte-laliga .logo-championnat {
+  filter:
+    brightness(1.06)
+    contrast(1.08)
+    drop-shadow(0 0 8px color-mix(in srgb, #ff4b44 40%, transparent))
+    drop-shadow(0 4px 12px color-mix(in srgb, #000 40%, transparent));
+  opacity: 0.96;
+}
+
+/* Bundesliga : rouge + silhouette blanche + bande BUNDESLIGA (fond extérieur transparent) */
+.tuile-competition.carte-bundesliga .logo-championnat {
+  width: clamp(78px, 14vw, 112px);
+  height: clamp(78px, 14vw, 112px);
+  filter:
+    brightness(1.02)
+    contrast(1.04)
+    drop-shadow(0 0 8px color-mix(in srgb, #e2001a 40%, transparent))
+    drop-shadow(0 4px 12px color-mix(in srgb, #000 40%, transparent));
+  opacity: 1;
+  /* pas de mix-blend : le blanc du logo doit rester visible sur tuile sombre */
 }
 
 .tuile-contenu {
@@ -611,9 +680,47 @@ a.bouton-nav-groupe {
   color: color-mix(in srgb, var(--carte-accent) 34%, transparent);
 }
 
-.tuile-competition.cliquable:hover .tuile-logo {
+.tuile-competition.cliquable:hover .logo-championnat {
   opacity: 1;
   transform: translateY(-52%) scale(1.04);
+}
+
+.tuile-competition.carte-pl.cliquable:hover .logo-championnat {
+  filter:
+    brightness(1.5)
+    drop-shadow(0 4px 12px color-mix(in srgb, #000 40%, transparent));
+}
+
+.tuile-competition.carte-ldc.cliquable:hover .logo-championnat {
+  filter:
+    brightness(1.14)
+    contrast(1.08)
+    drop-shadow(0 0 12px color-mix(in srgb, #7ec8ff 55%, transparent))
+    drop-shadow(0 4px 12px color-mix(in srgb, #000 40%, transparent));
+}
+
+.tuile-competition.carte-seriea.cliquable:hover .logo-championnat {
+  filter:
+    brightness(1.42)
+    contrast(1.16)
+    drop-shadow(0 0 10px color-mix(in srgb, #00a3e0 45%, transparent))
+    drop-shadow(0 4px 12px color-mix(in srgb, #000 40%, transparent));
+}
+
+.tuile-competition.carte-laliga.cliquable:hover .logo-championnat {
+  filter:
+    brightness(1.12)
+    contrast(1.1)
+    drop-shadow(0 0 10px color-mix(in srgb, #ff4b44 50%, transparent))
+    drop-shadow(0 4px 12px color-mix(in srgb, #000 40%, transparent));
+}
+
+.tuile-competition.carte-bundesliga.cliquable:hover .logo-championnat {
+  filter:
+    brightness(1.1)
+    contrast(1.08)
+    drop-shadow(0 0 10px color-mix(in srgb, #e2001a 50%, transparent))
+    drop-shadow(0 4px 12px color-mix(in srgb, #000 40%, transparent));
 }
 
 /* Cartes génériques (buteurs, etc.) — conservées */
@@ -650,8 +757,8 @@ a.bouton-nav-groupe {
 .carte-laliga,
 .tuile-competition.carte-laliga {
   --carte-accent: #ff4b44;
-  --fond-tuile: #1a0c0c;
-  background-color: #1a0c0c;
+  --fond-tuile: #160a0a;
+  background-color: #160a0a;
 }
 .carte-bundesliga,
 .tuile-competition.carte-bundesliga {
@@ -699,6 +806,7 @@ a.bouton-nav-groupe {
 
   .tuile-competition {
     min-height: 140px;
+    padding-right: 88px;
   }
 }
 
@@ -738,6 +846,56 @@ select:focus {
 
 .bloc > table {
   min-width: 520px;
+}
+
+.enveloppe-tableau {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+  margin-top: 12px;
+  border: 1px solid var(--ligne);
+  border-radius: 6px;
+  background: var(--fond-carte);
+}
+
+.enveloppe-tableau table {
+  min-width: 520px;
+  margin: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.enveloppe-tableau thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.entete-bloc {
+  margin-bottom: 14px;
+}
+
+.entete-bloc h2 {
+  margin: 0 0 6px;
+}
+
+.entete-bloc .doux {
+  margin: 0;
+  max-width: 62ch;
+  line-height: 1.45;
+}
+
+.entete-bloc .tag-section {
+  margin-bottom: 6px;
+}
+
+.titre-sous-section {
+  margin: 18px 0 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
 }
 
 table {
@@ -878,7 +1036,11 @@ tr.zone-hors-course td:first-child {
 }
 
 .bloc {
-  margin-top: 28px;
+  margin-top: 36px;
+}
+
+.bloc > h2 {
+  margin: 0 0 12px;
 }
 
 .score-gros {
@@ -946,6 +1108,24 @@ tr.zone-hors-course td:first-child {
   grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
   gap: 10px;
   margin-top: 18px;
+}
+
+.cartes-stats-resume {
+  margin-top: 0;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+}
+
+.cartes-stats-detail {
+  margin-top: 0;
+  grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+}
+
+.cartes-stats-detail .carte-stat {
+  padding: 8px 10px;
+}
+
+.cartes-stats-detail .carte-stat strong {
+  font-size: 1.35rem;
 }
 
 .cartes-buts {
@@ -1562,7 +1742,7 @@ tr.zone-hors-course td:first-child {
 .liste-scenarios {
   list-style: none;
   padding: 0;
-  margin: 12px 0 20px;
+  margin: 12px 0 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
@@ -1585,6 +1765,75 @@ tr.zone-hors-course td:first-child {
 
 .bloc-bilan {
   margin-top: 18px;
+}
+
+.resume-analyse {
+  position: sticky;
+  top: 5.5rem;
+  z-index: 2;
+  margin: 0 0 20px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--ligne));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--fond-carte) 92%, var(--accent));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.resume-analyse .bloc-1n2 {
+  margin: 14px 0 0;
+}
+
+.grille-scenario {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 8px;
+}
+
+.grille-scenario:not(:has(.colonne-scenario)),
+.grille-scenario:not(:has(.colonne-stats)) {
+  grid-template-columns: 1fr;
+}
+
+.colonne-scenario .bloc-recit:last-child {
+  margin-bottom: 0;
+}
+
+.colonne-stats {
+  padding: 14px;
+  border: 1px solid var(--ligne);
+  border-radius: 6px;
+  background: var(--fond-lisible);
+}
+
+.colonne-stats .titre-sous-section {
+  margin-top: 0;
+}
+
+.colonne-stats .cartes-stats {
+  margin-top: 0;
+  grid-template-columns: 1fr 1fr;
+}
+
+.sous-section-analyse {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--ligne);
+}
+
+.sous-section-analyse h3 {
+  margin: 0 0 12px;
+}
+
+.zone-communaute {
+  margin-top: 40px;
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--marque) 35%, var(--ligne));
+}
+
+.zone-communaute .bloc {
+  margin-top: 24px;
 }
 
 .bloc-recit {
@@ -1839,6 +2088,33 @@ tr.zone-hors-course td:first-child {
 }
 
 /* Sections meilleurs buteurs / passeurs (Accueil) */
+.bloc-matchs-jour {
+  margin-top: 40px;
+}
+
+.entete-matchs-jour {
+  margin-bottom: 18px;
+}
+
+.titre-section-matchs {
+  margin: 0;
+  font-family: Oswald, "Arial Narrow", sans-serif;
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.entete-matchs-jour .doux {
+  margin: 6px 0 0;
+}
+
+.liste-matchs-jour {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .bloc-buteurs,
 .bloc-passeurs {
   margin-top: 40px;
@@ -2504,8 +2780,18 @@ tr.zone-hors-course td:first-child {
   }
 
   .grille-analyse,
-  .liste-scenarios {
+  .liste-scenarios,
+  .grille-scenario {
     grid-template-columns: 1fr;
+  }
+
+  .resume-analyse {
+    position: static;
+    box-shadow: none;
+  }
+
+  .colonne-stats .cartes-stats {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .carte-match {
@@ -2945,8 +3231,8 @@ tr.zone-hors-course td:first-child {
 }
 
 .bloc-commentaires {
-  border-top: 1px solid var(--ligne);
-  padding-top: 8px;
+  border-top: none;
+  padding-top: 0;
 }
 
 .liste-commentaires {
@@ -3330,8 +3616,8 @@ tr.zone-hors-course td:first-child {
 }
 
 .bloc-pronostics {
-  border-top: 1px solid var(--ligne);
-  padding-top: 8px;
+  border-top: none;
+  padding-top: 0;
   margin-bottom: 8px;
 }
 

@@ -1,9 +1,10 @@
 """
 Analyse statistique d'une rencontre a partir de football.db.
 
-Forme, xG, forces/faiblesses et scenario Poisson (buts independants)
-commentes en francais. Les cotes (si disponibles) sont ajoutees cote
-serveur via cotes.lecture_marche_pour_analyse — pas de tipster.
+Forme, occasions attendues (xG), forces/faiblesses en phrases simples,
+et scenario en recit (debut / intrigue / denouement). Les cotes
+(si disponibles) sont ajoutees cote serveur via
+cotes.lecture_marche_pour_analyse — pas de tipster.
 """
 
 import math
@@ -444,6 +445,7 @@ def serie_forme_matchs(matchs, nom_equipe):
 
 
 def _phrases(profil, moyennes, a_domicile, donnees_limitees):
+    """Forces / faiblesses en phrases courtes, sans jargon opaque."""
     lieu = "à domicile" if a_domicile else "à l'extérieur"
     suffixe = "domicile" if a_domicile else "exterieur"
     forces = []
@@ -452,11 +454,11 @@ def _phrases(profil, moyennes, a_domicile, donnees_limitees):
     if donnees_limitees:
         return {
             "forces": [
-                f"Pas assez de matchs {lieu} pour un profil fiable : "
-                "la moyenne du championnat est utilisée pour la projection."
+                f"Pas assez de matchs {lieu} pour juger clairement : "
+                "on s'appuie sur la moyenne du championnat."
             ],
             "faiblesses": [
-                "Échantillon trop petit : pas de faiblesse statistique solide à retenir."
+                "Trop peu de matchs : aucune faiblesse nette à retenir."
             ],
         }
 
@@ -467,62 +469,68 @@ def _phrases(profil, moyennes, a_domicile, donnees_limitees):
 
     if xg_m >= moy_m * SEUIL_FORCE:
         forces.append(
-            f"Attaque {lieu} productive : {xg_m:.2f} xG marqués par match "
-            f"(moyenne {moy_m:.2f})."
+            f"Bonne attaque {lieu} : environ {xg_m:.2f} occasions attendues (xG) "
+            f"par match, au-dessus de la moyenne ({moy_m:.2f})."
         )
     elif xg_m <= moy_m * SEUIL_FAIBLESSE:
         faiblesses.append(
-            f"Attaque {lieu} en retrait : {xg_m:.2f} xG marqués par match "
-            f"(moyenne {moy_m:.2f})."
+            f"Attaque {lieu} en difficulté : seulement {xg_m:.2f} occasions "
+            f"attendues (xG) par match (moyenne {moy_m:.2f})."
         )
 
     if xg_e <= moy_e * SEUIL_FAIBLESSE:
         forces.append(
-            f"Défense {lieu} solide : seulement {xg_e:.2f} xG encaissés "
-            f"(moyenne {moy_e:.2f})."
+            f"Défense {lieu} solide : elle laisse peu d'occasions "
+            f"({xg_e:.2f} xG encaissés, moyenne {moy_e:.2f})."
         )
     elif xg_e >= moy_e * SEUIL_FORCE:
         faiblesses.append(
-            f"Défense {lieu} perméable : {xg_e:.2f} xG encaissés "
-            f"(moyenne {moy_e:.2f})."
+            f"Défense {lieu} fragile : elle concède beaucoup d'occasions "
+            f"({xg_e:.2f} xG encaissés, moyenne {moy_e:.2f})."
         )
 
     tc = profil["tirs_cadres"]
     moy_tc = moyennes["tirs_cadres_" + suffixe]
     if tc >= moy_tc * SEUIL_FORCE:
         forces.append(
-            f"Beaucoup de tirs cadrés {lieu} ({tc:.1f} par match, moyenne {moy_tc:.1f})."
+            f"Beaucoup de tirs cadrés {lieu} "
+            f"({tc:.1f} par match, moyenne {moy_tc:.1f}) : le but adverse est souvent menacé."
         )
     elif tc <= moy_tc * SEUIL_FAIBLESSE:
         faiblesses.append(
-            f"Peu de tirs cadrés {lieu} ({tc:.1f} par match, moyenne {moy_tc:.1f})."
+            f"Peu de tirs cadrés {lieu} "
+            f"({tc:.1f} par match, moyenne {moy_tc:.1f}) : difficile de faire mal au gardien."
         )
 
     jaunes = profil["jaunes"]
     moy_j = moyennes["jaunes_" + suffixe]
     if jaunes <= moy_j * SEUIL_FAIBLESSE:
         forces.append(
-            f"Peu de cartons jaunes {lieu} ({jaunes:.1f} par match, moyenne {moy_j:.1f})."
+            f"Discipline {lieu} : peu de cartons jaunes "
+            f"({jaunes:.1f} par match, moyenne {moy_j:.1f})."
         )
     elif jaunes >= moy_j * SEUIL_FORCE:
         faiblesses.append(
-            f"Beaucoup de cartons jaunes {lieu} ({jaunes:.1f} par match, moyenne {moy_j:.1f})."
+            f"Jeu rugueux {lieu} : beaucoup de cartons jaunes "
+            f"({jaunes:.1f} par match, moyenne {moy_j:.1f})."
         )
 
     rouges = profil.get("rouges")
     moy_r = moyennes.get("rouges_" + suffixe) or 0.1
     if rouges is not None and rouges >= max(moy_r * SEUIL_FORCE, 0.2):
         faiblesses.append(
-            f"Plus de cartons rouges {lieu} ({rouges:.2f} par match, moyenne {moy_r:.2f})."
+            f"Risque de carton rouge {lieu} plus élevé "
+            f"({rouges:.2f} par match, moyenne {moy_r:.2f})."
         )
 
     if not forces:
         forces.append(
-            f"Profil {lieu} proche de la moyenne du championnat sur l'attaque et la défense."
+            f"Profil {lieu} proche de la moyenne du championnat : "
+            "ni très fort, ni très faible en attaque et en défense."
         )
     if not faiblesses:
         faiblesses.append(
-            f"Pas de faiblesse marquée {lieu} par rapport à la moyenne du championnat."
+            f"Pas de faiblesse marquée {lieu} face à la moyenne du championnat."
         )
     return {"forces": forces, "faiblesses": faiblesses}
 
@@ -652,14 +660,20 @@ def _scenario_cartons(lam_j_dom, lam_j_ext, lam_r_dom, lam_r_ext, moy_j_match, s
     else:
         source = f"{sources[0]} (domicile), {sources[1]} (extérieur)"
     texte = (
-        f"Environ {lam_j:.1f} jaunes attendus "
-        f"({lam_j_dom:.1f} à domicile, {lam_j_ext:.1f} à l'extérieur), "
+        f"On attend environ {lam_j:.1f} cartons jaunes "
+        f"({lam_j_dom:.1f} pour les locaux, {lam_j_ext:.1f} pour les visiteurs), "
         f"d'après {source}."
     )
     if p_au_moins_un_rouge >= 0.20:
-        texte += f" Un rouge n'est pas improbable ({100 * p_au_moins_un_rouge:.0f} %)."
+        texte += (
+            f" Un carton rouge est possible "
+            f"(environ {100 * p_au_moins_un_rouge:.0f} % des cas)."
+        )
     else:
-        texte += f" Un rouge reste peu probable ({100 * p_au_moins_un_rouge:.0f} %)."
+        texte += (
+            f" Un carton rouge reste rare "
+            f"(environ {100 * p_au_moins_un_rouge:.0f} % des cas)."
+        )
     return {
         "jaunes_domicile": _arrondi(lam_j_dom, 1),
         "jaunes_exterieur": _arrondi(lam_j_ext, 1),
@@ -685,7 +699,8 @@ def _scenarios_detailles(pred, cartons, moy_xg_total):
             "cle": "rythme",
             "titre": "Match ouvert",
             "texte": (
-                f"Beaucoup d'occasions prévues : {total_xg:.1f} xG au total "
+                f"Beaucoup d'occasions de but en vue : environ {total_xg:.1f} "
+                f"occasions attendues (xG) au total "
                 f"(moyenne du championnat {moy:.1f})."
             ),
             "chiffre": f"{total_xg:.1f} xG",
@@ -695,7 +710,8 @@ def _scenarios_detailles(pred, cartons, moy_xg_total):
             "cle": "rythme",
             "titre": "Match fermé",
             "texte": (
-                f"Peu d'occasions prévues : {total_xg:.1f} xG au total "
+                f"Peu d'occasions de but attendues : environ {total_xg:.1f} "
+                f"occasions (xG) au total "
                 f"(moyenne du championnat {moy:.1f})."
             ),
             "chiffre": f"{total_xg:.1f} xG",
@@ -705,8 +721,8 @@ def _scenarios_detailles(pred, cartons, moy_xg_total):
             "cle": "rythme",
             "titre": "Rythme dans la moyenne",
             "texte": (
-                f"{total_xg:.1f} xG attendus au total, proche de la moyenne "
-                f"du championnat ({moy:.1f})."
+                f"Environ {total_xg:.1f} occasions attendues (xG) au total, "
+                f"proche de la moyenne du championnat ({moy:.1f})."
             ),
             "chiffre": f"{total_xg:.1f} xG",
         }
@@ -717,8 +733,8 @@ def _scenarios_detailles(pred, cartons, moy_xg_total):
             "cle": "deux_equipes",
             "titre": "Les deux équipes marquent",
             "texte": (
-                f"Dans {p_deux:.0f} % des scénarios, chaque équipe inscrit "
-                "au moins un but."
+                f"Dans {p_deux:.0f} % des cas, chaque équipe marque "
+                "au moins une fois."
             ),
             "pct": p_deux,
         }
@@ -727,7 +743,7 @@ def _scenarios_detailles(pred, cartons, moy_xg_total):
             "cle": "deux_equipes",
             "titre": "Pas forcément les deux équipes",
             "texte": (
-                f"Dans {100 - p_deux:.0f} % des scénarios, au moins une équipe "
+                f"Dans {100 - p_deux:.0f} % des cas, au moins une équipe "
                 "ne marque pas."
             ),
             "pct": p_deux,
@@ -739,7 +755,7 @@ def _scenarios_detailles(pred, cartons, moy_xg_total):
             "cle": "buts",
             "titre": "Plus de 2 buts",
             "texte": (
-                f"Le match dépasse 2 buts dans {p_plus:.0f} % des scénarios."
+                f"Le match dépasse 2 buts dans {p_plus:.0f} % des cas."
             ),
             "pct": p_plus,
         }
@@ -748,8 +764,8 @@ def _scenarios_detailles(pred, cartons, moy_xg_total):
             "cle": "buts",
             "titre": "2 buts ou moins",
             "texte": (
-                f"Le match reste à 2 buts ou moins dans {100 - p_plus:.0f} % "
-                "des scénarios."
+                f"Le score reste à 2 buts ou moins dans {100 - p_plus:.0f} % "
+                "des cas."
             ),
             "pct": p_plus,
         }
@@ -764,13 +780,15 @@ def _scenarios_detailles(pred, cartons, moy_xg_total):
 
 
 def _phrases_concretes(phrases):
-    """Écarte les phrases génériques (moyenne, échantillon trop petit)."""
+    """Écarte les phrases génériques (moyenne, trop peu de matchs)."""
     a_ignorer = (
         "proche de la moyenne",
         "pas de faiblesse",
         "échantillon trop petit",
+        "trop peu de matchs",
         "pas assez de matchs",
         "moyenne du championnat est utilisée",
+        "on s'appuie sur la moyenne",
     )
     concretes = []
     for phrase in phrases or []:
@@ -789,64 +807,115 @@ def _a_motif(phrases, motifs):
     return False
 
 
-def _premiere_concrete(phrases):
-    concretes = _phrases_concretes(phrases)
-    return concretes[0] if concretes else None
-
-
 def _recit_scenario(nom_dom, nom_ext, domicile, exterieur, pred, cartons):
-    """Récit du déroulé : forces contre faiblesses, puis le scénario le plus probable."""
-    paragraphes = []
+    """
+    Récit type bande-annonce : enjeu, intrigue, dénouement probable.
+    3 à 6 phrases fluides ; les chiffres restent secondaires.
+    """
+    phrases = []
 
-    force_d = _premiere_concrete(domicile.get("forces"))
-    faib_e = _premiere_concrete(exterieur.get("faiblesses"))
-    force_e = _premiere_concrete(exterieur.get("forces"))
-    faib_d = _premiere_concrete(domicile.get("faiblesses"))
     att_d = _a_motif(domicile.get("forces"), ["attaque", "tirs cadrés"])
-    def_e_faible = _a_motif(exterieur.get("faiblesses"), ["défense"])
-    att_e = _a_motif(exterieur.get("forces"), ["attaque", "tirs cadrés"])
+    def_d_forte = _a_motif(domicile.get("forces"), ["défense"])
+    att_d_faible = _a_motif(domicile.get("faiblesses"), ["attaque", "tirs cadrés"])
     def_d_faible = _a_motif(domicile.get("faiblesses"), ["défense"])
+    att_e = _a_motif(exterieur.get("forces"), ["attaque", "tirs cadrés"])
+    def_e_forte = _a_motif(exterieur.get("forces"), ["défense"])
+    att_e_faible = _a_motif(exterieur.get("faiblesses"), ["attaque", "tirs cadrés"])
+    def_e_faible = _a_motif(exterieur.get("faiblesses"), ["défense"])
+    jeu_rugueux = _a_motif(
+        (domicile.get("faiblesses") or []) + (exterieur.get("faiblesses") or []),
+        ["jaunes", "rouges"],
+    )
 
-    if force_d and faib_e:
-        suite = ""
-        if att_d and def_e_faible:
-            suite = f" {nom_dom} devrait donc mettre la pression et chercher les espaces."
-        elif att_d:
-            suite = f" {nom_dom} peut créer des occasions."
-        paragraphes.append(
-            f"{nom_dom} à domicile : {force_d} "
-            f"En face, {nom_ext} : {faib_e}"
-            + suite
-        )
-    elif force_d:
-        paragraphes.append(f"{nom_dom} à domicile : {force_d}")
-    elif faib_e:
-        paragraphes.append(
-            f"{nom_ext} à l'extérieur : {faib_e} "
-            f"{nom_dom} peut en profiter pour imposer son rythme."
-        )
+    # --- Début : l'affiche / l'enjeu ---
+    atouts_dom = []
+    if att_d:
+        atouts_dom.append("une attaque qui crée beaucoup d'occasions")
+    if def_d_forte:
+        atouts_dom.append("une défense difficile à percer")
+    faiblesses_ext = []
+    if def_e_faible:
+        faiblesses_ext.append("une défense fragile")
+    if att_e_faible:
+        faiblesses_ext.append("une attaque en panne")
 
-    if force_e and faib_d:
-        suite = ""
-        if att_e and def_d_faible:
-            suite = (
-                f" Les visiteurs peuvent donc inquiéter, surtout si le match s'ouvre."
-            )
-        paragraphes.append(
-            f"{nom_ext} à l'extérieur : {force_e} "
-            f"Côté {nom_dom} : {faib_d}"
-            + suite
+    if atouts_dom and faiblesses_ext:
+        debut = (
+            f"Affiche : {nom_dom} reçoit {nom_ext}. "
+            f"Chez eux, les locaux misent sur {atouts_dom[0]} ; "
+            f"les visiteurs, eux, traînent {faiblesses_ext[0]}."
         )
-    elif force_e:
-        paragraphes.append(f"{nom_ext} à l'extérieur : {force_e}")
-    elif faib_d:
-        paragraphes.append(
-            f"{nom_dom} a un point faible : {faib_d} "
-            f"{nom_ext} peut s'y accrocher."
+    elif atouts_dom:
+        debut = (
+            f"Affiche : {nom_dom} reçoit {nom_ext}. "
+            f"Sur leur terrain, les locaux ont un atout clair — {atouts_dom[0]} — "
+            f"et {nom_ext} vient chercher la surprise."
+        )
+    elif faiblesses_ext:
+        debut = (
+            f"Affiche : {nom_dom} reçoit {nom_ext}. "
+            f"Les visiteurs arrivent avec {faiblesses_ext[0]} : "
+            f"les locaux peuvent imposer leur rythme dès le début."
+        )
+    else:
+        debut = (
+            f"Affiche : {nom_dom} reçoit {nom_ext}. "
+            "Sur le papier, peu d'écart : le match se jouera sur les détails."
+        )
+    phrases.append(debut)
+
+    # --- Milieu : l'intrigue / la tension ---
+    intrigue = []
+    rebond = []
+    if att_e:
+        rebond.append("une attaque capable de faire mal")
+    if def_e_forte:
+        rebond.append("une défense solide")
+    faille_dom = []
+    if def_d_faible:
+        faille_dom.append("une défense fragile")
+    if att_d_faible:
+        faille_dom.append("une attaque peu menaçante")
+
+    if rebond and faille_dom:
+        intrigue.append(
+            f"Mais le scénario a un retournement possible : "
+            f"{nom_ext} apporte {rebond[0]}, "
+            f"alors que {nom_dom} montre {faille_dom[0]}."
+        )
+    elif rebond:
+        intrigue.append(
+            f"Les visiteurs ne sont pas sans arme : {rebond[0]}."
+        )
+    elif faille_dom:
+        intrigue.append(
+            f"{nom_dom} a aussi une faille — {faille_dom[0]} — "
+            f"et {nom_ext} peut s'y accrocher."
         )
 
     pression_dom = att_d and def_e_faible
     pression_ext = att_e and def_d_faible
+    if pression_dom and pression_ext:
+        intrigue.append(
+            "Le milieu du film s'annonce nerveux : duel d'attaques, "
+            "allers-retours, peu de répit."
+        )
+    elif pression_dom:
+        intrigue.append(
+            f"La pression devrait venir surtout de {nom_dom}, "
+            "qui cherchera les espaces derrière la défense adverse."
+        )
+    elif pression_ext:
+        intrigue.append(
+            f"Même loin de chez eux, {nom_ext} peut inquiéter "
+            f"la défense de {nom_dom} et basculer le récit."
+        )
+    else:
+        intrigue.append(
+            "Ni l'une ni l'autre n'impose clairement son attaque : "
+            "moins d'occasions nettes, match plus contrôlé."
+        )
+
     rythme = None
     for item in pred.get("scenarios") or []:
         if item.get("cle") == "rythme":
@@ -857,49 +926,52 @@ def _recit_scenario(nom_dom, nom_ext, domicile, exterieur, pred, cartons):
     xg_e = pred.get("xg_prevu_exterieur")
     xg_total = pred.get("xg_total") or ((xg_d or 0) + (xg_e or 0))
 
-    if pression_dom and pression_ext:
-        pression = (
-            "Les deux attaques peuvent faire mal : allers-retours, peu de répit."
-        )
-    elif pression_dom:
-        pression = f"La pression devrait venir surtout de {nom_dom}."
-    elif pression_ext:
-        pression = (
-            f"Même à l'extérieur, {nom_ext} peut inquiéter la défense de {nom_dom}."
-        )
-    else:
-        pression = (
-            "Ni l'une ni l'autre n'impose clairement son attaque : "
-            "moins d'occasions nettes, match plus contrôlé."
-        )
-
     p_deux = pred.get("p_les_deux_marquent") or 0
     p_plus = pred.get("p_plus_de_2_buts") or 0
-    if p_deux >= 50:
-        buts = "Les deux équipes ont de bonnes chances de marquer."
+    if p_deux >= 50 and p_plus >= 50:
+        intrigue.append(
+            f"{titre_rythme} : les deux camps ont de bonnes chances de marquer, "
+            f"et le score devrait dépasser les 2 buts "
+            f"(environ {xg_total:.1f} occasions attendues au total)."
+        )
+    elif p_deux >= 50:
+        intrigue.append(
+            f"{titre_rythme} : les deux équipes peuvent marquer, "
+            "mais le score devrait rester serré "
+            f"(environ {xg_total:.1f} occasions attendues au total)."
+        )
+    elif p_plus >= 50:
+        intrigue.append(
+            f"{titre_rythme} : une équipe peut rester muette, "
+            "mais les buts devraient quand même tomber "
+            f"(environ {xg_total:.1f} occasions attendues au total)."
+        )
     else:
-        buts = "Une des deux équipes peut rester muette."
-    if p_plus >= 50:
-        volume = "Plus de 2 buts est le cas le plus fréquent."
+        intrigue.append(
+            f"{titre_rythme} : peu de buts en vue, "
+            "une des deux équipes peut rester muette "
+            f"(environ {xg_total:.1f} occasions attendues au total)."
+        )
+
+    if jeu_rugueux:
+        jaunes = cartons.get("jaunes_match")
+        if jaunes is not None:
+            intrigue.append(
+                f"Sous la pression, les fautes peuvent s'accumuler "
+                f"(environ {jaunes} cartons jaunes attendus)."
+            )
+        else:
+            intrigue.append(
+                "Sous la pression, les fautes et les cartons peuvent s'accumuler."
+            )
+
+    if len(intrigue) <= 2:
+        phrases.extend(intrigue)
     else:
-        volume = "Le score devrait rester à 2 buts ou moins."
+        phrases.append(" ".join(intrigue[:2]))
+        phrases.append(" ".join(intrigue[2:]))
 
-    cartons_txt = cartons.get("titre") or "Cartons dans la moyenne"
-    jaunes = cartons.get("jaunes_match")
-    faute = ""
-    if _a_motif(
-        (domicile.get("faiblesses") or []) + (exterieur.get("faiblesses") or []),
-        ["jaunes", "rouges"],
-    ):
-        faute = " Sous la pression, les fautes et les cartons peuvent s'accumuler."
-    paragraphes.append(
-        f"{titre_rythme} ({xg_total:.1f} xG attendus au total) : {pression} "
-        f"{buts} {volume} "
-        f"{cartons_txt}"
-        + (f" (environ {jaunes} jaunes)." if jaunes is not None else ".")
-        + faute
-    )
-
+    # --- Fin : le dénouement probable ---
     commentaire = pred.get("commentaire_score") or "scénario serré"
     score = pred.get("score_plus_probable") or "1-1"
     p_dom = pred.get("p_victoire_domicile") or 0
@@ -910,32 +982,38 @@ def _recit_scenario(nom_dom, nom_ext, domicile, exterieur, pred, cartons):
         avantage = f"{nom_ext} peut l'emporter malgré le déplacement"
     else:
         avantage = "aucune équipe ne se détache vraiment"
+
     if commentaire.startswith("match nul"):
         if avantage.startswith("aucune"):
-            fil = (
-                f"Le fil le plus probable : un {commentaire} ({score}) "
-                f"— {avantage}."
+            denouement = (
+                f"Le dénouement le plus probable : un {commentaire} ({score}). "
+                f"Sur le papier, {avantage}."
             )
         else:
-            fil = (
-                f"Le fil le plus probable : un {commentaire} ({score}), "
+            denouement = (
+                f"Le dénouement le plus probable : un {commentaire} ({score}), "
                 f"même si {avantage}."
             )
     else:
-        fil = (
-            f"Le fil le plus probable : {avantage}, vers un {commentaire} ({score})."
+        denouement = (
+            f"Le dénouement le plus probable : {avantage}, "
+            f"vers un {commentaire} ({score})."
         )
-    paragraphes.append(
-        f"{fil} {nom_dom} autour de {xg_d} xG, {nom_ext} autour de {xg_e} xG."
-    )
+    if xg_d is not None and xg_e is not None:
+        denouement += (
+            f" En coulisses des chiffres : {nom_dom} autour de {xg_d} "
+            f"occasions attendues (xG), {nom_ext} autour de {xg_e}."
+        )
+    phrases.append(denouement)
 
     if domicile.get("donnees_limitees") or exterieur.get("donnees_limitees"):
-        paragraphes.append(
-            "Une équipe a trop peu de matchs : ce récit s'appuie aussi "
-            "sur la moyenne du championnat, à prendre avec du recul."
+        phrases.append(
+            "Attention : une équipe a trop peu de matchs récents — "
+            "ce récit s'appuie aussi sur la moyenne du championnat, "
+            "à prendre avec du recul."
         )
 
-    return paragraphes
+    return phrases
 
 
 def _bilan_match(pred, match_joue):
@@ -960,16 +1038,17 @@ def _bilan_match(pred, match_joue):
     if total > 2:
         if (pred.get("p_plus_de_2_buts") or 0) >= 50:
             points.append(
-                f"{total} buts : plus de 2 buts, comme le scénario le plus fréquent."
+                f"{total} buts au total : plus de 2 buts, comme prévu le plus souvent."
             )
         else:
             points.append(
-                f"{total} buts : plus de buts que ce que les xG laissaient attendre."
+                f"{total} buts au total : plus de buts que les occasions attendues "
+                "laissaient penser."
             )
     else:
         if (pred.get("p_plus_de_2_buts") or 0) < 50:
             points.append(
-                f"{total} buts : 2 ou moins, cohérent avec le scénario."
+                f"{total} buts au total : 2 ou moins, cohérent avec le scénario."
             )
         else:
             points.append(
@@ -984,7 +1063,7 @@ def _bilan_match(pred, match_joue):
         else:
             points.append(
                 "Les deux équipes ont marqué, alors que ce n'était pas "
-                "le scénario majoritaire."
+                "le cas le plus fréquent."
             )
     else:
         if p_deux < 50:
@@ -1003,7 +1082,7 @@ def _bilan_match(pred, match_joue):
         r_d = match_joue.get("rouges_domicile")
         r_e = match_joue.get("rouges_exterieur")
         rouges = int(r_d or 0) + int(r_e or 0)
-        phrase = f"{jaunes} jaunes"
+        phrase = f"{jaunes} cartons jaunes"
         if rouges:
             phrase += f" et {rouges} rouge" + ("s" if rouges > 1 else "")
         if prevu is not None:
@@ -1032,18 +1111,22 @@ def _texte_prediction(nom_dom, nom_ext, pred, saisons_xg, limitees):
         ref = "les matchs en base"
     extra = ""
     if any(limitees):
-        extra = " Une équipe a trop peu de matchs : sa projection colle à la moyenne du championnat."
+        extra = (
+            " Une équipe a trop peu de matchs : sa projection colle "
+            "à la moyenne du championnat."
+        )
     commentaire = pred.get("commentaire_score") or ""
     detail_score = f" ({commentaire})" if commentaire else ""
     return (
-        f"D'après les xG {ref}, le scénario le plus fréquent est "
+        f"D'après les occasions attendues (xG) de {ref}, "
+        f"le scénario le plus fréquent est "
         f"{pred['score_plus_probable']}{detail_score} "
         f"({pred['p_victoire_domicile']:.0f} % victoire {nom_dom}, "
         f"{pred['p_nul']:.0f} % nul, "
         f"{pred['p_victoire_exterieur']:.0f} % victoire {nom_ext})."
         f"{extra} "
-        "Ce n'est pas un pronostic de paris : uniquement un modèle Poisson "
-        "sur les statistiques déjà en base."
+        "Ce n'est pas un conseil de paris : uniquement un modèle statistique "
+        "sur les matchs déjà en base."
     )
 
 
@@ -1337,8 +1420,8 @@ def analyser_rencontre(connexion, championnat, saison, nom_domicile, nom_exterie
         "saison_demandee": saison,
         "saison_ligue": saison_ligue,
         "avertissement": (
-            "Scénario statistique calculé à partir des matchs et xG déjà en base. "
-            "Ce n'est pas un pronostic de paris."
+            "Scénario statistique calculé à partir des matchs et occasions "
+            "attendues (xG) déjà en base. Ce n'est pas un conseil de paris."
         ),
         "domicile": domicile,
         "exterieur": exterieur,

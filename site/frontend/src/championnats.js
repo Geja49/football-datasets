@@ -29,12 +29,12 @@ export const CODES_CARTES = {
 
 /** Chemins locaux (public/) — pas de scrape sites officiels. */
 export const LOGOS_CARTES = {
-  "Premier League": "/logos-championnats/premier-league.svg",
-  "La Liga": "/logos-championnats/la-liga.svg",
+  "Premier League": "/logos-championnats/premier-league.png",
+  "La Liga": "/logos-championnats/la-liga.png",
   Bundesliga: "/logos-championnats/bundesliga.png",
-  "Serie A": "/logos-championnats/serie-a.svg",
-  "Ligue 1": "/logos-championnats/ligue-1.svg",
-  "Ligue des champions": "/logos-championnats/ligue-des-champions.svg",
+  "Serie A": "/logos-championnats/serie-a.png",
+  "Ligue 1": "/logos-championnats/ligue-1.png",
+  "Ligue des champions": "/logos-championnats/ligue-des-champions.png",
 };
 
 export function libelleTypeCompetition(nom) {

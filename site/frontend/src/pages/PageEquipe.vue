@@ -230,16 +230,18 @@ function analyserMatch(match) {
     </p>
 
     <div class="bloc" v-if="axesEquipe.length">
-      <h2>Forces de l’équipe</h2>
-      <p class="doux">
-        Moyennes par match (buts, xG, tirs), forme sur 5 matchs, solidité et xG encaissés (inversés).
-        Comparaison à la moyenne du championnat (même saison) : polygone pointillé sur le radar,
-        losange sur les densités.
-        <template v-if="butsEquipe && (butsEquipe.matchs_championnat || butsEquipe.matchs_ldc)">
-          Totaux buts (cartes) : championnat + Ligue des champions
-          ({{ butsEquipe.matchs_championnat }} + {{ butsEquipe.matchs_ldc }} matchs).
-        </template>
-      </p>
+      <header class="entete-bloc">
+        <h2>Forces de l’équipe</h2>
+        <p class="doux">
+          Moyennes par match (buts, xG, tirs), forme sur 5 matchs, solidité et xG encaissés (inversés).
+          Comparaison à la moyenne du championnat (même saison) : polygone pointillé sur le radar,
+          losange sur les densités.
+          <template v-if="butsEquipe && (butsEquipe.matchs_championnat || butsEquipe.matchs_ldc)">
+            Totaux buts (cartes) : championnat + Ligue des champions
+            ({{ butsEquipe.matchs_championnat }} + {{ butsEquipe.matchs_ldc }} matchs).
+          </template>
+        </p>
+      </header>
       <p v-if="messageReperes" class="mention">{{ messageReperes }}</p>
       <div class="grille-diagrammes">
         <div class="cadre-diagramme">
@@ -256,7 +258,8 @@ function analyserMatch(match) {
           <DiagrammeDensites :lignes="axesEquipe" libelle-sujet="Club" />
         </div>
       </div>
-      <table v-if="comparaisonLigue.length" class="table-vs-ligue">
+      <div class="enveloppe-tableau" v-if="comparaisonLigue.length">
+      <table class="table-vs-ligue">
         <thead>
           <tr>
             <th>Métrique</th>
@@ -274,10 +277,14 @@ function analyserMatch(match) {
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
 
     <div class="bloc" v-if="data.joueurs.length">
-      <h2>Effectif</h2>
+      <header class="entete-bloc">
+        <h2>Effectif</h2>
+      </header>
+      <div class="enveloppe-tableau">
       <table>
         <thead>
           <tr>
@@ -325,11 +332,14 @@ function analyserMatch(match) {
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
 
     <div class="bloc">
-      <h2>Contribution défensive</h2>
-      <p class="doux">{{ data.defense && data.defense.message }}</p>
+      <header class="entete-bloc">
+        <h2>Contribution défensive</h2>
+        <p class="doux">{{ data.defense && data.defense.message }}</p>
+      </header>
       <template v-if="data.defense && data.defense.disponible && data.defense.totaux">
         <div class="cartes-stats">
           <div class="carte-stat">
@@ -365,7 +375,8 @@ function analyserMatch(match) {
             <strong>{{ data.defense.totaux.pressions }}</strong>
           </div>
         </div>
-        <table v-if="data.defense.joueurs.length" class="table-defense">
+        <div class="enveloppe-tableau" v-if="data.defense.joueurs.length">
+        <table class="table-defense">
           <thead>
             <tr>
               <th>Joueur</th>
@@ -396,11 +407,13 @@ function analyserMatch(match) {
             </tr>
           </tbody>
         </table>
+        </div>
         <div v-if="data.defense.gardiens.length" class="gardiens-defense">
           <h3>Gardiens</h3>
           <p class="doux">
             Arrêts et xG des tirs subis (StatsBomb, ce n’est pas un PSxG).
           </p>
+          <div class="enveloppe-tableau">
           <table>
             <thead>
               <tr>
@@ -424,12 +437,15 @@ function analyserMatch(match) {
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </template>
     </div>
 
     <div class="bloc" v-if="data.matchs.length">
-      <h2>Calendrier</h2>
+      <header class="entete-bloc">
+        <h2>Calendrier</h2>
+      </header>
       <CalendrierMatchs
         :matchs="data.matchs"
         :equipe-focus="equipe"

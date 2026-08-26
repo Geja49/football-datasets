@@ -183,7 +183,7 @@ const totaux = computed(() => {
             {{ saisonRecente.championnat }}
           </router-link>
         </p>
-        <div class="cartes-stats">
+        <div class="cartes-stats cartes-stats-resume">
           <div class="carte-stat">
             <span>Matchs</span>
             <strong>{{ totaux.matchs }}</strong>
@@ -208,6 +208,9 @@ const totaux = computed(() => {
             <span>xG</span>
             <strong>{{ totaux.xg }}</strong>
           </div>
+        </div>
+        <p class="titre-sous-section">Détail</p>
+        <div class="cartes-stats cartes-stats-detail">
           <div class="carte-stat">
             <span>xA</span>
             <strong>{{ totaux.xa }}</strong>
@@ -266,10 +269,13 @@ const totaux = computed(() => {
   <div class="page">
     <p v-if="erreur" class="erreur">{{ erreur }}</p>
     <div class="bloc" v-if="historiqueTransferts.length">
-      <h2>Historique des transferts</h2>
-      <p class="doux">
-        Dump communautaire (pas de mise à jour live Transfermarkt).
-      </p>
+      <header class="entete-bloc">
+        <h2>Historique des transferts</h2>
+        <p class="doux">
+          Dump communautaire (pas de mise à jour live Transfermarkt).
+        </p>
+      </header>
+      <div class="enveloppe-tableau">
       <table>
         <thead>
           <tr>
@@ -292,16 +298,19 @@ const totaux = computed(() => {
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
     <div class="bloc" v-if="axesJoueur.length">
-      <h2>Profil de saison</h2>
-      <p class="doux">
-        {{ saisonRadar.saison }} · {{ saisonRadar.championnat }}
-        · buts, xG, passes, xA, tirs, minutes.
-        {{ data.reperes && data.reperes.axes && data.reperes.axes.length
-          ? "Comparaison à la moyenne du championnat : polygone pointillé (radar) et losange (densités)."
-          : "Position relative à un plafond de saison type (valeur + centile)." }}
-      </p>
+      <header class="entete-bloc">
+        <h2>Profil de saison</h2>
+        <p class="doux">
+          {{ saisonRadar.saison }} · {{ saisonRadar.championnat }}
+          · buts, xG, passes, xA, tirs, minutes.
+          {{ data.reperes && data.reperes.axes && data.reperes.axes.length
+            ? "Comparaison à la moyenne du championnat : polygone pointillé (radar) et losange (densités)."
+            : "Position relative à un plafond de saison type (valeur + centile)." }}
+        </p>
+      </header>
       <p v-if="messageReperes" class="mention">{{ messageReperes }}</p>
       <div class="grille-diagrammes">
         <div class="cadre-diagramme">
@@ -318,7 +327,8 @@ const totaux = computed(() => {
           <DiagrammeDensites :lignes="axesJoueur" libelle-sujet="Joueur" />
         </div>
       </div>
-      <table v-if="comparaisonLigue.length" class="table-vs-ligue">
+      <div class="enveloppe-tableau" v-if="comparaisonLigue.length">
+      <table class="table-vs-ligue">
         <thead>
           <tr>
             <th>Métrique</th>
@@ -336,9 +346,13 @@ const totaux = computed(() => {
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
     <div class="bloc">
-      <h2>Statistiques par saison</h2>
+      <header class="entete-bloc">
+        <h2>Statistiques par saison</h2>
+      </header>
+      <div class="enveloppe-tableau">
       <table>
         <thead>
           <tr>
@@ -390,14 +404,21 @@ const totaux = computed(() => {
           </tr>
         </tbody>
       </table>
+      </div>
       <p v-if="!totaux.ldcParJoueur" class="doux mention-ldc">
         Ces lignes viennent des 5 ligues (Understat). {{ totaux.messageLdc }}.
       </p>
     </div>
     <div class="bloc">
-      <h2>Contribution défensive</h2>
-      <p class="doux">{{ data.defense && data.defense.message }}</p>
-      <table v-if="data.defense && data.defense.disponible && data.defense.saisons.length">
+      <header class="entete-bloc">
+        <h2>Contribution défensive</h2>
+        <p class="doux">{{ data.defense && data.defense.message }}</p>
+      </header>
+      <div
+        class="enveloppe-tableau"
+        v-if="data.defense && data.defense.disponible && data.defense.saisons.length"
+      >
+      <table>
         <thead>
           <tr>
             <th>Saison</th>
@@ -431,6 +452,7 @@ const totaux = computed(() => {
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
   </div>
 </template>

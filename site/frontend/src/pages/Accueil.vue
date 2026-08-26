@@ -130,7 +130,7 @@ function ouvrirJoueur(nom, ligue) {
         >
           <img
             v-if="logosCartes[champ.nom]"
-            class="tuile-logo"
+            class="logo-championnat"
             :src="logosCartes[champ.nom]"
             alt=""
             width="88"
@@ -148,10 +148,16 @@ function ouvrirJoueur(nom, ligue) {
       </div>
     </section>
 
-    <div class="bloc" v-if="jour">
-      <h2>{{ jour === aujourd ? "Matchs du jour" : "Prochains matchs" }}</h2>
-      <p v-if="jour !== aujourd" class="doux">{{ formaterDate(jour) }}</p>
+    <div class="bloc bloc-matchs-jour" v-if="jour">
+      <header class="entete-matchs-jour">
+        <p class="tag-section">Calendrier</p>
+        <h2 class="titre-section-matchs">
+          {{ jour === aujourd ? "Matchs du jour" : "Prochains matchs" }}
+        </h2>
+        <p v-if="jour !== aujourd" class="doux">{{ formaterDate(jour) }}</p>
+      </header>
       <p v-if="!matchsJour.length" class="doux">Aucun match à cette date.</p>
+      <div class="liste-matchs-jour">
       <article
         v-for="match in matchsJour"
         :key="match.championnat + match.domicile + match.exterieur"
@@ -195,6 +201,7 @@ function ouvrirJoueur(nom, ligue) {
           <span>{{ match.exterieur }}</span>
         </div>
       </article>
+      </div>
     </div>
 
     <section class="bloc bloc-buteurs" v-if="buteurs.length" aria-label="Meilleurs buteurs">

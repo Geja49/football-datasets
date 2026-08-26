@@ -4,7 +4,9 @@ from analyse_rencontre import (
     _bilan_match,
     _commentaire_score,
     _lambda_cartons_equipe,
+    _phrases,
     _poisson,
+    _recit_scenario,
     _scenario_cartons,
     _scenario_poisson,
     _scenarios_detailles,
@@ -108,6 +110,7 @@ def test_scenario_cartons_et_scenarios_detailles():
     scenarios = _scenarios_detailles(pred, cartons, 2.5)
     cles = [s["cle"] for s in scenarios]
     assert cles == ["rythme", "deux_equipes", "buts", "cartons"]
+    assert "occasions attendues" in scenarios[0]["texte"].lower()
 
 
 def test_bilan_match_score_exact():
@@ -127,3 +130,59 @@ def test_bilan_match_score_exact():
     )
     assert bilan["points"]
     assert any("exactement" in p for p in bilan["points"])
+
+
+def test_phrases_simples_expliquent_xg():
+    moyennes = {
+        "xg_domicile": 1.4,
+        "xg_encaisses_domicile": 1.1,
+        "tirs_cadres_domicile": 4.5,
+        "jaunes_domicile": 2.0,
+        "rouges_domicile": 0.1,
+    }
+    profil = {
+        "xg_marques": 2.0,
+        "xg_encaisses": 0.8,
+        "tirs_cadres": 6.0,
+        "jaunes": 1.2,
+        "rouges": 0.05,
+    }
+    phrases = _phrases(profil, moyennes, True, False)
+    texte = " ".join(phrases["forces"]).lower()
+    assert "occasions attendues" in texte
+    assert "attaque" in texte or "défense" in texte or "tirs cadrés" in texte
+
+
+def test_recit_scenario_style_film():
+    pred = _scenario_poisson(2.0, 1.0)
+    cartons = _scenario_cartons(1.5, 1.8, 0.05, 0.05, 3.5, ["saison", "saison"])
+    pred["scenarios"] = _scenarios_detailles(pred, cartons, 2.5)
+    domicile = {
+        "forces": [
+            "Bonne attaque à domicile : environ 2.00 occasions attendues (xG) "
+            "par match, au-dessus de la moyenne (1.40)."
+        ],
+        "faiblesses": [
+            "Pas de faiblesse marquée à domicile face à la moyenne du championnat."
+        ],
+        "donnees_limitees": False,
+    }
+    exterieur = {
+        "forces": [
+            "Profil à l'extérieur proche de la moyenne du championnat : "
+            "ni très fort, ni très faible en attaque et en défense."
+        ],
+        "faiblesses": [
+            "Défense à l'extérieur fragile : elle concède beaucoup d'occasions "
+            "(1.80 xG encaissés, moyenne 1.20)."
+        ],
+        "donnees_limitees": False,
+    }
+    recit = _recit_scenario("Paris", "Lyon", domicile, exterieur, pred, cartons)
+    assert 3 <= len(recit) <= 6
+    texte = " ".join(recit).lower()
+    assert "affiche" in texte
+    assert "dénouement" in texte
+    assert "paris" in texte and "lyon" in texte
+    # Pas une liste sèche de stats collées
+    assert "xG marqués par match" not in texte

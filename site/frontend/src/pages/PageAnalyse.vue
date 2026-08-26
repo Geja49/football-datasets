@@ -600,7 +600,7 @@ async function seDeconnecter() {
     <p v-if="erreur" class="erreur">{{ erreur }}</p>
     <AnimationJoueurBallon
       v-if="chargement"
-      message="Calcul du scénario en cours…"
+      message="Calcul du scénario…"
     />
 
     <template v-if="suggestionsVisibles">
@@ -707,8 +707,8 @@ async function seDeconnecter() {
             </div>
           </header>
           <p class="chiffres-xg">
-            <strong>{{ cote.xg_marques ?? "—" }}</strong> xG marqués ·
-            <strong>{{ cote.xg_encaisses ?? "—" }}</strong> xG encaissés
+            <strong>{{ cote.xg_marques ?? "—" }}</strong> occasions créées (xG) ·
+            <strong>{{ cote.xg_encaisses ?? "—" }}</strong> occasions concédées (xG)
           </p>
           <h3>Forces</h3>
           <ul class="liste-points">
@@ -730,7 +730,7 @@ async function seDeconnecter() {
         </p>
         <div class="cartes-stats">
           <div class="carte-stat">
-            <span>xG</span>
+            <span>Occasions (xG)</span>
             <strong class="valeur-couple">{{ couple(matchJoue.xg_domicile, matchJoue.xg_exterieur) }}</strong>
           </div>
           <div class="carte-stat">
@@ -759,98 +759,117 @@ async function seDeconnecter() {
       </div>
 
       <div class="bloc carte-scenario">
-        <h2>{{ matchJoue ? "Ce qui pouvait se passer" : "Ce qui peut se passer" }}</h2>
-        <div class="bloc-recit" v-if="recit.length">
-          <h3>Comment le match peut se dérouler</h3>
-          <p v-for="(paragraphe, i) in recit" :key="'r' + i">{{ paragraphe }}</p>
-        </div>
-        <div class="bloc-recit lecture-marche" v-if="lectureMarche">
-          <h3>Lecture du marché</h3>
-          <div class="ligne-cotes" v-if="lectureMarche.cotes">
-            <span class="puce-cote">
-              <em>1</em>{{ texteCote(lectureMarche.cotes.domicile) }}
-            </span>
-            <span class="puce-cote">
-              <em>N</em>{{ texteCote(lectureMarche.cotes.nul) }}
-            </span>
-            <span class="puce-cote">
-              <em>2</em>{{ texteCote(lectureMarche.cotes.exterieur) }}
-            </span>
-          </div>
-          <p>{{ lectureMarche.texte }}</p>
-          <p class="doux petit">{{ lectureMarche.disclaimer }}</p>
-        </div>
-        <p class="doux">{{ pred.texte }}</p>
-        <div class="cartes-stats">
-          <div class="carte-stat">
-            <span>xG prévu domicile</span>
-            <strong>{{ pred.xg_prevu_domicile }}</strong>
-          </div>
-          <div class="carte-stat">
-            <span>xG prévu extérieur</span>
-            <strong>{{ pred.xg_prevu_exterieur }}</strong>
-          </div>
-          <div class="carte-stat">
-            <span>Score le plus probable</span>
-            <strong>{{ pred.score_plus_probable }}</strong>
-          </div>
-        </div>
-        <div class="cartes-stats" v-if="cartons">
-          <div class="carte-stat">
-            <span>Jaunes prévus</span>
-            <strong>{{ cartons.jaunes_match }}</strong>
-            <p class="doux petit">
-              {{ cartons.jaunes_domicile }} – {{ cartons.jaunes_exterieur }}
-              (moy. ligue {{ cartons.moyenne_championnat }})
-            </p>
-          </div>
-          <div class="carte-stat">
-            <span>Rouges prévus</span>
-            <strong>{{ cartons.rouges_match }}</strong>
-            <p class="doux petit">
-              au moins un rouge : {{ cartons.p_au_moins_un_rouge }} %
-            </p>
-          </div>
-          <div class="carte-stat">
-            <span>Les deux marquent</span>
-            <strong>{{ pred.p_les_deux_marquent }} %</strong>
-          </div>
-          <div class="carte-stat">
-            <span>Plus de 2 buts</span>
-            <strong>{{ pred.p_plus_de_2_buts }} %</strong>
-          </div>
-        </div>
-        <div class="bloc-1n2">
-          <div class="ligne-1n2">
-            <span>{{ data.domicile.nom }} {{ pred.p_victoire_domicile }} %</span>
-            <span>Nul {{ pred.p_nul }} %</span>
-            <span>{{ data.exterieur.nom }} {{ pred.p_victoire_exterieur }} %</span>
-          </div>
-          <div class="barre-1n2" role="img" :aria-label="'Probabilités 1N2'">
-            <div class="seg-1" :style="largeur(pred.p_victoire_domicile)"></div>
-            <div class="seg-n" :style="largeur(pred.p_nul)"></div>
-            <div class="seg-2" :style="largeur(pred.p_victoire_exterieur)"></div>
-          </div>
-        </div>
-        <h3>Comment le match peut tourner</h3>
-        <ul class="liste-scenarios">
-          <li v-for="item in scenarios" :key="item.cle" class="carte-scenario-detail">
-            <h4>{{ item.titre }}</h4>
-            <p>{{ item.texte }}</p>
-            <p class="doux petit" v-if="item.chiffre">{{ item.chiffre }}</p>
-            <p class="doux petit" v-else-if="item.pct != null">{{ item.pct }} %</p>
-          </li>
-        </ul>
-        <h3>Scores les plus fréquents</h3>
-        <ul class="liste-scores">
-          <li v-for="item in pred.scores_frequents" :key="item.score">
-            <div class="ligne-score-pct">
-              <span class="score-gros">{{ item.score }}</span>
-              <span class="doux">{{ item.pct }} %</span>
+        <header class="entete-bloc">
+          <h2>{{ matchJoue ? "Ce qui pouvait se passer" : "Ce qui peut se passer" }}</h2>
+          <p class="doux" v-if="pred.texte">{{ pred.texte }}</p>
+        </header>
+
+        <div class="resume-analyse" aria-label="Résumé du scénario">
+          <div class="cartes-stats cartes-stats-resume">
+            <div class="carte-stat">
+              <span>Occasions prévues domicile (xG)</span>
+              <strong>{{ pred.xg_prevu_domicile }}</strong>
             </div>
-            <span class="commentaire-score" v-if="item.commentaire">{{ item.commentaire }}</span>
-          </li>
-        </ul>
+            <div class="carte-stat">
+              <span>Occasions prévues extérieur (xG)</span>
+              <strong>{{ pred.xg_prevu_exterieur }}</strong>
+            </div>
+            <div class="carte-stat">
+              <span>Score le plus probable</span>
+              <strong>{{ pred.score_plus_probable }}</strong>
+            </div>
+          </div>
+          <div class="bloc-1n2">
+            <div class="ligne-1n2">
+              <span>{{ data.domicile.nom }} {{ pred.p_victoire_domicile }} %</span>
+              <span>Nul {{ pred.p_nul }} %</span>
+              <span>{{ data.exterieur.nom }} {{ pred.p_victoire_exterieur }} %</span>
+            </div>
+            <div class="barre-1n2" role="img" :aria-label="'Probabilités 1N2'">
+              <div class="seg-1" :style="largeur(pred.p_victoire_domicile)"></div>
+              <div class="seg-n" :style="largeur(pred.p_nul)"></div>
+              <div class="seg-2" :style="largeur(pred.p_victoire_exterieur)"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grille-scenario" v-if="recit.length || lectureMarche || cartons">
+          <div class="colonne-scenario" v-if="recit.length || lectureMarche">
+            <div class="bloc-recit" v-if="recit.length">
+              <h3>Le récit du match</h3>
+              <p v-for="(paragraphe, i) in recit" :key="'r' + i">{{ paragraphe }}</p>
+            </div>
+            <div class="bloc-recit lecture-marche" v-if="lectureMarche">
+              <h3>Lecture du marché</h3>
+              <div class="ligne-cotes" v-if="lectureMarche.cotes">
+                <span class="puce-cote">
+                  <em>1</em>{{ texteCote(lectureMarche.cotes.domicile) }}
+                </span>
+                <span class="puce-cote">
+                  <em>N</em>{{ texteCote(lectureMarche.cotes.nul) }}
+                </span>
+                <span class="puce-cote">
+                  <em>2</em>{{ texteCote(lectureMarche.cotes.exterieur) }}
+                </span>
+              </div>
+              <p>{{ lectureMarche.texte }}</p>
+              <p class="doux petit">{{ lectureMarche.disclaimer }}</p>
+            </div>
+          </div>
+          <aside class="colonne-stats" v-if="cartons">
+            <h3 class="titre-sous-section">Indicateurs</h3>
+            <div class="cartes-stats">
+              <div class="carte-stat">
+                <span>Jaunes prévus</span>
+                <strong>{{ cartons.jaunes_match }}</strong>
+                <p class="doux petit">
+                  {{ cartons.jaunes_domicile }} – {{ cartons.jaunes_exterieur }}
+                  (moy. ligue {{ cartons.moyenne_championnat }})
+                </p>
+              </div>
+              <div class="carte-stat">
+                <span>Rouges prévus</span>
+                <strong>{{ cartons.rouges_match }}</strong>
+                <p class="doux petit">
+                  au moins un rouge : {{ cartons.p_au_moins_un_rouge }} %
+                </p>
+              </div>
+              <div class="carte-stat">
+                <span>Les deux marquent</span>
+                <strong>{{ pred.p_les_deux_marquent }} %</strong>
+              </div>
+              <div class="carte-stat">
+                <span>Plus de 2 buts</span>
+                <strong>{{ pred.p_plus_de_2_buts }} %</strong>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <section class="sous-section-analyse">
+          <h3>Comment le match peut tourner</h3>
+          <ul class="liste-scenarios">
+            <li v-for="item in scenarios" :key="item.cle" class="carte-scenario-detail">
+              <h4>{{ item.titre }}</h4>
+              <p>{{ item.texte }}</p>
+              <p class="doux petit" v-if="item.chiffre">{{ item.chiffre }}</p>
+              <p class="doux petit" v-else-if="item.pct != null">{{ item.pct }} %</p>
+            </li>
+          </ul>
+        </section>
+
+        <section class="sous-section-analyse">
+          <h3>Scores les plus fréquents</h3>
+          <ul class="liste-scores">
+            <li v-for="item in pred.scores_frequents" :key="item.score">
+              <div class="ligne-score-pct">
+                <span class="score-gros">{{ item.score }}</span>
+                <span class="doux">{{ item.pct }} %</span>
+              </div>
+              <span class="commentaire-score" v-if="item.commentaire">{{ item.commentaire }}</span>
+            </li>
+          </ul>
+        </section>
       </div>
 
       <div class="bloc carte-scenario" v-if="confrontations">
@@ -881,8 +900,12 @@ async function seDeconnecter() {
         </template>
       </div>
 
+      <div class="zone-communaute">
       <div class="bloc bloc-pronostics" v-if="data && utilisateur">
-        <h2>Mon pronostic privé</h2>
+        <header class="entete-bloc">
+          <p class="tag-section">Communauté</p>
+          <h2>Mon pronostic privé</h2>
+        </header>
 
         <p v-if="chargementPronostic" class="doux">Chargement du pronostic…</p>
         <p v-if="erreurPronostic" class="erreur">{{ erreurPronostic }}</p>
@@ -987,7 +1010,10 @@ async function seDeconnecter() {
       </div>
 
       <div class="bloc bloc-pronostics" v-else-if="data && !utilisateur && !matchJoue">
-        <h2>Mon pronostic privé</h2>
+        <header class="entete-bloc">
+          <p class="tag-section">Communauté</p>
+          <h2>Mon pronostic privé</h2>
+        </header>
         <p class="doux">
           <router-link :to="lienConnexionMatch()">Connectez-vous</router-link>
           pour déposer un pronostic privé avant le coup d'envoi.
@@ -995,7 +1021,10 @@ async function seDeconnecter() {
       </div>
 
       <div class="bloc bloc-commentaires" v-if="data">
-        <h2>Commentaires</h2>
+        <header class="entete-bloc">
+          <p class="tag-section">Communauté</p>
+          <h2>Commentaires</h2>
+        </header>
         <p class="mention mention-communaute">
           {{
             disclaimerCommunaute ||
@@ -1159,6 +1188,7 @@ async function seDeconnecter() {
           Connecté en tant que <strong>{{ utilisateur.pseudo }}</strong>
           <button type="button" class="lien-action" @click="seDeconnecter">Se déconnecter</button>
         </p>
+      </div>
       </div>
 
       <div class="bloc" v-if="matchsEquipe.length">

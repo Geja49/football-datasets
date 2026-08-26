@@ -316,7 +316,8 @@ function serieForme(serie) {
           <span class="legende-hors"><i></i> 25-36 : éliminés</span>
         </p>
         <p v-if="eloMeta.message && !eloMeta.disponible" class="doux">{{ eloMeta.message }}</p>
-        <table v-if="classement.length">
+        <div class="enveloppe-tableau" v-if="classement.length">
+        <table class="table-classement">
           <thead>
             <tr>
               <th>#</th>
@@ -376,6 +377,7 @@ function serieForme(serie) {
             </tr>
           </tbody>
         </table>
+        </div>
       </template>
 
       <template v-else-if="onglet === 'calendrier'">
@@ -396,7 +398,8 @@ function serieForme(serie) {
           Aucun {{ onglet === 'buteurs' ? 'buteur' : 'passeur' }} pour
           {{ championnat }} en {{ saison }}.
         </p>
-        <table v-if="meilleurs.length">
+        <div class="enveloppe-tableau" v-if="meilleurs.length">
+        <table>
           <thead>
             <tr>
               <th>#</th>
@@ -437,6 +440,7 @@ function serieForme(serie) {
             </tr>
           </tbody>
         </table>
+        </div>
       </template>
     </template>
   </div>
