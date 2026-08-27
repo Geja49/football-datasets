@@ -19,7 +19,7 @@ FICHIER = DOSSIER_SORTIE / "classements_elo.csv"
 URL_JOUR = "https://api.clubelo.com/{date}"
 TIMEOUT = 60
 # Codes pays ClubElo pour les 5 ligues + LDC europeenne (Level 1).
-PAYS_CIBLES = {"ENG", "ESP", "GER", "ITA", "FRA"}
+PAYS_CIBLES = {"ENG", "ESP", "GER", "ITA", "FRA", "TUR"}
 COLONNES = [
     "date",
     "rang",

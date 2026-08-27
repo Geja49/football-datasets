@@ -1,0 +1,421 @@
+Date,HomeTeam,AwayTeam,FTHG,FTAG,FTR,HTHG,HTAG,HTR,Referee,HS,AS,HST,AST,HF,AF,HC,AC,HY,AY,HR,AR
+2020-09-11,Rizespor,Fenerbahce,1,2,A,0,0,D,,9,17,3,8,11,12,3,11,1,2,0,0
+2020-09-12,Karagumruk,Yeni Malatyaspor,3,0,H,1,0,H,,7,20,6,7,19,10,8,6,4,3,0,0
+2020-09-12,Sivasspor,Alanyaspor,0,2,A,0,1,A,,10,12,4,6,14,11,7,6,4,2,0,0
+2020-09-12,Galatasaray,Gaziantep,3,1,H,3,0,H,,23,9,12,2,13,12,8,6,2,3,0,0
+2020-09-12,Goztep,Denizlispor,5,1,H,3,0,H,,10,8,6,1,15,13,4,6,0,3,0,0
+2020-09-13,Ankaragucu,Erzurum BB,1,2,A,0,0,D,,8,12,5,4,16,12,6,3,3,0,0,0
+2020-09-13,Kayserispor,Kasimpasa,1,0,H,1,0,H,,6,12,2,3,12,16,1,6,3,2,0,0
+2020-09-13,Antalyaspor,Genclerbirligi,2,0,H,1,0,H,,9,6,5,1,12,18,2,3,1,1,0,0
+2020-09-13,Trabzonspor,Besiktas,1,3,A,0,1,A,,8,12,4,5,7,17,4,3,3,2,1,0
+2020-09-14,Hatayspor,Buyuksehyr,2,0,H,1,0,H,,12,15,6,2,13,14,1,6,1,2,0,0
+2020-09-18,Yeni Malatyaspor,Goztep,1,1,D,1,1,D,,14,3,1,1,13,19,5,6,0,0,0,0
+2020-09-19,Genclerbirligi,Konyaspor,0,0,D,0,0,D,,12,10,1,1,10,13,6,1,0,3,0,0
+2020-09-19,Denizlispor,Trabzonspor,0,0,D,0,0,D,,9,13,2,4,17,13,7,7,3,0,1,0
+2020-09-19,Alanyaspor,Kayserispor,2,0,H,1,0,H,,18,10,8,1,10,12,5,1,1,3,0,0
+2020-09-19,Besiktas,Antalyaspor,1,1,D,1,0,H,,12,8,3,4,18,26,5,3,5,4,0,0
+2020-09-20,Erzurum BB,Sivasspor,1,2,A,0,0,D,,7,9,3,3,14,9,2,7,0,0,0,0
+2020-09-20,Kasimpasa,Rizespor,2,0,H,1,0,H,,16,11,7,6,14,9,5,8,3,1,1,0
+2020-09-20,Buyuksehyr,Galatasaray,0,2,A,0,1,A,,12,12,5,6,16,15,5,2,3,1,0,0
+2020-09-20,Gaziantep,Karagumruk,2,2,D,0,1,A,,14,11,9,4,15,14,7,7,2,2,0,0
+2020-09-21,Fenerbahce,Hatayspor,0,0,D,0,0,D,,12,0,4,0,15,14,3,1,1,6,0,2
+2020-09-25,Karagumruk,Buyuksehyr,2,0,H,0,0,D,,5,13,3,4,8,11,2,2,2,3,0,1
+2020-09-26,Kayserispor,Erzurum BB,1,3,A,0,2,A,,12,13,2,8,15,21,5,5,1,3,0,0
+2020-09-26,Goztep,Gaziantep,2,2,D,0,1,A,,13,9,4,4,19,10,2,4,3,1,0,0
+2020-09-26,Hatayspor,Kasimpasa,1,0,H,0,0,D,,11,6,3,3,14,16,6,3,2,3,0,0
+2020-09-26,Trabzonspor,Yeni Malatyaspor,3,1,H,3,0,H,,10,9,4,4,9,14,5,5,1,2,0,0
+2020-09-27,Rizespor,Alanyaspor,1,1,D,0,0,D,,11,12,4,3,15,19,4,6,2,1,0,0
+2020-09-27,Konyaspor,Besiktas,4,1,H,1,0,H,,10,10,4,2,12,17,3,4,4,4,0,0
+2020-09-27,Sivasspor,Ankaragucu,0,0,D,0,0,D,,13,2,3,2,16,17,6,2,1,2,0,0
+2020-09-27,Galatasaray,Fenerbahce,0,0,D,0,0,D,,9,15,5,1,16,14,5,9,7,4,0,0
+2020-09-28,Antalyaspor,Denizlispor,1,0,H,0,0,D,,10,5,5,2,21,11,7,3,0,2,0,0
+2020-10-02,Ankaragucu,Kayserispor,0,1,A,0,1,A,,14,12,5,3,7,15,7,2,1,2,0,0
+2020-10-02,Gaziantep,Trabzonspor,1,1,D,0,0,D,,10,4,2,3,16,11,5,6,4,2,0,1
+2020-10-03,Yeni Malatyaspor,Antalyaspor,1,0,H,1,0,H,,14,7,4,1,19,10,7,3,4,2,0,0
+2020-10-03,Buyuksehyr,Goztep,0,0,D,0,0,D,,24,2,5,0,11,12,10,3,1,2,0,0
+2020-10-03,Erzurum BB,Rizespor,0,0,D,0,0,D,,11,7,5,2,14,10,9,3,1,3,0,0
+2020-10-03,Fenerbahce,Karagumruk,2,1,H,1,0,H,,8,13,4,3,15,10,3,7,2,2,1,0
+2020-10-04,Denizlispor,Konyaspor,0,0,D,0,0,D,,6,11,2,5,13,11,6,6,1,0,0,0
+2020-10-04,Alanyaspor,Hatayspor,6,0,H,4,0,H,,24,4,15,0,14,12,6,3,2,3,0,0
+2020-10-04,Besiktas,Genclerbirligi,0,1,A,0,1,A,,13,10,4,4,9,12,6,5,2,2,0,0
+2020-10-04,Kasimpasa,Galatasaray,1,0,H,1,0,H,,12,12,8,3,12,15,6,7,1,1,0,0
+2020-10-17,Rizespor,Ankaragucu,5,3,H,2,3,A,,15,9,10,4,9,17,2,3,0,4,0,1
+2020-10-17,Kayserispor,Sivasspor,1,3,A,0,1,A,,12,18,3,8,15,15,4,6,3,3,1,0
+2020-10-17,Konyaspor,Yeni Malatyaspor,1,1,D,0,0,D,,19,9,8,3,15,14,4,4,4,2,0,0
+2020-10-17,Trabzonspor,Buyuksehyr,0,2,A,0,1,A,,12,17,6,6,10,13,4,4,1,1,0,0
+2020-10-18,Antalyaspor,Gaziantep,1,1,D,1,0,H,,13,15,3,5,20,15,2,7,5,5,2,2
+2020-10-18,Karagumruk,Kasimpasa,1,1,D,1,0,H,,13,11,2,5,11,14,4,4,4,1,1,0
+2020-10-18,Goztep,Fenerbahce,2,3,A,1,2,A,,8,19,5,8,10,21,4,7,3,4,0,0
+2020-10-19,Galatasaray,Alanyaspor,1,2,A,1,1,D,,7,22,5,12,18,15,3,10,5,3,1,0
+2020-10-19,Genclerbirligi,Denizlispor,1,2,A,0,2,A,,7,23,2,10,11,13,5,4,1,0,0,0
+2020-10-23,Kasimpasa,Goztep,0,0,D,0,0,D,,14,3,4,0,17,12,7,5,1,1,0,0
+2020-10-24,Gaziantep,Konyaspor,1,0,H,0,0,D,,10,11,4,4,17,12,6,4,3,5,0,0
+2020-10-24,Buyuksehyr,Antalyaspor,5,1,H,4,1,H,,30,6,9,2,6,7,12,1,0,0,0,1
+2020-10-24,Erzurum BB,Galatasaray,1,2,A,1,1,D,,4,13,2,4,14,11,3,3,0,4,0,1
+2020-10-25,Yeni Malatyaspor,Genclerbirligi,2,1,H,1,1,D,,11,5,4,1,10,12,5,6,0,0,0,0
+2020-10-25,Alanyaspor,Karagumruk,2,0,H,1,0,H,,19,7,8,4,12,14,4,4,1,1,0,0
+2020-10-25,Fenerbahce,Trabzonspor,3,1,H,0,1,A,,20,12,6,5,17,12,10,2,2,1,0,0
+2020-10-26,Denizlispor,Besiktas,2,3,A,0,2,A,,9,18,5,5,14,14,2,5,2,3,0,1
+2020-10-26,Sivasspor,Rizespor,0,2,A,0,1,A,,9,4,2,3,18,11,5,0,2,2,0,0
+2020-10-30,Karagumruk,Erzurum BB,5,1,H,3,0,H,,18,14,9,6,6,13,7,5,1,1,0,0
+2020-10-30,Trabzonspor,Kasimpasa,3,4,A,3,2,H,,12,17,4,11,8,10,2,5,3,2,0,0
+2020-10-31,Genclerbirligi,Gaziantep,1,1,D,0,1,A,,15,10,5,7,16,16,7,9,3,3,0,0
+2020-10-31,Galatasaray,Ankaragucu,1,0,H,1,0,H,,13,7,3,1,10,14,7,3,1,3,0,0
+2020-11-01,Rizespor,Kayserispor,1,0,H,1,0,H,,12,11,6,4,14,15,2,3,3,2,0,0
+2020-11-01,Konyaspor,Buyuksehyr,1,2,A,0,1,A,,13,12,5,5,14,8,2,7,3,1,0,0
+2020-11-01,Besiktas,Yeni Malatyaspor,1,0,H,0,0,D,,16,6,6,1,14,15,4,1,3,0,0,0
+2020-11-02,Antalyaspor,Fenerbahce,1,2,A,0,0,D,,5,28,2,10,11,14,0,12,2,3,1,1
+2020-11-02,Hatayspor,Sivasspor,1,1,D,1,1,D,,10,7,4,4,14,7,2,2,4,2,1,0
+2020-11-06,Gaziantep,Besiktas,3,1,H,1,0,H,,8,9,6,3,22,8,5,2,2,1,0,1
+2020-11-07,Kasimpasa,Antalyaspor,2,2,D,1,0,H,,16,11,4,4,19,14,3,7,3,0,0,0
+2020-11-07,Alanyaspor,Trabzonspor,1,1,D,0,0,D,,9,7,4,5,17,13,8,8,2,3,0,0
+2020-11-07,Erzurum BB,Goztep,1,1,D,0,1,A,,13,11,3,3,10,11,9,6,2,0,1,0
+2020-11-07,Fenerbahce,Konyaspor,0,2,A,0,0,D,,13,12,2,5,15,14,13,4,2,3,0,0
+2020-11-08,Ankaragucu,Karagumruk,2,2,D,1,2,A,,14,15,5,3,16,16,10,3,5,3,0,0
+2020-11-08,Yeni Malatyaspor,Denizlispor,2,0,H,2,0,H,,9,22,7,3,20,13,2,9,1,2,0,0
+2020-11-08,Buyuksehyr,Genclerbirligi,2,1,H,0,1,A,,22,6,5,2,7,10,17,3,0,3,0,1
+2020-11-08,Kayserispor,Hatayspor,0,1,A,0,0,D,,11,15,3,6,11,12,3,6,4,2,1,0
+2020-11-08,Sivasspor,Galatasaray,1,2,A,0,1,A,,10,8,6,3,18,14,7,2,5,3,0,0
+2020-11-21,Karagumruk,Sivasspor,1,1,D,0,1,A,,19,9,5,3,15,16,5,5,4,3,0,0
+2020-11-21,Denizlispor,Gaziantep,0,1,A,0,1,A,,13,11,4,5,9,16,6,3,2,3,0,0
+2020-11-21,Genclerbirligi,Fenerbahce,1,5,A,1,2,A,,11,10,5,5,19,9,5,3,3,1,0,0
+2020-11-21,Besiktas,Buyuksehyr,3,2,H,2,0,H,,20,19,8,7,12,17,4,8,3,5,0,1
+2020-11-22,Hatayspor,Rizespor,2,2,D,1,1,D,,14,7,6,1,14,15,6,4,1,2,0,0
+2020-11-22,Goztep,Ankaragucu,3,1,H,1,0,H,,10,14,4,7,17,11,7,6,2,2,0,0
+2020-11-22,Konyaspor,Kasimpasa,2,1,H,0,1,A,,16,8,8,3,13,9,5,5,3,2,0,0
+2020-11-22,Antalyaspor,Alanyaspor,0,2,A,0,0,D,,4,10,3,5,17,11,5,3,5,1,1,0
+2020-11-22,Trabzonspor,Erzurum BB,1,0,H,1,0,H,,11,21,3,7,11,13,4,10,2,3,0,0
+2020-11-23,Galatasaray,Kayserispor,1,1,D,0,0,D,,27,3,12,1,12,13,10,2,1,4,0,1
+2020-11-27,Ankaragucu,Trabzonspor,0,1,A,0,1,A,,14,8,3,1,11,13,5,5,2,4,0,1
+2020-11-28,Gaziantep,Yeni Malatyaspor,2,2,D,1,0,H,,6,11,5,5,17,13,3,7,6,3,1,0
+2020-11-28,Buyuksehyr,Denizlispor,3,3,D,2,0,H,,18,12,7,7,11,12,6,4,2,1,0,0
+2020-11-28,Rizespor,Galatasaray,0,4,A,0,1,A,,4,21,0,11,9,9,1,7,6,1,1,0
+2020-11-29,Erzurum BB,Antalyaspor,2,2,D,1,0,H,,11,11,4,6,13,17,2,8,3,3,0,1
+2020-11-29,Alanyaspor,Konyaspor,1,0,H,1,0,H,,18,10,8,3,12,14,3,4,3,5,0,0
+2020-11-29,Kasimpasa,Genclerbirligi,2,0,H,2,0,H,,13,20,9,5,15,8,5,3,2,2,0,0
+2020-11-29,Fenerbahce,Besiktas,3,4,A,1,2,A,,18,7,5,4,12,9,9,1,6,4,0,1
+2020-11-30,Kayserispor,Karagumruk,0,0,D,0,0,D,,18,10,4,4,14,12,6,4,1,1,0,0
+2020-11-30,Sivasspor,Goztep,0,1,A,0,0,D,,7,6,5,1,11,13,6,3,1,3,0,0
+2020-12-04,Besiktas,Kasimpasa,3,0,H,1,0,H,,17,6,5,2,14,11,6,3,1,0,0,1
+2020-12-05,Genclerbirligi,Alanyaspor,2,1,H,1,0,H,,14,16,5,6,14,9,4,9,4,2,0,0
+2020-12-05,Goztep,Kayserispor,1,1,D,0,0,D,,6,12,2,5,13,12,6,4,2,2,0,0
+2020-12-05,Konyaspor,Erzurum BB,2,0,H,1,0,H,,16,10,6,3,9,17,2,9,0,1,0,1
+2020-12-05,Yeni Malatyaspor,Buyuksehyr,1,1,D,0,1,A,,10,11,3,5,17,11,4,2,3,2,0,0
+2020-12-05,Galatasaray,Hatayspor,3,0,H,1,0,H,,12,11,4,1,10,17,7,5,3,2,0,1
+2020-12-06,Karagumruk,Rizespor,2,1,H,2,1,H,,8,9,4,3,17,19,6,5,4,1,0,0
+2020-12-06,Antalyaspor,Ankaragucu,1,0,H,1,0,H,,13,7,5,3,19,12,4,5,3,2,0,0
+2020-12-06,Denizlispor,Fenerbahce,0,2,A,0,2,A,,18,10,7,2,17,11,11,4,3,4,0,1
+2020-12-07,Trabzonspor,Sivasspor,1,1,D,1,0,H,,10,6,4,1,13,12,6,6,0,1,0,0
+2020-12-09,Goztep,Alanyaspor,1,0,H,0,0,D,,9,17,5,4,15,17,4,6,2,3,0,0
+2020-12-09,Hatayspor,Erzurum BB,3,0,H,1,0,H,,11,13,8,4,17,16,2,6,3,3,0,0
+2020-12-11,Kasimpasa,Denizlispor,3,2,H,2,1,H,,16,13,5,4,16,12,3,7,2,2,0,0
+2020-12-12,Hatayspor,Karagumruk,3,1,H,1,0,H,,7,13,5,3,17,9,1,4,1,7,0,2
+2020-12-12,Kayserispor,Trabzonspor,0,0,D,0,0,D,,18,11,6,4,6,10,4,4,0,3,0,0
+2020-12-12,Rizespor,Goztep,3,2,H,1,0,H,,13,12,7,5,18,16,3,4,3,5,0,0
+2020-12-12,Ankaragucu,Konyaspor,4,3,H,1,2,A,,11,8,5,4,9,15,4,2,5,3,1,0
+2020-12-12,Fenerbahce,Yeni Malatyaspor,0,3,A,0,2,A,,20,10,6,6,15,15,9,2,3,2,0,0
+2020-12-13,Erzurum BB,Genclerbirligi,0,1,A,0,0,D,,14,11,4,5,16,14,6,8,2,1,0,0
+2020-12-13,Alanyaspor,Besiktas,2,1,H,1,0,H,,20,10,6,3,13,17,6,4,5,3,1,0
+2020-12-13,Buyuksehyr,Gaziantep,1,2,A,0,1,A,,19,9,6,3,14,8,4,4,2,1,0,0
+2020-12-14,Sivasspor,Antalyaspor,0,0,D,0,0,D,,9,12,2,5,10,11,4,8,1,0,0,0
+2020-12-15,Ankaragucu,Hatayspor,2,0,H,0,0,D,,11,9,5,4,5,10,3,4,3,3,0,1
+2020-12-18,Karagumruk,Galatasaray,2,1,H,0,0,D,,7,15,4,1,11,22,5,8,7,4,1,1
+2020-12-19,Goztep,Hatayspor,0,1,A,0,0,D,,8,13,2,3,18,14,2,3,3,2,0,0
+2020-12-19,Trabzonspor,Rizespor,2,1,H,0,1,A,,18,4,8,1,11,19,9,3,1,4,0,0
+2020-12-19,Yeni Malatyaspor,Kasimpasa,2,0,H,1,0,H,,15,10,5,4,21,13,2,3,3,2,0,0
+2020-12-19,Gaziantep,Fenerbahce,3,1,H,2,1,H,,10,14,4,4,12,15,7,4,3,3,0,0
+2020-12-20,Genclerbirligi,Ankaragucu,1,1,D,0,0,D,,9,16,3,5,12,18,4,5,3,1,1,0
+2020-12-20,Denizlispor,Alanyaspor,1,0,H,1,0,H,,5,17,2,7,25,15,3,8,8,2,1,0
+2020-12-20,Besiktas,Erzurum BB,4,0,H,0,0,D,,14,8,7,4,14,18,10,6,3,2,0,0
+2020-12-21,Antalyaspor,Kayserispor,2,0,H,2,0,H,,9,5,4,2,10,13,4,2,4,1,0,0
+2020-12-21,Konyaspor,Sivasspor,0,1,A,0,0,D,,3,10,1,4,10,12,2,3,0,1,0,0
+2020-12-22,Hatayspor,Trabzonspor,0,1,A,0,0,D,,17,8,5,2,13,17,6,2,1,1,0,0
+2020-12-22,Galatasaray,Goztep,3,1,H,2,1,H,,15,12,8,5,9,9,8,7,1,1,0,0
+2020-12-23,Alanyaspor,Yeni Malatyaspor,1,1,D,1,0,H,,14,13,5,7,13,19,6,1,2,2,0,0
+2020-12-23,Erzurum BB,Denizlispor,1,2,A,0,1,A,,13,11,6,5,8,14,12,4,3,2,0,0
+2020-12-23,Fenerbahce,Buyuksehyr,4,1,H,1,1,D,,15,19,4,3,16,10,7,10,2,4,0,2
+2020-12-23,Kasimpasa,Gaziantep,0,4,A,0,2,A,,12,9,5,4,17,19,5,6,2,2,0,0
+2020-12-24,Kayserispor,Konyaspor,1,2,A,1,0,H,,10,16,4,8,16,16,6,1,5,2,1,0
+2020-12-24,Sivasspor,Genclerbirligi,3,1,H,1,0,H,,18,10,8,4,9,13,9,6,1,2,0,0
+2020-12-24,Ankaragucu,Besiktas,0,1,A,0,0,D,,8,7,1,3,16,18,2,1,1,0,0,0
+2020-12-24,Rizespor,Antalyaspor,2,1,H,1,0,H,,11,12,4,7,14,8,2,4,3,2,0,0
+2020-12-26,Goztep,Karagumruk,1,1,D,1,0,H,,10,21,2,5,16,8,6,8,1,1,0,0
+2020-12-26,Trabzonspor,Galatasaray,0,2,A,0,1,A,,12,9,4,5,11,10,1,2,2,3,0,0
+2020-12-27,Gaziantep,Alanyaspor,3,1,H,2,1,H,,6,15,4,5,20,10,2,5,5,4,0,0
+2020-12-27,Denizlispor,Ankaragucu,1,2,A,0,2,A,,12,8,3,3,17,13,7,4,2,3,0,0
+2020-12-27,Yeni Malatyaspor,Erzurum BB,1,3,A,0,1,A,,14,10,4,6,13,24,7,3,3,6,0,0
+2020-12-27,Buyuksehyr,Kasimpasa,2,2,D,1,1,D,,19,11,9,7,12,12,6,4,1,4,0,1
+2020-12-28,Genclerbirligi,Kayserispor,3,2,H,1,1,D,,14,11,5,4,12,16,5,2,2,2,0,0
+2020-12-28,Konyaspor,Rizespor,1,1,D,1,0,H,,13,16,4,5,10,14,1,3,2,1,0,1
+2020-12-28,Besiktas,Sivasspor,3,0,H,1,0,H,,13,8,5,2,20,15,1,5,1,3,0,1
+2020-12-29,Antalyaspor,Hatayspor,0,6,A,0,5,A,,8,13,4,9,16,21,2,5,6,3,0,0
+2021-01-02,Erzurum BB,Gaziantep,1,1,D,0,0,D,,5,12,1,4,14,15,2,5,4,4,0,0
+2021-01-02,Sivasspor,Denizlispor,2,2,D,2,1,H,,7,14,5,5,11,12,1,6,1,3,0,0
+2021-01-02,Alanyaspor,Buyuksehyr,3,0,H,2,0,H,,11,12,5,2,12,12,2,8,4,3,0,0
+2021-01-02,Ankaragucu,Yeni Malatyaspor,3,1,H,2,0,H,,9,16,5,2,14,15,4,7,3,2,0,1
+2021-01-02,Galatasaray,Antalyaspor,0,0,D,0,0,D,,15,5,6,1,9,11,6,8,2,4,1,0
+2021-01-02,Hatayspor,Konyaspor,2,1,H,1,1,D,,12,14,4,2,12,13,4,8,2,3,0,0
+2021-01-03,Rizespor,Genclerbirligi,1,1,D,1,0,H,,21,17,7,7,13,10,6,2,4,5,0,0
+2021-01-03,Karagumruk,Trabzonspor,1,2,A,0,0,D,,12,14,3,4,11,15,5,8,2,4,0,0
+2021-01-03,Kayserispor,Besiktas,0,2,A,0,0,D,,7,14,2,4,15,8,3,5,3,1,1,0
+2021-01-04,Kasimpasa,Fenerbahce,0,3,A,0,2,A,,10,11,2,5,14,13,7,1,2,1,0,0
+2021-01-05,Gaziantep,Ankaragucu,2,0,H,0,0,D,,15,7,9,3,15,12,9,4,2,1,0,0
+2021-01-05,Yeni Malatyaspor,Sivasspor,2,2,D,1,2,A,,8,14,3,4,14,15,4,5,3,1,0,0
+2021-01-05,Konyaspor,Galatasaray,4,3,H,1,1,D,,9,18,4,5,15,10,4,4,2,2,0,0
+2021-01-06,Denizlispor,Kayserispor,0,1,A,0,1,A,,14,8,7,3,13,19,7,8,2,6,0,0
+2021-01-06,Buyuksehyr,Erzurum BB,1,0,H,1,0,H,,14,7,6,2,15,14,4,2,1,1,0,0
+2021-01-06,Genclerbirligi,Hatayspor,3,1,H,1,1,D,,21,7,8,3,18,11,6,2,5,2,0,1
+2021-01-06,Trabzonspor,Goztep,1,0,H,1,0,H,,13,7,4,4,10,15,5,5,1,3,0,0
+2021-01-06,Antalyaspor,Karagumruk,3,1,H,2,1,H,,11,10,5,3,17,12,3,2,1,3,0,1
+2021-01-06,Besiktas,Rizespor,6,0,H,2,0,H,,17,9,10,3,15,11,2,4,2,0,0,0
+2021-01-07,Fenerbahce,Alanyaspor,2,1,H,1,0,H,,14,17,5,8,20,13,2,9,4,4,0,0
+2021-01-09,Sivasspor,Gaziantep,2,1,H,1,1,D,,21,10,7,2,10,10,8,7,5,3,0,1
+2021-01-09,Goztep,Antalyaspor,0,1,A,0,0,D,,7,7,2,2,16,15,8,5,3,1,0,0
+2021-01-09,Kayserispor,Yeni Malatyaspor,1,0,H,1,0,H,,8,12,4,3,18,12,2,5,1,4,0,0
+2021-01-09,Galatasaray,Genclerbirligi,6,0,H,4,0,H,,16,5,9,2,8,18,5,4,0,3,0,0
+2021-01-10,Karagumruk,Konyaspor,2,1,H,0,0,D,,9,8,4,2,10,10,4,5,3,2,0,0
+2021-01-10,Ankaragucu,Buyuksehyr,1,2,A,1,1,D,,13,12,3,3,16,12,5,3,2,3,0,0
+2021-01-10,Rizespor,Denizlispor,1,1,D,0,1,A,,21,11,7,5,20,24,11,5,2,5,0,0
+2021-01-10,Hatayspor,Besiktas,2,2,D,2,2,D,,9,18,3,7,17,12,3,9,4,1,0,0
+2021-01-11,Erzurum BB,Fenerbahce,0,3,A,0,1,A,,13,11,2,8,10,12,6,5,1,1,0,0
+2021-01-11,Alanyaspor,Kasimpasa,1,2,A,1,2,A,,28,6,8,2,16,9,8,1,1,1,0,1
+2021-01-15,Genclerbirligi,Karagumruk,1,3,A,0,2,A,,17,14,3,7,21,8,8,3,5,3,0,0
+2021-01-16,Konyaspor,Goztep,2,3,A,0,2,A,,21,6,10,5,8,8,7,5,2,1,0,0
+2021-01-16,Buyuksehyr,Sivasspor,1,1,D,1,1,D,,10,8,4,1,15,15,3,3,2,2,0,0
+2021-01-16,Gaziantep,Kayserispor,2,1,H,1,0,H,,13,10,6,4,9,11,5,2,1,2,0,0
+2021-01-16,Antalyaspor,Trabzonspor,1,1,D,1,0,H,,6,18,2,5,11,2,2,6,5,1,1,0
+2021-01-17,Denizlispor,Hatayspor,0,2,A,0,0,D,,12,12,2,5,19,8,6,2,2,3,0,1
+2021-01-17,Yeni Malatyaspor,Rizespor,4,1,H,0,1,A,,20,7,9,3,13,14,4,4,0,2,0,0
+2021-01-17,Besiktas,Galatasaray,2,0,H,0,0,D,,14,9,3,2,12,16,10,7,2,2,0,1
+2021-01-18,Fenerbahce,Ankaragucu,3,1,H,2,0,H,,17,13,8,3,22,18,4,4,2,1,0,0
+2021-01-18,Kasimpasa,Erzurum BB,1,2,A,0,1,A,,12,13,4,6,18,21,3,2,5,4,1,0
+2021-01-19,Goztep,Genclerbirligi,4,0,H,3,0,H,,12,5,6,2,9,10,2,1,1,2,0,0
+2021-01-19,Kayserispor,Buyuksehyr,2,0,H,1,0,H,,14,18,6,1,12,8,4,4,1,0,0,0
+2021-01-19,Trabzonspor,Konyaspor,3,1,H,1,0,H,,10,13,5,3,16,11,0,6,3,5,0,0
+2021-01-20,Hatayspor,Yeni Malatyaspor,1,2,A,0,0,D,,12,14,5,5,15,11,3,4,3,3,0,0
+2021-01-20,Rizespor,Gaziantep,3,0,H,1,0,H,,9,10,6,0,10,11,3,3,1,2,0,0
+2021-01-20,Galatasaray,Denizlispor,6,1,H,3,0,H,,14,14,10,6,9,15,8,11,1,1,0,0
+2021-01-21,Erzurum BB,Alanyaspor,1,1,D,1,0,H,,3,6,2,2,16,11,1,9,4,2,0,1
+2021-01-21,Karagumruk,Besiktas,1,4,A,0,1,A,,10,18,3,7,8,13,4,7,2,0,0,0
+2021-01-21,Ankaragucu,Kasimpasa,1,0,H,1,0,H,,15,11,5,4,13,20,0,7,5,5,0,0
+2021-01-21,Sivasspor,Fenerbahce,1,1,D,1,1,D,,11,8,4,4,15,11,7,3,2,1,0,0
+2021-01-23,Genclerbirligi,Trabzonspor,1,2,A,0,1,A,,13,14,2,8,10,13,5,5,2,2,0,0
+2021-01-23,Buyuksehyr,Rizespor,1,1,D,0,0,D,,17,4,4,1,13,10,9,1,2,2,0,0
+2021-01-24,Konyaspor,Antalyaspor,0,0,D,0,0,D,,8,6,0,3,8,12,6,2,1,1,0,0
+2021-01-24,Denizlispor,Karagumruk,1,2,A,0,1,A,,17,11,5,3,16,12,4,1,3,3,0,0
+2021-01-24,Yeni Malatyaspor,Galatasaray,0,1,A,0,0,D,,5,10,3,4,13,13,3,6,3,2,0,0
+2021-01-24,Besiktas,Goztep,2,1,H,0,1,A,,10,5,5,3,15,17,1,2,2,3,0,0
+2021-01-24,Gaziantep,Hatayspor,1,1,D,1,0,H,,7,12,2,3,18,10,2,5,2,2,0,0
+2021-01-25,Kasimpasa,Sivasspor,2,0,H,2,0,H,,11,7,3,3,17,16,4,10,2,2,0,0
+2021-01-25,Alanyaspor,Ankaragucu,4,3,H,1,2,A,,24,9,7,5,12,17,13,4,1,3,0,0
+2021-01-25,Fenerbahce,Kayserispor,3,0,H,1,0,H,,21,6,11,1,12,9,6,5,2,1,0,0
+2021-01-29,Yeni Malatyaspor,Karagumruk,0,0,D,0,0,D,,6,16,1,7,13,9,7,7,3,1,1,0
+2021-01-29,Gaziantep,Galatasaray,1,2,A,0,0,D,,15,6,6,6,15,9,8,4,1,1,0,0
+2021-01-30,Kasimpasa,Kayserispor,0,1,A,0,0,D,,15,15,4,5,17,14,3,5,2,0,0,0
+2021-01-30,Buyuksehyr,Hatayspor,1,5,A,0,3,A,,17,16,0,10,10,9,4,4,3,1,0,0
+2021-01-30,Fenerbahce,Rizespor,1,0,H,1,0,H,,15,6,4,1,16,16,7,2,1,5,0,1
+2021-01-31,Erzurum BB,Ankaragucu,1,0,H,0,0,D,,11,6,5,2,26,17,3,4,7,6,1,2
+2021-01-31,Alanyaspor,Sivasspor,3,1,H,2,0,H,,9,11,4,4,15,15,1,5,2,1,0,0
+2021-01-31,Denizlispor,Goztep,2,1,H,1,0,H,,9,4,4,2,18,13,2,5,2,1,0,0
+2021-01-31,Genclerbirligi,Antalyaspor,0,1,A,0,0,D,,7,10,2,3,15,14,3,4,2,1,0,0
+2021-01-31,Besiktas,Trabzonspor,1,2,A,1,1,D,,22,16,8,5,12,8,7,5,2,3,1,0
+2021-02-02,Hatayspor,Fenerbahce,1,2,A,0,1,A,,18,10,7,6,17,16,7,4,4,2,0,0
+2021-02-02,Galatasaray,Buyuksehyr,3,0,H,1,0,H,,11,10,5,3,6,10,6,5,1,2,0,0
+2021-02-02,Rizespor,Kasimpasa,1,1,D,0,0,D,,16,13,4,5,8,16,1,4,2,2,0,0
+2021-02-03,Sivasspor,Erzurum BB,0,0,D,0,0,D,,8,9,3,3,19,19,4,5,1,1,0,0
+2021-02-03,Karagumruk,Gaziantep,2,0,H,0,0,D,,14,12,5,6,13,13,6,7,2,2,0,0
+2021-02-03,Kayserispor,Alanyaspor,1,1,D,0,0,D,,8,12,4,4,12,11,2,1,6,1,1,0
+2021-02-03,Antalyaspor,Besiktas,1,1,D,1,0,H,,2,17,1,8,9,10,3,7,4,1,1,0
+2021-02-03,Konyaspor,Genclerbirligi,0,0,D,0,0,D,,19,7,5,2,10,15,7,2,2,3,0,0
+2021-02-04,Goztep,Yeni Malatyaspor,2,2,D,1,1,D,,25,10,7,5,18,14,10,2,0,1,0,0
+2021-02-04,Trabzonspor,Denizlispor,1,0,H,0,0,D,,25,4,5,3,6,18,5,5,0,3,0,0
+2021-02-06,Kasimpasa,Hatayspor,1,4,A,0,1,A,,15,16,6,8,15,12,9,3,1,0,0,0
+2021-02-06,Alanyaspor,Rizespor,2,1,H,1,1,D,,33,8,10,3,10,10,13,4,2,6,0,0
+2021-02-06,Buyuksehyr,Karagumruk,0,1,A,0,0,D,,16,13,7,5,12,11,5,3,1,1,0,0
+2021-02-06,Fenerbahce,Galatasaray,0,1,A,0,0,D,,12,9,5,2,16,25,8,6,2,2,0,0
+2021-02-07,Erzurum BB,Kayserispor,1,1,D,1,0,H,,7,8,2,5,12,13,1,5,3,1,1,0
+2021-02-07,Ankaragucu,Sivasspor,1,4,A,0,1,A,,14,12,6,7,17,10,3,2,5,1,0,0
+2021-02-07,Denizlispor,Antalyaspor,1,1,D,1,0,H,,9,13,3,2,20,9,2,3,2,2,0,0
+2021-02-07,Besiktas,Konyaspor,1,0,H,0,0,D,,12,3,3,0,12,12,5,3,4,3,1,0
+2021-02-08,Gaziantep,Goztep,2,0,H,0,0,D,,8,6,2,4,15,14,2,2,1,0,0,0
+2021-02-08,Yeni Malatyaspor,Trabzonspor,0,2,A,0,0,D,,11,10,1,2,9,17,11,4,1,2,0,0
+2021-02-12,Rizespor,Erzurum BB,0,2,A,0,0,D,,10,17,4,8,16,15,3,1,4,3,1,0
+2021-02-13,Kayserispor,Ankaragucu,0,0,D,0,0,D,,23,4,7,0,16,7,12,4,1,2,0,1
+2021-02-13,Trabzonspor,Gaziantep,1,0,H,0,0,D,,8,9,4,2,8,13,2,4,3,4,1,0
+2021-02-13,Karagumruk,Fenerbahce,1,2,A,0,1,A,,12,7,3,3,12,16,8,4,2,1,0,0
+2021-02-14,Konyaspor,Denizlispor,2,0,H,0,0,D,,11,8,4,3,9,15,3,4,3,2,0,0
+2021-02-14,Galatasaray,Kasimpasa,2,1,H,1,0,H,,15,8,10,2,13,22,8,2,0,4,0,0
+2021-02-14,Goztep,Buyuksehyr,2,1,H,1,0,H,,13,12,6,4,12,16,3,5,1,2,0,0
+2021-02-14,Hatayspor,Alanyaspor,0,0,D,0,0,D,,7,13,1,7,13,18,3,7,2,3,1,0
+2021-02-15,Genclerbirligi,Besiktas,0,3,A,0,1,A,,5,20,1,9,15,7,2,9,3,2,0,0
+2021-02-15,Antalyaspor,Yeni Malatyaspor,1,1,D,1,1,D,,11,3,4,1,9,14,1,3,0,3,0,0
+2021-02-19,Buyuksehyr,Trabzonspor,0,1,A,0,0,D,,7,10,1,3,11,9,3,3,3,2,1,0
+2021-02-20,Kasimpasa,Karagumruk,3,2,H,1,1,D,,13,8,6,3,11,10,13,3,1,2,0,0
+2021-02-20,Denizlispor,Genclerbirligi,1,0,H,1,0,H,,10,12,4,1,17,15,5,4,2,1,0,0
+2021-02-20,Yeni Malatyaspor,Konyaspor,2,3,A,2,0,H,,7,11,2,4,10,17,3,8,2,3,0,0
+2021-02-20,Alanyaspor,Galatasaray,0,1,A,0,1,A,,24,8,6,1,16,18,12,1,3,0,0,0
+2021-02-21,Erzurum BB,Hatayspor,1,3,A,0,2,A,,15,10,5,7,15,16,3,7,3,2,1,0
+2021-02-21,Gaziantep,Antalyaspor,0,0,D,0,0,D,,9,13,2,2,12,10,7,4,2,1,0,0
+2021-02-21,Sivasspor,Kayserispor,2,0,H,1,0,H,,21,7,7,1,15,17,6,5,3,5,0,0
+2021-02-21,Fenerbahce,Goztep,0,1,A,0,1,A,,22,6,5,2,17,18,13,1,1,2,0,0
+2021-02-22,Ankaragucu,Rizespor,1,1,D,1,1,D,,14,7,7,3,13,12,5,1,2,1,0,0
+2021-02-26,Genclerbirligi,Yeni Malatyaspor,1,1,D,0,1,A,,13,12,3,2,14,10,13,4,3,0,1,1
+2021-02-26,Konyaspor,Gaziantep,0,0,D,0,0,D,,10,13,2,2,9,17,6,7,2,2,0,0
+2021-02-26,Besiktas,Denizlispor,3,0,H,3,0,H,,14,6,7,2,7,9,9,6,0,1,0,0
+2021-02-27,Hatayspor,Ankaragucu,4,1,H,1,1,D,,19,6,6,2,16,20,14,4,1,3,0,1
+2021-02-27,Karagumruk,Alanyaspor,2,0,H,0,0,D,,10,8,2,1,12,15,4,7,2,3,0,0
+2021-02-27,Antalyaspor,Buyuksehyr,0,0,D,0,0,D,,1,2,0,0,13,8,2,2,1,0,0,0
+2021-02-27,Rizespor,Sivasspor,0,0,D,0,0,D,,11,7,3,1,15,14,3,4,3,2,0,1
+2021-02-27,Galatasaray,Erzurum BB,2,0,H,2,0,H,,10,8,4,3,11,14,5,3,3,3,0,0
+2021-02-28,Goztep,Kasimpasa,1,0,H,1,0,H,,5,6,1,3,15,7,3,4,3,2,1,1
+2021-02-28,Trabzonspor,Fenerbahce,0,1,A,0,0,D,,16,12,1,8,13,15,5,7,1,2,0,0
+2021-03-02,Gaziantep,Genclerbirligi,2,1,H,0,1,A,,15,14,7,5,11,17,7,3,0,2,1,0
+2021-03-02,Yeni Malatyaspor,Besiktas,0,1,A,0,0,D,,9,13,4,3,17,14,4,10,2,0,0,0
+2021-03-03,Erzurum BB,Karagumruk,2,2,D,1,1,D,,14,11,4,6,15,12,3,6,4,1,0,0
+2021-03-03,Buyuksehyr,Konyaspor,1,1,D,0,0,D,,13,10,5,2,10,12,4,4,0,1,0,0
+2021-03-03,Sivasspor,Hatayspor,1,1,D,0,0,D,,12,5,4,1,15,18,6,3,1,3,0,0
+2021-03-03,Ankaragucu,Galatasaray,2,1,H,1,0,H,,8,8,3,4,15,14,1,5,6,4,0,1
+2021-03-03,Kayserispor,Rizespor,2,1,H,0,0,D,,7,17,4,3,11,9,4,6,0,0,0,0
+2021-03-04,Alanyaspor,Goztep,1,1,D,0,1,A,,15,7,7,0,9,12,10,3,1,2,0,0
+2021-03-04,Kasimpasa,Trabzonspor,1,2,A,1,1,D,,13,14,5,4,17,16,6,5,1,2,0,0
+2021-03-04,Fenerbahce,Antalyaspor,1,1,D,0,1,A,,16,7,6,2,16,17,11,1,5,5,0,1
+2021-03-06,Denizlispor,Yeni Malatyaspor,3,2,H,2,1,H,,13,11,6,5,18,14,4,4,3,2,0,0
+2021-03-06,Besiktas,Gaziantep,2,1,H,1,0,H,,10,8,3,3,15,10,4,5,1,1,0,0
+2021-03-07,Karagumruk,Ankaragucu,0,1,A,0,0,D,,16,4,3,3,20,11,4,2,1,1,0,0
+2021-03-07,Genclerbirligi,Buyuksehyr,0,1,A,0,0,D,,10,9,3,4,14,10,1,7,2,2,1,0
+2021-03-07,Hatayspor,Kayserispor,1,3,A,0,2,A,,10,16,4,6,3,13,7,5,2,1,1,0
+2021-03-07,Galatasaray,Sivasspor,2,2,D,1,2,A,,17,12,7,4,11,13,6,4,4,4,0,1
+2021-03-08,Antalyaspor,Kasimpasa,1,1,D,1,0,H,,8,11,3,2,13,10,0,4,1,3,0,0
+2021-03-08,Trabzonspor,Alanyaspor,1,3,A,0,0,D,,18,11,5,6,17,8,3,4,3,3,0,0
+2021-03-08,Goztep,Erzurum BB,3,1,H,1,0,H,,16,11,7,4,18,14,7,2,2,3,0,1
+2021-03-08,Konyaspor,Fenerbahce,0,3,A,0,2,A,,15,14,5,7,10,11,2,2,2,2,0,0
+2021-03-12,Buyuksehyr,Besiktas,2,3,A,0,1,A,,9,14,3,5,13,10,4,1,3,1,0,0
+2021-03-13,Sivasspor,Karagumruk,1,0,H,1,0,H,,10,14,4,3,14,9,1,8,1,1,0,0
+2021-03-13,Alanyaspor,Antalyaspor,4,0,H,2,0,H,,14,7,7,2,13,18,5,5,0,5,0,0
+2021-03-13,Rizespor,Hatayspor,1,0,H,0,0,D,,17,17,6,3,13,17,3,5,5,4,0,0
+2021-03-13,Kayserispor,Galatasaray,0,3,A,0,1,A,,7,18,1,7,17,11,3,3,1,1,0,0
+2021-03-14,Ankaragucu,Goztep,3,0,H,1,0,H,,17,8,9,2,15,10,5,7,1,1,0,0
+2021-03-14,Erzurum BB,Trabzonspor,0,0,D,0,0,D,,11,8,3,1,15,6,12,2,2,0,0,0
+2021-03-14,Gaziantep,Denizlispor,2,0,H,0,0,D,,14,6,3,3,15,11,8,3,2,2,0,1
+2021-03-14,Fenerbahce,Genclerbirligi,1,2,A,1,1,D,,16,7,6,3,11,13,6,1,1,5,0,0
+2021-03-15,Kasimpasa,Konyaspor,1,1,D,0,0,D,,12,7,4,2,12,16,8,0,1,1,0,0
+2021-03-19,Karagumruk,Kayserispor,3,0,H,1,0,H,,10,12,7,3,16,9,7,7,2,1,0,0
+2021-03-19,Galatasaray,Rizespor,3,4,A,2,2,D,,10,12,6,6,12,18,7,1,4,2,1,0
+2021-03-20,Genclerbirligi,Kasimpasa,2,1,H,0,0,D,,8,12,2,7,8,6,3,8,3,1,0,0
+2021-03-20,Goztep,Sivasspor,3,5,A,0,4,A,,14,9,6,5,12,18,8,3,2,2,0,0
+2021-03-20,Yeni Malatyaspor,Gaziantep,2,2,D,1,1,D,,6,10,3,3,13,12,7,5,1,4,1,0
+2021-03-20,Trabzonspor,Ankaragucu,4,1,H,3,1,H,,14,12,9,7,14,10,4,1,1,2,0,0
+2021-03-21,Antalyaspor,Erzurum BB,3,1,H,0,1,A,,9,8,5,4,12,15,6,3,2,3,0,0
+2021-03-21,Konyaspor,Alanyaspor,1,0,H,1,0,H,,8,10,4,0,22,18,3,4,3,4,0,0
+2021-03-21,Denizlispor,Buyuksehyr,0,0,D,0,0,D,,8,16,2,3,8,10,2,5,1,2,0,0
+2021-03-21,Besiktas,Fenerbahce,1,1,D,0,0,D,,14,14,7,3,17,20,3,7,2,5,0,0
+2021-04-03,Kayserispor,Goztep,1,1,D,1,0,H,,15,5,6,2,8,12,6,4,1,1,0,0
+2021-04-03,Rizespor,Karagumruk,0,0,D,0,0,D,,7,14,2,2,17,17,5,7,3,2,1,0
+2021-04-03,Sivasspor,Trabzonspor,0,0,D,0,0,D,,11,12,1,3,15,8,7,9,3,2,0,0
+2021-04-03,Hatayspor,Galatasaray,3,0,H,2,0,H,,8,12,6,4,19,10,5,7,5,2,1,0
+2021-04-04,Erzurum BB,Konyaspor,1,2,A,1,2,A,,14,14,3,7,15,13,4,6,2,2,0,0
+2021-04-04,Alanyaspor,Genclerbirligi,1,2,A,1,1,D,,16,10,8,3,13,14,7,4,1,4,0,0
+2021-04-04,Ankaragucu,Antalyaspor,1,0,H,0,0,D,,9,13,3,3,10,13,3,9,2,4,0,0
+2021-04-04,Buyuksehyr,Yeni Malatyaspor,3,1,H,1,0,H,,11,8,7,2,12,11,7,3,2,1,0,0
+2021-04-04,Kasimpasa,Besiktas,1,0,H,1,0,H,,11,16,4,2,13,9,2,5,3,1,0,0
+2021-04-05,Fenerbahce,Denizlispor,1,0,H,0,0,D,,20,3,2,1,13,23,13,1,1,0,0,0
+2021-04-06,Goztep,Rizespor,2,0,H,0,0,D,,11,8,4,0,15,11,5,1,2,2,0,1
+2021-04-06,Karagumruk,Hatayspor,1,0,H,0,0,D,,9,10,3,4,16,10,10,3,1,1,0,0
+2021-04-06,Trabzonspor,Kayserispor,1,1,D,1,1,D,,28,5,11,2,7,11,7,4,1,4,0,0
+2021-04-07,Genclerbirligi,Erzurum BB,1,1,D,1,0,H,,6,23,2,5,17,8,4,8,2,2,0,0
+2021-04-07,Konyaspor,Ankaragucu,1,1,D,0,0,D,,11,11,3,5,14,9,4,4,2,1,0,0
+2021-04-07,Antalyaspor,Sivasspor,2,4,A,1,2,A,,12,11,7,8,5,10,1,1,3,2,0,0
+2021-04-07,Besiktas,Alanyaspor,3,0,H,1,0,H,,17,13,7,6,14,11,4,5,2,2,0,0
+2021-04-08,Denizlispor,Kasimpasa,1,1,D,0,0,D,,15,13,6,3,9,16,1,2,2,0,0,0
+2021-04-08,Gaziantep,Buyuksehyr,2,0,H,1,0,H,,6,16,2,5,8,3,2,13,1,1,0,0
+2021-04-08,Yeni Malatyaspor,Fenerbahce,1,1,D,1,1,D,,8,14,1,4,14,15,4,7,0,0,0,0
+2021-04-10,Hatayspor,Goztep,2,3,A,0,2,A,,16,16,3,7,8,15,5,2,2,4,0,0
+2021-04-10,Rizespor,Trabzonspor,0,0,D,0,0,D,,12,17,3,7,13,10,2,7,4,3,0,1
+2021-04-10,Galatasaray,Karagumruk,1,1,D,0,0,D,,17,9,4,7,15,15,3,9,5,2,1,0
+2021-04-11,Sivasspor,Konyaspor,3,1,H,1,0,H,,9,13,6,5,15,15,2,5,1,2,1,0
+2021-04-11,Ankaragucu,Genclerbirligi,2,1,H,0,0,D,,15,12,5,6,14,20,5,3,4,4,0,0
+2021-04-11,Kayserispor,Antalyaspor,0,1,A,0,1,A,,13,5,5,3,9,10,7,3,2,4,0,0
+2021-04-11,Erzurum BB,Besiktas,2,4,A,2,2,D,,12,10,4,6,16,19,3,2,1,2,0,0
+2021-04-12,Kasimpasa,Yeni Malatyaspor,0,0,D,0,0,D,,14,5,3,1,11,9,4,4,1,1,0,0
+2021-04-12,Alanyaspor,Denizlispor,3,2,H,0,1,A,,25,10,10,3,13,12,8,1,2,4,0,0
+2021-04-12,Fenerbahce,Gaziantep,3,1,H,0,0,D,,17,11,9,3,10,15,8,3,2,2,0,0
+2021-04-16,Genclerbirligi,Sivasspor,2,3,A,2,0,H,,8,17,5,8,11,8,3,5,2,3,0,0
+2021-04-16,Konyaspor,Kayserispor,0,0,D,0,0,D,,19,8,6,1,6,15,10,3,0,3,0,0
+2021-04-16,Antalyaspor,Rizespor,2,3,A,1,2,A,,17,8,5,6,11,13,7,3,2,2,0,0
+2021-04-16,Besiktas,Ankaragucu,2,2,D,1,0,H,,9,7,3,3,12,17,5,2,1,2,0,0
+2021-04-17,Denizlispor,Erzurum BB,2,3,A,0,1,A,,12,12,5,5,13,14,6,4,1,3,0,0
+2021-04-17,Trabzonspor,Hatayspor,1,1,D,1,0,H,,10,10,3,2,17,22,6,1,3,4,0,0
+2021-04-17,Yeni Malatyaspor,Alanyaspor,1,0,H,0,0,D,,3,9,1,4,13,16,2,7,4,0,0,0
+2021-04-17,Goztep,Galatasaray,1,3,A,1,2,A,,6,14,1,6,13,11,3,8,1,1,0,0
+2021-04-18,Gaziantep,Kasimpasa,2,2,D,0,1,A,,18,14,3,7,14,12,9,6,2,2,0,0
+2021-04-18,Buyuksehyr,Fenerbahce,1,2,A,1,1,D,,8,17,5,7,18,12,1,6,3,3,1,0
+2021-04-20,Karagumruk,Goztep,1,1,D,1,0,H,,8,13,6,3,11,11,4,7,1,1,0,0
+2021-04-20,Kayserispor,Genclerbirligi,2,2,D,1,0,H,,9,9,4,3,19,11,6,3,5,2,0,0
+2021-04-20,Rizespor,Konyaspor,5,3,H,2,2,D,,19,24,9,8,11,7,9,6,2,1,0,0
+2021-04-20,Hatayspor,Antalyaspor,3,2,H,1,0,H,,21,13,9,9,13,11,7,7,2,0,0,0
+2021-04-20,Sivasspor,Besiktas,0,0,D,0,0,D,,6,7,0,3,22,11,1,1,1,3,0,0
+2021-04-21,Ankaragucu,Denizlispor,1,1,D,1,1,D,,15,5,6,2,13,22,6,3,2,3,0,0
+2021-04-21,Erzurum BB,Yeni Malatyaspor,1,0,H,0,0,D,,15,8,4,2,16,12,2,6,1,1,0,0
+2021-04-21,Galatasaray,Trabzonspor,1,1,D,0,0,D,,15,9,4,5,15,11,7,5,1,3,0,0
+2021-04-22,Alanyaspor,Gaziantep,3,2,H,2,2,D,,17,8,7,4,10,13,4,4,3,1,0,0
+2021-04-22,Kasimpasa,Buyuksehyr,0,1,A,0,1,A,,9,7,3,4,11,10,4,3,2,1,0,0
+2021-04-23,Genclerbirligi,Rizespor,2,1,H,1,0,H,,12,14,6,3,11,10,4,7,1,0,0,0
+2021-04-24,Konyaspor,Hatayspor,0,0,D,0,0,D,,12,5,4,4,10,14,4,0,4,1,1,0
+2021-04-24,Trabzonspor,Karagumruk,2,0,H,1,0,H,,15,15,6,6,9,15,2,10,1,3,0,0
+2021-04-24,Antalyaspor,Galatasaray,0,1,A,0,0,D,,3,22,1,8,17,13,1,8,7,1,2,0
+2021-04-24,Besiktas,Kayserispor,3,1,H,2,1,H,,19,6,7,1,19,18,3,0,4,1,0,0
+2021-04-24,Denizlispor,Sivasspor,1,1,D,0,1,A,,7,10,3,2,12,9,5,5,0,1,0,0
+2021-04-25,Yeni Malatyaspor,Ankaragucu,2,1,H,0,0,D,,12,9,6,4,12,9,4,4,2,5,0,1
+2021-04-25,Buyuksehyr,Alanyaspor,0,0,D,0,0,D,,3,13,0,5,17,7,4,3,1,0,0,0
+2021-04-25,Gaziantep,Erzurum BB,2,3,A,0,0,D,,14,12,6,6,10,14,7,5,0,3,0,0
+2021-04-25,Fenerbahce,Kasimpasa,3,2,H,3,1,H,,21,11,11,3,8,12,7,3,2,1,0,0
+2021-04-27,Hatayspor,Genclerbirligi,3,1,H,1,0,H,,16,19,9,6,14,10,4,4,3,2,0,0
+2021-04-28,Goztep,Trabzonspor,1,1,D,1,0,H,,14,14,3,7,10,14,7,2,5,2,1,1
+2021-04-28,Karagumruk,Antalyaspor,2,2,D,2,1,H,,5,10,3,5,19,22,0,4,5,2,0,0
+2021-04-28,Kayserispor,Denizlispor,6,3,H,3,1,H,,18,16,15,7,16,11,7,6,1,6,0,1
+2021-04-28,Galatasaray,Konyaspor,1,0,H,0,0,D,,16,8,6,2,7,9,11,1,0,2,0,0
+2021-04-28,Rizespor,Besiktas,2,3,A,0,1,A,,8,16,3,9,18,16,5,6,1,1,0,0
+2021-04-29,Erzurum BB,Buyuksehyr,1,2,A,1,0,H,,21,12,5,5,11,9,5,6,2,3,0,1
+2021-04-29,Sivasspor,Yeni Malatyaspor,1,0,H,0,0,D,,21,7,5,2,11,10,8,2,1,3,0,0
+2021-04-29,Alanyaspor,Fenerbahce,0,0,D,0,0,D,,16,11,2,1,15,11,4,3,3,0,0,1
+2021-04-29,Ankaragucu,Gaziantep,0,1,A,0,0,D,,15,10,0,3,8,19,8,4,1,4,0,0
+2021-05-01,Besiktas,Hatayspor,7,0,H,5,0,H,,17,9,13,1,8,14,3,3,0,3,0,0
+2021-05-02,Antalyaspor,Goztep,2,3,A,1,1,D,,14,7,5,3,12,10,7,2,0,1,0,0
+2021-05-02,Denizlispor,Rizespor,0,1,A,0,0,D,,8,13,1,5,12,8,0,4,2,2,0,0
+2021-05-02,Konyaspor,Karagumruk,5,1,H,1,1,D,,20,10,9,3,14,20,7,5,2,4,0,0
+2021-05-02,Genclerbirligi,Galatasaray,0,2,A,0,1,A,,6,22,1,10,10,17,2,6,1,1,0,0
+2021-05-03,Buyuksehyr,Ankaragucu,2,1,H,0,1,A,,8,8,3,3,10,10,7,5,3,5,0,0
+2021-05-03,Kasimpasa,Alanyaspor,3,0,H,2,0,H,,9,18,8,5,17,9,1,5,0,1,0,0
+2021-05-03,Yeni Malatyaspor,Kayserispor,1,1,D,0,1,A,,17,7,2,1,10,13,9,4,2,1,0,0
+2021-05-03,Fenerbahce,Erzurum BB,3,1,H,3,0,H,,28,11,10,2,17,12,10,5,0,3,0,0
+2021-05-03,Gaziantep,Sivasspor,0,1,A,0,1,A,,11,11,5,5,15,13,4,14,2,1,0,0
+2021-05-08,Ankaragucu,Fenerbahce,1,2,A,1,1,D,,15,19,5,7,17,10,5,12,2,0,0,0
+2021-05-08,Erzurum BB,Kasimpasa,0,1,A,0,0,D,,12,13,2,3,8,16,3,4,0,5,1,1
+2021-05-08,Galatasaray,Besiktas,3,1,H,2,1,H,,9,7,5,2,18,18,4,5,4,3,0,0
+2021-05-08,Goztep,Konyaspor,0,1,A,0,0,D,,8,10,3,6,12,9,5,3,3,0,0,0
+2021-05-08,Hatayspor,Denizlispor,1,0,H,0,0,D,,14,11,3,2,11,8,1,3,1,1,0,0
+2021-05-08,Karagumruk,Genclerbirligi,5,1,H,2,0,H,,14,8,7,2,20,10,8,6,2,2,0,0
+2021-05-08,Kayserispor,Gaziantep,0,0,D,0,0,D,,10,11,2,1,9,12,5,3,2,2,0,0
+2021-05-08,Rizespor,Yeni Malatyaspor,0,4,A,0,2,A,,8,12,1,9,10,10,4,3,3,0,1,0
+2021-05-08,Sivasspor,Buyuksehyr,0,0,D,0,0,D,,11,7,2,2,6,8,5,7,0,2,0,0
+2021-05-08,Trabzonspor,Antalyaspor,2,1,H,1,0,H,,14,7,8,2,11,14,5,3,1,3,0,0
+2021-05-11,Konyaspor,Trabzonspor,1,1,D,0,0,D,,26,10,6,5,10,7,10,1,2,2,0,1
+2021-05-11,Alanyaspor,Erzurum BB,2,3,A,2,1,H,,13,10,6,6,18,11,7,2,4,1,0,0
+2021-05-11,Besiktas,Karagumruk,1,2,A,0,1,A,,17,5,5,5,21,19,8,2,2,7,0,1
+2021-05-11,Buyuksehyr,Kayserispor,0,0,D,0,0,D,,3,7,0,2,7,7,1,6,1,1,0,0
+2021-05-11,Denizlispor,Galatasaray,1,4,A,0,2,A,,7,19,3,10,12,6,1,6,5,0,1,0
+2021-05-11,Fenerbahce,Sivasspor,1,2,A,0,1,A,,19,14,7,3,14,9,8,1,2,3,0,0
+2021-05-11,Gaziantep,Rizespor,4,5,A,0,3,A,,19,10,7,6,14,12,9,3,4,2,0,0
+2021-05-11,Genclerbirligi,Goztep,5,3,H,1,2,A,,12,5,8,3,4,11,4,6,2,2,0,0
+2021-05-11,Kasimpasa,Ankaragucu,3,1,H,2,0,H,,10,16,5,7,27,12,2,3,4,3,0,0
+2021-05-11,Yeni Malatyaspor,Hatayspor,1,1,D,0,1,A,,12,11,4,2,12,14,5,4,2,1,0,0
+2021-05-15,Ankaragucu,Alanyaspor,0,1,A,0,1,A,,10,21,3,9,11,18,6,3,2,1,0,0
+2021-05-15,Antalyaspor,Konyaspor,0,0,D,0,0,D,,10,8,3,3,13,16,1,4,3,2,0,0
+2021-05-15,Hatayspor,Gaziantep,0,1,A,0,0,D,,12,9,4,4,12,14,3,1,1,1,0,0
+2021-05-15,Karagumruk,Denizlispor,5,1,H,2,1,H,,24,8,11,3,13,16,6,0,0,2,0,1
+2021-05-15,Rizespor,Buyuksehyr,0,2,A,0,2,A,,14,9,5,3,12,8,6,1,1,0,0,0
+2021-05-15,Sivasspor,Kasimpasa,2,1,H,1,0,H,,19,6,9,3,14,11,7,1,2,3,0,0
+2021-05-15,Galatasaray,Yeni Malatyaspor,3,1,H,0,1,A,,33,5,10,1,8,12,15,0,0,0,0,0
+2021-05-15,Goztep,Besiktas,1,2,A,1,1,D,,9,14,3,3,17,13,3,6,1,1,0,0
+2021-05-15,Kayserispor,Fenerbahce,1,2,A,1,0,H,,9,9,3,4,14,10,2,11,5,2,1,0
+2021-05-15,Trabzonspor,Genclerbirligi,2,1,H,1,0,H,,20,9,11,4,7,8,9,2,1,2,0,0

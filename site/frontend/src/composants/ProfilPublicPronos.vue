@@ -1,5 +1,7 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
+import AvatarUtilisateur from "./AvatarUtilisateur.vue";
+import { formaterPseudoAffichage } from "../formaterPseudo.js";
 import { chargerProfilPublic } from "../services/api.js";
 
 const props = defineProps({
@@ -31,10 +33,23 @@ watch(() => props.pseudo, charger);
 
 <template>
   <aside v-if="pseudo" class="carte-profil-public">
-    <h3 class="titre-profil-public">Profil — {{ pseudo }}</h3>
+    <h3 class="titre-profil-public">Profil — {{ formaterPseudoAffichage(pseudo) }}</h3>
     <p v-if="chargement" class="doux">Chargement…</p>
     <p v-else-if="erreur" class="erreur">{{ erreur }}</p>
     <template v-else-if="profil">
+      <div class="entete-profil-public">
+        <AvatarUtilisateur
+          :pseudo="profil.pseudo"
+          :avatar-id="profil.avatar_id"
+          :taille="48"
+        />
+        <div>
+          <p v-if="profil.equipe_favorite" class="doux">
+            Fan de <strong>{{ profil.equipe_favorite }}</strong>
+          </p>
+        </div>
+      </div>
+      <p v-if="profil.bio" class="bio-profil">{{ profil.bio }}</p>
       <dl class="stats-profil-public">
         <div>
           <dt>Points totaux</dt>
@@ -45,8 +60,8 @@ watch(() => props.pseudo, charger);
           <dd>{{ profil.nb_pronos }}</dd>
         </div>
         <div>
-          <dt>Matchs évalués</dt>
-          <dd>{{ profil.nb_evalues }}</dd>
+          <dt>Taux d’exacts</dt>
+          <dd>{{ profil.taux_exacts }} %</dd>
         </div>
         <div>
           <dt>Scores exacts</dt>
@@ -64,6 +79,29 @@ watch(() => props.pseudo, charger);
           {{ entree.points }} pt(s), {{ entree.nb_pronos }} prono(s)
         </li>
       </ul>
+      <h4 v-if="profil.historique_recent?.length" class="titre-historique-public">
+        Historique récent
+      </h4>
+      <ul v-if="profil.historique_recent?.length" class="liste-historique-public">
+        <li
+          v-for="(item, idx) in profil.historique_recent"
+          :key="`${item.domicile}-${item.exterieur}-${idx}`"
+        >
+          <span>{{ item.domicile }} – {{ item.exterieur }}</span>
+          <strong>{{ item.libelle }}</strong>
+          <span
+            v-if="item.evaluation"
+            class="badge-pronostic"
+            :class="item.evaluation.exact ? 'badge-exact' : 'badge-rate'"
+          >
+            {{ item.evaluation.exact ? "Exact" : `${item.evaluation.points} pt` }}
+          </span>
+          <span v-else class="doux petit">En attente</span>
+        </li>
+      </ul>
+      <p v-else-if="!profil.nb_pronos" class="doux message-vide-communaute">
+        Aucun prono public pour ce profil.
+      </p>
     </template>
   </aside>
 </template>

@@ -124,6 +124,13 @@ joueur,date_transfert,saison_transfert,club_depart,club_arrivee,frais_eur,valeur
 Íñigo Lekue,2013-07-01,13/14,CD Basconia,Bilbao Athletic,,,255501,dump_transfermarkt_datasets_cc0
 Íñigo Lekue,2012-07-01,12/13,Danok Bat U19,CD Basconia,,,255501,dump_transfermarkt_datasets_cc0
 Íñigo Lekue,2009-07-01,09/10,Danok Bat Yth.,Danok Bat U19,,,255501,dump_transfermarkt_datasets_cc0
+Éderson,2022-07-06,22/23,Salernitana,Atalanta,22900000,13000000,607854,dump_transfermarkt_datasets_cc0
+Éderson,2022-01-30,21/22,Corinthians,Salernitana,6500000,5000000,607854,dump_transfermarkt_datasets_cc0
+Éderson,2022-01-29,21/22,Fortaleza,Corinthians,0,5000000,607854,dump_transfermarkt_datasets_cc0
+Éderson,2021-03-08,20/21,Corinthians,Fortaleza,0,4000000,607854,dump_transfermarkt_datasets_cc0
+Éderson,2020-02-21,19/20,Cruzeiro,Corinthians,0,2500000,607854,dump_transfermarkt_datasets_cc0
+Éderson,2019-07-15,19/20,Desp. Brasil,Cruzeiro,295000,100000,607854,dump_transfermarkt_datasets_cc0
+Éderson,2017-01-01,16/17,Desportivo U20,Desp. Brasil,,,607854,dump_transfermarkt_datasets_cc0
 Éder Balanta,2024-07-01,24/25,Club Brugge,CD América,0,1200000,265127,dump_transfermarkt_datasets_cc0
 Éder Balanta,2023-06-30,22/23,FC Schalke 04,Club Brugge,0,2000000,265127,dump_transfermarkt_datasets_cc0
 Éder Balanta,2023-01-31,22/23,Club Brugge,FC Schalke 04,0,3000000,265127,dump_transfermarkt_datasets_cc0
@@ -808,14 +815,14 @@ Youssef En-Nesyri,2017-01-01,16/17,Atl. Malagueño,Málaga CF,,1000000,433049,du
 Youssef En-Nesyri,2016-07-01,16/17,Málaga U19,Atl. Malagueño,,,433049,dump_transfermarkt_datasets_cc0
 Youssef En-Nesyri,2015-07-01,15/16,AM Football,Málaga U19,125000,,433049,dump_transfermarkt_datasets_cc0
 Youssef En-Nesyri,2011-07-01,11/12,MAS Fes Youth,AM Football,0,,433049,dump_transfermarkt_datasets_cc0
-Youssef El-Arabi,2025-07-18,25/26,APOEL Nicosia,FC Nantes,0,150000,96533,dump_transfermarkt_datasets_cc0
-Youssef El-Arabi,2024-07-13,24/25,Olympiacos,APOEL Nicosia,0,300000,96533,dump_transfermarkt_datasets_cc0
-Youssef El-Arabi,2019-07-06,19/20,Al-Duhail SC,Olympiacos,0,5000000,96533,dump_transfermarkt_datasets_cc0
-Youssef El-Arabi,2016-07-18,16/17,Granada CF,Lekhwiya SC,,7500000,96533,dump_transfermarkt_datasets_cc0
-Youssef El-Arabi,2012-07-18,12/13,Al-Hilal,Granada CF,5000000,6500000,96533,dump_transfermarkt_datasets_cc0
-Youssef El-Arabi,2011-07-13,11/12,SM Caen,Al-Hilal,7500000,6500000,96533,dump_transfermarkt_datasets_cc0
-Youssef El-Arabi,2009-07-01,09/10,SM Caen B,SM Caen,,,96533,dump_transfermarkt_datasets_cc0
-Youssef El-Arabi,2007-07-01,07/08,Mondeville,SM Caen B,0,,96533,dump_transfermarkt_datasets_cc0
+Youssef El Arabi,2025-07-18,25/26,APOEL Nicosia,FC Nantes,0,150000,96533,dump_transfermarkt_datasets_cc0
+Youssef El Arabi,2024-07-13,24/25,Olympiacos,APOEL Nicosia,0,300000,96533,dump_transfermarkt_datasets_cc0
+Youssef El Arabi,2019-07-06,19/20,Al-Duhail SC,Olympiacos,0,5000000,96533,dump_transfermarkt_datasets_cc0
+Youssef El Arabi,2016-07-18,16/17,Granada CF,Lekhwiya SC,,7500000,96533,dump_transfermarkt_datasets_cc0
+Youssef El Arabi,2012-07-18,12/13,Al-Hilal,Granada CF,5000000,6500000,96533,dump_transfermarkt_datasets_cc0
+Youssef El Arabi,2011-07-13,11/12,SM Caen,Al-Hilal,7500000,6500000,96533,dump_transfermarkt_datasets_cc0
+Youssef El Arabi,2009-07-01,09/10,SM Caen B,SM Caen,,,96533,dump_transfermarkt_datasets_cc0
+Youssef El Arabi,2007-07-01,07/08,Mondeville,SM Caen B,0,,96533,dump_transfermarkt_datasets_cc0
 Youssef Chermiti,2025-09-01,25/26,Everton,Rangers,8600000,8000000,670688,dump_transfermarkt_datasets_cc0
 Youssef Chermiti,2023-08-11,23/24,Sporting,Everton,12500000,3000000,670688,dump_transfermarkt_datasets_cc0
 Youssef Chermiti,2023-01-10,22/23,Sporting B,Sporting,,,670688,dump_transfermarkt_datasets_cc0
@@ -14054,25 +14061,10 @@ Naatan Skyttä,2022-12-31,22/23,Viking,Toulouse,0,500000,567309,dump_transfermar
 Naatan Skyttä,2022-08-26,22/23,Toulouse,Viking,0,500000,567309,dump_transfermarkt_datasets_cc0
 Naatan Skyttä,2021-02-01,20/21,Ilves,Toulouse,500000,200000,567309,dump_transfermarkt_datasets_cc0
 Naatan Skyttä,2018-01-01,17/18,Ilves U19,Ilves,,,567309,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2026-02-02,25/26,Hoffenheim,1.FC K'lautern,0,2500000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2025-06-30,24/25,Augsburg,Hoffenheim,0,3500000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2025-01-28,24/25,Hoffenheim,Augsburg,0,7000000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2023-08-30,23/24,Augsburg,Hoffenheim,14000000,12000000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2023-07-02,23/24,Fenerbahçe,Augsburg,4000000,12000000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2023-06-30,22/23,Augsburg,Fenerbahçe,0,12000000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2022-08-31,22/23,Fenerbahçe,Augsburg,0,6000000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2021-09-02,21/22,Salzburg,Fenerbahçe,5000000,10000000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2020-01-06,19/20,SCR Altach,Salzburg,0,1800000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2019-01-10,18/19,Salzburg,SCR Altach,0,750000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2018-12-31,18/19,1.FC Magdeburg,Salzburg,0,750000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2018-07-01,18/19,Salzburg,1.FC Magdeburg,0,750000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2018-06-30,17/18,LASK,Salzburg,0,750000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2017-08-21,17/18,Salzburg,LASK,0,500000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2017-01-01,16/17,FC Liefering,Salzburg,,400000,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2016-01-01,15/16,AKA Salzb. U18,FC Liefering,,,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2014-07-01,14/15,AKA Salzb. U16,AKA Salzb. U18,,,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2013-07-01,13/14,AKA Salzb. U15,AKA Salzb. U16,,,307924,dump_transfermarkt_datasets_cc0
-Mërgim Berisha,2012-07-01,12/13,Salzburg Youth,AKA Salzb. U15,,,307924,dump_transfermarkt_datasets_cc0
+Míchel,2026-06-30,25/26,Moreirense,Palmeiras,0,600000,887834,dump_transfermarkt_datasets_cc0
+Míchel,2025-01-31,24/25,Palmeiras,Moreirense,0,1000000,887834,dump_transfermarkt_datasets_cc0
+Míchel,2024-01-01,23/24,Palmeiras U20,Palmeiras,,1000000,887834,dump_transfermarkt_datasets_cc0
+Míchel,2021-01-01,21/22,Palmeiras U17,Palmeiras U20,,,887834,dump_transfermarkt_datasets_cc0
 Máximo Perrone,2025-07-18,25/26,Man City,Como,13000000,12000000,668547,dump_transfermarkt_datasets_cc0
 Máximo Perrone,2025-06-30,24/25,Como,Man City,0,12000000,668547,dump_transfermarkt_datasets_cc0
 Máximo Perrone,2024-08-25,24/25,Man City,Como,0,9000000,668547,dump_transfermarkt_datasets_cc0
@@ -15388,10 +15380,6 @@ Michel Aebischer,2017-02-17,16/17,BSC YB U21,Young Boys,,100000,237658,dump_tran
 Michel Aebischer,2015-07-01,15/16,BSC YB U18,BSC YB U21,,,237658,dump_transfermarkt_datasets_cc0
 Michel Aebischer,2014-07-01,14/15,BSC YB U17,BSC YB U18,,,237658,dump_transfermarkt_datasets_cc0
 Michel Aebischer,2013-07-01,13/14,Fribourg Youth,BSC YB U17,,,237658,dump_transfermarkt_datasets_cc0
-Michel,2026-06-30,25/26,Moreirense,Palmeiras,0,600000,887834,dump_transfermarkt_datasets_cc0
-Michel,2025-01-31,24/25,Palmeiras,Moreirense,0,1000000,887834,dump_transfermarkt_datasets_cc0
-Michel,2024-01-01,23/24,Palmeiras U20,Palmeiras,,1000000,887834,dump_transfermarkt_datasets_cc0
-Michel,2021-01-01,21/22,Palmeiras U17,Palmeiras U20,,,887834,dump_transfermarkt_datasets_cc0
 Michalis Bakakis,2022-09-01,22/23,AEK Athens,Panetolikos,0,400000,130142,dump_transfermarkt_datasets_cc0
 Michalis Bakakis,2014-07-01,14/15,Panetolikos,AEK Athens,250000,500000,130142,dump_transfermarkt_datasets_cc0
 Michalis Bakakis,2012-07-30,12/13,AO Chania,Panetolikos,0,100000,130142,dump_transfermarkt_datasets_cc0
@@ -15637,6 +15625,25 @@ Mergim Vojvoda,2015-06-30,15/16,Sint-Truiden,Standard U21,0,100000,336125,dump_t
 Mergim Vojvoda,2014-08-20,14/15,Standard U21,Sint-Truiden,0,,336125,dump_transfermarkt_datasets_cc0
 Mergim Vojvoda,2013-07-01,13/14,Standard U19,Standard U21,,,336125,dump_transfermarkt_datasets_cc0
 Mergim Vojvoda,2011-07-01,11/12,MVV U17,Standard U19,0,,336125,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2026-02-02,25/26,Hoffenheim,1.FC K'lautern,0,2500000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2025-06-30,24/25,Augsburg,Hoffenheim,0,3500000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2025-01-28,24/25,Hoffenheim,Augsburg,0,7000000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2023-08-30,23/24,Augsburg,Hoffenheim,14000000,12000000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2023-07-02,23/24,Fenerbahçe,Augsburg,4000000,12000000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2023-06-30,22/23,Augsburg,Fenerbahçe,0,12000000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2022-08-31,22/23,Fenerbahçe,Augsburg,0,6000000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2021-09-02,21/22,Salzburg,Fenerbahçe,5000000,10000000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2020-01-06,19/20,SCR Altach,Salzburg,0,1800000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2019-01-10,18/19,Salzburg,SCR Altach,0,750000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2018-12-31,18/19,1.FC Magdeburg,Salzburg,0,750000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2018-07-01,18/19,Salzburg,1.FC Magdeburg,0,750000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2018-06-30,17/18,LASK,Salzburg,0,750000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2017-08-21,17/18,Salzburg,LASK,0,500000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2017-01-01,16/17,FC Liefering,Salzburg,,400000,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2016-01-01,15/16,AKA Salzb. U18,FC Liefering,,,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2014-07-01,14/15,AKA Salzb. U16,AKA Salzb. U18,,,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2013-07-01,13/14,AKA Salzb. U15,AKA Salzb. U16,,,307924,dump_transfermarkt_datasets_cc0
+Mergim Berisha,2012-07-01,12/13,Salzburg Youth,AKA Salzb. U15,,,307924,dump_transfermarkt_datasets_cc0
 Memphis Depay,2024-09-09,24/25,Without Club,Corinthians,,10000000,167850,dump_transfermarkt_datasets_cc0
 Memphis Depay,2024-07-01,24/25,Atlético,Without Club,,10000000,167850,dump_transfermarkt_datasets_cc0
 Memphis Depay,2023-01-20,22/23,Barcelona,Atlético,3000000,20000000,167850,dump_transfermarkt_datasets_cc0
@@ -23219,14 +23226,6 @@ Kaan Ayhan,2016-01-03,15/16,FC Schalke 04,Frankfurt,0,5000000,119031,dump_transf
 Kaan Ayhan,2013-07-01,13/14,Schalke 04 U19,FC Schalke 04,,,119031,dump_transfermarkt_datasets_cc0
 Kaan Ayhan,2011-01-01,10/11,Schalke 04 U17,Schalke 04 U19,,,119031,dump_transfermarkt_datasets_cc0
 Kaan Ayhan,2009-07-01,09/10,Schalke 04 Yth.,Schalke 04 U17,,,119031,dump_transfermarkt_datasets_cc0
-Júnior Firpo,2025-07-17,25/26,Leeds,Real Betis,0,8000000,374139,dump_transfermarkt_datasets_cc0
-Júnior Firpo,2021-07-06,21/22,Barcelona,Leeds,15000000,8000000,374139,dump_transfermarkt_datasets_cc0
-Júnior Firpo,2019-08-04,19/20,Real Betis,Barcelona,20000000,25000000,374139,dump_transfermarkt_datasets_cc0
-Júnior Firpo,2018-01-01,17/18,Betis Deportivo,Real Betis,,100000,374139,dump_transfermarkt_datasets_cc0
-Júnior Firpo,2015-07-07,15/16,Betis U19,Betis B,,,374139,dump_transfermarkt_datasets_cc0
-Júnior Firpo,2014-07-01,14/15,Malagueño U19,Betis U19,0,,374139,dump_transfermarkt_datasets_cc0
-Júnior Firpo,2013-07-01,13/14,T. Pichón U19,Malagueño U19,,,374139,dump_transfermarkt_datasets_cc0
-Júnior Firpo,2012-07-01,12/13,Atl. Benamiel,T. Pichón U19,,,374139,dump_transfermarkt_datasets_cc0
 Jørgen Strand Larsen,2026-02-02,25/26,Wolves,Crystal Palace,49700000,40000000,429983,dump_transfermarkt_datasets_cc0
 Jørgen Strand Larsen,2025-07-01,25/26,Celta de Vigo,Wolves,27000000,30000000,429983,dump_transfermarkt_datasets_cc0
 Jørgen Strand Larsen,2025-06-30,24/25,Wolves,Celta de Vigo,0,30000000,429983,dump_transfermarkt_datasets_cc0
@@ -23468,6 +23467,14 @@ Junior Messias,2017-07-01,17/18,Chieri,Without Club,,125000,449151,dump_transfer
 Junior Messias,2016-07-23,16/17,Casale,Chieri,120000,,449151,dump_transfermarkt_datasets_cc0
 Junior Messias,2015-07-01,15/16,Career break,Casale,,,449151,dump_transfermarkt_datasets_cc0
 Junior Messias,2011-01-01,10/11,Cruzeiro U20,Career break,,,449151,dump_transfermarkt_datasets_cc0
+Junior Firpo,2025-07-17,25/26,Leeds,Real Betis,0,8000000,374139,dump_transfermarkt_datasets_cc0
+Junior Firpo,2021-07-06,21/22,Barcelona,Leeds,15000000,8000000,374139,dump_transfermarkt_datasets_cc0
+Junior Firpo,2019-08-04,19/20,Real Betis,Barcelona,20000000,25000000,374139,dump_transfermarkt_datasets_cc0
+Junior Firpo,2018-01-01,17/18,Betis Deportivo,Real Betis,,100000,374139,dump_transfermarkt_datasets_cc0
+Junior Firpo,2015-07-07,15/16,Betis U19,Betis B,,,374139,dump_transfermarkt_datasets_cc0
+Junior Firpo,2014-07-01,14/15,Malagueño U19,Betis U19,0,,374139,dump_transfermarkt_datasets_cc0
+Junior Firpo,2013-07-01,13/14,T. Pichón U19,Malagueño U19,,,374139,dump_transfermarkt_datasets_cc0
+Junior Firpo,2012-07-01,12/13,Atl. Benamiel,T. Pichón U19,,,374139,dump_transfermarkt_datasets_cc0
 Junior Ajayi,2024-07-01,24/25,Sassuolo U20,Hellas Verona,150000,150000,1111820,dump_transfermarkt_datasets_cc0
 Junior Ajayi,2024-06-30,23/24,Verona U19,Sassuolo U20,0,150000,1111820,dump_transfermarkt_datasets_cc0
 Junior Ajayi,2023-09-01,23/24,Sassuolo U20,Verona U19,0,50000,1111820,dump_transfermarkt_datasets_cc0
@@ -23906,6 +23913,18 @@ João Virgínia,2016-07-01,16/17,Arsenal Youth,Arsenal U18,,,329813,dump_transfe
 João Virgínia,2015-07-09,15/16,Benfica U17,Arsenal Youth,,,329813,dump_transfermarkt_datasets_cc0
 João Virgínia,2014-07-01,14/15,Benfica U15,Benfica U17,,,329813,dump_transfermarkt_datasets_cc0
 João Virgínia,2012-07-01,12/13,Benfica Yth,Benfica U15,,,329813,dump_transfermarkt_datasets_cc0
+João Victor,2025-08-20,25/26,Vasco da Gama,CSKA Moscow,4500000,5000000,671145,dump_transfermarkt_datasets_cc0
+João Victor,2024-01-01,23/24,Benfica,Vasco da Gama,8000000,5000000,671145,dump_transfermarkt_datasets_cc0
+João Victor,2023-06-30,22/23,FC Nantes,Benfica,0,7000000,671145,dump_transfermarkt_datasets_cc0
+João Victor,2023-01-25,22/23,Benfica,FC Nantes,0,8000000,671145,dump_transfermarkt_datasets_cc0
+João Victor,2022-07-07,22/23,Corinthians,Benfica,9500000,8000000,671145,dump_transfermarkt_datasets_cc0
+João Victor,2021-02-28,20/21,Atlético-GO,Corinthians,0,800000,671145,dump_transfermarkt_datasets_cc0
+João Victor,2020-07-30,20/21,Corinthians,Atlético-GO,0,50000,671145,dump_transfermarkt_datasets_cc0
+João Victor,2020-04-26,19/20,Inter Limeira,Corinthians,0,50000,671145,dump_transfermarkt_datasets_cc0
+João Victor,2020-01-15,19/20,Corinthians,Inter Limeira,0,50000,671145,dump_transfermarkt_datasets_cc0
+João Victor,2019-01-01,18/19,Corinthians B,Corinthians,,,671145,dump_transfermarkt_datasets_cc0
+João Victor,2017-01-02,16/17,Atlético-MG U20,Corinthians B,,,671145,dump_transfermarkt_datasets_cc0
+João Victor,2016-01-04,15/16,Botafogo-SP U20,Atlético-MG U20,,,671145,dump_transfermarkt_datasets_cc0
 João Pedro,2025-07-02,25/26,Brighton,Chelsea,63700000,50000000,626724,dump_transfermarkt_datasets_cc0
 João Pedro,2023-07-01,23/24,Watford,Brighton,34200000,32000000,626724,dump_transfermarkt_datasets_cc0
 João Pedro,2020-01-01,19/20,Fluminense,Watford,11500000,20000000,626724,dump_transfermarkt_datasets_cc0
@@ -25492,18 +25511,6 @@ Joaquín Blázquez,2020-09-01,20/21,Talleres II,CA Talleres,,300000,668996,dump_
 Joaquín Blázquez,2020-01-13,19/20,Valencia U19,Talleres II,0,300000,668996,dump_transfermarkt_datasets_cc0
 Joaquín Blázquez,2019-01-30,18/19,Talleres II,Valencia U19,0,,668996,dump_transfermarkt_datasets_cc0
 Joaquín Blázquez,2018-01-01,17/18,Talleres U20,Talleres II,,,668996,dump_transfermarkt_datasets_cc0
-Joao Victor,2025-08-20,25/26,Vasco da Gama,CSKA Moscow,4500000,5000000,671145,dump_transfermarkt_datasets_cc0
-Joao Victor,2024-01-01,23/24,Benfica,Vasco da Gama,8000000,5000000,671145,dump_transfermarkt_datasets_cc0
-Joao Victor,2023-06-30,22/23,FC Nantes,Benfica,0,7000000,671145,dump_transfermarkt_datasets_cc0
-Joao Victor,2023-01-25,22/23,Benfica,FC Nantes,0,8000000,671145,dump_transfermarkt_datasets_cc0
-Joao Victor,2022-07-07,22/23,Corinthians,Benfica,9500000,8000000,671145,dump_transfermarkt_datasets_cc0
-Joao Victor,2021-02-28,20/21,Atlético-GO,Corinthians,0,800000,671145,dump_transfermarkt_datasets_cc0
-Joao Victor,2020-07-30,20/21,Corinthians,Atlético-GO,0,50000,671145,dump_transfermarkt_datasets_cc0
-Joao Victor,2020-04-26,19/20,Inter Limeira,Corinthians,0,50000,671145,dump_transfermarkt_datasets_cc0
-Joao Victor,2020-01-15,19/20,Corinthians,Inter Limeira,0,50000,671145,dump_transfermarkt_datasets_cc0
-Joao Victor,2019-01-01,18/19,Corinthians B,Corinthians,,,671145,dump_transfermarkt_datasets_cc0
-Joao Victor,2017-01-02,16/17,Atlético-MG U20,Corinthians B,,,671145,dump_transfermarkt_datasets_cc0
-Joao Victor,2016-01-04,15/16,Botafogo-SP U20,Atlético-MG U20,,,671145,dump_transfermarkt_datasets_cc0
 Joan Sastre,2022-07-01,22/23,RCD Mallorca,PAOK,400000,1800000,350364,dump_transfermarkt_datasets_cc0
 Joan Sastre,2022-06-30,21/22,PAOK,RCD Mallorca,0,1800000,350364,dump_transfermarkt_datasets_cc0
 Joan Sastre,2022-01-12,21/22,RCD Mallorca,PAOK,0,1600000,350364,dump_transfermarkt_datasets_cc0
@@ -25612,9 +25619,9 @@ Jhon Solis,2026-06-30,25/26,Birmingham,Girona,0,2500000,742521,dump_transfermark
 Jhon Solis,2026-01-17,25/26,Girona,Birmingham,0,2500000,742521,dump_transfermarkt_datasets_cc0
 Jhon Solis,2023-09-01,23/24,Atl. Nacional,Girona,6000000,700000,742521,dump_transfermarkt_datasets_cc0
 Jhon Solis,2022-07-01,22/23,Nacional U20,Atl. Nacional,,,742521,dump_transfermarkt_datasets_cc0
-Jhon Lucumí,2022-08-18,22/23,Genk,Bologna,8000000,9000000,413565,dump_transfermarkt_datasets_cc0
-Jhon Lucumí,2018-07-18,18/19,Deportivo Cali,Genk,2500000,400000,413565,dump_transfermarkt_datasets_cc0
-Jhon Lucumí,2016-01-01,15/16,Dep. Cali U20,Deportivo Cali,,,413565,dump_transfermarkt_datasets_cc0
+Jhon Lucumi,2022-08-18,22/23,Genk,Bologna,8000000,9000000,413565,dump_transfermarkt_datasets_cc0
+Jhon Lucumi,2018-07-18,18/19,Deportivo Cali,Genk,2500000,400000,413565,dump_transfermarkt_datasets_cc0
+Jhon Lucumi,2016-01-01,15/16,Dep. Cali U20,Deportivo Cali,,,413565,dump_transfermarkt_datasets_cc0
 Jhon Durán,2026-06-30,25/26,Zenit S-Pb,Al-Nassr,0,15000000,649317,dump_transfermarkt_datasets_cc0
 Jhon Durán,2026-02-09,25/26,Al-Nassr,Zenit S-Pb,0,32000000,649317,dump_transfermarkt_datasets_cc0
 Jhon Durán,2026-02-08,25/26,Fenerbahçe,Al-Nassr,0,32000000,649317,dump_transfermarkt_datasets_cc0
@@ -26129,24 +26136,24 @@ Jean-Ricner Bellegarde,2019-07-02,19/20,Lens,R. Strasbourg,2000000,1500000,45005
 Jean-Ricner Bellegarde,2016-07-28,16/17,RC Lens B,Lens,,,450050,dump_transfermarkt_datasets_cc0
 Jean-Ricner Bellegarde,2015-07-01,15/16,RC Lens U17,RC Lens B,,,450050,dump_transfermarkt_datasets_cc0
 Jean-Ricner Bellegarde,2013-10-01,13/14,Le Mans Yth.,RC Lens U17,0,,450050,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2025-06-30,24/25,FC St. Gallen,Legia Warszawa,0,700000,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2025-01-30,24/25,Legia Warszawa,FC St. Gallen,0,1000000,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2025-01-29,24/25,Como,Legia Warszawa,575000,1000000,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2025-01-28,24/25,Legia Warszawa,Como,0,1000000,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2024-07-01,24/25,Como,Legia Warszawa,0,2800000,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2024-01-26,23/24,Young Boys,Como,500000,3000000,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2022-06-30,21/22,Venezia,Young Boys,0,4000000,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2022-01-31,21/22,Young Boys,Venezia,0,7000000,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2017-07-19,17/18,Servette FC,Young Boys,900000,950000,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2016-08-23,16/17,Angers SCO,Servette FC,0,300000,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2015-06-30,14/15,Amiens SC,Angers SCO,0,300000,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2014-07-01,14/15,Angers SCO,Amiens SC,0,300000,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2014-06-30,13/14,Carquefou,Angers SCO,0,300000,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2013-07-01,13/14,Angers SCO,Carquefou,0,300000,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2012-12-21,12/13,Angers SCO B,Angers SCO,,,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2012-07-01,12/13,Angers SCO U19,Angers SCO B,,,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2010-07-01,10/11,Angers SCO U17,Angers SCO U19,,,225055,dump_transfermarkt_datasets_cc0
-Jean-Pierre Nsame,2008-07-01,08/09,ACBB Youth,Angers SCO U17,0,,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2025-06-30,24/25,FC St. Gallen,Legia Warszawa,0,700000,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2025-01-30,24/25,Legia Warszawa,FC St. Gallen,0,1000000,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2025-01-29,24/25,Como,Legia Warszawa,575000,1000000,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2025-01-28,24/25,Legia Warszawa,Como,0,1000000,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2024-07-01,24/25,Como,Legia Warszawa,0,2800000,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2024-01-26,23/24,Young Boys,Como,500000,3000000,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2022-06-30,21/22,Venezia,Young Boys,0,4000000,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2022-01-31,21/22,Young Boys,Venezia,0,7000000,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2017-07-19,17/18,Servette FC,Young Boys,900000,950000,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2016-08-23,16/17,Angers SCO,Servette FC,0,300000,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2015-06-30,14/15,Amiens SC,Angers SCO,0,300000,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2014-07-01,14/15,Angers SCO,Amiens SC,0,300000,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2014-06-30,13/14,Carquefou,Angers SCO,0,300000,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2013-07-01,13/14,Angers SCO,Carquefou,0,300000,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2012-12-21,12/13,Angers SCO B,Angers SCO,,,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2012-07-01,12/13,Angers SCO U19,Angers SCO B,,,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2010-07-01,10/11,Angers SCO U17,Angers SCO U19,,,225055,dump_transfermarkt_datasets_cc0
+Jean-Pierre Nsamé,2008-07-01,08/09,ACBB Youth,Angers SCO U17,0,,225055,dump_transfermarkt_datasets_cc0
 Jean-Philippe Mateta,2022-01-31,21/22,Mainz,Crystal Palace,11000000,5000000,420002,dump_transfermarkt_datasets_cc0
 Jean-Philippe Mateta,2022-01-30,21/22,Crystal Palace,Mainz,0,5000000,420002,dump_transfermarkt_datasets_cc0
 Jean-Philippe Mateta,2021-01-21,20/21,Mainz,Crystal Palace,0,15000000,420002,dump_transfermarkt_datasets_cc0
@@ -26205,20 +26212,32 @@ Jean-Kevin Duverne,2023-08-30,23/24,Stade Brestois,FC Nantes,0,4000000,344864,du
 Jean-Kevin Duverne,2019-09-02,19/20,Lens,Stade Brestois,2000000,2000000,344864,dump_transfermarkt_datasets_cc0
 Jean-Kevin Duverne,2016-09-14,16/17,RC Lens B,Lens,,150000,344864,dump_transfermarkt_datasets_cc0
 Jean-Kevin Duverne,2014-07-01,14/15,RC Lens U19,RC Lens B,,,344864,dump_transfermarkt_datasets_cc0
-Jean-Daniel Akpa-Akpro,2026-07-01,26/27,Hellas Verona,Without Club,,500000,170481,dump_transfermarkt_datasets_cc0
-Jean-Daniel Akpa-Akpro,2025-09-06,25/26,Without Club,Hellas Verona,,500000,170481,dump_transfermarkt_datasets_cc0
-Jean-Daniel Akpa-Akpro,2025-07-01,25/26,Lazio,Without Club,,500000,170481,dump_transfermarkt_datasets_cc0
-Jean-Daniel Akpa-Akpro,2025-06-30,24/25,Monza,Lazio,0,500000,170481,dump_transfermarkt_datasets_cc0
-Jean-Daniel Akpa-Akpro,2025-01-02,24/25,Lazio,Monza,0,500000,170481,dump_transfermarkt_datasets_cc0
-Jean-Daniel Akpa-Akpro,2024-06-30,23/24,Monza,Lazio,0,1000000,170481,dump_transfermarkt_datasets_cc0
-Jean-Daniel Akpa-Akpro,2023-08-26,23/24,Lazio,Monza,0,1500000,170481,dump_transfermarkt_datasets_cc0
-Jean-Daniel Akpa-Akpro,2023-06-30,22/23,FC Empoli,Lazio,0,1500000,170481,dump_transfermarkt_datasets_cc0
-Jean-Daniel Akpa-Akpro,2022-09-01,22/23,Lazio,FC Empoli,0,2000000,170481,dump_transfermarkt_datasets_cc0
-Jean-Daniel Akpa-Akpro,2020-09-18,20/21,Salernitana,Lazio,12700000,600000,170481,dump_transfermarkt_datasets_cc0
-Jean-Daniel Akpa-Akpro,2018-02-12,17/18,Without Club,Salernitana,,1000000,170481,dump_transfermarkt_datasets_cc0
-Jean-Daniel Akpa-Akpro,2017-07-01,17/18,Toulouse,Without Club,,1500000,170481,dump_transfermarkt_datasets_cc0
-Jean-Daniel Akpa-Akpro,2011-10-12,11/12,Toulouse B,Toulouse,,,170481,dump_transfermarkt_datasets_cc0
-Jean-Daniel Akpa-Akpro,2010-07-01,10/11,Toulouse U19,Toulouse B,,,170481,dump_transfermarkt_datasets_cc0
+Jean-Eudes Aholou,2024-07-01,24/25,R. Strasbourg,Angers SCO,0,800000,178313,dump_transfermarkt_datasets_cc0
+Jean-Eudes Aholou,2022-07-01,22/23,Monaco,R. Strasbourg,3000000,3000000,178313,dump_transfermarkt_datasets_cc0
+Jean-Eudes Aholou,2022-06-30,21/22,R. Strasbourg,Monaco,0,3000000,178313,dump_transfermarkt_datasets_cc0
+Jean-Eudes Aholou,2021-07-16,21/22,Monaco,R. Strasbourg,0,4000000,178313,dump_transfermarkt_datasets_cc0
+Jean-Eudes Aholou,2021-06-30,20/21,R. Strasbourg,Monaco,0,4000000,178313,dump_transfermarkt_datasets_cc0
+Jean-Eudes Aholou,2020-09-29,20/21,Monaco,R. Strasbourg,0,4000000,178313,dump_transfermarkt_datasets_cc0
+Jean-Eudes Aholou,2020-06-30,19/20,Saint-Étienne,Monaco,0,4000000,178313,dump_transfermarkt_datasets_cc0
+Jean-Eudes Aholou,2019-08-01,19/20,Monaco,Saint-Étienne,0,7000000,178313,dump_transfermarkt_datasets_cc0
+Jean-Eudes Aholou,2018-07-24,18/19,R. Strasbourg,Monaco,14000000,3000000,178313,dump_transfermarkt_datasets_cc0
+Jean-Eudes Aholou,2017-01-16,16/17,US Orléans,R. Strasbourg,500000,400000,178313,dump_transfermarkt_datasets_cc0
+Jean-Eudes Aholou,2015-07-13,15/16,LOSC Lille B,US Orléans,0,,178313,dump_transfermarkt_datasets_cc0
+Jean-Eudes Aholou,2013-07-01,13/14,LOSC Lille U19,LOSC Lille B,,,178313,dump_transfermarkt_datasets_cc0
+Jean-Daniel Akpa Akpro,2026-07-01,26/27,Hellas Verona,Without Club,,500000,170481,dump_transfermarkt_datasets_cc0
+Jean-Daniel Akpa Akpro,2025-09-06,25/26,Without Club,Hellas Verona,,500000,170481,dump_transfermarkt_datasets_cc0
+Jean-Daniel Akpa Akpro,2025-07-01,25/26,Lazio,Without Club,,500000,170481,dump_transfermarkt_datasets_cc0
+Jean-Daniel Akpa Akpro,2025-06-30,24/25,Monza,Lazio,0,500000,170481,dump_transfermarkt_datasets_cc0
+Jean-Daniel Akpa Akpro,2025-01-02,24/25,Lazio,Monza,0,500000,170481,dump_transfermarkt_datasets_cc0
+Jean-Daniel Akpa Akpro,2024-06-30,23/24,Monza,Lazio,0,1000000,170481,dump_transfermarkt_datasets_cc0
+Jean-Daniel Akpa Akpro,2023-08-26,23/24,Lazio,Monza,0,1500000,170481,dump_transfermarkt_datasets_cc0
+Jean-Daniel Akpa Akpro,2023-06-30,22/23,FC Empoli,Lazio,0,1500000,170481,dump_transfermarkt_datasets_cc0
+Jean-Daniel Akpa Akpro,2022-09-01,22/23,Lazio,FC Empoli,0,2000000,170481,dump_transfermarkt_datasets_cc0
+Jean-Daniel Akpa Akpro,2020-09-18,20/21,Salernitana,Lazio,12700000,600000,170481,dump_transfermarkt_datasets_cc0
+Jean-Daniel Akpa Akpro,2018-02-12,17/18,Without Club,Salernitana,,1000000,170481,dump_transfermarkt_datasets_cc0
+Jean-Daniel Akpa Akpro,2017-07-01,17/18,Toulouse,Without Club,,1500000,170481,dump_transfermarkt_datasets_cc0
+Jean-Daniel Akpa Akpro,2011-10-12,11/12,Toulouse B,Toulouse,,,170481,dump_transfermarkt_datasets_cc0
+Jean-Daniel Akpa Akpro,2010-07-01,10/11,Toulouse U19,Toulouse B,,,170481,dump_transfermarkt_datasets_cc0
 Jean-Clair Todibo,2025-07-01,25/26,Nice,West Ham,40000000,25000000,605184,dump_transfermarkt_datasets_cc0
 Jean-Clair Todibo,2025-06-30,24/25,West Ham,Nice,0,25000000,605184,dump_transfermarkt_datasets_cc0
 Jean-Clair Todibo,2024-08-10,24/25,Nice,West Ham,0,35000000,605184,dump_transfermarkt_datasets_cc0
@@ -26269,18 +26288,6 @@ Jean Lucas,2019-07-01,19/20,Flamengo,Lyon,8000000,1000000,578872,dump_transferma
 Jean Lucas,2019-06-30,18/19,Santos,Flamengo,0,1000000,578872,dump_transfermarkt_datasets_cc0
 Jean Lucas,2019-02-07,18/19,Flamengo,Santos,0,400000,578872,dump_transfermarkt_datasets_cc0
 Jean Lucas,2018-01-02,17/18,Flamengo U20,Flamengo,,,578872,dump_transfermarkt_datasets_cc0
-Jean Eudes Aholou,2024-07-01,24/25,R. Strasbourg,Angers SCO,0,800000,178313,dump_transfermarkt_datasets_cc0
-Jean Eudes Aholou,2022-07-01,22/23,Monaco,R. Strasbourg,3000000,3000000,178313,dump_transfermarkt_datasets_cc0
-Jean Eudes Aholou,2022-06-30,21/22,R. Strasbourg,Monaco,0,3000000,178313,dump_transfermarkt_datasets_cc0
-Jean Eudes Aholou,2021-07-16,21/22,Monaco,R. Strasbourg,0,4000000,178313,dump_transfermarkt_datasets_cc0
-Jean Eudes Aholou,2021-06-30,20/21,R. Strasbourg,Monaco,0,4000000,178313,dump_transfermarkt_datasets_cc0
-Jean Eudes Aholou,2020-09-29,20/21,Monaco,R. Strasbourg,0,4000000,178313,dump_transfermarkt_datasets_cc0
-Jean Eudes Aholou,2020-06-30,19/20,Saint-Étienne,Monaco,0,4000000,178313,dump_transfermarkt_datasets_cc0
-Jean Eudes Aholou,2019-08-01,19/20,Monaco,Saint-Étienne,0,7000000,178313,dump_transfermarkt_datasets_cc0
-Jean Eudes Aholou,2018-07-24,18/19,R. Strasbourg,Monaco,14000000,3000000,178313,dump_transfermarkt_datasets_cc0
-Jean Eudes Aholou,2017-01-16,16/17,US Orléans,R. Strasbourg,500000,400000,178313,dump_transfermarkt_datasets_cc0
-Jean Eudes Aholou,2015-07-13,15/16,LOSC Lille B,US Orléans,0,,178313,dump_transfermarkt_datasets_cc0
-Jean Eudes Aholou,2013-07-01,13/14,LOSC Lille U19,LOSC Lille B,,,178313,dump_transfermarkt_datasets_cc0
 Jean Butez,2025-01-07,24/25,Royal Antwerp,Como,2100000,4000000,290537,dump_transfermarkt_datasets_cc0
 Jean Butez,2020-07-01,20/21,Mouscron,Royal Antwerp,1000000,2000000,290537,dump_transfermarkt_datasets_cc0
 Jean Butez,2018-07-01,18/19,Lille,Mouscron,200000,250000,290537,dump_transfermarkt_datasets_cc0
@@ -34220,13 +34227,6 @@ Edgar González,2016-07-02,16/17,RCD Espanyol B,UE Cornellà,0,,401624,dump_tran
 Edgar González,2016-07-01,16/17,Espanyol U19,RCD Espanyol B,,,401624,dump_transfermarkt_datasets_cc0
 Edgar González,2015-07-01,15/16,Cornellà U19,Espanyol U19,,,401624,dump_transfermarkt_datasets_cc0
 Edgar González,2014-07-01,14/15,Cornellà Youth,Cornellà U19,,,401624,dump_transfermarkt_datasets_cc0
-Ederson,2022-07-06,22/23,Salernitana,Atalanta,22900000,13000000,607854,dump_transfermarkt_datasets_cc0
-Ederson,2022-01-30,21/22,Corinthians,Salernitana,6500000,5000000,607854,dump_transfermarkt_datasets_cc0
-Ederson,2022-01-29,21/22,Fortaleza,Corinthians,0,5000000,607854,dump_transfermarkt_datasets_cc0
-Ederson,2021-03-08,20/21,Corinthians,Fortaleza,0,4000000,607854,dump_transfermarkt_datasets_cc0
-Ederson,2020-02-21,19/20,Cruzeiro,Corinthians,0,2500000,607854,dump_transfermarkt_datasets_cc0
-Ederson,2019-07-15,19/20,Desp. Brasil,Cruzeiro,295000,100000,607854,dump_transfermarkt_datasets_cc0
-Ederson,2017-01-01,16/17,Desportivo U20,Desp. Brasil,,,607854,dump_transfermarkt_datasets_cc0
 Eder Militão,2019-07-01,19/20,Porto,Real Madrid,50000000,50000000,401530,dump_transfermarkt_datasets_cc0
 Eder Militão,2018-08-07,18/19,São Paulo,Porto,7000000,8000000,401530,dump_transfermarkt_datasets_cc0
 Eder Militão,2017-01-01,16/17,São Paulo U20,São Paulo,,,401530,dump_transfermarkt_datasets_cc0
@@ -35732,6 +35732,12 @@ David von Ballmoos,2017-06-30,16/17,FC Winterthur,Young Boys,0,500000,203124,dum
 David von Ballmoos,2015-07-01,15/16,Young Boys,FC Winterthur,0,50000,203124,dump_transfermarkt_datasets_cc0
 David von Ballmoos,2013-07-01,13/14,BSC YB U21,Young Boys,,,203124,dump_transfermarkt_datasets_cc0
 David von Ballmoos,2012-07-01,12/13,BSC YB U18,BSC YB U21,,,203124,dump_transfermarkt_datasets_cc0
+David de Gea,2024-08-09,24/25,Without Club,Fiorentina,,5000000,59377,dump_transfermarkt_datasets_cc0
+David de Gea,2023-07-01,23/24,Man Utd,Without Club,,13000000,59377,dump_transfermarkt_datasets_cc0
+David de Gea,2011-07-01,11/12,Atlético,Man Utd,25000000,12000000,59377,dump_transfermarkt_datasets_cc0
+David de Gea,2009-07-01,09/10,Atl. Madrileño,Atlético,,100000,59377,dump_transfermarkt_datasets_cc0
+David de Gea,2008-07-01,08/09,Atl. Madrid U19,Atl. Madrileño,,100000,59377,dump_transfermarkt_datasets_cc0
+David de Gea,2007-07-01,07/08,Atl. Madrid U17,Atl. Madrid U19,,,59377,dump_transfermarkt_datasets_cc0
 David Zima,2024-01-31,23/24,Torino,Slavia Praha,4000000,4000000,544149,dump_transfermarkt_datasets_cc0
 David Zima,2021-08-31,21/22,Slavia Praha,Torino,5900000,7500000,544149,dump_transfermarkt_datasets_cc0
 David Zima,2020-08-03,20/21,Olomouc B,Slavia Praha,1300000,400000,544149,dump_transfermarkt_datasets_cc0
@@ -35922,12 +35928,6 @@ David García,2018-01-17,17/18,CA Osasuna,CyD Leonesa,0,1000000,298589,dump_tran
 David García,2015-01-01,14/15,Osasuna B,CA Osasuna,,,298589,dump_transfermarkt_datasets_cc0
 David García,2013-07-01,13/14,Osasuna U19,Osasuna B,,,298589,dump_transfermarkt_datasets_cc0
 David García,2012-07-01,12/13,CA Osasuna Yout,Osasuna U19,,,298589,dump_transfermarkt_datasets_cc0
-David De Gea,2024-08-09,24/25,Without Club,Fiorentina,,5000000,59377,dump_transfermarkt_datasets_cc0
-David De Gea,2023-07-01,23/24,Man Utd,Without Club,,13000000,59377,dump_transfermarkt_datasets_cc0
-David De Gea,2011-07-01,11/12,Atlético,Man Utd,25000000,12000000,59377,dump_transfermarkt_datasets_cc0
-David De Gea,2009-07-01,09/10,Atl. Madrileño,Atlético,,100000,59377,dump_transfermarkt_datasets_cc0
-David De Gea,2008-07-01,08/09,Atl. Madrid U19,Atl. Madrileño,,100000,59377,dump_transfermarkt_datasets_cc0
-David De Gea,2007-07-01,07/08,Atl. Madrid U17,Atl. Madrid U19,,,59377,dump_transfermarkt_datasets_cc0
 David Datro Fofana,2026-06-30,25/26,R. Strasbourg,Chelsea,0,4000000,787232,dump_transfermarkt_datasets_cc0
 David Datro Fofana,2026-02-02,25/26,Chelsea,R. Strasbourg,0,5000000,787232,dump_transfermarkt_datasets_cc0
 David Datro Fofana,2026-01-21,25/26,Karagümrük,Chelsea,0,5000000,787232,dump_transfermarkt_datasets_cc0

@@ -30,6 +30,7 @@ CHAMPIONNATS = [
     {"dossier": "bundesliga", "nom": "Bundesliga", "understat": "Bundesliga", "code": "D1"},
     {"dossier": "serie-a", "nom": "Serie A", "understat": "Serie_A", "code": "I1"},
     {"dossier": "ligue-1", "nom": "Ligue 1", "understat": "Ligue_1", "code": "F1"},
+    {"dossier": "super-lig", "nom": "Super Lig", "understat": None, "code": "T1"},
 ]
 CODES_VERS_NOM = {champ["code"]: champ["nom"] for champ in CHAMPIONNATS}
 COLONNES_MATCH = [
@@ -225,6 +226,8 @@ def collecter_understat(annees=None):
     annees = annees if annees is not None else SAISONS_UNDERSTAT
 
     for champ in CHAMPIONNATS:
+        if not champ.get("understat"):
+            continue
         for annee in annees:
             saison = libelle_saison(annee)
             print(f"  Understat {champ['nom']} {saison}...")
@@ -318,6 +321,25 @@ def equipes_depuis_joueurs(joueurs):
             }
         )
     return sorted(equipes, key=lambda x: (x["championnat"], x["saison"], x["equipe"]))
+
+
+def equipes_depuis_matchs(matchs):
+    vus = set()
+    equipes = []
+    for match in matchs:
+        for nom in (match["domicile"], match["exterieur"]):
+            cle = (match["championnat"], match["saison"], nom)
+            if not nom or cle in vus:
+                continue
+            vus.add(cle)
+            equipes.append(
+                {
+                    "championnat": match["championnat"],
+                    "saison": match["saison"],
+                    "equipe": nom,
+                }
+            )
+    return equipes
 
 
 def ecrire_csv(chemin, lignes):
@@ -554,7 +576,13 @@ def main():
     ecrire_csv(DOSSIER_SORTIE / "joueurs.csv", joueurs)
     ecrire_csv(DOSSIER_SORTIE / "matchs_xg.csv", matchs_xg)
     ecrire_csv(DOSSIER_SORTIE / "calendrier.csv", calendrier + ldc_calendrier)
-    equipes = equipes_depuis_joueurs(joueurs) + ldc_equipes
+    ligues_sans_understat = {c["nom"] for c in CHAMPIONNATS if not c.get("understat")}
+    matchs_sans_us = [m for m in matchs if m["championnat"] in ligues_sans_understat]
+    equipes = (
+        equipes_depuis_joueurs(joueurs)
+        + equipes_depuis_matchs(matchs_sans_us)
+        + ldc_equipes
+    )
     ecrire_csv(DOSSIER_SORTIE / "equipes.csv", equipes)
 
     print(f"   {len(matchs)} matchs -> {DOSSIER_SORTIE / 'matchs.csv'}")

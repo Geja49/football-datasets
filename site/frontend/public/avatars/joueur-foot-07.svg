@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Polyvalent orange">
+  <defs>
+    <clipPath id="cercle"><circle cx="64" cy="64" r="62"/></clipPath>
+  </defs>
+  <circle cx="64" cy="64" r="62" fill="#ea580c"/>
+  <g clip-path="url(#cercle)">
+    <ellipse cx="64" cy="118" rx="40" ry="12" fill="rgba(0,0,0,0.12)"/>
+    <path d="M32 128 L96 128 L88 92 Q64 84 40 92 Z" fill="#f97316"/>
+    <path d="M52 92 L76 92 L74 128 L54 128 Z" fill="#1e293b" opacity="0.35"/>
+    <path d="M58 92 Q64 88 70 92" fill="none" stroke="#1e293b" stroke-width="2"/>
+    <circle cx="64" cy="56" r="24" fill="#ffdbac"/>
+    <ellipse cx="64" cy="62" rx="20" ry="16" fill="#ffdbac"/>
+    <ellipse cx="64" cy="36" rx="28" ry="14" fill="#d4a017"/><path d="M44 38 Q48 24 52 36" fill="#d4a017"/><path d="M56 34 Q60 22 64 34" fill="#d4a017"/><path d="M68 34 Q72 22 76 34" fill="#d4a017"/>
+    <ellipse cx="54" cy="54" rx="3" ry="4" fill="#1e293b"/>
+    <ellipse cx="74" cy="54" rx="3" ry="4" fill="#1e293b"/>
+    <circle cx="55" cy="53" r="1" fill="#ffffff"/>
+    <circle cx="75" cy="53" r="1" fill="#ffffff"/>
+    <path d="M58 64 Q64 68 70 64" fill="none" stroke="#b45309" stroke-width="1.5" stroke-linecap="round"/>
+    <ellipse cx="48" cy="60" rx="4" ry="2.5" fill="#e11d48" opacity="0.25"/>
+    <ellipse cx="80" cy="60" rx="4" ry="2.5" fill="#e11d48" opacity="0.25"/>
+    
+  </g>
+</svg>

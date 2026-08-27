@@ -2,6 +2,7 @@
 import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { CHAMPIONNATS_DEFAUT } from "../championnats.js";
+import ChargementPage from "../composants/ChargementPage.vue";
 import DiagrammeDensites from "../composants/DiagrammeDensites.vue";
 import DiagrammeRadar from "../composants/DiagrammeRadar.vue";
 import {
@@ -340,7 +341,7 @@ watch(
       </div>
 
       <button type="button" class="bouton-analyse" @click="comparer">Comparer</button>
-      <p v-if="chargement" class="doux">Chargement…</p>
+      <ChargementPage v-if="chargement" message="Chargement de la comparaison" />
       <p v-if="erreur" class="erreur">{{ erreur }}</p>
     </div>
 

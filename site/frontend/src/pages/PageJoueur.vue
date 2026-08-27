@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import ChargementPage from "../composants/ChargementPage.vue";
 import DiagrammeDensites from "../composants/DiagrammeDensites.vue";
 import PortraitJoueur from "../composants/PortraitJoueur.vue";
 import DiagrammeRadar from "../composants/DiagrammeRadar.vue";
@@ -28,6 +29,7 @@ const data = ref({
   transferts: [],
 });
 const erreur = ref("");
+const chargement = ref(true);
 
 function texteEuros(valeur) {
   const n = Number(valeur);
@@ -57,10 +59,13 @@ function formaterDateTransfert(valeur) {
 
 async function charger() {
   erreur.value = "";
+  chargement.value = true;
   try {
     data.value = await chargerJoueur(joueur.value, championnat.value || null);
   } catch (e) {
     erreur.value = e.message;
+  } finally {
+    chargement.value = false;
   }
 }
 
@@ -268,6 +273,8 @@ const totaux = computed(() => {
   </section>
   <div class="page">
     <p v-if="erreur" class="erreur">{{ erreur }}</p>
+    <ChargementPage v-else-if="chargement" message="Chargement des stats" />
+    <template v-else>
     <div class="bloc" v-if="historiqueTransferts.length">
       <header class="entete-bloc">
         <h2>Historique des transferts</h2>
@@ -454,5 +461,6 @@ const totaux = computed(() => {
       </table>
       </div>
     </div>
+    </template>
   </div>
 </template>

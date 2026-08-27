@@ -2,6 +2,7 @@
 import { computed, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import CalendrierMatchs from "../composants/CalendrierMatchs.vue";
+import ChargementPage from "../composants/ChargementPage.vue";
 import PortraitJoueur from "../composants/PortraitJoueur.vue";
 import { definirExtraNavigation, viderExtraNavigation } from "../contexteNavigation.js";
 import { chargerAccueil, chargerCalendrier, chargerClassement, chargerMeilleurs } from "../services/api.js";
@@ -304,7 +305,8 @@ function serieForme(serie) {
 
       <p v-if="mentionSources" class="mention">{{ mentionSources }}</p>
 
-      <p v-if="chargement" class="doux">Chargement…</p>
+      <ChargementPage v-if="chargement" message="Chargement des stats" />
+
 
       <template v-if="onglet === 'classement'">
         <p v-if="!chargement && !classement.length" class="doux">

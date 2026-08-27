@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import ChargementPage from "../composants/ChargementPage.vue";
 import { definirExtraNavigation, viderExtraNavigation } from "../contexteNavigation.js";
 import { formaterDate, formaterHeureLocale } from "../dates.js";
 import { chargerEquipe } from "../services/api.js";
@@ -110,8 +111,9 @@ const lienEquipe = computed(() => ({
   </section>
   <div class="page">
     <p v-if="erreur" class="erreur">{{ erreur }}</p>
-    <p v-else-if="chargement" class="doux">Chargement du calendrier…</p>
+    <ChargementPage v-else-if="chargement" message="Chargement du calendrier" />
     <p v-else-if="!matchs.length" class="doux">
+
       Pas encore de matchs pour {{ nomEquipe || equipe }} en {{ saison }}.
     </p>
 

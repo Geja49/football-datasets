@@ -7,6 +7,7 @@ from collections import defaultdict
 from datetime import date, datetime, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
+import os
 import re
 import sqlite3
 
@@ -31,16 +32,22 @@ from photos_joueurs import DOSSIER_PHOTOS, obtenir_photo, photo_en_cache
 from elo_clubs import elo_pour_equipe, enrichir_classement_elo
 from sites_officiels import SITES_CHAMPIONNATS, SITES_EQUIPES
 from cotes import lecture_marche_pour_analyse, routeur_cotes
-from communaute import initialiser_base, routeur_communaute
+from communaute import charger_fichier_env, initialiser_base, routeur_communaute
+from forum import assurer_tables_forum, routeur_forum
 
 RACINE = Path(__file__).resolve().parents[2]
 FICHIER_BASE = RACINE / "donnees" / "football.db"
+ORIGINES_CORS_DEFAUT = (
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+)
 CHAMPIONNATS = (
     "Premier League",
     "La Liga",
     "Bundesliga",
     "Serie A",
     "Ligue 1",
+    "Super Lig",
     "Ligue des champions",
 )
 NOM_LDC = "Ligue des champions"
@@ -55,6 +62,7 @@ FUSEAU_PAR_CHAMPIONNAT = {
     "Bundesliga": "Europe/Berlin",
     "Serie A": "Europe/Rome",
     "Ligue 1": "Europe/Paris",
+    "Super Lig": "Europe/Istanbul",
     "Ligue des champions": "Europe/Paris",
 }
 
@@ -93,17 +101,29 @@ def enrichir_horaires(matchs, championnat_defaut=None):
     return matchs
 
 
+def lire_origines_cors() -> list[str]:
+    """Origines CORS depuis ORIGINES_CORS (virgules) ou défauts localhost."""
+    charger_fichier_env()
+    brut = (os.environ.get("ORIGINES_CORS") or "").strip()
+    if not brut:
+        return list(ORIGINES_CORS_DEFAUT)
+    origines = [partie.strip() for partie in brut.split(",") if partie.strip()]
+    return origines or list(ORIGINES_CORS_DEFAUT)
+
+
 app = FastAPI(title="Stats championnats")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=lire_origines_cors(),
     allow_methods=["GET", "POST", "DELETE"],
     allow_headers=["*"],
     allow_credentials=True,
 )
 app.include_router(routeur_cotes)
 app.include_router(routeur_communaute)
+app.include_router(routeur_forum)
 initialiser_base()
+assurer_tables_forum()
 
 
 def lire_horaire_match(connexion, championnat, saison, domicile, exterieur):

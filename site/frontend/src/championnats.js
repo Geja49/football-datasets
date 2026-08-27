@@ -6,6 +6,7 @@ export const CHAMPIONNATS_DEFAUT = [
   "Bundesliga",
   "Serie A",
   "Ligue 1",
+  "Super Lig",
   "Ligue des champions",
 ];
 
@@ -15,6 +16,7 @@ export const CLASSES_CARTES = {
   Bundesliga: "carte-bundesliga",
   "Serie A": "carte-seriea",
   "Ligue 1": "carte-ligue1",
+  "Super Lig": "carte-superlig",
   "Ligue des champions": "carte-ldc",
 };
 
@@ -24,6 +26,7 @@ export const CODES_CARTES = {
   Bundesliga: "BL",
   "Serie A": "SA",
   "Ligue 1": "L1",
+  "Super Lig": "SL",
   "Ligue des champions": "UCL",
 };
 
@@ -34,6 +37,7 @@ export const LOGOS_CARTES = {
   Bundesliga: "/logos-championnats/bundesliga.png",
   "Serie A": "/logos-championnats/serie-a.png",
   "Ligue 1": "/logos-championnats/ligue-1.png",
+  "Super Lig": "/logos-championnats/super-lig.png",
   "Ligue des champions": "/logos-championnats/ligue-des-champions.png",
 };
 

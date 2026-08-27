@@ -1,0 +1,89 @@
+# Licences des avatars — Stats Foot
+# Dernière mise à jour : 2026-08-26
+
+================================================================================
+PACK ACTUEL — Portraits joueur de foot (joueur-foot-*.svg)
+================================================================================
+Source     : Créations originales Stats Foot (illustrations SVG flat)
+Inspiration: Style « Football player Avatars » par Niki (nikibd) sur Dribbble
+             https://dribbble.com/shots/18148910-Football-player-Avatars
+             Auteur Dribbble : Niki — Tehrān, Iran — https://dribbble.com/nikibd
+             Les assets Dribbble ne sont PAS téléchargés ni reproduits :
+             aperçu protégé par droit d'auteur, sans pack gratuit ni licence
+             commerciale publique. Les SVG ci-dessous sont des œuvres originales
+             réalisées pour le projet, dans un esprit visuel similaire (portraits
+             flat/colorés de joueurs en maillot).
+Créateur   : Stats Foot (génération script scripts/generer_avatars_joueurs.py)
+Licence    : Projet Stats Foot — usage interne au site
+Fichiers   : joueur-foot-01.svg … joueur-foot-12.svg (12 fichiers)
+Usage      : Sélection dans Mon profil (/mon-profil), affichage forum et pronos.
+
+Pour une utilisation des assets originaux de nikibd :
+  → Contacter l'auteur via https://dribbble.com/nikibd (licence / achat).
+
+================================================================================
+PACK LÉGENDES — Portraits illustrés (avatar-legende-*.png)
+================================================================================
+Source     : Image fournie par l'utilisateur du projet (grille 3×6, 18 badges)
+             Découpage technique : scripts/decouper_avatars_legendes.py
+Créateur   : Illustrations tierces — auteur et licence d'origine inconnus
+Licence    : NON VÉRIFIÉE — usage développement / personnel uniquement
+Fichiers   : avatar-legende-01.png … avatar-legende-18.png (18 fichiers PNG)
+Usage      : Sélection dans Mon profil (/mon-profil), affichage forum et pronos.
+
+AVERTISSEMENT — DROIT À L'IMAGE ET PROPRIÉTÉ INTELLECTUELLE
+  Les illustrations semblent représenter des joueurs de football réels
+  (ressemblance, maillots, contexte sportif). En production commerciale ou
+  publication publique, cela peut poser des problèmes de :
+    • droit à l'image des personnes représentées ;
+    • droits d'auteur sur les illustrations ;
+    • marques déposées (clubs, fédérations, sponsors visibles).
+  Avant toute mise en production : obtenir une licence explicite ou remplacer
+  ces avatars par des créations originales libres de droits.
+  Le découpage technique pour tests locaux ne constitue pas une autorisation
+  d'exploitation commerciale.
+
+Libellés catalogue : noms génériques « Portrait foot N » (sans nom de joueur).
+
+================================================================================
+PACK LÉGENDES B — Portraits illustrés (avatar-legende-b-*.png)
+================================================================================
+Source     : Image fournie par l'utilisateur du projet (grille 5×10, 50 badges)
+             Découpage technique : scripts/decouper_avatars_legendes_b.py
+Créateur   : Illustrations tierces — auteur et licence d'origine inconnus
+Licence    : NON VÉRIFIÉE — usage développement / personnel uniquement
+Fichiers   : avatar-legende-b-01.png … avatar-legende-b-50.png (50 fichiers PNG)
+Usage      : Sélection dans Mon profil (/mon-profil), affichage forum et pronos.
+
+AVERTISSEMENT — DROIT À L'IMAGE ET PROPRIÉTÉ INTELLECTUELLE
+  Comme pour le pack A, les illustrations semblent représenter des joueurs de
+  football réels (ressemblance, maillots, contexte sportif). En production
+  commerciale ou publication publique, cela peut poser des problèmes de :
+    • droit à l'image des personnes représentées ;
+    • droits d'auteur sur les illustrations ;
+    • marques déposées (clubs, fédérations, sponsors visibles).
+  Avant toute mise en production : obtenir une licence explicite ou remplacer
+  ces avatars par des créations originales libres de droits.
+  Le découpage technique pour tests locaux ne constitue pas une autorisation
+  d'exploitation commerciale.
+
+Libellés catalogue : noms génériques « Légende foot N » (19 à 68, sans nom de joueur).
+
+================================================================================
+ARCHIVE — Anciens packs (remplacés le 2026-08-26)
+================================================================================
+Les fichiers suivants ont été retirés du catalogue actif. Les identifiants
+legacy en base sont mappés vers joueur-foot-XX via site/api/avatars.py.
+
+- DiceBear voxel-art (CC0) : avatar-voxel-01 … avatar-voxel-10
+- DiceBear clay (CC0)      : avatar-argile-01 … avatar-argile-05
+- DiceBear voxel-bot (CC0) : avatar-robot-01 … avatar-robot-05
+- Icônes football internes : ballon-vert, ballon-or, maillot-bleu, maillot-rouge,
+                             sifflet, crampon, gardien, trophee
+
+================================================================================
+NOTE LÉGALE
+================================================================================
+Les résumés ci-dessus sont indicatifs. Les textes de licence officiels font foi.
+Dribbble : les shots sont protégés par le droit d'auteur de leurs auteurs ;
+           le téléchargement non autorisé des previews constitue une violation.

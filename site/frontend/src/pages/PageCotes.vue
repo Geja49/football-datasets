@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import ChargementPage from "../composants/ChargementPage.vue";
 import { definirExtraNavigation, viderExtraNavigation } from "../contexteNavigation.js";
 import { cleJourLocale, formaterDate, formaterHeureLocale } from "../dates.js";
 import { chargerCotes } from "../services/api.js";
@@ -129,7 +130,7 @@ const groupes = computed(() => {
   </section>
   <div class="page">
     <p v-if="erreur" class="erreur">{{ erreur }}</p>
-    <p v-else-if="chargement" class="doux">Chargement des cotes…</p>
+    <ChargementPage v-else-if="chargement" message="Chargement des cotes" />
     <template v-else>
       <p v-if="message" class="bloc-recit">{{ message }}</p>
 

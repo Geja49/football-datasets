@@ -50,8 +50,9 @@ def main():
         "publie souvent avec 1 a 2 jours de retard."
     )
     print(
-        "Le calendrier a venir des 5 ligues : Understat + fixtures.csv "
-        "+ openfootball (38 journees si publiees)."
+        "Le calendrier a venir : Understat + fixtures.csv + openfootball "
+        "(38 journees si publiees). Super Lig : fixtures.csv uniquement "
+        "(pas de source Understat/openfootball)."
     )
     print(
         "La Ligue des champions vient d'openfootball (GitHub), depuis 2011-2012. "

@@ -5,10 +5,12 @@ from fastapi import HTTPException
 
 from serveur import (
     NOM_LDC,
+    ORIGINES_CORS_DEFAUT,
     SAISON_COURANTE,
     calculer_classement,
     filtrer_matchs_a_venir,
     histogramme_simple,
+    lire_origines_cors,
     matchs_classement,
     mediane_liste,
     moyenne_liste,
@@ -104,3 +106,19 @@ def test_verifier_filtres_erreur():
     assert erreur.value.status_code == 400
     with pytest.raises(HTTPException):
         verifier_filtres("La Liga", "2026")
+
+
+def test_lire_origines_cors_defaut(monkeypatch):
+    monkeypatch.delenv("ORIGINES_CORS", raising=False)
+    assert lire_origines_cors() == list(ORIGINES_CORS_DEFAUT)
+
+
+def test_lire_origines_cors_depuis_env(monkeypatch):
+    monkeypatch.setenv(
+        "ORIGINES_CORS",
+        "https://statsfoot.exemple.fr, http://localhost:5173",
+    )
+    assert lire_origines_cors() == [
+        "https://statsfoot.exemple.fr",
+        "http://localhost:5173",
+    ]

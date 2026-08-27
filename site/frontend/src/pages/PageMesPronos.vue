@@ -1,15 +1,26 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
+import ChargementPage from "../composants/ChargementPage.vue";
 import { chargerMesPronostics, chargerMatchsSansProno, chargerUtilisateurConnecte } from "../services/api.js";
 
 const pronostics = ref([]);
 const matchsSansProno = ref([]);
-const disclaimer = ref("");
+const stats = ref(null);
 const erreur = ref("");
 const chargement = ref(true);
 const utilisateur = ref(null);
 
 const resume = computed(() => {
+  if (stats.value) {
+    return {
+      total: stats.value.nb_pronos,
+      exacts: stats.value.nb_exacts,
+      rates: Math.max(0, (stats.value.nb_evalues || 0) - (stats.value.nb_exacts || 0)),
+      enAttente: Math.max(0, (stats.value.nb_pronos || 0) - (stats.value.nb_evalues || 0)),
+      points: stats.value.points,
+      tauxExacts: stats.value.taux_exacts ?? 0,
+    };
+  }
   const liste = pronostics.value;
   let exacts = 0;
   let rates = 0;
@@ -24,7 +35,15 @@ const resume = computed(() => {
       enAttente += 1;
     }
   }
-  return { total: liste.length, exacts, rates, enAttente, points };
+  const evalues = exacts + rates;
+  return {
+    total: liste.length,
+    exacts,
+    rates,
+    enAttente,
+    points,
+    tauxExacts: evalues ? Math.round((1000 * exacts) / evalues) / 10 : 0,
+  };
 });
 
 function formaterDate(iso) {
@@ -88,7 +107,7 @@ onMounted(async () => {
       chargerMatchsSansProno(),
     ]);
     pronostics.value = reponse.pronostics || [];
-    disclaimer.value = reponse.disclaimer || "";
+    stats.value = reponse.stats || null;
     matchsSansProno.value = rappels.matchs || [];
   } catch (e) {
     erreur.value = e.message;
@@ -113,8 +132,6 @@ onMounted(async () => {
   </section>
 
   <div class="page">
-    <p v-if="disclaimer" class="mention mention-communaute">{{ disclaimer }}</p>
-
     <nav v-if="utilisateur" class="raccourcis-pronos" aria-label="Raccourcis pronostics">
       <router-link to="/pronos-journee" class="puce-raccourci-prono">Prono journée</router-link>
       <router-link to="/classement-pronos" class="puce-raccourci-prono">Classement</router-link>
@@ -124,9 +141,7 @@ onMounted(async () => {
 
     <section v-if="utilisateur && matchsSansProno.length" class="bloc bloc-rappels-pronos">
       <h2 class="titre-rappels">Matchs à pronostiquer bientôt</h2>
-      <p class="doux">
-        Prochains matchs sans votre prono (7 jours) — contenu informatif, 18+.
-      </p>
+      <p class="doux">Prochains matchs sans votre prono (7 jours).</p>
       <ul class="liste-rappels-pronos">
         <li v-for="match in matchsSansProno" :key="`${match.championnat}-${match.domicile}-${match.exterieur}`">
           <router-link :to="lienMatchSansProno(match)" class="lien-rappel-prono">
@@ -142,9 +157,10 @@ onMounted(async () => {
     </section>
 
     <p v-if="erreur" class="erreur">{{ erreur }}</p>
-    <p v-if="chargement" class="doux">Chargement de vos pronostics…</p>
+    <ChargementPage v-if="chargement" message="Chargement de vos pronostics" />
 
     <p v-else-if="!utilisateur" class="doux">
+
       <router-link to="/connexion">Connectez-vous</router-link>
       ou
       <router-link to="/inscription">créez un compte</router-link>
@@ -166,6 +182,10 @@ onMounted(async () => {
           <span class="libelle-resume">Exact(s)</span>
         </div>
         <div class="case-resume">
+          <span class="chiffre-resume">{{ resume.tauxExacts }}%</span>
+          <span class="libelle-resume">Taux exacts</span>
+        </div>
+        <div class="case-resume">
           <span class="chiffre-resume">{{ resume.enAttente }}</span>
           <span class="libelle-resume">En attente</span>
         </div>
@@ -173,7 +193,7 @@ onMounted(async () => {
 
       <h2 class="titre-historique-pronos">Votre historique</h2>
 
-      <p v-if="!pronostics.length" class="doux">
+      <p v-if="!pronostics.length" class="doux message-vide-communaute">
         Aucun pronostic pour l’instant.
         <router-link to="/match">Analysez un match à venir</router-link>
         ou passez par

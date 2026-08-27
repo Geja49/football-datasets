@@ -19,10 +19,6 @@ defineProps({
         Joueurs Info Service
       </a>
       ·
-      <a href="https://connexions.ca/" target="_blank" rel="noopener noreferrer">
-        Connexions.ca
-      </a>
-      ·
       <a
         href="https://www.jeu-aidereference.qc.ca/"
         target="_blank"
@@ -45,17 +41,6 @@ defineProps({
             Joueurs Info Service
           </a>
           (France)
-        </span>
-        <span class="pied-site-sep" aria-hidden="true">·</span>
-        <span class="mention-jeu-responsable-item">
-          <a
-            href="https://connexions.ca/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Connexions.ca
-          </a>
-          (Canada)
         </span>
         <span class="pied-site-sep" aria-hidden="true">·</span>
         <span class="mention-jeu-responsable-item">

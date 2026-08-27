@@ -2,10 +2,12 @@
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import FilAriane from "./composants/FilAriane.vue";
+import AvatarUtilisateur from "./composants/AvatarUtilisateur.vue";
 import MentionJeuResponsable from "./composants/MentionJeuResponsable.vue";
 import Raccourcis from "./composants/Raccourcis.vue";
 import { extraNavigation } from "./contexteNavigation.js";
-import { chargerUtilisateurConnecte, chargerMatchsSansProno, deconnecterUtilisateur, rechercher } from "./services/api.js";
+import { formaterPseudoAffichage } from "./formaterPseudo.js";
+import { chargerUtilisateurConnecte, chargerMatchsSansProno, chargerCompteNotifications, deconnecterUtilisateur, rechercher } from "./services/api.js";
 import { appliquerTheme, nomTheme } from "./themes.js";
 
 const route = useRoute();
@@ -14,6 +16,7 @@ const terme = ref("");
 const resultats = ref(null);
 const utilisateur = ref(null);
 const nbMatchsSansProno = ref(0);
+const nbNotifications = ref(0);
 /** @type {import('vue').Ref<'stats' | 'communaute' | 'compte' | null>} */
 const menuOuvert = ref(null);
 let delai = null;
@@ -30,6 +33,23 @@ async function chargerRappelsPronos() {
     nbMatchsSansProno.value = 0;
   }
 }
+
+async function chargerBadgeNotifications() {
+  if (!utilisateur.value) {
+    nbNotifications.value = 0;
+    return;
+  }
+  try {
+    const reponse = await chargerCompteNotifications();
+    nbNotifications.value = reponse.nb_non_lues || 0;
+  } catch {
+    nbNotifications.value = 0;
+  }
+}
+
+const badgeCommunaute = computed(
+  () => Math.min(99, nbMatchsSansProno.value + nbNotifications.value),
+);
 
 function fermerMenus() {
   menuOuvert.value = null;
@@ -72,10 +92,11 @@ onMounted(async () => {
   try {
     const reponse = await chargerUtilisateurConnecte();
     utilisateur.value = reponse.utilisateur;
-    await chargerRappelsPronos();
+    await Promise.all([chargerRappelsPronos(), chargerBadgeNotifications()]);
   } catch {
     utilisateur.value = null;
     nbMatchsSansProno.value = 0;
+    nbNotifications.value = 0;
   }
 });
 
@@ -89,6 +110,7 @@ async function seDeconnecter() {
   await deconnecterUtilisateur();
   utilisateur.value = null;
   nbMatchsSansProno.value = 0;
+  nbNotifications.value = 0;
   if (route.path === "/match") {
     routeur.go(0);
   }
@@ -158,7 +180,12 @@ const communauteActif = computed(
     route.path === "/mes-pronos" ||
     route.path === "/nos-pronos" ||
     route.path === "/ligues" ||
-    route.path.startsWith("/ligue/"),
+    route.path.startsWith("/ligue/") ||
+    route.path === "/notifications" ||
+    route.path === "/mon-profil" ||
+    route.path === "/moderation" ||
+    route.path === "/forum" ||
+    route.path.startsWith("/forum/"),
 );
 
 const compteActif = computed(
@@ -291,11 +318,11 @@ function allerEquipe(item) {
           >
             Communauté
             <span
-              v-if="utilisateur && nbMatchsSansProno > 0"
+              v-if="utilisateur && badgeCommunaute > 0"
               class="badge-nav-pronos"
-              :title="`${nbMatchsSansProno} match(s) à pronostiquer bientôt`"
+              :title="`${badgeCommunaute} alerte(s) communauté`"
             >
-              {{ nbMatchsSansProno > 9 ? "9+" : nbMatchsSansProno }}
+              {{ badgeCommunaute > 9 ? "9+" : badgeCommunaute }}
             </span>
             <span class="fleche-nav" aria-hidden="true">▾</span>
           </button>
@@ -349,6 +376,39 @@ function allerEquipe(item) {
             >
               Ligues privées
             </router-link>
+            <router-link
+              v-if="utilisateur"
+              class="lien-menu-nav"
+              role="menuitem"
+              to="/notifications"
+              :class="{ actif: route.path === '/notifications' }"
+            >
+              Notifications
+              <span
+                v-if="nbNotifications > 0"
+                class="badge-nav-pronos"
+                :title="`${nbNotifications} notification(s)`"
+              >
+                {{ nbNotifications > 9 ? "9+" : nbNotifications }}
+              </span>
+            </router-link>
+            <router-link
+              v-if="utilisateur?.est_admin"
+              class="lien-menu-nav"
+              role="menuitem"
+              to="/moderation"
+              :class="{ actif: route.path === '/moderation' }"
+            >
+              Modération
+            </router-link>
+            <router-link
+              class="lien-menu-nav"
+              role="menuitem"
+              to="/forum"
+              :class="{ actif: route.path === '/forum' || route.path.startsWith('/forum/') }"
+            >
+              Forum
+            </router-link>
           </div>
         </div>
 
@@ -375,7 +435,13 @@ function allerEquipe(item) {
               @click.stop="basculerMenu('compte')"
               @keydown="surToucheBoutonMenu($event, 'compte')"
             >
-              <span class="pseudo-nav">{{ utilisateur.pseudo }}</span>
+              <AvatarUtilisateur
+                :pseudo="utilisateur.pseudo"
+                :avatar-id="utilisateur.avatar_id"
+                :taille="28"
+                class="avatar-nav"
+              />
+              <span class="pseudo-nav">{{ formaterPseudoAffichage(utilisateur.pseudo) }}</span>
               <span class="fleche-nav" aria-hidden="true">▾</span>
             </button>
             <div
@@ -386,6 +452,14 @@ function allerEquipe(item) {
               aria-labelledby="bouton-nav-compte"
               @click.stop
             >
+              <router-link
+                class="lien-menu-nav"
+                role="menuitem"
+                to="/mon-profil"
+                :class="{ actif: route.path === '/mon-profil' }"
+              >
+                Mon profil
+              </router-link>
               <button
                 type="button"
                 class="lien-menu-nav lien-menu-action"

@@ -13,8 +13,13 @@ def fichier_communaute_temp(tmp_path, monkeypatch):
     with communaute._verrou_limite:
         communaute._historique_commentaires.clear()
         communaute._historique_pronostics.clear()
+        communaute._historique_sondages_match.clear()
         communaute._historique_reactions.clear()
         communaute._historique_ligues.clear()
+        communaute._historique_messages_ligue.clear()
+        communaute._historique_connexion_ip.clear()
+        communaute._historique_connexion_identifiant.clear()
+        communaute._historique_inscription_ip.clear()
     communaute.initialiser_base()
     return chemin
 
@@ -891,3 +896,453 @@ def test_mes_ligues_liste(client_communaute):
     assert liste.status_code == 200
     assert len(liste.json()["ligues"]) == 1
     assert liste.json()["ligues"][0]["nom"] == "Ma ligue"
+    assert "lien_invitation" in liste.json()["ligues"][0]
+
+
+def test_commentaire_spam_url_refuse(client_communaute):
+    _inscrire(client_communaute, email="spam@exemple.fr", pseudo="Spammeur")
+    reponse = client_communaute.post(
+        "/api/communaute/commentaires",
+        json={
+            "championnat": "La Liga",
+            "saison": "2026-2027",
+            "domicile": "Barcelona",
+            "exterieur": "Athletic",
+            "contenu": "Regarde https://exemple.com c'est ouf",
+        },
+    )
+    assert reponse.status_code == 400
+
+
+def test_profil_enrichi_maj(client_communaute):
+    _inscrire(client_communaute, email="bio@exemple.fr", pseudo="BioFan")
+    maj = client_communaute.patch(
+        "/api/communaute/moi/profil",
+        json={"bio": "Fan du ballon rond", "equipe_favorite": "Barcelona"},
+    )
+    assert maj.status_code == 200
+    assert maj.json()["utilisateur"]["bio"] == "Fan du ballon rond"
+    assert maj.json()["utilisateur"]["equipe_favorite"] == "Barcelona"
+
+    profil = client_communaute.get("/api/communaute/profil/BioFan")
+    assert profil.status_code == 200
+    assert profil.json()["profil"]["bio"] == "Fan du ballon rond"
+    assert profil.json()["profil"]["equipe_favorite"] == "Barcelona"
+    assert "taux_exacts" in profil.json()["profil"]
+    assert "historique_recent" in profil.json()["profil"]
+
+
+def test_catalogue_avatars(client_communaute):
+    reponse = client_communaute.get("/api/communaute/avatars")
+    assert reponse.status_code == 200
+    avatars = reponse.json()["avatars"]
+    assert len(avatars) == 80
+    assert avatars[0]["id"] == "joueur-foot-01"
+    assert avatars[0]["libelle"]
+    assert avatars[11]["id"] == "joueur-foot-12"
+    assert avatars[12]["id"] == "avatar-legende-01"
+    assert avatars[29]["id"] == "avatar-legende-18"
+    assert avatars[30]["id"] == "avatar-legende-b-01"
+    assert avatars[30]["libelle"] == "Légende foot 19"
+    assert avatars[-1]["id"] == "avatar-legende-b-50"
+    assert avatars[-1]["libelle"] == "Légende foot 68"
+
+
+def test_profil_avatar_maj(client_communaute):
+    _inscrire(client_communaute, email="avatar@exemple.fr", pseudo="AvatarFan")
+    maj = client_communaute.patch(
+        "/api/communaute/moi/profil",
+        json={"avatar_id": "joueur-foot-01"},
+    )
+    assert maj.status_code == 200
+    assert maj.json()["utilisateur"]["avatar_id"] == "joueur-foot-01"
+
+    moi = client_communaute.get("/api/communaute/moi")
+    assert moi.json()["utilisateur"]["avatar_id"] == "joueur-foot-01"
+
+    profil = client_communaute.get("/api/communaute/profil/AvatarFan")
+    assert profil.json()["profil"]["avatar_id"] == "joueur-foot-01"
+
+    legacy = client_communaute.patch(
+        "/api/communaute/moi/profil",
+        json={"avatar_id": "ballon-vert"},
+    )
+    assert legacy.status_code == 200
+    assert legacy.json()["utilisateur"]["avatar_id"] == "joueur-foot-03"
+
+    invalide = client_communaute.patch(
+        "/api/communaute/moi/profil",
+        json={"avatar_id": "inconnu"},
+    )
+    assert invalide.status_code == 400
+
+    reinit = client_communaute.patch(
+        "/api/communaute/moi/profil",
+        json={"avatar_id": ""},
+    )
+    assert reinit.status_code == 200
+    assert reinit.json()["utilisateur"]["avatar_id"] == ""
+
+    pack_b = client_communaute.patch(
+        "/api/communaute/moi/profil",
+        json={"avatar_id": "avatar-legende-b-25"},
+    )
+    assert pack_b.status_code == 200
+    assert pack_b.json()["utilisateur"]["avatar_id"] == "avatar-legende-b-25"
+
+
+def test_commentaire_inclut_avatar(client_communaute):
+    _inscrire(client_communaute, email="comavatar@exemple.fr", pseudo="ComAvatar")
+    client_communaute.patch(
+        "/api/communaute/moi/profil",
+        json={"avatar_id": "joueur-foot-12"},
+    )
+    reponse = client_communaute.post(
+        "/api/communaute/commentaires",
+        json={
+            "championnat": "La Liga",
+            "saison": "2026-2027",
+            "domicile": "Barcelona",
+            "exterieur": "Athletic",
+            "contenu": "Commentaire avec avatar",
+        },
+    )
+    assert reponse.status_code == 200
+    commentaire = reponse.json()["commentaire"]
+    assert commentaire["avatar_id"] == "joueur-foot-12"
+
+    liste = client_communaute.get(
+        "/api/communaute/commentaires",
+        params={
+            "championnat": "La Liga",
+            "saison": "2026-2027",
+            "domicile": "Barcelona",
+            "exterieur": "Athletic",
+        },
+    )
+    assert liste.json()["commentaires"][0]["avatar_id"] == "joueur-foot-12"
+
+
+def test_notifications_reponse_commentaire(client_communaute):
+    _inscrire(client_communaute, email="auteur@exemple.fr", pseudo="AuteurNotif")
+    parent = client_communaute.post(
+        "/api/communaute/commentaires",
+        json={
+            "championnat": "La Liga",
+            "saison": "2026-2027",
+            "domicile": "Barcelona",
+            "exterieur": "Athletic",
+            "contenu": "Mon commentaire initial",
+        },
+    ).json()["commentaire"]["id"]
+
+    client_communaute.post("/api/communaute/deconnexion")
+    _inscrire(client_communaute, email="repondeur@exemple.fr", pseudo="Repondeur")
+    client_communaute.post(
+        "/api/communaute/commentaires",
+        json={
+            "championnat": "La Liga",
+            "saison": "2026-2027",
+            "domicile": "Barcelona",
+            "exterieur": "Athletic",
+            "contenu": "Ma réponse",
+            "commentaire_parent_id": parent,
+        },
+    )
+
+    client_communaute.post("/api/communaute/deconnexion")
+    client_communaute.post(
+        "/api/communaute/connexion",
+        json={"identifiant": "auteur@exemple.fr", "mot_de_passe": "motdepasse1"},
+    )
+    notifs = client_communaute.get("/api/communaute/notifications")
+    assert notifs.status_code == 200
+    assert notifs.json()["nb_non_lues"] >= 1
+    types = {n["type_notification"] for n in notifs.json()["notifications"]}
+    assert "reponse_commentaire" in types
+
+    compte = client_communaute.get("/api/communaute/notifications/compte")
+    assert compte.status_code == 200
+    assert compte.json()["nb_non_lues"] >= 1
+
+    tout = client_communaute.post("/api/communaute/notifications/lues")
+    assert tout.status_code == 200
+    compte2 = client_communaute.get("/api/communaute/notifications/compte")
+    assert compte2.json()["nb_non_lues"] == 0
+
+
+def test_admin_signalements(client_communaute, monkeypatch):
+    monkeypatch.setattr(communaute, "email_admin_communaute", lambda: "admin@exemple.fr")
+    _inscrire(
+        client_communaute,
+        email="admin@exemple.fr",
+        pseudo="AdminMod",
+    )
+    publication = client_communaute.post(
+        "/api/communaute/commentaires",
+        json={
+            "championnat": "La Liga",
+            "saison": "2026-2027",
+            "domicile": "Barcelona",
+            "exterieur": "Athletic",
+            "contenu": "Commentaire a signaler",
+        },
+    )
+    commentaire_id = publication.json()["commentaire"]["id"]
+
+    client_communaute.post("/api/communaute/deconnexion")
+    _inscrire(client_communaute, email="sig@exemple.fr", pseudo="Signaleur")
+    client_communaute.post(
+        f"/api/communaute/commentaires/{commentaire_id}/signaler",
+        json={"motif": "spam"},
+    )
+
+    client_communaute.post("/api/communaute/deconnexion")
+    client_communaute.post(
+        "/api/communaute/connexion",
+        json={"identifiant": "admin@exemple.fr", "mot_de_passe": "motdepasse1"},
+    )
+    file_ = client_communaute.get("/api/communaute/admin/signalements")
+    assert file_.status_code == 200
+    assert len(file_.json()["signalements"]) >= 1
+    sid = file_.json()["signalements"][0]["id"]
+
+    traite = client_communaute.post(
+        f"/api/communaute/admin/signalements/{sid}/traiter",
+        json={"statut": "traite"},
+    )
+    assert traite.status_code == 200
+    ouverts = client_communaute.get(
+        "/api/communaute/admin/signalements",
+        params={"statut": "ouvert"},
+    )
+    assert all(s["id"] != sid for s in ouverts.json()["signalements"])
+
+
+def test_pronostics_lot(client_communaute, fichier_base_temp, monkeypatch):
+    monkeypatch.setattr(communaute, "FICHIER_FOOTBALL", fichier_base_temp)
+    import sqlite3
+    from datetime import date, timedelta
+
+    jour = (date.today() + timedelta(days=25)).isoformat()
+    connexion = sqlite3.connect(fichier_base_temp)
+    connexion.execute(
+        """
+        INSERT INTO calendrier (date, heure, journee, championnat, saison, domicile, exterieur)
+        VALUES (?, '20:00', '9', 'La Liga', '2026-2027', 'Barcelona', 'Valencia')
+        """,
+        (jour,),
+    )
+    connexion.execute(
+        """
+        INSERT INTO calendrier (date, heure, journee, championnat, saison, domicile, exterieur)
+        VALUES (?, '18:00', '9', 'La Liga', '2026-2027', 'Sevilla', 'Getafe')
+        """,
+        (jour,),
+    )
+    connexion.commit()
+    connexion.close()
+
+    _inscrire(client_communaute, email="lot@exemple.fr", pseudo="LotProno")
+    lot = client_communaute.post(
+        "/api/communaute/pronostics/lot",
+        json={
+            "pronostics": [
+                {
+                    "championnat": "La Liga",
+                    "saison": "2026-2027",
+                    "domicile": "Barcelona",
+                    "exterieur": "Valencia",
+                    "type_pronostic": "1x2",
+                    "resultat_1x2": "1",
+                },
+                {
+                    "championnat": "La Liga",
+                    "saison": "2026-2027",
+                    "domicile": "Sevilla",
+                    "exterieur": "Getafe",
+                    "type_pronostic": "score",
+                    "buts_domicile": 2,
+                    "buts_exterieur": 1,
+                },
+            ]
+        },
+    )
+    assert lot.status_code == 200
+    assert lot.json()["nb_ok"] == 2
+
+    mes = client_communaute.get("/api/communaute/pronostics/mes-pronos")
+    assert mes.status_code == 200
+    assert "stats" in mes.json()
+    assert "taux_exacts" in mes.json()["stats"]
+
+
+def test_messages_ligue_et_classement_journee(
+    client_communaute, fichier_communaute_temp, fichier_base_temp, monkeypatch
+):
+    monkeypatch.setattr(communaute, "FICHIER_FOOTBALL", fichier_base_temp)
+    import sqlite3
+
+    connexion = sqlite3.connect(fichier_base_temp)
+    connexion.execute(
+        """
+        INSERT INTO calendrier (date, heure, journee, championnat, saison, domicile, exterieur)
+        VALUES ('2026-08-20', '20:00', '3', 'La Liga', '2026-2027', 'Barcelona', 'Sevilla')
+        """
+    )
+    connexion.commit()
+    connexion.close()
+
+    _inscrire(client_communaute, email="chat@exemple.fr", pseudo="Chatteur")
+    creation = client_communaute.post(
+        "/api/communaute/ligues",
+        json={"nom": "Ligue chat"},
+    )
+    code = creation.json()["ligue"]["code_invitation"]
+
+    msg = client_communaute.post(
+        f"/api/communaute/ligues/{code}/messages",
+        json={"contenu": "Bonjour la ligue"},
+    )
+    assert msg.status_code == 200
+
+    liste = client_communaute.get(f"/api/communaute/ligues/{code}/messages")
+    assert liste.status_code == 200
+    assert len(liste.json()["messages"]) == 1
+
+    msg_emoji = client_communaute.post(
+        f"/api/communaute/ligues/{code}/messages",
+        json={"contenu": "Allez ⚽🔥"},
+    )
+    assert msg_emoji.status_code == 200
+    assert msg_emoji.json()["message"]["contenu"] == "Allez ⚽🔥"
+
+    uid = client_communaute.get("/api/communaute/moi").json()["utilisateur"]["id"]
+    _inserer_pronostic_direct(
+        fichier_communaute_temp,
+        uid,
+        {
+            "championnat": "La Liga",
+            "saison": "2026-2027",
+            "domicile": "Barcelona",
+            "exterieur": "Sevilla",
+            "type_pronostic": "score",
+            "buts_domicile": 2,
+            "buts_exterieur": 0,
+        },
+    )
+
+    classement = client_communaute.get(
+        f"/api/communaute/ligues/{code}/classement",
+        params={"championnat": "La Liga", "saison": "2026-2027", "journee": "3"},
+    )
+    assert classement.status_code == 200
+    assert classement.json()["journee"] == "3"
+    assert len(classement.json()["classement"]) >= 1
+
+
+def test_cookie_secure_selon_env(monkeypatch):
+    monkeypatch.delenv("COOKIE_SECURE", raising=False)
+    monkeypatch.delenv("ENVIRONNEMENT", raising=False)
+    assert communaute.cookie_secure_actif() is False
+
+    monkeypatch.setenv("COOKIE_SECURE", "1")
+    assert communaute.cookie_secure_actif() is True
+
+    monkeypatch.setenv("COOKIE_SECURE", "0")
+    monkeypatch.setenv("ENVIRONNEMENT", "production")
+    assert communaute.cookie_secure_actif() is False
+
+    monkeypatch.delenv("COOKIE_SECURE", raising=False)
+    monkeypatch.setenv("ENVIRONNEMENT", "production")
+    assert communaute.cookie_secure_actif() is True
+
+
+def test_cookie_session_flag_secure(client_communaute, monkeypatch):
+    monkeypatch.setenv("COOKIE_SECURE", "1")
+    reponse = _inscrire(client_communaute, email="secure@exemple.fr", pseudo="SecureUser")
+    assert reponse.status_code == 200
+    set_cookie = reponse.headers.get("set-cookie", "")
+    assert "session_communaute=" in set_cookie
+    assert "Secure" in set_cookie
+
+
+def test_cookie_session_sans_secure_en_dev(client_communaute, monkeypatch):
+    monkeypatch.setenv("COOKIE_SECURE", "0")
+    monkeypatch.delenv("ENVIRONNEMENT", raising=False)
+    reponse = _inscrire(client_communaute, email="devcookie@exemple.fr", pseudo="DevCookie")
+    assert reponse.status_code == 200
+    set_cookie = reponse.headers.get("set-cookie", "")
+    assert "session_communaute=" in set_cookie
+    assert "Secure" not in set_cookie
+
+
+def test_limite_connexion_par_ip(client_communaute, monkeypatch):
+    monkeypatch.setattr(communaute, "LIMITE_CONNEXION", 3)
+    _inscrire(client_communaute)
+    client_communaute.post("/api/communaute/deconnexion")
+
+    for _ in range(3):
+        reponse = client_communaute.post(
+            "/api/communaute/connexion",
+            json={"identifiant": "Testeur", "mot_de_passe": "mauvaismdp"},
+        )
+        assert reponse.status_code == 401
+
+    bloque = client_communaute.post(
+        "/api/communaute/connexion",
+        json={"identifiant": "Testeur", "mot_de_passe": "motdepasse1"},
+    )
+    assert bloque.status_code == 429
+    assert "Trop de tentatives" in bloque.json()["detail"]
+
+
+def test_limite_inscription_par_ip(client_communaute, monkeypatch):
+    monkeypatch.setattr(communaute, "LIMITE_INSCRIPTION", 2)
+
+    premiere = _inscrire(client_communaute, email="a1@exemple.fr", pseudo="UserA1")
+    assert premiere.status_code == 200
+    deuxieme = _inscrire(client_communaute, email="a2@exemple.fr", pseudo="UserA2")
+    assert deuxieme.status_code == 200
+    troisieme = _inscrire(client_communaute, email="a3@exemple.fr", pseudo="UserA3")
+    assert troisieme.status_code == 429
+    assert "inscription" in troisieme.json()["detail"].lower()
+
+
+def test_sondage_match_1n2(client_communaute):
+    _inscrire(client_communaute)
+    params = {
+        "championnat": "La Liga",
+        "saison": "2026-2027",
+        "domicile": "Real Madrid",
+        "exterieur": "Barcelona",
+    }
+    lecture = client_communaute.get("/api/communaute/sondage-match", params=params)
+    assert lecture.status_code == 200
+    sondage = lecture.json()["sondage"]
+    assert sondage["question"] == "Qui va gagner ?"
+    assert [o["choix"] for o in sondage["options"]] == ["1", "N", "2"]
+    assert sondage["a_vote"] is False
+
+    vote = client_communaute.post(
+        "/api/communaute/sondage-match",
+        json={**params, "choix": "1"},
+    )
+    assert vote.status_code == 200
+    apres = vote.json()["sondage"]
+    assert apres["a_vote"] is True
+    assert apres["mon_choix"] == "1"
+    assert apres["nb_votes_total"] == 1
+    assert apres["options"][0]["pourcentage"] == 100.0
+
+    doublon = client_communaute.post(
+        "/api/communaute/sondage-match",
+        json={**params, "choix": "N"},
+    )
+    assert doublon.status_code == 409
+
+    mauvais = client_communaute.post(
+        "/api/communaute/sondage-match",
+        json={**params, "choix": "X"},
+    )
+    assert mauvais.status_code == 400

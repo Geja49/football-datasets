@@ -374,9 +374,6 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <p class="mention-auth">
-        Contenu informatif — pas un conseil en paris. 18+.
-      </p>
     </div>
   </div>
 </template>
@@ -663,24 +660,6 @@ onUnmounted(() => {
   color: var(--texte-doux);
   font-size: 0.85rem;
   text-transform: none;
-}
-
-.mention-auth {
-  margin: 16px 8px 0;
-  text-align: center;
-  color: var(--texte-doux);
-  font-size: 0.8rem;
-}
-
-.mention-auth::before {
-  content: "";
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  margin-right: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  vertical-align: middle;
 }
 
 @media (max-width: 480px) {

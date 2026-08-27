@@ -2,6 +2,8 @@
 import { computed, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { CHAMPIONNATS_DEFAUT } from "../championnats.js";
+import AvatarUtilisateur from "../composants/AvatarUtilisateur.vue";
+import { formaterPseudoAffichage } from "../formaterPseudo.js";
 import { formaterDate, formaterHeureLocale } from "../dates.js";
 import {
   chargerAccueil,
@@ -10,6 +12,7 @@ import {
   chargerEquipesAnalyse,
   chargerPronosticMatch,
   chargerProchainsMatchs,
+  chargerSondageMatch,
   chargerUtilisateurConnecte,
   deconnecterUtilisateur,
   deposerPronostic,
@@ -17,9 +20,11 @@ import {
   signalerCommentaireMatch,
   supprimerCommentaireMatch,
   basculerReactionCommentaire,
+  voterSondageMatch,
 } from "../services/api.js";
 import { definirExtraNavigation, viderExtraNavigation } from "../contexteNavigation.js";
-import AnimationJoueurBallon from "../composants/AnimationJoueurBallon.vue";
+import ChargementPage from "../composants/ChargementPage.vue";
+import BlocSondage from "../composants/BlocSondage.vue";
 
 const route = useRoute();
 const routeur = useRouter();
@@ -39,7 +44,6 @@ const matchsEquipe = ref([]);
 const matchsLigue = ref([]);
 const utilisateur = ref(null);
 const commentaires = ref([]);
-const disclaimerCommunaute = ref("");
 const nouveauCommentaire = ref("");
 const erreurCommentaire = ref("");
 const messageCommentaire = ref("");
@@ -62,6 +66,10 @@ const erreurPronostic = ref("");
 const messagePronostic = ref("");
 const chargementPronostic = ref(false);
 const envoiPronostic = ref(false);
+const sondageMatch = ref(null);
+const chargementSondage = ref(false);
+const envoiSondageMatch = ref(false);
+const erreurSondage = ref("");
 
 async function chargerSaisons() {
   const meta = await chargerAccueil();
@@ -115,6 +123,7 @@ async function lancerAnalyse() {
     );
     await chargerCommentaires();
     await chargerPronostic();
+    await chargerSondageCommunautaire();
     routeur.replace({
       path: "/match",
       query: {
@@ -217,6 +226,7 @@ watch([domicile, exterieur], () => {
 watch(utilisateur, () => {
   if (data.value) {
     chargerPronostic();
+    chargerSondageCommunautaire();
   }
 });
 
@@ -256,7 +266,9 @@ const pronosticVerrouille = computed(() => {
 const confrontations = computed(() => (data.value && data.value.confrontations) || null);
 const scenarios = computed(() => pred.value.scenarios || []);
 const cartons = computed(() => pred.value.cartons || null);
-const bilan = computed(() => pred.value.bilan || null);
+  const bloc = pred.value.comparaison;
+  return bloc && bloc.lignes && bloc.lignes.length ? bloc.lignes : [];
+});
 const recit = computed(() => pred.value.recit || []);
 const lectureMarche = computed(() => {
   const bloc = data.value && data.value.lecture_marche;
@@ -267,10 +279,87 @@ function largeur(pct) {
   return { width: `${pct || 0}%` };
 }
 
-function couple(a, b) {
-  if (a == null && b == null) return "—";
-  return `${a ?? "—"} – ${b ?? "—"}`;
+function formaterStatMatch(valeur, decimales = 0) {
+  if (valeur == null || valeur === "") return "—";
+  const nombre = Number(valeur);
+  if (Number.isNaN(nombre)) return "—";
+  if (decimales > 0) return nombre.toFixed(decimales).replace(".", ",");
+  return String(Math.round(nombre));
 }
+
+function partsStatMatch(dom, ext) {
+  const a = dom == null || dom === "" || Number.isNaN(Number(dom)) ? null : Number(dom);
+  const b = ext == null || ext === "" || Number.isNaN(Number(ext)) ? null : Number(ext);
+  if (a == null && b == null) return { dom: 50, ext: 50 };
+  const va = a ?? 0;
+  const vb = b ?? 0;
+  const total = va + vb;
+  if (total === 0) return { dom: 50, ext: 50 };
+  return { dom: (va / total) * 100, ext: (vb / total) * 100 };
+}
+
+function styleBarreStat(dom, ext, cote) {
+  const parts = partsStatMatch(dom, ext);
+  const pct = cote === "dom" ? parts.dom : parts.ext;
+  return { width: `${Math.max(pct, pct > 0 ? 6 : 0)}%` };
+}
+
+function construireLignesStats(source, definitions) {
+  if (!source) return [];
+  return definitions
+    .map(({ libelle, cleDom, cleExt, decimales = 0 }) => ({
+      libelle,
+      dom: source[cleDom],
+      ext: source[cleExt],
+      decimales,
+    }))
+    .filter((ligne) => ligne.dom != null || ligne.ext != null);
+}
+
+const DEFINITIONS_STATS_JOUE = [
+  { libelle: "Occasions (xG)", cleDom: "xg_domicile", cleExt: "xg_exterieur", decimales: 1 },
+  { libelle: "Buts mi-temps", cleDom: "buts_domicile_mt", cleExt: "buts_exterieur_mt" },
+  { libelle: "Tirs", cleDom: "tirs_domicile", cleExt: "tirs_exterieur" },
+  { libelle: "Tirs cadrés", cleDom: "tirs_cadres_domicile", cleExt: "tirs_cadres_exterieur" },
+  { libelle: "Corners", cleDom: "corners_domicile", cleExt: "corners_exterieur" },
+  { libelle: "Fautes", cleDom: "fautes_domicile", cleExt: "fautes_exterieur" },
+  { libelle: "Cartons jaunes", cleDom: "jaunes_domicile", cleExt: "jaunes_exterieur" },
+  { libelle: "Cartons rouges", cleDom: "rouges_domicile", cleExt: "rouges_exterieur" },
+];
+
+const lignesStatsMatch = computed(() => construireLignesStats(matchJoue.value, DEFINITIONS_STATS_JOUE));
+
+const lignesStatsPrevues = computed(() => {
+  if (matchJoue.value) return [];
+  const lignes = [];
+  if (pred.value.xg_prevu_domicile != null && pred.value.xg_prevu_exterieur != null) {
+    lignes.push({
+      libelle: "Occasions prévues (xG)",
+      dom: pred.value.xg_prevu_domicile,
+      ext: pred.value.xg_prevu_exterieur,
+      decimales: 1,
+    });
+  }
+  if (cartons.value) {
+    if (cartons.value.jaunes_domicile != null || cartons.value.jaunes_exterieur != null) {
+      lignes.push({
+        libelle: "Cartons jaunes prévus",
+        dom: cartons.value.jaunes_domicile,
+        ext: cartons.value.jaunes_exterieur,
+        decimales: 1,
+      });
+    }
+    if (cartons.value.rouges_domicile != null || cartons.value.rouges_exterieur != null) {
+      lignes.push({
+        libelle: "Cartons rouges prévus",
+        dom: cartons.value.rouges_domicile,
+        ext: cartons.value.rouges_exterieur,
+        decimales: 2,
+      });
+    }
+  }
+  return lignes;
+});
 
 function texteCote(valeur) {
   if (valeur == null || valeur === "") return "—";
@@ -334,7 +423,6 @@ async function chargerCommentaires() {
       exterieur.value,
     );
     commentaires.value = reponse.commentaires || [];
-    disclaimerCommunaute.value = reponse.disclaimer || "";
   } catch (e) {
     commentaires.value = [];
     erreurCommentaire.value = e.message;
@@ -527,6 +615,67 @@ async function envoyerPronostic() {
   }
 }
 
+async function chargerSondageCommunautaire() {
+  if (!domicile.value || !exterieur.value || domicile.value === exterieur.value) {
+    sondageMatch.value = null;
+    return;
+  }
+  chargementSondage.value = true;
+  erreurSondage.value = "";
+  try {
+    const reponse = await chargerSondageMatch(
+      championnat.value,
+      saison.value,
+      domicile.value,
+      exterieur.value,
+    );
+    sondageMatch.value = reponse.sondage;
+  } catch (e) {
+    sondageMatch.value = null;
+    erreurSondage.value = e.message;
+  } finally {
+    chargementSondage.value = false;
+  }
+}
+
+async function voterSondageCommunautaire(choix) {
+  if (!utilisateur.value) {
+    erreurSondage.value = "Connectez-vous pour voter.";
+    return;
+  }
+  envoiSondageMatch.value = true;
+  erreurSondage.value = "";
+  try {
+    const reponse = await voterSondageMatch({
+      championnat: championnat.value,
+      saison: saison.value,
+      domicile: domicile.value,
+      exterieur: exterieur.value,
+      choix,
+    });
+    sondageMatch.value = reponse.sondage;
+  } catch (e) {
+    erreurSondage.value = e.message;
+  } finally {
+    envoiSondageMatch.value = false;
+  }
+}
+
+function libelleOptionSondage(option) {
+  if (!data.value) return option.libelle;
+  if (option.choix === "1") return `${data.value.domicile.nom} gagne`;
+  if (option.choix === "2") return `${data.value.exterieur.nom} gagne`;
+  return "Match nul";
+}
+
+const optionsSondageAffichees = computed(() => {
+  if (!sondageMatch.value) return [];
+  return (sondageMatch.value.options || []).map((option) => ({
+    ...option,
+    libelle: libelleOptionSondage(option),
+  }));
+});
+
 async function seDeconnecter() {
   await deconnecterUtilisateur();
   utilisateur.value = null;
@@ -598,9 +747,9 @@ async function seDeconnecter() {
 
   <div class="page">
     <p v-if="erreur" class="erreur">{{ erreur }}</p>
-    <AnimationJoueurBallon
+    <ChargementPage
       v-if="chargement"
-      message="Calcul du scénario…"
+      message="Calcul du scénario"
     />
 
     <template v-if="suggestionsVisibles">
@@ -667,7 +816,7 @@ async function seDeconnecter() {
     <p v-else-if="domicile === exterieur" class="erreur">Choisissez deux équipes différentes.</p>
 
     <template v-if="data">
-      <p class="mention">{{ data.avertissement }} Saison des moyennes : {{ data.saison_ligue }}.</p>
+      <p class="mention">Saison des moyennes : {{ data.saison_ligue }}.</p>
 
       <div class="grille-analyse">
         <article
@@ -723,39 +872,94 @@ async function seDeconnecter() {
 
       <div class="bloc carte-scenario" v-if="matchJoue">
         <h2>Ce qui s'est passé</h2>
-        <p class="doux">{{ formaterDate(matchJoue.date) }}</p>
-        <p class="score-gros">
-          {{ data.domicile.nom }} {{ matchJoue.buts_domicile }} – {{ matchJoue.buts_exterieur }}
-          {{ data.exterieur.nom }}
-        </p>
-        <div class="cartes-stats">
-          <div class="carte-stat">
-            <span>Occasions (xG)</span>
-            <strong class="valeur-couple">{{ couple(matchJoue.xg_domicile, matchJoue.xg_exterieur) }}</strong>
+        <p class="doux date-resultat-match">{{ formaterDate(matchJoue.date) }}</p>
+
+        <div class="entete-resultat-match">
+          <div class="equipe-resultat equipe-resultat-dom">
+            <img
+              v-if="data.domicile.url_logo"
+              :src="data.domicile.url_logo"
+              :alt="data.domicile.nom"
+              class="blason-resultat"
+            />
+            <span class="nom-equipe-resultat">{{ data.domicile.nom }}</span>
           </div>
-          <div class="carte-stat">
-            <span>Tirs</span>
-            <strong class="valeur-couple">{{ couple(matchJoue.tirs_domicile, matchJoue.tirs_exterieur) }}</strong>
-          </div>
-          <div class="carte-stat">
-            <span>Cadrés</span>
-            <strong class="valeur-couple">{{ couple(matchJoue.tirs_cadres_domicile, matchJoue.tirs_cadres_exterieur) }}</strong>
-          </div>
-          <div class="carte-stat">
-            <span>Jaunes</span>
-            <strong class="valeur-couple">{{ couple(matchJoue.jaunes_domicile, matchJoue.jaunes_exterieur) }}</strong>
-          </div>
-          <div class="carte-stat">
-            <span>Rouges</span>
-            <strong class="valeur-couple">{{ couple(matchJoue.rouges_domicile, matchJoue.rouges_exterieur) }}</strong>
+          <p class="score-match-final" :aria-label="`Score final : ${matchJoue.buts_domicile} à ${matchJoue.buts_exterieur}`">
+            <span class="score-chiffre">{{ matchJoue.buts_domicile }}</span>
+            <span class="score-separateur" aria-hidden="true">–</span>
+            <span class="score-chiffre">{{ matchJoue.buts_exterieur }}</span>
+          </p>
+          <div class="equipe-resultat equipe-resultat-ext">
+            <span class="nom-equipe-resultat">{{ data.exterieur.nom }}</span>
+            <img
+              v-if="data.exterieur.url_logo"
+              :src="data.exterieur.url_logo"
+              :alt="data.exterieur.nom"
+              class="blason-resultat"
+            />
           </div>
         </div>
-        <div class="bloc-bilan" v-if="bilan && bilan.points && bilan.points.length">
-          <h3>Prévu et réel</h3>
-          <ul class="liste-points">
-            <li v-for="phrase in bilan.points" :key="phrase">{{ phrase }}</li>
-          </ul>
-        </div>
+
+        <section
+          v-if="lignesStatsMatch.length"
+          class="stats-match"
+          aria-label="Statistiques du match"
+        >
+          <div
+            v-for="ligne in lignesStatsMatch"
+            :key="ligne.libelle"
+            class="ligne-stat-match"
+          >
+            <span class="valeur-stat valeur-stat-dom">
+              {{ formaterStatMatch(ligne.dom, ligne.decimales) }}
+            </span>
+            <div class="centre-stat-match">
+              <span class="libelle-stat-match">{{ ligne.libelle }}</span>
+              <div
+                class="barre-stat-match"
+                role="img"
+                :aria-label="`${ligne.libelle} : ${formaterStatMatch(ligne.dom, ligne.decimales)} contre ${formaterStatMatch(ligne.ext, ligne.decimales)}`"
+              >
+                <div class="seg-stat-dom" :style="styleBarreStat(ligne.dom, ligne.ext, 'dom')"></div>
+                <div class="seg-stat-ext" :style="styleBarreStat(ligne.dom, ligne.ext, 'ext')"></div>
+              </div>
+            </div>
+            <span class="valeur-stat valeur-stat-ext">
+              {{ formaterStatMatch(ligne.ext, ligne.decimales) }}
+            </span>
+          </div>
+        </section>
+        <p v-else class="doux">Statistiques détaillées indisponibles pour ce match.</p>
+
+        <section
+          v-if="comparaisonPrevisions.length"
+          class="comparaison-previsions-reel"
+          aria-label="Prévisions vs réalité"
+        >
+          <h3>Prévisions vs réalité</h3>
+          <div class="enveloppe-tableau">
+            <table class="table-comparaison-previsions">
+              <thead>
+                <tr>
+                  <th>Statistique</th>
+                  <th class="droit">Dom. prévu</th>
+                  <th class="droit">Dom. réel</th>
+                  <th class="droit">Ext. prévu</th>
+                  <th class="droit">Ext. réel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="ligne in comparaisonPrevisions" :key="ligne.statistique">
+                  <th scope="row">{{ ligne.statistique }}</th>
+                  <td class="droit">{{ formaterStatMatch(ligne.prevu_domicile, ligne.decimales) }}</td>
+                  <td class="droit">{{ formaterStatMatch(ligne.reel_domicile, ligne.decimales) }}</td>
+                  <td class="droit">{{ formaterStatMatch(ligne.prevu_exterieur, ligne.decimales) }}</td>
+                  <td class="droit">{{ formaterStatMatch(ligne.reel_exterieur, ligne.decimales) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
       </div>
 
       <div class="bloc carte-scenario">
@@ -766,17 +970,43 @@ async function seDeconnecter() {
 
         <div class="resume-analyse" aria-label="Résumé du scénario">
           <div class="cartes-stats cartes-stats-resume">
-            <div class="carte-stat">
-              <span>Occasions prévues domicile (xG)</span>
-              <strong>{{ pred.xg_prevu_domicile }}</strong>
-            </div>
-            <div class="carte-stat">
-              <span>Occasions prévues extérieur (xG)</span>
-              <strong>{{ pred.xg_prevu_exterieur }}</strong>
-            </div>
-            <div class="carte-stat">
+            <div class="carte-stat carte-stat-large">
               <span>Score le plus probable</span>
               <strong>{{ pred.score_plus_probable }}</strong>
+            </div>
+          </div>
+
+          <div
+            v-if="lignesStatsPrevues.length"
+            class="stats-match stats-match-prevues"
+            aria-label="Statistiques prévues"
+          >
+            <div
+              v-for="ligne in lignesStatsPrevues"
+              :key="ligne.libelle"
+              class="ligne-stat-match ligne-stat-prevue"
+            >
+              <span class="valeur-stat valeur-stat-dom">
+                {{ formaterStatMatch(ligne.dom, ligne.decimales) }}
+              </span>
+              <div class="centre-stat-match">
+                <span class="libelle-stat-match">{{ ligne.libelle }}</span>
+                <div
+                  class="barre-stat-match"
+                  role="img"
+                  :aria-label="`${ligne.libelle} : ${formaterStatMatch(ligne.dom, ligne.decimales)} contre ${formaterStatMatch(ligne.ext, ligne.decimales)}`"
+                >
+                  <div class="seg-stat-dom" :style="styleBarreStat(ligne.dom, ligne.ext, 'dom')"></div>
+                  <div class="seg-stat-ext" :style="styleBarreStat(ligne.dom, ligne.ext, 'ext')"></div>
+                </div>
+                <div class="legendes-xg-prevu">
+                  <span>{{ data.domicile.nom }}</span>
+                  <span>{{ data.exterieur.nom }}</span>
+                </div>
+              </div>
+              <span class="valeur-stat valeur-stat-ext">
+                {{ formaterStatMatch(ligne.ext, ligne.decimales) }}
+              </span>
             </div>
           </div>
           <div class="bloc-1n2">
@@ -813,7 +1043,6 @@ async function seDeconnecter() {
                 </span>
               </div>
               <p>{{ lectureMarche.texte }}</p>
-              <p class="doux petit">{{ lectureMarche.disclaimer }}</p>
             </div>
           </div>
           <aside class="colonne-stats" v-if="cartons">
@@ -1020,17 +1249,36 @@ async function seDeconnecter() {
         </p>
       </div>
 
+      <div class="bloc bloc-sondage-match" v-if="data">
+        <header class="entete-bloc">
+          <p class="tag-section">Communauté</p>
+          <h2>Sondage du match</h2>
+        </header>
+        <p v-if="chargementSondage" class="doux">Chargement du sondage…</p>
+        <p v-if="erreurSondage" class="erreur">{{ erreurSondage }}</p>
+        <BlocSondage
+          v-if="sondageMatch"
+          :question="sondageMatch.question"
+          :options="optionsSondageAffichees"
+          :a-vote="sondageMatch.a_vote"
+          :mon-cle="sondageMatch.mon_choix"
+          :nb-votes-total="sondageMatch.nb_votes_total"
+          :connecte="Boolean(utilisateur)"
+          :envoi="envoiSondageMatch"
+          :disclaimer="sondageMatch.disclaimer || ''"
+          cle-option="choix"
+          @voter="voterSondageCommunautaire"
+        />
+        <p class="doux petit">
+          Distinct de votre pronostic privé — un avis rapide 1 / N / 2.
+        </p>
+      </div>
+
       <div class="bloc bloc-commentaires" v-if="data">
         <header class="entete-bloc">
           <p class="tag-section">Communauté</p>
           <h2>Commentaires</h2>
         </header>
-        <p class="mention mention-communaute">
-          {{
-            disclaimerCommunaute ||
-            "Contenu informatif uniquement — pas un conseil en paris sportifs. 18+."
-          }}
-        </p>
 
         <p v-if="chargementCommentaires" class="doux">Chargement des commentaires…</p>
         <p v-if="erreurCommentaire" class="erreur">{{ erreurCommentaire }}</p>
@@ -1039,7 +1287,14 @@ async function seDeconnecter() {
         <ul v-if="commentaires.length" class="liste-commentaires">
           <li v-for="item in commentaires" :key="item.id" class="carte-commentaire">
             <header class="entete-commentaire">
-              <strong>{{ item.pseudo }}</strong>
+              <span class="auteur-commentaire">
+                <AvatarUtilisateur
+                  :pseudo="item.pseudo"
+                  :avatar-id="item.avatar_id"
+                  :taille="28"
+                />
+                <strong>{{ formaterPseudoAffichage(item.pseudo) }}</strong>
+              </span>
               <time class="doux petit">{{ formaterDateCommentaire(item.cree_le) }}</time>
             </header>
             <p class="texte-commentaire">{{ item.contenu }}</p>
@@ -1101,7 +1356,7 @@ async function seDeconnecter() {
                   rows="2"
                   maxlength="500"
                   required
-                  placeholder="Répondre (informatif, pas un conseil de pari)…"
+                  placeholder="Votre réponse…"
                 ></textarea>
               </label>
               <button type="submit" class="bouton-principal" :disabled="envoiCommentaire">
@@ -1116,7 +1371,14 @@ async function seDeconnecter() {
                 class="carte-commentaire carte-reponse"
               >
                 <header class="entete-commentaire">
-                  <strong>{{ reponse.pseudo }}</strong>
+                  <span class="auteur-commentaire">
+                    <AvatarUtilisateur
+                      :pseudo="reponse.pseudo"
+                      :avatar-id="reponse.avatar_id"
+                      :taille="24"
+                    />
+                    <strong>{{ formaterPseudoAffichage(reponse.pseudo) }}</strong>
+                  </span>
                   <time class="doux petit">{{ formaterDateCommentaire(reponse.cree_le) }}</time>
                 </header>
                 <p class="texte-commentaire">{{ reponse.contenu }}</p>
@@ -1154,7 +1416,7 @@ async function seDeconnecter() {
             </ul>
           </li>
         </ul>
-        <p v-else-if="!chargementCommentaires" class="doux">
+        <p v-else-if="!chargementCommentaires" class="doux message-vide-communaute">
           Aucun commentaire pour ce match. Soyez le premier à réagir.
         </p>
 
@@ -1170,7 +1432,7 @@ async function seDeconnecter() {
               rows="3"
               maxlength="500"
               required
-              placeholder="Partagez votre lecture du match (informatif, pas un conseil de pari)…"
+              placeholder="Partagez votre lecture du match…"
             ></textarea>
           </label>
           <button type="submit" class="bouton-principal" :disabled="envoiCommentaire">
@@ -1185,7 +1447,7 @@ async function seDeconnecter() {
         </p>
 
         <p v-if="utilisateur" class="doux session-utilisateur">
-          Connecté en tant que <strong>{{ utilisateur.pseudo }}</strong>
+          Connecté en tant que <strong>{{ formaterPseudoAffichage(utilisateur.pseudo) }}</strong>
           <button type="button" class="lien-action" @click="seDeconnecter">Se déconnecter</button>
         </p>
       </div>

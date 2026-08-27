@@ -15,6 +15,12 @@ const PageMesPronos = () => import("./pages/PageMesPronos.vue");
 const PageClassementPronos = () => import("./pages/PageClassementPronos.vue");
 const PagePronosJournee = () => import("./pages/PagePronosJournee.vue");
 const PageLigues = () => import("./pages/PageLigues.vue");
+const PageForum = () => import("./pages/PageForum.vue");
+const PageForumChampionnat = () => import("./pages/PageForumChampionnat.vue");
+const PageForumSujet = () => import("./pages/PageForumSujet.vue");
+const PageNotifications = () => import("./pages/PageNotifications.vue");
+const PageMonProfil = () => import("./pages/PageMonProfil.vue");
+const PageModeration = () => import("./pages/PageModeration.vue");
 const PageIntrouvable = () => import("./pages/PageIntrouvable.vue");
 
 export default createRouter({
@@ -31,6 +37,12 @@ export default createRouter({
     { path: "/pronos-journee", component: PagePronosJournee },
     { path: "/ligues", component: PageLigues },
     { path: "/ligue/:code", component: PageLigues },
+    { path: "/notifications", component: PageNotifications },
+    { path: "/mon-profil", component: PageMonProfil },
+    { path: "/moderation", component: PageModeration },
+    { path: "/forum", component: PageForum },
+    { path: "/forum/sujet/:id", component: PageForumSujet },
+    { path: "/forum/:championnat", component: PageForumChampionnat },
     { path: "/conditions", component: PageConditions },
     { path: "/glossaire", component: PageGlossaire },
     { path: "/comparer", component: PageComparer },

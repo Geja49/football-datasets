@@ -21,6 +21,10 @@ SITES_CHAMPIONNATS = {
         "url_site": "https://www.ligue1.com",
         "nom_affichage": "Ligue 1",
     },
+    "Super Lig": {
+        "url_site": "https://www.tff.org",
+        "nom_affichage": "Trendyol Süper Lig",
+    },
     "Ligue des champions": {
         "url_site": "",
         "nom_affichage": "Ligue des champions",

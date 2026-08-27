@@ -32,6 +32,7 @@ COMPETITIONS = (
     ("soccer_germany_bundesliga", "Bundesliga"),
     ("soccer_italy_serie_a", "Serie A"),
     ("soccer_france_ligue_one", "Ligue 1"),
+    ("soccer_turkey_super_league", "Super Lig"),
     ("soccer_uefa_champs_league", "Ligue des champions"),
 )
 NOMS_COMPETITIONS = tuple(nom for _, nom in COMPETITIONS)

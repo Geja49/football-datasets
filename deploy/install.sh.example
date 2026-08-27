@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+# Script d'installation commenté — NE PAS exécuter tel quel sans lire chaque étape.
+# Usage prévu : copier les sections une par une, adapter les variables, puis lancer.
+#
+# Prérequis : Ubuntu 22.04+ / Debian 12+, accès root (sudo).
+# Serveur maison : domaine + ports 80/443, ou Cloudflare Tunnel / Tailscale (voir README-DEPLOIEMENT.md).
+# Prérequis VPS classiques : domaine pointant vers le serveur.
+
+set -euo pipefail
+
+# --- Variables à personnaliser ---
+DOMAINE="statsfoot.example.com"
+REPO_URL="https://github.com/VOTRE_ORG/football-datasets.git"
+CHEMIN="/opt/statsfoot"
+UTILISATEUR="statsfoot"
+
+# --- 1. Paquets système ---
+# sudo apt update
+# sudo apt install -y python3 python3-venv python3-pip nginx certbot python3-certbot-nginx git ufw
+
+# Node.js (build frontend uniquement — LTS 20+)
+# curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+# sudo apt install -y nodejs
+
+# --- 2. Utilisateur dédié ---
+# sudo useradd --system --home "$CHEMIN" --shell /usr/sbin/nologin "$UTILISATEUR" || true
+# sudo mkdir -p "$CHEMIN"
+# sudo chown "$UTILISATEUR:$UTILISATEUR" "$CHEMIN"
+
+# --- 3. Clone du dépôt ---
+# sudo -u "$UTILISATEUR" git clone "$REPO_URL" "$CHEMIN"
+# cd "$CHEMIN"
+
+# --- 4. Environnement Python ---
+# sudo -u "$UTILISATEUR" python3 -m venv .venv
+# sudo -u "$UTILISATEUR" .venv/bin/pip install --upgrade pip
+# sudo -u "$UTILISATEUR" .venv/bin/pip install -r site/api/requirements.txt
+
+# --- 5. Fichier .env ---
+# sudo -u "$UTILISATEUR" cp .env.exemple .env
+# sudo -u "$UTILISATEUR" nano .env
+#   Production : ENVIRONNEMENT=production, COOKIE_SECURE=1
+#   ORIGINES_CORS=https://$DOMAINE  (si front séparé ; sinon vide OK derrière Nginx)
+#   EMAIL_ADMIN_COMMUNAUTE, GOOGLE_CLIENT_ID, clés API…
+
+# --- 5b. Sauvegardes (optionnel) ---
+# sudo mkdir -p /var/backups/statsfoot
+# sudo cp "$CHEMIN/deploy/sauvegarder-bases.sh.example" "$CHEMIN/deploy/sauvegarder-bases.sh"
+# sudo chmod +x "$CHEMIN/deploy/sauvegarder-bases.sh"
+# crontab : 30 3 * * * $CHEMIN/deploy/sauvegarder-bases.sh >> /var/log/statsfoot-backup.log 2>&1
+
+# --- 6. Base de données football (si absente) ---
+# sudo -u "$UTILISATEUR" .venv/bin/python scripts/creer_base.py
+# communaute.db est créée automatiquement au premier démarrage de l'API
+
+# --- 7. Build frontend ---
+# cd site/frontend
+# sudo -u "$UTILISATEUR" npm ci
+# sudo -u "$UTILISATEUR" npm run build
+# cd "$CHEMIN"
+
+# --- 8. Service systemd ---
+# sudo cp deploy/statsfoot.service.example /etc/systemd/system/statsfoot.service
+# sudo sed -i "s|/opt/statsfoot|$CHEMIN|g" /etc/systemd/system/statsfoot.service
+# sudo sed -i "s|User=statsfoot|User=$UTILISATEUR|g" /etc/systemd/system/statsfoot.service
+# sudo systemctl daemon-reload
+# sudo systemctl enable --now statsfoot
+
+# --- 9. Nginx (d'abord HTTP seul pour certbot, puis activer HTTPS) ---
+# sudo cp deploy/nginx-statsfoot.conf.example /etc/nginx/sites-available/statsfoot
+# sudo sed -i "s|statsfoot.example.com|$DOMAINE|g" /etc/nginx/sites-available/statsfoot
+# sudo sed -i "s|/opt/statsfoot|$CHEMIN|g" /etc/nginx/sites-available/statsfoot
+# sudo ln -sf /etc/nginx/sites-available/statsfoot /etc/nginx/sites-enabled/
+# sudo rm -f /etc/nginx/sites-enabled/default
+# sudo nginx -t && sudo systemctl reload nginx
+
+# --- 10. Certificat Let's Encrypt ---
+# sudo certbot --nginx -d "$DOMAINE"
+# sudo certbot renew --dry-run
+
+# --- 11. Pare-feu ---
+# sudo ufw allow OpenSSH
+# sudo ufw allow 'Nginx Full'
+# sudo ufw enable
+
+# --- 12. Vérifications ---
+# curl -sI "https://$DOMAINE/api/accueil" | head
+# curl -s "https://$DOMAINE/api/communaute/config" | head
+# systemctl status statsfoot
+
+echo "Script modèle — décommentez les sections et adaptez les variables avant exécution."

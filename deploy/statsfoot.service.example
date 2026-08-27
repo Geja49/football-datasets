@@ -1,0 +1,37 @@
+# Exemple service systemd — copier vers /etc/systemd/system/statsfoot.service
+# puis : sudo systemctl daemon-reload && sudo systemctl enable --now statsfoot
+#
+# Remplacer /opt/statsfoot par le chemin réel du dépôt.
+# L'API doit être lancée depuis la RACINE du dépôt (chemins donnees/, .env).
+
+[Unit]
+Description=StatsFoot API (FastAPI / uvicorn)
+After=network.target
+
+[Service]
+Type=simple
+User=statsfoot
+Group=statsfoot
+WorkingDirectory=/opt/statsfoot
+Environment=PYTHONUNBUFFERED=1
+
+# Optionnel : variables d'environnement explicites (sinon .env chargé par le code)
+# EnvironmentFile=/opt/statsfoot/.env
+# Environment=ENVIRONNEMENT=production
+# Environment=COOKIE_SECURE=1
+
+ExecStart=/opt/statsfoot/.venv/bin/python -m uvicorn site.api.serveur:app \
+    --host 127.0.0.1 \
+    --port 8001 \
+    --workers 1
+# Important : workers=1 (SQLite). Ne pas augmenter sans migrer vers Postgres.
+
+Restart=on-failure
+RestartSec=5
+
+# Durcissement minimal
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

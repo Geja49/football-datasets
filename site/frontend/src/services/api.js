@@ -286,9 +286,183 @@ export function chargerLiguePrivee(code) {
   return envoyerJson(`/api/communaute/ligues/${encodeURIComponent(code)}`);
 }
 
-export function chargerClassementLigue(code, championnat, saison) {
+export function chargerClassementLigue(code, championnat, saison, journee = "") {
   const params = new URLSearchParams({ championnat, saison });
+  if (journee) params.set("journee", journee);
   return envoyerJson(
     `/api/communaute/ligues/${encodeURIComponent(code)}/classement?${params}`,
   );
+}
+
+export function majProfilCommunaute(donnees) {
+  return envoyerJson("/api/communaute/moi/profil", {
+    method: "PATCH",
+    body: JSON.stringify(donnees),
+  });
+}
+
+export function chargerCatalogueAvatars() {
+  return envoyerJson("/api/communaute/avatars");
+}
+
+export function chargerNotifications() {
+  return envoyerJson("/api/communaute/notifications");
+}
+
+export function chargerCompteNotifications() {
+  return envoyerJson("/api/communaute/notifications/compte");
+}
+
+export function marquerNotificationLue(notificationId) {
+  return envoyerJson(`/api/communaute/notifications/${notificationId}/lue`, {
+    method: "POST",
+  });
+}
+
+export function marquerToutesNotificationsLues() {
+  return envoyerJson("/api/communaute/notifications/lues", {
+    method: "POST",
+  });
+}
+
+export function deposerPronosticsLot(pronostics) {
+  return envoyerJson("/api/communaute/pronostics/lot", {
+    method: "POST",
+    body: JSON.stringify({ pronostics }),
+  });
+}
+
+export function chargerMessagesLigue(code) {
+  return envoyerJson(`/api/communaute/ligues/${encodeURIComponent(code)}/messages`);
+}
+
+export function publierMessageLigue(code, contenu) {
+  return envoyerJson(`/api/communaute/ligues/${encodeURIComponent(code)}/messages`, {
+    method: "POST",
+    body: JSON.stringify({ contenu }),
+  });
+}
+
+export function chargerSignalementsAdmin(statut = "ouvert") {
+  const params = new URLSearchParams({ statut });
+  return envoyerJson(`/api/communaute/admin/signalements?${params}`);
+}
+
+export function traiterSignalementAdmin(signalementId, statut = "traite") {
+  return envoyerJson(`/api/communaute/admin/signalements/${signalementId}/traiter`, {
+    method: "POST",
+    body: JSON.stringify({ statut }),
+  });
+}
+
+export function chargerEspacesForum() {
+  return envoyerJson("/api/forum");
+}
+
+export function chargerSujetsForum(championnat) {
+  return envoyerJson(
+    `/api/forum/${encodeURIComponent(championnat)}/sujets`,
+  );
+}
+
+export function creerSujetForum(championnat, titre, contenu) {
+  return envoyerJson(
+    `/api/forum/${encodeURIComponent(championnat)}/sujets`,
+    {
+      method: "POST",
+      body: JSON.stringify({ titre, contenu }),
+    },
+  );
+}
+
+export function chargerSujetForum(sujetId) {
+  return envoyerJson(`/api/forum/sujets/${sujetId}`);
+}
+
+export function publierMessageForum(sujetId, contenu, messageParentId = null) {
+  const corps = { contenu };
+  if (messageParentId != null) {
+    corps.message_parent_id = messageParentId;
+  }
+  return envoyerJson(`/api/forum/sujets/${sujetId}/messages`, {
+    method: "POST",
+    body: JSON.stringify(corps),
+  });
+}
+
+export function modifierSujetForum(sujetId, titre) {
+  return envoyerJson(`/api/forum/sujets/${sujetId}`, {
+    method: "PATCH",
+    body: JSON.stringify({ titre }),
+  });
+}
+
+export function modifierMessageForum(messageId, contenu) {
+  return envoyerJson(`/api/forum/messages/${messageId}`, {
+    method: "PATCH",
+    body: JSON.stringify({ contenu }),
+  });
+}
+
+export function supprimerMessageForum(messageId) {
+  return envoyerJson(`/api/forum/messages/${messageId}`, {
+    method: "DELETE",
+  });
+}
+
+export function supprimerSujetForum(sujetId) {
+  return envoyerJson(`/api/forum/sujets/${sujetId}`, {
+    method: "DELETE",
+  });
+}
+
+export function signalerMessageForum(messageId, motif = "") {
+  return envoyerJson(`/api/forum/messages/${messageId}/signaler`, {
+    method: "POST",
+    body: JSON.stringify({ motif }),
+  });
+}
+
+export function basculerReactionMessageForum(messageId, typeReaction = "pouce") {
+  return envoyerJson(`/api/forum/messages/${messageId}/reactions`, {
+    method: "POST",
+    body: JSON.stringify({ type_reaction: typeReaction }),
+  });
+}
+
+export function creerSondageForum(sujetId, question, options) {
+  return envoyerJson(`/api/forum/sujets/${sujetId}/sondage`, {
+    method: "POST",
+    body: JSON.stringify({ question, options }),
+  });
+}
+
+export function voterSondageForum(sondageId, optionId) {
+  return envoyerJson(`/api/forum/sondages/${sondageId}/votes`, {
+    method: "POST",
+    body: JSON.stringify({ option_id: optionId }),
+  });
+}
+
+export function supprimerSondageForum(sondageId) {
+  return envoyerJson(`/api/forum/sondages/${sondageId}`, {
+    method: "DELETE",
+  });
+}
+
+export function chargerSondageMatch(championnat, saison, domicile, exterieur) {
+  const params = new URLSearchParams({
+    championnat,
+    saison,
+    domicile,
+    exterieur,
+  });
+  return envoyerJson(`/api/communaute/sondage-match?${params}`);
+}
+
+export function voterSondageMatch(donnees) {
+  return envoyerJson("/api/communaute/sondage-match", {
+    method: "POST",
+    body: JSON.stringify(donnees),
+  });
 }

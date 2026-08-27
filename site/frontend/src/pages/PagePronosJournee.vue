@@ -2,12 +2,14 @@
 import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { CHAMPIONNATS_DEFAUT } from "../championnats.js";
+import ChargementPage from "../composants/ChargementPage.vue";
 import {
   chargerAccueil,
   chargerJourneesPronos,
   chargerPronosJournee,
   chargerUtilisateurConnecte,
   deposerPronostic,
+  deposerPronosticsLot,
 } from "../services/api.js";
 
 const route = useRoute();
@@ -20,13 +22,13 @@ const saisons = ref(["2026-2027"]);
 const journees = ref([]);
 const journee = ref("");
 const matchs = ref([]);
-const disclaimer = ref("");
 const reglePoints = ref("");
 const erreur = ref("");
 const message = ref("");
 const chargement = ref(true);
 const utilisateur = ref(null);
 const envoiId = ref(null);
+const envoiLot = ref(false);
 
 /** Formulaire compact par match : clé domicile|exterieur */
 const formulaires = ref({});
@@ -109,7 +111,6 @@ async function chargerMatchs() {
       journee.value,
     );
     matchs.value = reponse.matchs || [];
-    disclaimer.value = reponse.disclaimer || "";
     reglePoints.value = reponse.regle_points || "";
     const forms = {};
     for (const match of matchs.value) {
@@ -151,6 +152,46 @@ async function soumettreProno(match) {
     erreur.value = e.message;
   } finally {
     envoiId.value = null;
+  }
+}
+
+async function soumettreJournee() {
+  const ouverts = matchs.value.filter((m) => !m.verrouille && !m.match_deja_joue);
+  if (!ouverts.length) {
+    erreur.value = "Aucun match ouvert à enregistrer pour cette journée.";
+    return;
+  }
+  envoiLot.value = true;
+  erreur.value = "";
+  message.value = "";
+  try {
+    const lot = ouverts.map((match) => {
+      const form = formulaires.value[cleMatch(match)];
+      const corps = {
+        championnat: match.championnat,
+        saison: match.saison,
+        domicile: match.domicile,
+        exterieur: match.exterieur,
+        type_pronostic: form.type_pronostic,
+      };
+      if (form.type_pronostic === "score") {
+        corps.buts_domicile = Number(form.buts_domicile);
+        corps.buts_exterieur = Number(form.buts_exterieur);
+      } else {
+        corps.resultat_1x2 = form.resultat_1x2;
+      }
+      return corps;
+    });
+    const reponse = await deposerPronosticsLot(lot);
+    message.value = `${reponse.nb_ok} prono(s) enregistré(s)`;
+    if (reponse.nb_erreurs) {
+      erreur.value = `${reponse.nb_erreurs} match(s) non enregistrés`;
+    }
+    await chargerMatchs();
+  } catch (e) {
+    erreur.value = e.message;
+  } finally {
+    envoiLot.value = false;
   }
 }
 
@@ -207,7 +248,7 @@ watch(journee, () => {
         <p class="sur-titre-analyse">Communauté</p>
         <h1 class="titre-analyse">Pronos journée</h1>
         <p class="intro-analyse">
-          Déposez plusieurs prévisions pour une journée — informatif, 18+.
+          Déposez plusieurs prévisions pour une journée.
         </p>
       </header>
 
@@ -235,12 +276,11 @@ watch(journee, () => {
   </section>
 
   <div class="page">
-    <p v-if="reglePoints" class="mention mention-communaute">{{ reglePoints }}</p>
-    <p v-if="disclaimer" class="mention mention-communaute">{{ disclaimer }}</p>
+    <p v-if="reglePoints" class="mention">{{ reglePoints }}</p>
 
     <p v-if="erreur" class="erreur">{{ erreur }}</p>
     <p v-if="message" class="message-ok">{{ message }}</p>
-    <p v-if="chargement" class="doux">Chargement…</p>
+    <ChargementPage v-if="chargement" message="Chargement des pronos" />
 
     <p v-else-if="!utilisateur" class="doux">
       <router-link to="/connexion">Connectez-vous</router-link>
@@ -248,11 +288,26 @@ watch(journee, () => {
       <router-link to="/inscription">créez un compte</router-link>.
     </p>
 
-    <p v-else-if="!matchs.length" class="doux">
-      Aucun match pour cette journée.
+    <p v-else-if="!matchs.length" class="doux message-vide-communaute">
+      Aucun match pour cette journée — choisissez une autre journée ou un autre championnat.
     </p>
 
-    <ul v-else class="liste-pronos-journee">
+    <template v-else>
+      <div class="barre-actions-journee">
+        <button
+          type="button"
+          class="bouton-principal"
+          :disabled="envoiLot"
+          @click="soumettreJournee"
+        >
+          {{ envoiLot ? "Enregistrement…" : "Enregistrer toute la journée" }}
+        </button>
+        <p class="doux petit">
+          Enregistre tous les matchs encore ouverts avec les scores saisis ci-dessous.
+        </p>
+      </div>
+
+    <ul class="liste-pronos-journee">
       <li v-for="match in matchs" :key="cleMatch(match)" class="carte-prono-journee">
         <header class="entete-prono-journee">
           <div>
@@ -351,6 +406,7 @@ watch(journee, () => {
         </p>
       </li>
     </ul>
+    </template>
 
     <p class="doux petit lien-mes-pronos">
       <router-link to="/mes-pronos">Nos pronostics</router-link>

@@ -9,6 +9,8 @@ def test_accueil(client_api):
     assert "saisons" in data
     assert "2026-2027" in data["saisons"]
     assert len(data["championnats"]) >= 5
+    noms_championnats = [c["nom"] for c in data["championnats"]]
+    assert "Super Lig" in noms_championnats
     assert "buteurs" in data
     assert "passeurs" in data
     assert len(data["buteurs"]) >= 1

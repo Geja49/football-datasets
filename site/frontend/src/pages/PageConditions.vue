@@ -1,7 +1,3 @@
-<script setup>
-import MentionJeuResponsable from "../composants/MentionJeuResponsable.vue";
-</script>
-
 <template>
   <section class="hero hero-compact">
     <div class="hero-inner">
@@ -87,9 +83,8 @@ import MentionJeuResponsable from "../composants/MentionJeuResponsable.vue";
       <p>
         Les paris sportifs comportent des risques financiers et peuvent créer une
         dépendance. En cas de difficulté, consultez sans attendre les ressources
-        d'aide :
+        d'aide indiquées en bas de chaque page.
       </p>
-      <MentionJeuResponsable />
     </article>
   </div>
 </template>

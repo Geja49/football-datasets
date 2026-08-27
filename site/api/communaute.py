@@ -21,6 +21,8 @@ from fastapi import APIRouter, HTTPException, Request, Response
 from pydantic import BaseModel, Field
 from passlib.context import CryptContext
 
+from avatars import CATALOGUE_AVATARS, lire_avatar_id_ligne, valider_avatar_id
+
 RACINE = Path(__file__).resolve().parents[2]
 FICHIER_COMMUNAUTE = RACINE / "donnees" / "communaute.db"
 FICHIER_FOOTBALL = RACINE / "donnees" / "football.db"
@@ -34,21 +36,51 @@ LIMITE_COMMENTAIRES = 5
 FENETRE_COMMENTAIRES_SEC = 600
 LIMITE_PRONOSTICS = 15
 FENETRE_PRONOSTICS_SEC = 600
+LIMITE_SONDAGES_MATCH = 20
+FENETRE_SONDAGES_MATCH_SEC = 600
 LIMITE_REACTIONS = 40
 FENETRE_REACTIONS_SEC = 600
+CHOIX_SONDAGE_MATCH = ("1", "N", "2")
+LIBELLES_SONDAGE_MATCH = {
+    "1": "Victoire domicile",
+    "N": "Match nul",
+    "2": "Victoire extérieur",
+}
 LIMITE_LIGUES = 10
 FENETRE_LIGUES_SEC = 600
 LIMITE_MATCHS_SANS_PRONO = 12
 HORIZON_SANS_PRONO_JOURS = 7
 SCORE_BUTS_MAX = 15
-TYPES_REACTION = ("pouce", "coeur")
-LIBELLES_REACTION = {"pouce": "👍", "coeur": "❤️"}
+TYPES_REACTION = ("pouce", "coeur", "ballon", "feu", "rire", "applaudir")
+LIBELLES_REACTION = {
+    "pouce": "👍",
+    "coeur": "❤️",
+    "ballon": "⚽",
+    "feu": "🔥",
+    "rire": "😂",
+    "applaudir": "👏",
+}
 LONGUEUR_NOM_LIGUE_MAX = 40
 LONGUEUR_CODE_LIGUE = 8
 MOTIF_CODE_LIGUE = re.compile(r"^[A-Z0-9]{6,12}$")
+LONGUEUR_BIO_MAX = 160
+LONGUEUR_EQUIPE_FAVORITE_MAX = 60
+LONGUEUR_MESSAGE_LIGUE_MAX = 300
+LIMITE_MESSAGES_LIGUE = 20
+FENETRE_MESSAGES_LIGUE_SEC = 600
+LIMITE_NOTIFICATIONS_LISTE = 50
+HORIZON_RAPPEL_HEURES = 24
+LIMITE_PRONOS_LOT = 20
+LIMITE_CONNEXION = 10
+FENETRE_CONNEXION_SEC = 900
+LIMITE_INSCRIPTION = 5
+FENETRE_INSCRIPTION_SEC = 900
 
 MOTIF_EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 MOTIF_PSEUDO = re.compile(r"^[A-Za-z0-9_\-\s]{3,30}$")
+MOTIF_URL_SPAM = re.compile(r"(https?://|www\.)", re.IGNORECASE)
+MOTIF_REPETITION_SPAM = re.compile(r"(.)\1{6,}", re.IGNORECASE)
+MOTS_SPAM = ("viagra", "crypto free", "click here", "bit.ly", "t.me/")
 
 FUSEAU_PAR_CHAMPIONNAT = {
     "Premier League": "Europe/London",
@@ -56,6 +88,7 @@ FUSEAU_PAR_CHAMPIONNAT = {
     "Bundesliga": "Europe/Berlin",
     "Serie A": "Europe/Rome",
     "Ligue 1": "Europe/Paris",
+    "Super Lig": "Europe/Istanbul",
     "Ligue des champions": "Europe/Paris",
 }
 
@@ -68,6 +101,11 @@ DISCLAIMER_PRONOSTICS = (
     "Vos pronostics sont privés et servent uniquement à suivre vos prévisions à titre "
     "informatif. Ils ne constituent pas un conseil en paris sportifs. "
     "Réservé aux 18 ans et plus."
+)
+
+DISCLAIMER_SONDAGE_MATCH = (
+    "Sondage communautaire informatif (1 / N / 2) — distinct de votre pronostic privé. "
+    "Ce n'est pas un conseil en paris sportifs. Réservé aux 18 ans et plus."
 )
 
 DISCLAIMER_CLASSEMENT = (
@@ -93,6 +131,7 @@ CHAMPIONNATS_VALIDES = (
     "Bundesliga",
     "Serie A",
     "Ligue 1",
+    "Super Lig",
     "Ligue des champions",
 )
 
@@ -108,8 +147,13 @@ _initialise = False
 _verrou_limite = threading.Lock()
 _historique_commentaires: dict[int, list[float]] = defaultdict(list)
 _historique_pronostics: dict[int, list[float]] = defaultdict(list)
+_historique_sondages_match: dict[int, list[float]] = defaultdict(list)
 _historique_reactions: dict[int, list[float]] = defaultdict(list)
 _historique_ligues: dict[int, list[float]] = defaultdict(list)
+_historique_messages_ligue: dict[int, list[float]] = defaultdict(list)
+_historique_connexion_ip: dict[str, list[float]] = defaultdict(list)
+_historique_connexion_identifiant: dict[str, list[float]] = defaultdict(list)
+_historique_inscription_ip: dict[str, list[float]] = defaultdict(list)
 
 
 def charger_fichier_env():
@@ -135,6 +179,28 @@ def email_admin_communaute():
 def google_client_id():
     charger_fichier_env()
     return (os.environ.get("GOOGLE_CLIENT_ID") or "").strip()
+
+
+def cookie_secure_actif() -> bool:
+    """True en prod HTTPS (COOKIE_SECURE=1 ou ENVIRONNEMENT=production)."""
+    charger_fichier_env()
+    valeur = (os.environ.get("COOKIE_SECURE") or "").strip().lower()
+    if valeur in ("1", "true", "oui", "yes"):
+        return True
+    if valeur in ("0", "false", "non", "no"):
+        return False
+    environnement = (os.environ.get("ENVIRONNEMENT") or "").strip().lower()
+    return environnement in ("production", "prod")
+
+
+def adresse_client(request: Request) -> str:
+    """IP client ; privilégie X-Forwarded-For derrière Nginx."""
+    transmis = (request.headers.get("x-forwarded-for") or "").strip()
+    if transmis:
+        return transmis.split(",")[0].strip() or "inconnu"
+    if request.client and request.client.host:
+        return request.client.host
+    return "inconnu"
 
 
 def ouvrir_base():
@@ -337,6 +403,71 @@ def migrer_schema_communaute(connexion):
             ON utilisateurs(google_id) WHERE google_id IS NOT NULL
             """
         )
+    if "bio" not in colonnes:
+        connexion.execute("ALTER TABLE utilisateurs ADD COLUMN bio TEXT NOT NULL DEFAULT ''")
+    if "equipe_favorite" not in colonnes:
+        connexion.execute(
+            "ALTER TABLE utilisateurs ADD COLUMN equipe_favorite TEXT NOT NULL DEFAULT ''"
+        )
+    if "avatar_id" not in colonnes:
+        connexion.execute(
+            "ALTER TABLE utilisateurs ADD COLUMN avatar_id TEXT NOT NULL DEFAULT ''"
+        )
+
+    colonnes_sig = {
+        row[1] for row in connexion.execute("PRAGMA table_info(signalements)").fetchall()
+    }
+    if "statut" not in colonnes_sig:
+        connexion.execute(
+            "ALTER TABLE signalements ADD COLUMN statut TEXT NOT NULL DEFAULT 'ouvert'"
+        )
+
+    connexion.executescript(
+        """
+        CREATE TABLE IF NOT EXISTS notifications (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            utilisateur_id INTEGER NOT NULL,
+            type_notification TEXT NOT NULL,
+            titre TEXT NOT NULL,
+            corps TEXT NOT NULL DEFAULT '',
+            lien TEXT NOT NULL DEFAULT '',
+            cle_unique TEXT,
+            lue INTEGER NOT NULL DEFAULT 0,
+            cree_le TEXT NOT NULL,
+            FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id)
+        );
+        CREATE INDEX IF NOT EXISTS idx_notifications_utilisateur
+            ON notifications(utilisateur_id, lue, cree_le DESC);
+        CREATE UNIQUE INDEX IF NOT EXISTS idx_notifications_cle
+            ON notifications(utilisateur_id, cle_unique)
+            WHERE cle_unique IS NOT NULL;
+        CREATE TABLE IF NOT EXISTS messages_ligue (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ligue_id INTEGER NOT NULL,
+            utilisateur_id INTEGER NOT NULL,
+            contenu TEXT NOT NULL,
+            cree_le TEXT NOT NULL,
+            FOREIGN KEY (ligue_id) REFERENCES ligues_privees(id),
+            FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id)
+        );
+        CREATE INDEX IF NOT EXISTS idx_messages_ligue
+            ON messages_ligue(ligue_id, cree_le DESC);
+        CREATE TABLE IF NOT EXISTS matchs_sondage_votes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            championnat TEXT NOT NULL,
+            saison TEXT NOT NULL,
+            domicile TEXT NOT NULL,
+            exterieur TEXT NOT NULL,
+            utilisateur_id INTEGER NOT NULL,
+            choix TEXT NOT NULL,
+            cree_le TEXT NOT NULL,
+            FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id),
+            UNIQUE(utilisateur_id, championnat, saison, domicile, exterieur)
+        );
+        CREATE INDEX IF NOT EXISTS idx_matchs_sondage_votes_match
+            ON matchs_sondage_votes(championnat, saison, domicile, exterieur);
+        """
+    )
 
 
 def maintenant_iso():
@@ -385,14 +516,74 @@ def valider_commentaire(contenu: str) -> str:
             400,
             f"Commentaire trop long (max {LONGUEUR_COMMENTAIRE_MAX} caractères)",
         )
+    if MOTIF_URL_SPAM.search(texte):
+        raise HTTPException(400, "Les liens ne sont pas autorisés dans les commentaires")
+    if MOTIF_REPETITION_SPAM.search(texte):
+        raise HTTPException(400, "Message refusé (caractères répétés excessifs)")
+    texte_bas = texte.lower()
+    for mot in MOTS_SPAM:
+        if mot in texte_bas:
+            raise HTTPException(400, "Message refusé par le filtre anti-spam")
+    return texte
+
+
+def valider_bio(bio: str | None) -> str:
+    texte = (bio or "").strip()
+    if len(texte) > LONGUEUR_BIO_MAX:
+        raise HTTPException(400, f"Bio trop longue (max {LONGUEUR_BIO_MAX} caractères)")
+    if MOTIF_URL_SPAM.search(texte):
+        raise HTTPException(400, "Les liens ne sont pas autorisés dans la bio")
+    return texte
+
+
+def valider_equipe_favorite(equipe: str | None) -> str:
+    texte = (equipe or "").strip()
+    if len(texte) > LONGUEUR_EQUIPE_FAVORITE_MAX:
+        raise HTTPException(
+            400,
+            f"Équipe favorite trop longue (max {LONGUEUR_EQUIPE_FAVORITE_MAX})",
+        )
+    return texte
+
+
+def valider_message_ligue(contenu: str) -> str:
+    texte = (contenu or "").strip()
+    if not texte:
+        raise HTTPException(400, "Message vide")
+    if len(texte) > LONGUEUR_MESSAGE_LIGUE_MAX:
+        raise HTTPException(
+            400,
+            f"Message trop long (max {LONGUEUR_MESSAGE_LIGUE_MAX} caractères)",
+        )
+    if MOTIF_URL_SPAM.search(texte):
+        raise HTTPException(400, "Les liens ne sont pas autorisés dans le chat")
+    if MOTIF_REPETITION_SPAM.search(texte):
+        raise HTTPException(400, "Message refusé (caractères répétés excessifs)")
     return texte
 
 
 def utilisateur_public(ligne) -> dict:
+    bio = ""
+    equipe = ""
+    try:
+        bio = (ligne["bio"] or "") if "bio" in ligne.keys() else ""
+    except (IndexError, KeyError):
+        bio = ""
+    try:
+        equipe = (
+            (ligne["equipe_favorite"] or "")
+            if "equipe_favorite" in ligne.keys()
+            else ""
+        )
+    except (IndexError, KeyError):
+        equipe = ""
     return {
         "id": ligne["id"],
         "pseudo": ligne["pseudo"],
         "est_admin": bool(ligne["est_admin"]),
+        "bio": bio,
+        "equipe_favorite": equipe,
+        "avatar_id": lire_avatar_id_ligne(ligne),
     }
 
 
@@ -415,13 +606,20 @@ def poser_cookie_session(reponse: Response, session_id: str):
         value=session_id,
         httponly=True,
         samesite="lax",
+        secure=cookie_secure_actif(),
         max_age=DUREE_SESSION_JOURS * 86400,
         path="/",
     )
 
 
 def effacer_cookie_session(reponse: Response):
-    reponse.delete_cookie(key=NOM_COOKIE_SESSION, path="/")
+    reponse.delete_cookie(
+        key=NOM_COOKIE_SESSION,
+        path="/",
+        secure=cookie_secure_actif(),
+        httponly=True,
+        samesite="lax",
+    )
 
 
 def session_active(connexion, session_id: str | None):
@@ -429,8 +627,7 @@ def session_active(connexion, session_id: str | None):
         return None
     ligne = connexion.execute(
         """
-        SELECT s.id AS session_id, s.expire_le, u.id, u.email, u.pseudo,
-               u.mot_de_passe_hash, u.est_admin, u.age_confirme, u.cgu_acceptees, u.cree_le
+        SELECT s.id AS session_id, s.expire_le, u.*
         FROM sessions s
         JOIN utilisateurs u ON u.id = s.utilisateur_id
         WHERE s.id = ?
@@ -500,6 +697,23 @@ def verifier_limite_pronostics(utilisateur_id: int):
         historique.append(maintenant)
 
 
+def verifier_limite_sondages_match(utilisateur_id: int):
+    maintenant = time.time()
+    with _verrou_limite:
+        historique = _historique_sondages_match[utilisateur_id]
+        historique[:] = [
+            instant
+            for instant in historique
+            if maintenant - instant < FENETRE_SONDAGES_MATCH_SEC
+        ]
+        if len(historique) >= LIMITE_SONDAGES_MATCH:
+            raise HTTPException(
+                429,
+                "Trop de votes sondage récents. Réessayez dans quelques minutes.",
+            )
+        historique.append(maintenant)
+
+
 def verifier_limite_reactions(utilisateur_id: int):
     maintenant = time.time()
     with _verrou_limite:
@@ -532,6 +746,73 @@ def verifier_limite_ligues(utilisateur_id: int):
                 "Trop d'actions sur les ligues. Réessayez dans quelques minutes.",
             )
         historique.append(maintenant)
+
+
+def verifier_limite_messages_ligue(utilisateur_id: int):
+    maintenant = time.time()
+    with _verrou_limite:
+        historique = _historique_messages_ligue[utilisateur_id]
+        historique[:] = [
+            instant
+            for instant in historique
+            if maintenant - instant < FENETRE_MESSAGES_LIGUE_SEC
+        ]
+        if len(historique) >= LIMITE_MESSAGES_LIGUE:
+            raise HTTPException(
+                429,
+                "Trop de messages. Réessayez dans quelques minutes.",
+            )
+        historique.append(maintenant)
+
+
+def _verifier_limite_fenetre(
+    historique: list[float],
+    limite: int,
+    fenetre_sec: int,
+    message: str,
+):
+    maintenant = time.time()
+    historique[:] = [
+        instant for instant in historique if maintenant - instant < fenetre_sec
+    ]
+    if len(historique) >= limite:
+        raise HTTPException(429, message)
+    historique.append(maintenant)
+
+
+def verifier_limite_connexion(request: Request, identifiant: str = ""):
+    """Limite les tentatives de connexion par IP et par identifiant."""
+    ip = adresse_client(request)
+    cle_id = (identifiant or "").strip().lower()
+    message = (
+        "Trop de tentatives de connexion. Réessayez dans 15 minutes."
+    )
+    with _verrou_limite:
+        _verifier_limite_fenetre(
+            _historique_connexion_ip[ip],
+            LIMITE_CONNEXION,
+            FENETRE_CONNEXION_SEC,
+            message,
+        )
+        if cle_id:
+            _verifier_limite_fenetre(
+                _historique_connexion_identifiant[cle_id],
+                LIMITE_CONNEXION,
+                FENETRE_CONNEXION_SEC,
+                message,
+            )
+
+
+def verifier_limite_inscription(request: Request):
+    """Limite les inscriptions par IP."""
+    ip = adresse_client(request)
+    with _verrou_limite:
+        _verifier_limite_fenetre(
+            _historique_inscription_ip[ip],
+            LIMITE_INSCRIPTION,
+            FENETRE_INSCRIPTION_SEC,
+            "Trop de tentatives d'inscription. Réessayez dans 15 minutes.",
+        )
 
 
 def session_optionnelle(request: Request):
@@ -624,6 +905,7 @@ def serialiser_commentaire(
         "contenu": row["contenu"],
         "cree_le": row["cree_le"],
         "utilisateur_id": row["utilisateur_id"],
+        "avatar_id": lire_avatar_id_ligne(row),
         "commentaire_parent_id": parent_id,
         "reactions": reactions,
         "mes_reactions": mes_reactions,
@@ -713,11 +995,12 @@ def lister_matchs_sans_prono(utilisateur_id: int) -> list[dict]:
                 (utilisateur_id,),
             ).fetchall()
         }
+        placeholders = ",".join("?" * len(CHAMPIONNATS_VALIDES))
         lignes = connexion_foot.execute(
-            """
+            f"""
             SELECT c.date, c.heure, c.championnat, c.saison, c.domicile, c.exterieur
             FROM calendrier c
-            WHERE c.championnat IN (?, ?, ?, ?, ?, ?)
+            WHERE c.championnat IN ({placeholders})
               AND c.date >= date('now', '-1 day')
             ORDER BY c.date ASC, c.heure ASC
             LIMIT 400
@@ -965,10 +1248,20 @@ def valider_filtres_classement(championnat: str, saison: str):
 
 
 def calculer_classement_pronos(
-    championnat: str, saison: str, utilisateur_ids: list[int] | None = None
+    championnat: str,
+    saison: str,
+    utilisateur_ids: list[int] | None = None,
+    journee: str | None = None,
 ) -> list[dict]:
     """Calcule le classement à partir des pronostics et des scores réels."""
     initialiser_base()
+    cles_matchs = None
+    if journee:
+        matchs = lister_matchs_journee(championnat, saison, journee)
+        cles_matchs = {
+            (m["championnat"], m["saison"], m["domicile"], m["exterieur"])
+            for m in matchs
+        }
     connexion = ouvrir_base()
     try:
         if utilisateur_ids is not None:
@@ -1000,6 +1293,15 @@ def calculer_classement_pronos(
 
     stats: dict[int, dict] = {}
     for prono in lignes:
+        if cles_matchs is not None:
+            cle = (
+                prono["championnat"],
+                prono["saison"],
+                prono["domicile"],
+                prono["exterieur"],
+            )
+            if cle not in cles_matchs:
+                continue
         uid = prono["utilisateur_id"]
         if uid not in stats:
             stats[uid] = {
@@ -1029,8 +1331,6 @@ def calculer_classement_pronos(
         elif points_info["type_reussite"] in ("bon_vainqueur", "1x2_exact"):
             entree["nb_bons_vainqueurs"] += 1
 
-    # Membres sans prono n'apparaissent pas tant qu'ils n'ont pas de prono
-
     classement = sorted(
         stats.values(),
         key=lambda x: (
@@ -1044,6 +1344,12 @@ def calculer_classement_pronos(
     for rang, entree in enumerate(classement, start=1):
         entree["rang"] = rang
         entree["badges"] = attribuer_badges(entree)
+        if entree["nb_evalues"]:
+            entree["taux_exacts"] = round(
+                100.0 * entree["nb_exacts"] / entree["nb_evalues"], 1
+            )
+        else:
+            entree["taux_exacts"] = 0.0
     return classement
 
 
@@ -1099,10 +1405,12 @@ def ids_membres_ligue(connexion, ligue_id: int) -> list[int]:
 
 
 def serialiser_ligue(ligne, nb_membres: int = 0, est_membre: bool = False) -> dict:
+    code = ligne["code_invitation"]
     return {
         "id": ligne["id"],
         "nom": ligne["nom"],
-        "code_invitation": ligne["code_invitation"],
+        "code_invitation": code,
+        "lien_invitation": f"/ligue/{code}",
         "createur_id": ligne["createur_id"],
         "createur_pseudo": ligne["createur_pseudo"]
         if "createur_pseudo" in ligne.keys()
@@ -1181,7 +1489,10 @@ def profil_public_stats(pseudo: str) -> dict | None:
     connexion = ouvrir_base()
     try:
         utilisateur = connexion.execute(
-            "SELECT id, pseudo FROM utilisateurs WHERE pseudo = ? COLLATE NOCASE",
+            """
+            SELECT id, pseudo, bio, equipe_favorite, avatar_id
+            FROM utilisateurs WHERE pseudo = ? COLLATE NOCASE
+            """,
             (pseudo.strip(),),
         ).fetchone()
         if not utilisateur:
@@ -1196,18 +1507,32 @@ def profil_public_stats(pseudo: str) -> dict | None:
             """,
             (utilisateur["id"],),
         ).fetchall()
+        bio = ""
+        equipe = ""
+        avatar_id = ""
+        try:
+            bio = utilisateur["bio"] or ""
+            equipe = utilisateur["equipe_favorite"] or ""
+            avatar_id = lire_avatar_id_ligne(utilisateur)
+        except (IndexError, KeyError):
+            pass
     finally:
         connexion.close()
 
     if not lignes:
         return {
             "pseudo": utilisateur["pseudo"],
+            "bio": bio,
+            "equipe_favorite": equipe,
+            "avatar_id": avatar_id,
             "points_total": 0,
             "nb_pronos": 0,
             "nb_evalues": 0,
             "nb_exacts": 0,
             "nb_bons_vainqueurs": 0,
+            "taux_exacts": 0.0,
             "par_championnat": [],
+            "historique_recent": [],
             "badges": [],
         }
 
@@ -1216,6 +1541,7 @@ def profil_public_stats(pseudo: str) -> dict | None:
     nb_exacts = 0
     nb_bons_vainqueurs = 0
     par_champ: dict[tuple[str, str], dict] = {}
+    historique_recent: list[dict] = []
 
     for prono in lignes:
         cle = (prono["championnat"], prono["saison"])
@@ -1234,29 +1560,54 @@ def profil_public_stats(pseudo: str) -> dict | None:
             prono["domicile"],
             prono["exterieur"],
         )
-        if not resultat:
-            continue
-        nb_evalues += 1
-        par_champ[cle]["nb_evalues"] += 1
-        points_info = calculer_points_pronostic(prono, resultat)
-        points_total += points_info["points"]
-        par_champ[cle]["points"] += points_info["points"]
-        if points_info["type_reussite"] == "score_exact":
-            nb_exacts += 1
-        elif points_info["type_reussite"] in ("bon_vainqueur", "1x2_exact"):
-            nb_bons_vainqueurs += 1
+        evaluation = None
+        if resultat:
+            nb_evalues += 1
+            par_champ[cle]["nb_evalues"] += 1
+            points_info = calculer_points_pronostic(prono, resultat)
+            points_total += points_info["points"]
+            par_champ[cle]["points"] += points_info["points"]
+            if points_info["type_reussite"] == "score_exact":
+                nb_exacts += 1
+            elif points_info["type_reussite"] in ("bon_vainqueur", "1x2_exact"):
+                nb_bons_vainqueurs += 1
+            evaluation = evaluer_pronostic(prono, resultat)
+        if len(historique_recent) < 12:
+            item = {
+                "championnat": prono["championnat"],
+                "saison": prono["saison"],
+                "domicile": prono["domicile"],
+                "exterieur": prono["exterieur"],
+                "type_pronostic": prono["type_pronostic"],
+                "libelle": (
+                    f"{prono['buts_domicile']} – {prono['buts_exterieur']}"
+                    if prono["type_pronostic"] == "score"
+                    else {"1": "Victoire domicile", "N": "Match nul", "2": "Victoire extérieur"}.get(
+                        prono["resultat_1x2"], prono["resultat_1x2"]
+                    )
+                ),
+                "commence_at": prono["commence_at"],
+                "evaluation": evaluation,
+            }
+            historique_recent.append(item)
 
+    taux = round(100.0 * nb_exacts / nb_evalues, 1) if nb_evalues else 0.0
     stats = {
         "pseudo": utilisateur["pseudo"],
+        "bio": bio,
+        "equipe_favorite": equipe,
+        "avatar_id": avatar_id,
         "points_total": points_total,
         "nb_pronos": len(lignes),
         "nb_evalues": nb_evalues,
         "nb_exacts": nb_exacts,
         "nb_bons_vainqueurs": nb_bons_vainqueurs,
+        "taux_exacts": taux,
         "par_championnat": sorted(
             par_champ.values(),
             key=lambda x: (-x["points"], x["championnat"]),
         ),
+        "historique_recent": historique_recent,
     }
     stats["badges"] = attribuer_badges(stats)
     return stats
@@ -1324,6 +1675,273 @@ def valider_pronostic(donnees: "PronosticBody"):
     return champ, sais, dom, ext, type_prono, buts_d, buts_e, resultat_1x2
 
 
+def serialiser_sondage_match(
+    connexion,
+    championnat: str,
+    saison: str,
+    domicile: str,
+    exterieur: str,
+    utilisateur_id: int = 0,
+) -> dict:
+    """Agrège les votes communautaires 1/N/2 pour un match."""
+    compteurs_bruts = {
+        row["choix"]: row["nb"]
+        for row in connexion.execute(
+            """
+            SELECT choix, COUNT(*) AS nb
+            FROM matchs_sondage_votes
+            WHERE championnat = ? AND saison = ?
+              AND domicile = ? AND exterieur = ?
+            GROUP BY choix
+            """,
+            (championnat, saison, domicile, exterieur),
+        ).fetchall()
+    }
+    mon_choix = None
+    if utilisateur_id:
+        mon_vote = connexion.execute(
+            """
+            SELECT choix FROM matchs_sondage_votes
+            WHERE utilisateur_id = ?
+              AND championnat = ? AND saison = ?
+              AND domicile = ? AND exterieur = ?
+            """,
+            (utilisateur_id, championnat, saison, domicile, exterieur),
+        ).fetchone()
+        if mon_vote:
+            mon_choix = mon_vote["choix"]
+    a_vote = mon_choix is not None
+    total = sum(compteurs_bruts.values())
+    options = []
+    for choix in CHOIX_SONDAGE_MATCH:
+        nb = compteurs_bruts.get(choix, 0)
+        item = {
+            "choix": choix,
+            "libelle": LIBELLES_SONDAGE_MATCH[choix],
+        }
+        if a_vote:
+            item["nb_votes"] = nb
+            item["pourcentage"] = round(100.0 * nb / total, 1) if total else 0.0
+        options.append(item)
+    return {
+        "question": "Qui va gagner ?",
+        "championnat": championnat,
+        "saison": saison,
+        "domicile": domicile,
+        "exterieur": exterieur,
+        "options": options,
+        "nb_votes_total": total if a_vote else None,
+        "mon_choix": mon_choix,
+        "a_vote": a_vote,
+        "disclaimer": DISCLAIMER_SONDAGE_MATCH,
+    }
+
+
+def creer_notification(
+    connexion,
+    utilisateur_id: int,
+    type_notification: str,
+    titre: str,
+    corps: str = "",
+    lien: str = "",
+    cle_unique: str | None = None,
+):
+    """Insère une notification ; ignore silencieusement les doublons (cle_unique)."""
+    try:
+        connexion.execute(
+            """
+            INSERT INTO notifications (
+                utilisateur_id, type_notification, titre, corps, lien, cle_unique, lue, cree_le
+            ) VALUES (?, ?, ?, ?, ?, ?, 0, ?)
+            """,
+            (
+                utilisateur_id,
+                type_notification,
+                titre[:120],
+                (corps or "")[:300],
+                (lien or "")[:200],
+                cle_unique,
+                maintenant_iso(),
+            ),
+        )
+    except sqlite3.IntegrityError:
+        pass
+
+
+def synchroniser_notifications(connexion, utilisateur_id: int):
+    """Génère rappels coup d'envoi et résultats de pronos manquants."""
+    maintenant = datetime.now(timezone.utc)
+    horizon = maintenant + timedelta(hours=HORIZON_RAPPEL_HEURES)
+
+    # Résultats de pronostics évalués
+    lignes = connexion.execute(
+        """
+        SELECT id, championnat, saison, domicile, exterieur, type_pronostic,
+               buts_domicile, buts_exterieur, resultat_1x2, commence_at
+        FROM pronostics
+        WHERE utilisateur_id = ?
+        ORDER BY commence_at DESC
+        LIMIT 40
+        """,
+        (utilisateur_id,),
+    ).fetchall()
+    for prono in lignes:
+        resultat = lire_resultat_match(
+            prono["championnat"],
+            prono["saison"],
+            prono["domicile"],
+            prono["exterieur"],
+        )
+        if not resultat:
+            continue
+        evaluation = evaluer_pronostic(prono, resultat)
+        cle = f"resultat:{prono['id']}"
+        points = evaluation.get("points", 0)
+        exact = evaluation.get("exact", False)
+        titre = (
+            f"Score exact : {prono['domicile']} – {prono['exterieur']}"
+            if exact
+            else f"Résultat : {prono['domicile']} – {prono['exterieur']}"
+        )
+        corps = (
+            f"{evaluation.get('score_reel', '')} · {points} pt(s)"
+        )
+        lien = (
+            f"/match?championnat={prono['championnat']}"
+            f"&saison={prono['saison']}"
+            f"&domicile={prono['domicile']}"
+            f"&exterieur={prono['exterieur']}"
+        )
+        creer_notification(
+            connexion,
+            utilisateur_id,
+            "resultat_prono",
+            titre,
+            corps,
+            lien,
+            cle,
+        )
+
+    # Rappels avant coup d'envoi (matchs sans prono dans les prochaines heures)
+    for match in lister_matchs_sans_prono(utilisateur_id):
+        commence = parser_instant_iso(match.get("commence_at") or "")
+        if not commence or commence < maintenant or commence > horizon:
+            continue
+        cle = (
+            f"rappel:{match['championnat']}:{match['saison']}:"
+            f"{match['domicile']}:{match['exterieur']}"
+        )
+        titre = f"Rappel : {match['domicile']} – {match['exterieur']}"
+        corps = "Coup d'envoi bientôt — déposez votre prono."
+        lien = (
+            f"/match?championnat={match['championnat']}"
+            f"&saison={match['saison']}"
+            f"&domicile={match['domicile']}"
+            f"&exterieur={match['exterieur']}"
+        )
+        creer_notification(
+            connexion,
+            utilisateur_id,
+            "rappel_coup_envoi",
+            titre,
+            corps,
+            lien,
+            cle,
+        )
+
+
+def serialiser_notification(ligne) -> dict:
+    return {
+        "id": ligne["id"],
+        "type_notification": ligne["type_notification"],
+        "titre": ligne["titre"],
+        "corps": ligne["corps"],
+        "lien": ligne["lien"],
+        "lue": bool(ligne["lue"]),
+        "cree_le": ligne["cree_le"],
+    }
+
+
+def enregistrer_pronostic_interne(
+    connexion,
+    utilisateur_id: int,
+    champ: str,
+    sais: str,
+    dom: str,
+    ext: str,
+    type_prono: str,
+    buts_d,
+    buts_e,
+    resultat_1x2,
+):
+    """Crée ou met à jour un prono (sans commit). Retourne l'id."""
+    if match_deja_joue(champ, sais, dom, ext):
+        raise HTTPException(409, f"Match déjà terminé : {dom} – {ext}")
+    commence_at = lire_commence_at_match(champ, sais, dom, ext)
+    if not commence_at:
+        raise HTTPException(400, f"Horaire introuvable : {dom} – {ext}")
+    if est_verrouille(commence_at):
+        raise HTTPException(409, f"Coup d'envoi passé : {dom} – {ext}")
+    existant = connexion.execute(
+        """
+        SELECT id, commence_at, verrouille FROM pronostics
+        WHERE utilisateur_id = ?
+          AND championnat = ? AND saison = ?
+          AND domicile = ? AND exterieur = ?
+        """,
+        (utilisateur_id, champ, sais, dom, ext),
+    ).fetchone()
+    if existant:
+        if est_verrouille(existant["commence_at"]) or existant["verrouille"]:
+            raise HTTPException(409, f"Pronostic verrouillé : {dom} – {ext}")
+        connexion.execute(
+            """
+            UPDATE pronostics SET
+                type_pronostic = ?,
+                buts_domicile = ?,
+                buts_exterieur = ?,
+                resultat_1x2 = ?,
+                commence_at = ?,
+                cree_le = ?,
+                verrouille = 0
+            WHERE id = ?
+            """,
+            (
+                type_prono,
+                buts_d,
+                buts_e,
+                resultat_1x2,
+                commence_at,
+                maintenant_iso(),
+                existant["id"],
+            ),
+        )
+        return existant["id"]
+    curseur = connexion.execute(
+        """
+        INSERT INTO pronostics (
+            utilisateur_id, championnat, saison, domicile, exterieur,
+            type_pronostic, buts_domicile, buts_exterieur, resultat_1x2,
+            commence_at, cree_le, verrouille
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
+        """,
+        (
+            utilisateur_id,
+            champ,
+            sais,
+            dom,
+            ext,
+            type_prono,
+            buts_d,
+            buts_e,
+            resultat_1x2,
+            commence_at,
+            maintenant_iso(),
+        ),
+    )
+    return curseur.lastrowid
+
+
 class InscriptionBody(BaseModel):
     email: str
     pseudo: str
@@ -1368,6 +1986,13 @@ class PronosticBody(BaseModel):
     resultat_1x2: str | None = None
 
 
+class SondageMatchVoteBody(BaseModel):
+    championnat: str
+    saison: str
+    domicile: str
+    exterieur: str
+    choix: str = Field(..., min_length=1, max_length=1)
+
 class GoogleConnexionBody(BaseModel):
     id_token: str = Field(max_length=8192)
 
@@ -1380,6 +2005,24 @@ class LigueRejoindreBody(BaseModel):
     code_invitation: str = Field(max_length=12)
 
 
+class ProfilMajBody(BaseModel):
+    bio: str = Field(default="", max_length=LONGUEUR_BIO_MAX)
+    equipe_favorite: str = Field(default="", max_length=LONGUEUR_EQUIPE_FAVORITE_MAX)
+    avatar_id: str | None = Field(default=None, max_length=32)
+
+
+class MessageLigueBody(BaseModel):
+    contenu: str = Field(max_length=LONGUEUR_MESSAGE_LIGUE_MAX)
+
+
+class PronosticsLotBody(BaseModel):
+    pronostics: list[PronosticBody] = Field(default_factory=list, max_length=LIMITE_PRONOS_LOT)
+
+
+class SignalementTraiterBody(BaseModel):
+    statut: str = Field(default="traite", max_length=20)
+
+
 @routeur_communaute.get("/config")
 def lire_config_communaute():
     client_id = google_client_id()
@@ -1390,9 +2033,16 @@ def lire_config_communaute():
     }
 
 
+@routeur_communaute.get("/avatars")
+def lister_avatars():
+    """Catalogue d'avatars prédéfinis (choix dans Mon profil, pas d'upload)."""
+    return {"avatars": list(CATALOGUE_AVATARS)}
+
+
 @routeur_communaute.post("/connexion/google")
-def connexion_google(donnees: GoogleConnexionBody, response: Response):
+def connexion_google(donnees: GoogleConnexionBody, request: Request, response: Response):
     initialiser_base()
+    verifier_limite_connexion(request, "google")
     infos = verifier_token_google(donnees.id_token)
     email = valider_email(infos.get("email", ""))
     google_id = (infos.get("sub") or "").strip()
@@ -1447,8 +2097,9 @@ def lire_disclaimer():
 
 
 @routeur_communaute.post("/inscription")
-def inscription(donnees: InscriptionBody, response: Response):
+def inscription(donnees: InscriptionBody, request: Request, response: Response):
     initialiser_base()
+    verifier_limite_inscription(request)
     email = valider_email(donnees.email)
     pseudo = valider_pseudo(donnees.pseudo)
     mot_de_passe = valider_mot_de_passe(donnees.mot_de_passe)
@@ -1507,11 +2158,12 @@ def trouver_utilisateur_par_identifiant(connexion_db, identifiant: str):
 
 
 @routeur_communaute.post("/connexion")
-def connexion(donnees: ConnexionBody, response: Response):
+def connexion(donnees: ConnexionBody, request: Request, response: Response):
     initialiser_base()
     identifiant = (donnees.identifiant or donnees.email or "").strip()
     if not identifiant:
         raise HTTPException(400, "Pseudo ou e-mail requis")
+    verifier_limite_connexion(request, identifiant)
     mot_de_passe = valider_mot_de_passe(donnees.mot_de_passe)
     message_echec = "Identifiant ou mot de passe incorrect"
     connexion_db = ouvrir_base()
@@ -1578,7 +2230,7 @@ def lister_commentaires(
         lignes = connexion.execute(
             """
             SELECT c.id, c.contenu, c.cree_le, c.commentaire_parent_id,
-                   u.pseudo, u.id AS utilisateur_id
+                   u.pseudo, u.id AS utilisateur_id, u.avatar_id
             FROM commentaires c
             JOIN utilisateurs u ON u.id = c.utilisateur_id
             WHERE c.supprime = 0
@@ -1676,6 +2328,25 @@ def publier_commentaire(donnees: CommentaireBody, request: Request):
                 parent_id,
             ),
         )
+        if parent_id is not None:
+            parent_auteur = connexion.execute(
+                "SELECT utilisateur_id FROM commentaires WHERE id = ?",
+                (parent_id,),
+            ).fetchone()
+            if parent_auteur and parent_auteur["utilisateur_id"] != utilisateur["id"]:
+                lien = (
+                    f"/match?championnat={champ}&saison={sais}"
+                    f"&domicile={dom}&exterieur={ext}"
+                )
+                creer_notification(
+                    connexion,
+                    parent_auteur["utilisateur_id"],
+                    "reponse_commentaire",
+                    f"{utilisateur['pseudo']} a répondu à votre commentaire",
+                    contenu[:120],
+                    lien,
+                    f"reponse:{curseur.lastrowid}",
+                )
         connexion.commit()
         return {
             "commentaire": serialiser_commentaire(
@@ -1685,6 +2356,7 @@ def publier_commentaire(donnees: CommentaireBody, request: Request):
                     "contenu": contenu,
                     "cree_le": maintenant_iso(),
                     "utilisateur_id": utilisateur["id"],
+                    "avatar_id": lire_avatar_id_ligne(utilisateur),
                     "commentaire_parent_id": parent_id,
                 },
             )
@@ -1873,8 +2545,28 @@ def lister_mes_pronostics(request: Request):
             """,
             (utilisateur["id"],),
         ).fetchall()
+        pronostics = [serialiser_pronostic(row) for row in lignes]
+        nb_evalues = 0
+        nb_exacts = 0
+        points = 0
+        for prono in pronostics:
+            evaluation = prono.get("evaluation")
+            if not evaluation:
+                continue
+            nb_evalues += 1
+            points += int(evaluation.get("points") or 0)
+            if evaluation.get("exact"):
+                nb_exacts += 1
+        taux = round(100.0 * nb_exacts / nb_evalues, 1) if nb_evalues else 0.0
         return {
-            "pronostics": [serialiser_pronostic(row) for row in lignes],
+            "pronostics": pronostics,
+            "stats": {
+                "nb_pronos": len(pronostics),
+                "nb_evalues": nb_evalues,
+                "nb_exacts": nb_exacts,
+                "points": points,
+                "taux_exacts": taux,
+            },
             "disclaimer": DISCLAIMER_PRONOSTICS,
         }
     finally:
@@ -1996,6 +2688,97 @@ def deposer_pronostic(donnees: PronosticBody, request: Request):
         return {"pronostic": serialiser_pronostic(ligne)}
     except sqlite3.IntegrityError as err:
         raise HTTPException(409, "Un pronostic existe déjà pour ce match") from err
+    finally:
+        connexion.close()
+
+
+@routeur_communaute.get("/sondage-match")
+def lire_sondage_match(
+    request: Request,
+    championnat: str,
+    saison: str,
+    domicile: str,
+    exterieur: str,
+):
+    """Sondage communautaire 1/N/2 lié à un match (lecture publique)."""
+    champ = valider_texte_match(championnat, "Championnat")
+    sais = valider_texte_match(saison, "Saison", 16)
+    dom = valider_texte_match(domicile, "Domicile")
+    ext = valider_texte_match(exterieur, "Extérieur")
+    if dom == ext:
+        raise HTTPException(400, "Les deux équipes doivent être différentes")
+    utilisateur, connexion_session = session_optionnelle(request)
+    connexion = connexion_session or ouvrir_base()
+    fermer = connexion_session is None
+    try:
+        return {
+            "sondage": serialiser_sondage_match(
+                connexion,
+                champ,
+                sais,
+                dom,
+                ext,
+                utilisateur["id"] if utilisateur else 0,
+            )
+        }
+    finally:
+        if fermer:
+            connexion.close()
+        elif connexion_session:
+            connexion_session.close()
+
+
+@routeur_communaute.post("/sondage-match")
+def voter_sondage_match(donnees: SondageMatchVoteBody, request: Request):
+    """Vote unique 1/N/2 sur le sondage communautaire d'un match."""
+    utilisateur, connexion = utilisateur_connecte(request)
+    verifier_limite_sondages_match(utilisateur["id"])
+    champ = valider_texte_match(donnees.championnat, "Championnat")
+    sais = valider_texte_match(donnees.saison, "Saison", 16)
+    dom = valider_texte_match(donnees.domicile, "Domicile")
+    ext = valider_texte_match(donnees.exterieur, "Extérieur")
+    if dom == ext:
+        raise HTTPException(400, "Les deux équipes doivent être différentes")
+    choix = (donnees.choix or "").strip().upper()
+    if choix not in CHOIX_SONDAGE_MATCH:
+        raise HTTPException(400, "Choix invalide (1, N ou 2)")
+    try:
+        deja = connexion.execute(
+            """
+            SELECT id FROM matchs_sondage_votes
+            WHERE utilisateur_id = ?
+              AND championnat = ? AND saison = ?
+              AND domicile = ? AND exterieur = ?
+            """,
+            (utilisateur["id"], champ, sais, dom, ext),
+        ).fetchone()
+        if deja:
+            raise HTTPException(409, "Vous avez déjà voté à ce sondage")
+        connexion.execute(
+            """
+            INSERT INTO matchs_sondage_votes (
+                championnat, saison, domicile, exterieur,
+                utilisateur_id, choix, cree_le
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                champ,
+                sais,
+                dom,
+                ext,
+                utilisateur["id"],
+                choix,
+                maintenant_iso(),
+            ),
+        )
+        connexion.commit()
+        return {
+            "sondage": serialiser_sondage_match(
+                connexion, champ, sais, dom, ext, utilisateur["id"]
+            )
+        }
+    except sqlite3.IntegrityError as err:
+        raise HTTPException(409, "Vous avez déjà voté à ce sondage") from err
     finally:
         connexion.close()
 
@@ -2218,10 +3001,19 @@ def lire_ligue(code: str, request: Request):
 
 
 @routeur_communaute.get("/ligues/{code}/classement")
-def classement_ligue(code: str, request: Request, championnat: str, saison: str):
+def classement_ligue(
+    code: str,
+    request: Request,
+    championnat: str,
+    saison: str,
+    journee: str | None = None,
+):
     utilisateur, connexion = utilisateur_connecte(request)
     code_valide = valider_code_invitation(code)
     champ, sais = valider_filtres_classement(championnat, saison)
+    jour = None
+    if journee:
+        jour = valider_texte_match(journee, "Journée", 16)
     try:
         ligne = lire_ligue_par_code(connexion, code_valide)
         if not ligne:
@@ -2229,16 +3021,355 @@ def classement_ligue(code: str, request: Request, championnat: str, saison: str)
         ids = ids_membres_ligue(connexion, ligne["id"])
         if utilisateur["id"] not in ids:
             raise HTTPException(403, "Vous n'êtes pas membre de cette ligue")
-        classement = calculer_classement_pronos(champ, sais, utilisateur_ids=ids)
+        classement = calculer_classement_pronos(
+            champ, sais, utilisateur_ids=ids, journee=jour
+        )
         return {
             "ligue": serialiser_ligue(
                 ligne, nb_membres=len(ids), est_membre=True
             ),
             "championnat": champ,
             "saison": sais,
+            "journee": jour,
             "classement": classement,
             "regle_points": REGLE_POINTS,
             "disclaimer": DISCLAIMER_LIGUES,
         }
+    finally:
+        connexion.close()
+
+@routeur_communaute.patch("/moi/profil")
+def maj_profil(donnees: ProfilMajBody, request: Request):
+    utilisateur, connexion = utilisateur_connecte(request)
+    bio = valider_bio(donnees.bio)
+    equipe = valider_equipe_favorite(donnees.equipe_favorite)
+    champs = ["bio = ?", "equipe_favorite = ?"]
+    valeurs = [bio, equipe]
+    if "avatar_id" in donnees.model_fields_set:
+        champs.append("avatar_id = ?")
+        valeurs.append(valider_avatar_id(donnees.avatar_id))
+    valeurs.append(utilisateur["id"])
+    try:
+        connexion.execute(
+            f"""
+            UPDATE utilisateurs
+            SET {", ".join(champs)}
+            WHERE id = ?
+            """,
+            tuple(valeurs),
+        )
+        connexion.commit()
+        ligne = connexion.execute(
+            "SELECT * FROM utilisateurs WHERE id = ?",
+            (utilisateur["id"],),
+        ).fetchone()
+        return {"utilisateur": utilisateur_public(ligne)}
+    finally:
+        connexion.close()
+
+
+@routeur_communaute.get("/notifications")
+def lister_notifications(request: Request):
+    utilisateur, connexion = utilisateur_connecte(request)
+    try:
+        synchroniser_notifications(connexion, utilisateur["id"])
+        connexion.commit()
+        lignes = connexion.execute(
+            """
+            SELECT * FROM notifications
+            WHERE utilisateur_id = ?
+            ORDER BY cree_le DESC
+            LIMIT ?
+            """,
+            (utilisateur["id"], LIMITE_NOTIFICATIONS_LISTE),
+        ).fetchall()
+        non_lues = connexion.execute(
+            """
+            SELECT COUNT(*) AS n FROM notifications
+            WHERE utilisateur_id = ? AND lue = 0
+            """,
+            (utilisateur["id"],),
+        ).fetchone()["n"]
+        return {
+            "notifications": [serialiser_notification(row) for row in lignes],
+            "nb_non_lues": non_lues,
+        }
+    finally:
+        connexion.close()
+
+
+@routeur_communaute.get("/notifications/compte")
+def compte_notifications(request: Request):
+    utilisateur, connexion = utilisateur_connecte(request)
+    try:
+        synchroniser_notifications(connexion, utilisateur["id"])
+        connexion.commit()
+        non_lues = connexion.execute(
+            """
+            SELECT COUNT(*) AS n FROM notifications
+            WHERE utilisateur_id = ? AND lue = 0
+            """,
+            (utilisateur["id"],),
+        ).fetchone()["n"]
+        return {"nb_non_lues": non_lues}
+    finally:
+        connexion.close()
+
+
+@routeur_communaute.post("/notifications/lues")
+def marquer_toutes_notifications_lues(request: Request):
+    utilisateur, connexion = utilisateur_connecte(request)
+    try:
+        connexion.execute(
+            """
+            UPDATE notifications SET lue = 1
+            WHERE utilisateur_id = ? AND lue = 0
+            """,
+            (utilisateur["id"],),
+        )
+        connexion.commit()
+        return {"ok": True}
+    finally:
+        connexion.close()
+
+
+@routeur_communaute.post("/notifications/{notification_id}/lue")
+def marquer_notification_lue(notification_id: int, request: Request):
+    if notification_id < 1:
+        raise HTTPException(400, "Identifiant invalide")
+    utilisateur, connexion = utilisateur_connecte(request)
+    try:
+        curseur = connexion.execute(
+            """
+            UPDATE notifications SET lue = 1
+            WHERE id = ? AND utilisateur_id = ?
+            """,
+            (notification_id, utilisateur["id"]),
+        )
+        if curseur.rowcount == 0:
+            raise HTTPException(404, "Notification introuvable")
+        connexion.commit()
+        return {"ok": True}
+    finally:
+        connexion.close()
+
+
+@routeur_communaute.post("/pronostics/lot")
+def deposer_pronostics_lot(donnees: PronosticsLotBody, request: Request):
+    utilisateur, connexion = utilisateur_connecte(request)
+    if not donnees.pronostics:
+        raise HTTPException(400, "Aucun pronostic fourni")
+    if len(donnees.pronostics) > LIMITE_PRONOS_LOT:
+        raise HTTPException(400, f"Maximum {LIMITE_PRONOS_LOT} pronostics par lot")
+    enregistres = []
+    erreurs = []
+    try:
+        for item in donnees.pronostics:
+            verifier_limite_pronostics(utilisateur["id"])
+            try:
+                champ, sais, dom, ext, type_prono, buts_d, buts_e, resultat_1x2 = (
+                    valider_pronostic(item)
+                )
+                prono_id = enregistrer_pronostic_interne(
+                    connexion,
+                    utilisateur["id"],
+                    champ,
+                    sais,
+                    dom,
+                    ext,
+                    type_prono,
+                    buts_d,
+                    buts_e,
+                    resultat_1x2,
+                )
+                ligne = connexion.execute(
+                    "SELECT * FROM pronostics WHERE id = ?",
+                    (prono_id,),
+                ).fetchone()
+                enregistres.append(serialiser_pronostic(ligne))
+            except HTTPException as err:
+                erreurs.append(
+                    {
+                        "domicile": getattr(item, "domicile", ""),
+                        "exterieur": getattr(item, "exterieur", ""),
+                        "detail": err.detail,
+                    }
+                )
+        connexion.commit()
+        return {
+            "enregistres": enregistres,
+            "nb_ok": len(enregistres),
+            "erreurs": erreurs,
+            "nb_erreurs": len(erreurs),
+        }
+    finally:
+        connexion.close()
+
+
+@routeur_communaute.get("/ligues/{code}/messages")
+def lister_messages_ligue(code: str, request: Request):
+    utilisateur, connexion = utilisateur_connecte(request)
+    code_valide = valider_code_invitation(code)
+    try:
+        ligne = lire_ligue_par_code(connexion, code_valide)
+        if not ligne:
+            raise HTTPException(404, "Ligue introuvable")
+        ids = ids_membres_ligue(connexion, ligne["id"])
+        if utilisateur["id"] not in ids:
+            raise HTTPException(403, "Vous n'êtes pas membre de cette ligue")
+        messages = connexion.execute(
+            """
+            SELECT m.id, m.contenu, m.cree_le, u.pseudo, u.id AS utilisateur_id
+            FROM messages_ligue m
+            JOIN utilisateurs u ON u.id = m.utilisateur_id
+            WHERE m.ligue_id = ?
+            ORDER BY m.cree_le DESC
+            LIMIT 50
+            """,
+            (ligne["id"],),
+        ).fetchall()
+        return {
+            "messages": [
+                {
+                    "id": row["id"],
+                    "contenu": row["contenu"],
+                    "cree_le": row["cree_le"],
+                    "pseudo": row["pseudo"],
+                    "utilisateur_id": row["utilisateur_id"],
+                }
+                for row in reversed(messages)
+            ],
+            "disclaimer": DISCLAIMER_LIGUES,
+        }
+    finally:
+        connexion.close()
+
+
+@routeur_communaute.post("/ligues/{code}/messages")
+def publier_message_ligue(code: str, donnees: MessageLigueBody, request: Request):
+    utilisateur, connexion = utilisateur_connecte(request)
+    verifier_limite_messages_ligue(utilisateur["id"])
+    code_valide = valider_code_invitation(code)
+    contenu = valider_message_ligue(donnees.contenu)
+    try:
+        ligne = lire_ligue_par_code(connexion, code_valide)
+        if not ligne:
+            raise HTTPException(404, "Ligue introuvable")
+        ids = ids_membres_ligue(connexion, ligne["id"])
+        if utilisateur["id"] not in ids:
+            raise HTTPException(403, "Vous n'êtes pas membre de cette ligue")
+        curseur = connexion.execute(
+            """
+            INSERT INTO messages_ligue (ligue_id, utilisateur_id, contenu, cree_le)
+            VALUES (?, ?, ?, ?)
+            """,
+            (ligne["id"], utilisateur["id"], contenu, maintenant_iso()),
+        )
+        connexion.commit()
+        return {
+            "message": {
+                "id": curseur.lastrowid,
+                "contenu": contenu,
+                "cree_le": maintenant_iso(),
+                "pseudo": utilisateur["pseudo"],
+                "utilisateur_id": utilisateur["id"],
+            }
+        }
+    finally:
+        connexion.close()
+
+
+@routeur_communaute.get("/admin/signalements")
+def lister_signalements_admin(request: Request, statut: str = "ouvert"):
+    utilisateur, connexion = utilisateur_connecte(request)
+    if not utilisateur["est_admin"]:
+        raise HTTPException(403, "Action réservée aux administrateurs")
+    filtre = (statut or "ouvert").strip().lower()
+    if filtre not in ("ouvert", "traite", "tous"):
+        raise HTTPException(400, "Statut invalide (ouvert, traite, tous)")
+    try:
+        if filtre == "tous":
+            lignes = connexion.execute(
+                """
+                SELECT s.id, s.motif, s.cree_le, s.statut,
+                       c.id AS commentaire_id, c.contenu, c.championnat, c.saison,
+                       c.domicile, c.exterieur, c.supprime,
+                       u.pseudo AS auteur_commentaire,
+                       signalant.pseudo AS pseudo_signalant
+                FROM signalements s
+                JOIN commentaires c ON c.id = s.commentaire_id
+                JOIN utilisateurs u ON u.id = c.utilisateur_id
+                LEFT JOIN utilisateurs signalant ON signalant.id = s.utilisateur_id
+                ORDER BY s.cree_le DESC
+                LIMIT 100
+                """
+            ).fetchall()
+        else:
+            lignes = connexion.execute(
+                """
+                SELECT s.id, s.motif, s.cree_le, s.statut,
+                       c.id AS commentaire_id, c.contenu, c.championnat, c.saison,
+                       c.domicile, c.exterieur, c.supprime,
+                       u.pseudo AS auteur_commentaire,
+                       signalant.pseudo AS pseudo_signalant
+                FROM signalements s
+                JOIN commentaires c ON c.id = s.commentaire_id
+                JOIN utilisateurs u ON u.id = c.utilisateur_id
+                LEFT JOIN utilisateurs signalant ON signalant.id = s.utilisateur_id
+                WHERE s.statut = ?
+                ORDER BY s.cree_le DESC
+                LIMIT 100
+                """,
+                (filtre,),
+            ).fetchall()
+        return {
+            "signalements": [
+                {
+                    "id": row["id"],
+                    "motif": row["motif"] or "",
+                    "cree_le": row["cree_le"],
+                    "statut": row["statut"],
+                    "commentaire_id": row["commentaire_id"],
+                    "contenu": row["contenu"],
+                    "auteur_commentaire": row["auteur_commentaire"],
+                    "pseudo_signalant": row["pseudo_signalant"],
+                    "supprime": bool(row["supprime"]),
+                    "match": {
+                        "championnat": row["championnat"],
+                        "saison": row["saison"],
+                        "domicile": row["domicile"],
+                        "exterieur": row["exterieur"],
+                    },
+                }
+                for row in lignes
+            ]
+        }
+    finally:
+        connexion.close()
+
+
+@routeur_communaute.post("/admin/signalements/{signalement_id}/traiter")
+def traiter_signalement(
+    signalement_id: int,
+    donnees: SignalementTraiterBody,
+    request: Request,
+):
+    if signalement_id < 1:
+        raise HTTPException(400, "Identifiant invalide")
+    utilisateur, connexion = utilisateur_connecte(request)
+    if not utilisateur["est_admin"]:
+        raise HTTPException(403, "Action réservée aux administrateurs")
+    statut = (donnees.statut or "traite").strip().lower()
+    if statut not in ("ouvert", "traite"):
+        raise HTTPException(400, "Statut invalide")
+    try:
+        curseur = connexion.execute(
+            "UPDATE signalements SET statut = ? WHERE id = ?",
+            (statut, signalement_id),
+        )
+        if curseur.rowcount == 0:
+            raise HTTPException(404, "Signalement introuvable")
+        connexion.commit()
+        return {"ok": True, "statut": statut}
     finally:
         connexion.close()

@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Sauvegarde simple des bases SQLite Stats Foot.
+# Copier vers /opt/statsfoot/deploy/sauvegarder-bases.sh, chmod +x, adapter les chemins.
+#
+# Exemple crontab (tous les jours a 3h30) :
+#   30 3 * * * /opt/statsfoot/deploy/sauvegarder-bases.sh >> /var/log/statsfoot-backup.log 2>&1
+
+set -euo pipefail
+
+# --- a adapter ---
+CHEMIN_PROJET="${CHEMIN_PROJET:-/opt/statsfoot}"
+DOSSIER_SAUVEGARDES="${DOSSIER_SAUVEGARDES:-/var/backups/statsfoot}"
+CONSERVER_JOURS="${CONSERVER_JOURS:-14}"
+
+DATE_TAG="$(date +%Y%m%d-%H%M%S)"
+CIBLE="${DOSSIER_SAUVEGARDES}/${DATE_TAG}"
+
+mkdir -p "$CIBLE"
+
+# Copie a froid : suffisante pour un debut (1 worker uvicorn = peu d'ecritures concurrentes).
+# Pour une copie plus propre sous charge : sqlite3 fichier ".backup '/chemin/copie.db'"
+for base in communaute.db football.db; do
+  source="${CHEMIN_PROJET}/donnees/${base}"
+  if [[ -f "$source" ]]; then
+    cp -a "$source" "${CIBLE}/${base}"
+    echo "[ok] ${base} -> ${CIBLE}/${base}"
+  else
+    echo "[skip] absent : ${source}"
+  fi
+done
+
+# Purge des anciennes sauvegardes
+find "$DOSSIER_SAUVEGARDES" -mindepth 1 -maxdepth 1 -type d -mtime "+${CONSERVER_JOURS}" -exec rm -rf {} +
+
+echo "[fin] sauvegarde ${DATE_TAG}"

@@ -305,7 +305,6 @@ Bundesliga,2026-2027,2027-05-22,15:30,RB Leipzig,Hoffenheim,34
 Bundesliga,2026-2027,2027-05-22,15:30,SV 07 Elversberg,Werder Bremen,34
 Bundesliga,2026-2027,2027-05-22,15:30,Schalke 04,Leverkusen,34
 Bundesliga,2026-2027,2027-05-22,15:30,Union Berlin,M'gladbach,34
-La Liga,2026-2027,2026-08-26,19:00,Real Madrid,Sociedad,
 La Liga,2026-2027,2026-08-27,18:30,Celta,Osasuna,
 La Liga,2026-2027,2026-08-27,19:00,Barcelona,Ath Bilbao,
 La Liga,2026-2027,2026-08-28,17:00,Santander,Elche,
@@ -320,10 +319,12 @@ La Liga,2026-2027,2026-08-30,19:30,Celta,Ath Bilbao,
 La Liga,2026-2027,2026-08-30,19:30,La Coruna,Valencia,3
 La Liga,2026-2027,2026-08-31,17:30,Osasuna,Getafe,
 La Liga,2026-2027,2026-08-31,19:30,Barcelona,Vallecano,
+La Liga,2026-2027,2026-08-31,21:30,Barcelona,Real Madrid,3
 La Liga,2026-2027,2026-09-03,19:00,Sociedad,Celta,
 La Liga,2026-2027,2026-09-04,19:00,Betis,Real Madrid,
 La Liga,2026-2027,2026-09-05,14:15,Ath Bilbao,Ath Madrid,
 La Liga,2026-2027,2026-09-05,16:30,Vallecano,Santander,
+La Liga,2026-2027,2026-09-05,18:30,Real Madrid,Santander,4
 La Liga,2026-2027,2026-09-05,19:00,Villarreal,Dep. A Coruna,
 La Liga,2026-2027,2026-09-05,21:00,Villarreal,La Coruna,4
 La Liga,2026-2027,2026-09-06,14:15,Valencia,Barcelona,
@@ -346,7 +347,7 @@ La Liga,2026-2027,2026-09-13,15:00,Sevilla,Valencia,
 La Liga,2026-2027,2026-09-13,15:00,Sociedad,Ath Madrid,
 La Liga,2026-2027,2026-09-13,15:00,Villarreal,Betis,
 La Liga,2026-2027,2026-09-16,,La Coruna,Sevilla,6
-La Liga,2026-2027,2026-09-16,,Vallecano,Barcelona,6
+La Liga,2026-2027,2026-09-16,,Real Madrid,Barcelona,6
 La Liga,2026-2027,2026-09-16,15:00,Alaves,Valencia,
 La Liga,2026-2027,2026-09-16,15:00,Ath Madrid,Osasuna,
 La Liga,2026-2027,2026-09-16,15:00,Barcelona,Santander,
@@ -358,6 +359,7 @@ La Liga,2026-2027,2026-09-16,15:00,Malaga,Villarreal,
 La Liga,2026-2027,2026-09-16,15:00,Vallecano,Espanol,
 La Liga,2026-2027,2026-09-20,,Barcelona,Elche,7
 La Liga,2026-2027,2026-09-20,,La Coruna,Betis,7
+La Liga,2026-2027,2026-09-20,,Osasuna,Real Madrid,7
 La Liga,2026-2027,2026-09-20,15:00,Ath Bilbao,Alaves,
 La Liga,2026-2027,2026-09-20,15:00,Ath Madrid,Real Madrid,
 La Liga,2026-2027,2026-09-20,15:00,Celta,Santander,
@@ -369,6 +371,7 @@ La Liga,2026-2027,2026-09-20,15:00,Sevilla,Barcelona,
 La Liga,2026-2027,2026-09-20,15:00,Valencia,Sociedad,
 La Liga,2026-2027,2026-09-20,15:00,Villarreal,Levante,
 La Liga,2026-2027,2026-10-11,,Malaga,Barcelona,8
+La Liga,2026-2027,2026-10-11,,Real Madrid,Ath Bilbao,8
 La Liga,2026-2027,2026-10-11,,Sociedad,La Coruna,8
 La Liga,2026-2027,2026-10-11,15:00,Alaves,Ath Madrid,
 La Liga,2026-2027,2026-10-11,15:00,Barcelona,Getafe,
@@ -381,6 +384,7 @@ La Liga,2026-2027,2026-10-11,15:00,Santander,Valencia,
 La Liga,2026-2027,2026-10-11,15:00,Sociedad,Dep. A Coruna,
 La Liga,2026-2027,2026-10-11,15:00,Vallecano,Ath Bilbao,
 La Liga,2026-2027,2026-10-18,,Barcelona,Ath Madrid,9
+La Liga,2026-2027,2026-10-18,,Getafe,Real Madrid,9
 La Liga,2026-2027,2026-10-18,,La Coruna,Levante,9
 La Liga,2026-2027,2026-10-18,15:00,Betis,Barcelona,
 La Liga,2026-2027,2026-10-18,15:00,Celta,Alaves,
@@ -393,6 +397,7 @@ La Liga,2026-2027,2026-10-18,15:00,Real Madrid,Sevilla,
 La Liga,2026-2027,2026-10-18,15:00,Valencia,Ath Bilbao,
 La Liga,2026-2027,2026-10-18,15:00,Villarreal,Elche,
 La Liga,2026-2027,2026-10-25,,Ath Madrid,La Coruna,10
+La Liga,2026-2027,2026-10-25,,Real Madrid,Elche,10
 La Liga,2026-2027,2026-10-25,,Santander,Barcelona,10
 La Liga,2026-2027,2026-10-25,16:00,Alaves,Malaga,
 La Liga,2026-2027,2026-10-25,16:00,Ath Bilbao,Getafe,
@@ -405,6 +410,7 @@ La Liga,2026-2027,2026-10-25,16:00,Sociedad,Levante,
 La Liga,2026-2027,2026-10-25,16:00,Valencia,Villarreal,
 La Liga,2026-2027,2026-10-25,16:00,Vallecano,Elche,
 La Liga,2026-2027,2026-11-01,,La Coruna,Osasuna,11
+La Liga,2026-2027,2026-11-01,,Real Madrid,Celta,11
 La Liga,2026-2027,2026-11-01,,Villarreal,Barcelona,11
 La Liga,2026-2027,2026-11-01,16:00,Ath Bilbao,Sociedad,
 La Liga,2026-2027,2026-11-01,16:00,Barcelona,Alaves,
@@ -417,6 +423,7 @@ La Liga,2026-2027,2026-11-01,16:00,Santander,Real Madrid,
 La Liga,2026-2027,2026-11-01,16:00,Vallecano,Celta,
 La Liga,2026-2027,2026-11-01,16:00,Villarreal,Espanol,
 La Liga,2026-2027,2026-11-08,,Barcelona,La Coruna,12
+La Liga,2026-2027,2026-11-08,,Sociedad,Real Madrid,12
 La Liga,2026-2027,2026-11-08,16:00,Ath Madrid,Barcelona,
 La Liga,2026-2027,2026-11-08,16:00,Celta,Levante,
 La Liga,2026-2027,2026-11-08,16:00,Elche,Betis,
@@ -429,6 +436,7 @@ La Liga,2026-2027,2026-11-08,16:00,Valencia,Real Madrid,
 La Liga,2026-2027,2026-11-08,16:00,Villarreal,Getafe,
 La Liga,2026-2027,2026-11-22,,Alaves,La Coruna,13
 La Liga,2026-2027,2026-11-22,,Ath Bilbao,Barcelona,13
+La Liga,2026-2027,2026-11-22,,Real Madrid,Valencia,13
 La Liga,2026-2027,2026-11-22,16:00,Alaves,Dep. A Coruna,
 La Liga,2026-2027,2026-11-22,16:00,Ath Bilbao,Espanol,
 La Liga,2026-2027,2026-11-22,16:00,Barcelona,Villarreal,
@@ -440,6 +448,7 @@ La Liga,2026-2027,2026-11-22,16:00,Santander,Sociedad,
 La Liga,2026-2027,2026-11-22,16:00,Sevilla,Betis,
 La Liga,2026-2027,2026-11-22,16:00,Vallecano,Valencia,
 La Liga,2026-2027,2026-11-29,,Barcelona,Getafe,14
+La Liga,2026-2027,2026-11-29,,Betis,Real Madrid,14
 La Liga,2026-2027,2026-11-29,,La Coruna,Barcelona,14
 La Liga,2026-2027,2026-11-29,16:00,Betis,Vallecano,
 La Liga,2026-2027,2026-11-29,16:00,Celta,Villarreal,
@@ -452,6 +461,7 @@ La Liga,2026-2027,2026-11-29,16:00,Real Madrid,Alaves,
 La Liga,2026-2027,2026-11-29,16:00,Sociedad,Sevilla,
 La Liga,2026-2027,2026-11-29,16:00,Valencia,Osasuna,
 La Liga,2026-2027,2026-12-06,,Alaves,Barcelona,15
+La Liga,2026-2027,2026-12-06,,Real Madrid,Levante,15
 La Liga,2026-2027,2026-12-06,,Santander,La Coruna,15
 La Liga,2026-2027,2026-12-06,16:00,Alaves,Espanol,
 La Liga,2026-2027,2026-12-06,16:00,Ath Bilbao,Real Madrid,
@@ -465,6 +475,7 @@ La Liga,2026-2027,2026-12-06,16:00,Vallecano,Levante,
 La Liga,2026-2027,2026-12-06,16:00,Villarreal,Sociedad,
 La Liga,2026-2027,2026-12-13,,Barcelona,Celta,16
 La Liga,2026-2027,2026-12-13,,La Coruna,Ath Bilbao,16
+La Liga,2026-2027,2026-12-13,,Villarreal,Real Madrid,16
 La Liga,2026-2027,2026-12-13,16:00,Ath Madrid,Valencia,
 La Liga,2026-2027,2026-12-13,16:00,Betis,Santander,
 La Liga,2026-2027,2026-12-13,16:00,Dep. A Coruna,Ath Bilbao,
@@ -476,6 +487,7 @@ La Liga,2026-2027,2026-12-13,16:00,Real Madrid,Osasuna,
 La Liga,2026-2027,2026-12-13,16:00,Sociedad,Getafe,
 La Liga,2026-2027,2026-12-13,16:00,Villarreal,Vallecano,
 La Liga,2026-2027,2026-12-20,,La Coruna,Real Madrid,17
+La Liga,2026-2027,2026-12-20,,Real Madrid,Malaga,17
 La Liga,2026-2027,2026-12-20,,Valencia,Barcelona,17
 La Liga,2026-2027,2026-12-20,16:00,Alaves,Elche,
 La Liga,2026-2027,2026-12-20,16:00,Ath Bilbao,Betis,
@@ -488,6 +500,7 @@ La Liga,2026-2027,2026-12-20,16:00,Sevilla,Santander,
 La Liga,2026-2027,2026-12-20,16:00,Valencia,Espanol,
 La Liga,2026-2027,2026-12-20,16:00,Vallecano,Malaga,
 La Liga,2026-2027,2027-01-03,,Celta,La Coruna,18
+La Liga,2026-2027,2027-01-03,,Real Madrid,Ath Madrid,18
 La Liga,2026-2027,2027-01-03,16:00,Betis,Alaves,
 La Liga,2026-2027,2027-01-03,16:00,Celta,Dep. A Coruna,
 La Liga,2026-2027,2027-01-03,16:00,Espanol,Barcelona,
@@ -499,7 +512,7 @@ La Liga,2026-2027,2027-01-03,16:00,Sociedad,Osasuna,
 La Liga,2026-2027,2027-01-03,16:00,Vallecano,Ath Madrid,
 La Liga,2026-2027,2027-01-03,16:00,Villarreal,Sevilla,
 La Liga,2026-2027,2027-01-10,,Barcelona,Betis,19
-La Liga,2026-2027,2027-01-10,,La Coruna,Vallecano,19
+La Liga,2026-2027,2027-01-10,,La Coruna,Real Madrid,19
 La Liga,2026-2027,2027-01-10,16:00,Alaves,Sociedad,
 La Liga,2026-2027,2027-01-10,16:00,Ath Bilbao,Villarreal,
 La Liga,2026-2027,2027-01-10,16:00,Ath Madrid,Santander,
@@ -512,6 +525,7 @@ La Liga,2026-2027,2027-01-10,16:00,Sevilla,Celta,
 La Liga,2026-2027,2027-01-10,16:00,Valencia,Malaga,
 La Liga,2026-2027,2027-01-17,,Betis,La Coruna,20
 La Liga,2026-2027,2027-01-17,,Levante,Barcelona,20
+La Liga,2026-2027,2027-01-17,,Real Madrid,Sevilla,20
 La Liga,2026-2027,2027-01-17,16:00,Ath Madrid,Sociedad,
 La Liga,2026-2027,2027-01-17,16:00,Barcelona,Elche,
 La Liga,2026-2027,2027-01-17,16:00,Betis,Dep. A Coruna,
@@ -523,6 +537,7 @@ La Liga,2026-2027,2027-01-17,16:00,Santander,Osasuna,
 La Liga,2026-2027,2027-01-17,16:00,Vallecano,Sevilla,
 La Liga,2026-2027,2027-01-17,16:00,Villarreal,Alaves,
 La Liga,2026-2027,2027-01-24,,Barcelona,Villarreal,21
+La Liga,2026-2027,2027-01-24,,Elche,Real Madrid,21
 La Liga,2026-2027,2027-01-24,,La Coruna,Ath Madrid,21
 La Liga,2026-2027,2027-01-24,16:00,Alaves,Barcelona,
 La Liga,2026-2027,2027-01-24,16:00,Ath Bilbao,Levante,
@@ -546,7 +561,6 @@ La Liga,2026-2027,2027-01-31,16:00,Osasuna,Dep. A Coruna,
 La Liga,2026-2027,2027-01-31,16:00,Sevilla,Ath Bilbao,
 La Liga,2026-2027,2027-01-31,16:00,Vallecano,Real Madrid,
 La Liga,2026-2027,2027-01-31,16:00,Villarreal,Santander,
-La Liga,2026-2027,2027-02-07,,Barcelona,Vallecano,23
 La Liga,2026-2027,2027-02-07,,La Coruna,Malaga,23
 La Liga,2026-2027,2027-02-07,16:00,Alaves,Celta,
 La Liga,2026-2027,2027-02-07,16:00,Ath Bilbao,Osasuna,
@@ -558,6 +572,7 @@ La Liga,2026-2027,2027-02-07,16:00,Espanol,Vallecano,
 La Liga,2026-2027,2027-02-07,16:00,Getafe,Villarreal,
 La Liga,2026-2027,2027-02-07,16:00,Sociedad,Real Madrid,
 La Liga,2026-2027,2027-02-07,16:00,Valencia,Santander,
+La Liga,2026-2027,2027-02-14,,Celta,Real Madrid,24
 La Liga,2026-2027,2027-02-14,,Elche,La Coruna,24
 La Liga,2026-2027,2027-02-14,,Sevilla,Barcelona,24
 La Liga,2026-2027,2027-02-14,16:00,Celta,Vallecano,
@@ -572,6 +587,7 @@ La Liga,2026-2027,2027-02-14,16:00,Valencia,Alaves,
 La Liga,2026-2027,2027-02-14,16:00,Villarreal,Barcelona,
 La Liga,2026-2027,2027-02-21,,Barcelona,Osasuna,25
 La Liga,2026-2027,2027-02-21,,La Coruna,Sociedad,25
+La Liga,2026-2027,2027-02-21,,Real Madrid,Getafe,25
 La Liga,2026-2027,2027-02-21,16:00,Alaves,Santander,
 La Liga,2026-2027,2027-02-21,16:00,Ath Bilbao,Celta,
 La Liga,2026-2027,2027-02-21,16:00,Ath Madrid,Elche,
@@ -584,6 +600,7 @@ La Liga,2026-2027,2027-02-21,16:00,Vallecano,Getafe,
 La Liga,2026-2027,2027-02-21,16:00,Villarreal,Valencia,
 La Liga,2026-2027,2027-02-28,,Celta,Barcelona,26
 La Liga,2026-2027,2027-02-28,,Levante,La Coruna,26
+La Liga,2026-2027,2027-02-28,,Santander,Real Madrid,26
 La Liga,2026-2027,2027-02-28,16:00,Ath Bilbao,Barcelona,
 La Liga,2026-2027,2027-02-28,16:00,Betis,Villarreal,
 La Liga,2026-2027,2027-02-28,16:00,Celta,Espanol,
@@ -596,6 +613,7 @@ La Liga,2026-2027,2027-02-28,16:00,Santander,Vallecano,
 La Liga,2026-2027,2027-02-28,16:00,Sociedad,Elche,
 La Liga,2026-2027,2027-03-07,,Barcelona,Santander,27
 La Liga,2026-2027,2027-03-07,,La Coruna,Getafe,27
+La Liga,2026-2027,2027-03-07,,Real Madrid,Osasuna,27
 La Liga,2026-2027,2027-03-07,16:00,Alaves,Ath Bilbao,
 La Liga,2026-2027,2027-03-07,16:00,Ath Madrid,Celta,
 La Liga,2026-2027,2027-03-07,16:00,Barcelona,Betis,
@@ -607,6 +625,7 @@ La Liga,2026-2027,2027-03-07,16:00,Valencia,Levante,
 La Liga,2026-2027,2027-03-07,16:00,Vallecano,Osasuna,
 La Liga,2026-2027,2027-03-07,16:00,Villarreal,Real Madrid,
 La Liga,2026-2027,2027-03-14,,Barcelona,La Coruna,28
+La Liga,2026-2027,2027-03-14,,Malaga,Real Madrid,28
 La Liga,2026-2027,2027-03-14,,Real Madrid,Barcelona,28
 La Liga,2026-2027,2027-03-14,16:00,Alaves,Sevilla,
 La Liga,2026-2027,2027-03-14,16:00,Ath Bilbao,Valencia,
@@ -619,6 +638,7 @@ La Liga,2026-2027,2027-03-14,16:00,Osasuna,Celta,
 La Liga,2026-2027,2027-03-14,16:00,Real Madrid,Espanol,
 La Liga,2026-2027,2027-03-14,16:00,Santander,Ath Madrid,
 La Liga,2026-2027,2027-03-21,,Barcelona,Ath Bilbao,29
+La Liga,2026-2027,2027-03-21,,Real Madrid,Barcelona,29
 La Liga,2026-2027,2027-03-21,,Valencia,La Coruna,29
 La Liga,2026-2027,2027-03-21,16:00,Ath Madrid,Getafe,
 La Liga,2026-2027,2027-03-21,16:00,Celta,Real Madrid,
@@ -632,6 +652,7 @@ La Liga,2026-2027,2027-03-21,16:00,Vallecano,Barcelona,
 La Liga,2026-2027,2027-03-21,16:00,Villarreal,Malaga,
 La Liga,2026-2027,2027-04-04,,Getafe,Barcelona,30
 La Liga,2026-2027,2027-04-04,,La Coruna,Villarreal,30
+La Liga,2026-2027,2027-04-04,,Levante,Real Madrid,30
 La Liga,2026-2027,2027-04-04,15:00,Ath Bilbao,Santander,
 La Liga,2026-2027,2027-04-04,15:00,Barcelona,Sevilla,
 La Liga,2026-2027,2027-04-04,15:00,Betis,Celta,
@@ -643,6 +664,7 @@ La Liga,2026-2027,2027-04-04,15:00,Malaga,Osasuna,
 La Liga,2026-2027,2027-04-04,15:00,Real Madrid,Ath Madrid,
 La Liga,2026-2027,2027-04-04,15:00,Sociedad,Valencia,
 La Liga,2026-2027,2027-04-11,,Barcelona,Malaga,31
+La Liga,2026-2027,2027-04-11,,Real Madrid,Sociedad,31
 La Liga,2026-2027,2027-04-11,,Sevilla,La Coruna,31
 La Liga,2026-2027,2027-04-11,15:00,Alaves,Betis,
 La Liga,2026-2027,2027-04-11,15:00,Ath Madrid,Levante,
@@ -654,6 +676,7 @@ La Liga,2026-2027,2027-04-11,15:00,Sevilla,Dep. A Coruna,
 La Liga,2026-2027,2027-04-11,15:00,Valencia,Getafe,
 La Liga,2026-2027,2027-04-11,15:00,Vallecano,Sociedad,
 La Liga,2026-2027,2027-04-11,15:00,Villarreal,Ath Bilbao,
+La Liga,2026-2027,2027-04-18,,Alaves,Real Madrid,32
 La Liga,2026-2027,2027-04-18,,La Coruna,Celta,32
 La Liga,2026-2027,2027-04-18,15:00,Alaves,Vallecano,
 La Liga,2026-2027,2027-04-18,15:00,Ath Madrid,Sevilla,
@@ -667,6 +690,7 @@ La Liga,2026-2027,2027-04-18,15:00,Malaga,Valencia,
 La Liga,2026-2027,2027-04-18,15:00,Sociedad,Santander,
 La Liga,2026-2027,2027-04-21,,Ath Bilbao,La Coruna,33
 La Liga,2026-2027,2027-04-21,,Barcelona,Sociedad,33
+La Liga,2026-2027,2027-04-21,,Valencia,Real Madrid,33
 La Liga,2026-2027,2027-04-21,15:00,Ath Bilbao,Dep. A Coruna,
 La Liga,2026-2027,2027-04-21,15:00,Celta,Barcelona,
 La Liga,2026-2027,2027-04-21,15:00,Espanol,Sociedad,
@@ -679,6 +703,7 @@ La Liga,2026-2027,2027-04-21,15:00,Valencia,Vallecano,
 La Liga,2026-2027,2027-04-21,15:00,Villarreal,Ath Madrid,
 La Liga,2026-2027,2027-05-02,,Elche,Barcelona,34
 La Liga,2026-2027,2027-05-02,,La Coruna,Santander,34
+La Liga,2026-2027,2027-05-02,,Real Madrid,Villarreal,34
 La Liga,2026-2027,2027-05-02,15:00,Ath Madrid,Alaves,
 La Liga,2026-2027,2027-05-02,15:00,Barcelona,Osasuna,
 La Liga,2026-2027,2027-05-02,15:00,Betis,Valencia,
@@ -690,7 +715,7 @@ La Liga,2026-2027,2027-05-02,15:00,Malaga,Getafe,
 La Liga,2026-2027,2027-05-02,15:00,Sociedad,Ath Bilbao,
 La Liga,2026-2027,2027-05-02,15:00,Vallecano,Villarreal,
 La Liga,2026-2027,2027-05-09,,Betis,Barcelona,35
-La Liga,2026-2027,2027-05-09,,Vallecano,La Coruna,35
+La Liga,2026-2027,2027-05-09,,Real Madrid,La Coruna,35
 La Liga,2026-2027,2027-05-09,15:00,Alaves,Levante,
 La Liga,2026-2027,2027-05-09,15:00,Ath Bilbao,Malaga,
 La Liga,2026-2027,2027-05-09,15:00,Betis,Espanol,
@@ -701,6 +726,7 @@ La Liga,2026-2027,2027-05-09,15:00,Santander,Sevilla,
 La Liga,2026-2027,2027-05-09,15:00,Valencia,Ath Madrid,
 La Liga,2026-2027,2027-05-09,15:00,Vallecano,Dep. A Coruna,
 La Liga,2026-2027,2027-05-09,15:00,Villarreal,Celta,
+La Liga,2026-2027,2027-05-16,,Ath Madrid,Real Madrid,36
 La Liga,2026-2027,2027-05-16,,Barcelona,Valencia,36
 La Liga,2026-2027,2027-05-16,,La Coruna,Alaves,36
 La Liga,2026-2027,2027-05-16,15:00,Ath Madrid,Vallecano,
@@ -714,6 +740,7 @@ La Liga,2026-2027,2027-05-16,15:00,Real Madrid,Santander,
 La Liga,2026-2027,2027-05-16,15:00,Sevilla,Villarreal,
 La Liga,2026-2027,2027-05-16,15:00,Sociedad,Barcelona,
 La Liga,2026-2027,2027-05-23,,La Coruna,Barcelona,37
+La Liga,2026-2027,2027-05-23,,Real Madrid,Betis,37
 La Liga,2026-2027,2027-05-23,15:00,Alaves,Real Madrid,
 La Liga,2026-2027,2027-05-23,15:00,Ath Madrid,Ath Bilbao,
 La Liga,2026-2027,2027-05-23,15:00,Barcelona,Malaga,
@@ -724,6 +751,7 @@ La Liga,2026-2027,2027-05-23,15:00,Sevilla,Getafe,
 La Liga,2026-2027,2027-05-23,15:00,Valencia,Elche,
 La Liga,2026-2027,2027-05-23,15:00,Vallecano,Betis,
 La Liga,2026-2027,2027-05-23,15:00,Villarreal,Osasuna,
+La Liga,2026-2027,2027-05-30,,Ath Bilbao,Real Madrid,38
 La Liga,2026-2027,2027-05-30,,Barcelona,Alaves,38
 La Liga,2026-2027,2027-05-30,,Real Madrid,La Coruna,38
 La Liga,2026-2027,2027-05-30,15:00,Ath Bilbao,Vallecano,

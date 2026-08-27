@@ -45,6 +45,7 @@ LIGUES = (
     {"id": 78, "nom": "Bundesliga"},
     {"id": 135, "nom": "Serie A"},
     {"id": 61, "nom": "Ligue 1"},
+    {"id": 203, "nom": "Super Lig"},
 )
 
 

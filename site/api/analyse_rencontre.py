@@ -18,6 +18,7 @@ LIGUES_NATIONALES = (
     "Bundesliga",
     "Serie A",
     "Ligue 1",
+    "Super Lig",
 )
 
 # Saison trop courte (ex. 2026-2027) : on retombe sur la precedente.
@@ -1016,6 +1017,87 @@ def _recit_scenario(nom_dom, nom_ext, domicile, exterieur, pred, cartons):
     return phrases
 
 
+def _parser_score_probable(score):
+    """Extrait les buts dom./ext. d'un score type « 2-1 »."""
+    if not score or "-" not in str(score):
+        return None, None
+    parties = str(score).split("-", 1)
+    try:
+        return int(parties[0]), int(parties[1])
+    except (TypeError, ValueError):
+        return None, None
+
+
+def _ligne_comparaison(libelle, prev_d, prev_e, reel_d, reel_e, decimales=0):
+    """Une statistique si prévision et réalité sont disponibles."""
+    prev_ok = prev_d is not None or prev_e is not None
+    reel_ok = reel_d is not None or reel_e is not None
+    if not prev_ok or not reel_ok:
+        return None
+    return {
+        "statistique": libelle,
+        "prevu_domicile": prev_d,
+        "prevu_exterieur": prev_e,
+        "reel_domicile": reel_d,
+        "reel_exterieur": reel_e,
+        "decimales": decimales,
+    }
+
+
+def comparaison_previsions_reel(pred, match_joue):
+    """
+    Tableau chiffré prévisions vs réalité pour un match joué.
+    Recalcule les mêmes indicateurs que l'analyse pré-match (Poisson, cartons).
+    """
+    lignes = []
+    prev_buts_d, prev_buts_e = _parser_score_probable(pred.get("score_plus_probable"))
+    ligne_buts = _ligne_comparaison(
+        "Buts",
+        prev_buts_d,
+        prev_buts_e,
+        match_joue.get("buts_domicile"),
+        match_joue.get("buts_exterieur"),
+    )
+    if ligne_buts:
+        lignes.append(ligne_buts)
+
+    ligne_xg = _ligne_comparaison(
+        "Occasions (xG)",
+        pred.get("xg_prevu_domicile"),
+        pred.get("xg_prevu_exterieur"),
+        match_joue.get("xg_domicile"),
+        match_joue.get("xg_exterieur"),
+        decimales=1,
+    )
+    if ligne_xg:
+        lignes.append(ligne_xg)
+
+    cartons = pred.get("cartons") or {}
+    ligne_jaunes = _ligne_comparaison(
+        "Cartons jaunes",
+        cartons.get("jaunes_domicile"),
+        cartons.get("jaunes_exterieur"),
+        match_joue.get("jaunes_domicile"),
+        match_joue.get("jaunes_exterieur"),
+        decimales=1,
+    )
+    if ligne_jaunes:
+        lignes.append(ligne_jaunes)
+
+    ligne_rouges = _ligne_comparaison(
+        "Cartons rouges",
+        cartons.get("rouges_domicile"),
+        cartons.get("rouges_exterieur"),
+        match_joue.get("rouges_domicile"),
+        match_joue.get("rouges_exterieur"),
+        decimales=2,
+    )
+    if ligne_rouges:
+        lignes.append(ligne_rouges)
+
+    return {"lignes": lignes}
+
+
 def _bilan_match(pred, match_joue):
     """Compare le scénario prévu et le résultat réel."""
     buts_d = match_joue["buts_domicile"]
@@ -1222,8 +1304,11 @@ def lire_match_joue(connexion, championnat, saison, nom_domicile, nom_exterieur)
         """
         SELECT date, saison, domicile, exterieur,
                buts_domicile, buts_exterieur,
+               buts_domicile_mt, buts_exterieur_mt,
                tirs_domicile, tirs_exterieur,
                tirs_cadres_domicile, tirs_cadres_exterieur,
+               fautes_domicile, fautes_exterieur,
+               corners_domicile, corners_exterieur,
                jaunes_domicile, jaunes_exterieur,
                rouges_domicile, rouges_exterieur
         FROM matchs
@@ -1247,10 +1332,16 @@ def lire_match_joue(connexion, championnat, saison, nom_domicile, nom_exterieur)
         "saison": ligne["saison"],
         "buts_domicile": int(ligne["buts_domicile"]),
         "buts_exterieur": int(ligne["buts_exterieur"]),
+        "buts_domicile_mt": int(ligne["buts_domicile_mt"]) if ligne["buts_domicile_mt"] is not None else None,
+        "buts_exterieur_mt": int(ligne["buts_exterieur_mt"]) if ligne["buts_exterieur_mt"] is not None else None,
         "tirs_domicile": ligne["tirs_domicile"],
         "tirs_exterieur": ligne["tirs_exterieur"],
         "tirs_cadres_domicile": ligne["tirs_cadres_domicile"],
         "tirs_cadres_exterieur": ligne["tirs_cadres_exterieur"],
+        "fautes_domicile": ligne["fautes_domicile"],
+        "fautes_exterieur": ligne["fautes_exterieur"],
+        "corners_domicile": ligne["corners_domicile"],
+        "corners_exterieur": ligne["corners_exterieur"],
         "jaunes_domicile": int(ligne["jaunes_domicile"]) if ligne["jaunes_domicile"] is not None else None,
         "jaunes_exterieur": int(ligne["jaunes_exterieur"]) if ligne["jaunes_exterieur"] is not None else None,
         "rouges_domicile": int(ligne["rouges_domicile"]) if ligne["rouges_domicile"] is not None else None,
@@ -1414,6 +1505,7 @@ def analyser_rencontre(connexion, championnat, saison, nom_domicile, nom_exterie
     )
     if match_joue.get("joue"):
         pred["bilan"] = _bilan_match(pred, match_joue)
+        pred["comparaison"] = comparaison_previsions_reel(pred, match_joue)
 
     return {
         "championnat": championnat,

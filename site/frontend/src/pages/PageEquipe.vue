@@ -2,6 +2,7 @@
 import { computed, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import CalendrierMatchs from "../composants/CalendrierMatchs.vue";
+import ChargementPage from "../composants/ChargementPage.vue";
 import PortraitJoueur from "../composants/PortraitJoueur.vue";
 import DiagrammeDensites from "../composants/DiagrammeDensites.vue";
 import DiagrammeRadar from "../composants/DiagrammeRadar.vue";
@@ -33,14 +34,18 @@ const data = ref({
   },
 });
 const erreur = ref("");
+const chargement = ref(true);
 const eloRetry = ref(false);
 
 async function charger() {
   erreur.value = "";
+  chargement.value = true;
   try {
     data.value = await chargerEquipe(championnat.value, saison.value, equipe.value);
   } catch (e) {
     erreur.value = e.message;
+  } finally {
+    chargement.value = false;
   }
 }
 
@@ -225,8 +230,14 @@ function analyserMatch(match) {
   </section>
   <div class="page">
     <p v-if="erreur" class="erreur">{{ erreur }}</p>
-    <p v-else-if="!data.joueurs.length && !data.matchs.length" class="doux">
-      Pas encore de données pour {{ equipe }} en {{ saison }}.
+    <ChargementPage v-else-if="chargement" message="Chargement des stats" />
+    <template v-else>
+    <p v-if="!data.joueurs.length && !data.matchs.length" class="doux message-vide-communaute">
+      Effectif et calendrier vides pour {{ equipe }} en {{ saison }}.
+      Réessayez une autre saison ou revenez après la prochaine collecte.
+    </p>
+    <p v-else-if="!data.joueurs.length" class="doux message-vide-communaute">
+      Effectif indisponible pour {{ equipe }} en {{ saison }}.
     </p>
 
     <div class="bloc" v-if="axesEquipe.length">
@@ -454,5 +465,6 @@ function analyserMatch(match) {
         @analyser="analyserMatch"
       />
     </div>
+    </template>
   </div>
 </template>

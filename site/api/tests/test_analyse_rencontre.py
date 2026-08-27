@@ -10,6 +10,7 @@ from analyse_rencontre import (
     _scenario_cartons,
     _scenario_poisson,
     _scenarios_detailles,
+    comparaison_previsions_reel,
     saison_precedente,
     serie_forme_matchs,
 )
@@ -130,6 +131,57 @@ def test_bilan_match_score_exact():
     )
     assert bilan["points"]
     assert any("exactement" in p for p in bilan["points"])
+
+
+def test_comparaison_previsions_reel_lignes_chiffrees():
+    pred = _scenario_poisson(1.5, 1.0)
+    pred["score_plus_probable"] = "2-1"
+    pred["cartons"] = _scenario_cartons(
+        2.0, 1.8, 0.05, 0.02, 3.8, ["saison", "saison"]
+    )
+    comparaison = comparaison_previsions_reel(
+        pred,
+        {
+            "buts_domicile": 2,
+            "buts_exterieur": 1,
+            "xg_domicile": 1.6,
+            "xg_exterieur": 0.9,
+            "jaunes_domicile": 3,
+            "jaunes_exterieur": 2,
+            "rouges_domicile": 0,
+            "rouges_exterieur": 1,
+        },
+    )
+    libelles = [ligne["statistique"] for ligne in comparaison["lignes"]]
+    assert libelles == [
+        "Buts",
+        "Occasions (xG)",
+        "Cartons jaunes",
+        "Cartons rouges",
+    ]
+    buts = comparaison["lignes"][0]
+    assert buts["prevu_domicile"] == 2
+    assert buts["reel_exterieur"] == 1
+
+
+def test_comparaison_previsions_reel_sans_xg_reel():
+    pred = _scenario_poisson(1.2, 1.0)
+    pred["cartons"] = {"jaunes_domicile": 2.0, "jaunes_exterieur": 1.5}
+    comparaison = comparaison_previsions_reel(
+        pred,
+        {
+            "buts_domicile": 1,
+            "buts_exterieur": 0,
+            "xg_domicile": None,
+            "xg_exterieur": None,
+            "jaunes_domicile": 2,
+            "jaunes_exterieur": 1,
+        },
+    )
+    libelles = [ligne["statistique"] for ligne in comparaison["lignes"]]
+    assert "Occasions (xG)" not in libelles
+    assert "Buts" in libelles
+    assert "Cartons jaunes" in libelles
 
 
 def test_phrases_simples_expliquent_xg():

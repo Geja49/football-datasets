@@ -27,7 +27,8 @@ LEAGUES = [
     {'name': 'la-liga', 'path': 'spainm.php', 'key': 'SP1', 'links': [], 'range': _NB_SAISONS - 1},
     {'name': 'bundesliga', 'path': 'germanym.php', 'key': 'D1', 'links': [], 'range': _NB_SAISONS - 1},
     {'name': 'serie-a', 'path': 'italym.php', 'key': 'I1', 'links': [], 'range': _NB_SAISONS - 1},
-    {'name': 'ligue-1', 'path': 'francem.php', 'key': 'F1', 'links': [], 'range': _NB_SAISONS - 1}
+    {'name': 'ligue-1', 'path': 'francem.php', 'key': 'F1', 'links': [], 'range': _NB_SAISONS - 1},
+    {'name': 'super-lig', 'path': 'turkeym.php', 'key': 'T1', 'links': [], 'range': _NB_SAISONS - 1},
 ]
 
 def fetch_league_links(league):

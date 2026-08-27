@@ -1,8 +1,10 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import ChargementPage from "../composants/ChargementPage.vue";
 import ProfilPublicPronos from "../composants/ProfilPublicPronos.vue";
 import { CHAMPIONNATS_DEFAUT } from "../championnats.js";
+import { formaterPseudoAffichage } from "../formaterPseudo.js";
 import { chargerAccueil, chargerClassementPronos } from "../services/api.js";
 
 const route = useRoute();
@@ -14,7 +16,6 @@ const saison = ref("2026-2027");
 const saisons = ref(["2026-2027"]);
 const classement = ref([]);
 const reglePoints = ref("");
-const disclaimer = ref("");
 const erreur = ref("");
 const chargement = ref(true);
 const profilOuvert = ref(null);
@@ -43,7 +44,6 @@ async function chargerClassement() {
     const reponse = await chargerClassementPronos(championnat.value, saison.value);
     classement.value = reponse.classement || [];
     reglePoints.value = reponse.regle_points || "";
-    disclaimer.value = reponse.disclaimer || "";
   } catch (e) {
     erreur.value = e.message;
     classement.value = [];
@@ -121,11 +121,10 @@ watch([championnat, saison], () => {
   </section>
 
   <div class="page">
-    <p v-if="reglePoints" class="mention mention-communaute">{{ reglePoints }}</p>
-    <p v-if="disclaimer" class="mention mention-communaute">{{ disclaimer }}</p>
+    <p v-if="reglePoints" class="mention">{{ reglePoints }}</p>
 
     <p v-if="erreur" class="erreur">{{ erreur }}</p>
-    <p v-if="chargement" class="doux">Chargement…</p>
+    <ChargementPage v-if="chargement" message="Chargement du classement" />
 
     <p v-else-if="!classement.length" class="doux">
       Aucun pronostic pour ce championnat et cette saison.
@@ -160,7 +159,7 @@ watch([championnat, saison], () => {
                 :class="{ actif: profilOuvert === ligne.pseudo }"
                 @click="ouvrirProfil(ligne.pseudo)"
               >
-                {{ ligne.pseudo }}
+                {{ formaterPseudoAffichage(ligne.pseudo) }}
               </button>
             </td>
             <td class="col-points">{{ ligne.points }}</td>
