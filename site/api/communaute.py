@@ -66,6 +66,7 @@ MOTIF_CODE_LIGUE = re.compile(r"^[A-Z0-9]{6,12}$")
 LONGUEUR_BIO_MAX = 160
 LONGUEUR_EQUIPE_FAVORITE_MAX = 60
 LONGUEUR_MESSAGE_LIGUE_MAX = 300
+LIMITE_CHANGEMENTS_PSEUDO = 4
 LIMITE_MESSAGES_LIGUE = 20
 FENETRE_MESSAGES_LIGUE_SEC = 600
 LIMITE_NOTIFICATIONS_LISTE = 50
@@ -413,6 +414,11 @@ def migrer_schema_communaute(connexion):
         connexion.execute(
             "ALTER TABLE utilisateurs ADD COLUMN avatar_id TEXT NOT NULL DEFAULT ''"
         )
+    if "nombre_changements_pseudo" not in colonnes:
+        connexion.execute(
+            "ALTER TABLE utilisateurs ADD COLUMN nombre_changements_pseudo "
+            "INTEGER NOT NULL DEFAULT 0"
+        )
 
     colonnes_sig = {
         row[1] for row in connexion.execute("PRAGMA table_info(signalements)").fetchall()
@@ -562,6 +568,19 @@ def valider_message_ligue(contenu: str) -> str:
     return texte
 
 
+def lire_nombre_changements_pseudo(ligne) -> int:
+    try:
+        if "nombre_changements_pseudo" not in ligne.keys():
+            return 0
+        return max(0, int(ligne["nombre_changements_pseudo"] or 0))
+    except (IndexError, KeyError, TypeError, ValueError):
+        return 0
+
+
+def changements_pseudo_restants(ligne) -> int:
+    return max(0, LIMITE_CHANGEMENTS_PSEUDO - lire_nombre_changements_pseudo(ligne))
+
+
 def utilisateur_public(ligne) -> dict:
     bio = ""
     equipe = ""
@@ -584,6 +603,7 @@ def utilisateur_public(ligne) -> dict:
         "bio": bio,
         "equipe_favorite": equipe,
         "avatar_id": lire_avatar_id_ligne(ligne),
+        "changements_pseudo_restants": changements_pseudo_restants(ligne),
     }
 
 
@@ -2009,6 +2029,7 @@ class ProfilMajBody(BaseModel):
     bio: str = Field(default="", max_length=LONGUEUR_BIO_MAX)
     equipe_favorite: str = Field(default="", max_length=LONGUEUR_EQUIPE_FAVORITE_MAX)
     avatar_id: str | None = Field(default=None, max_length=32)
+    pseudo: str | None = Field(default=None, max_length=LONGUEUR_PSEUDO_MAX)
 
 
 class MessageLigueBody(BaseModel):
@@ -3048,17 +3069,43 @@ def maj_profil(donnees: ProfilMajBody, request: Request):
     if "avatar_id" in donnees.model_fields_set:
         champs.append("avatar_id = ?")
         valeurs.append(valider_avatar_id(donnees.avatar_id))
+    if "pseudo" in donnees.model_fields_set:
+        nouveau_pseudo = valider_pseudo(donnees.pseudo or "")
+        pseudo_actuel = utilisateur["pseudo"] or ""
+        if nouveau_pseudo != pseudo_actuel:
+            restants = changements_pseudo_restants(utilisateur)
+            if restants <= 0:
+                raise HTTPException(
+                    400,
+                    "Vous avez atteint la limite de 4 modifications de pseudo",
+                )
+            deja_pris = connexion.execute(
+                """
+                SELECT 1 FROM utilisateurs
+                WHERE pseudo = ? COLLATE NOCASE AND id != ?
+                """,
+                (nouveau_pseudo, utilisateur["id"]),
+            ).fetchone()
+            if deja_pris:
+                raise HTTPException(409, "Ce pseudo est déjà pris")
+            champs.append("pseudo = ?")
+            valeurs.append(nouveau_pseudo)
+            champs.append("nombre_changements_pseudo = ?")
+            valeurs.append(lire_nombre_changements_pseudo(utilisateur) + 1)
     valeurs.append(utilisateur["id"])
     try:
-        connexion.execute(
-            f"""
-            UPDATE utilisateurs
-            SET {", ".join(champs)}
-            WHERE id = ?
-            """,
-            tuple(valeurs),
-        )
-        connexion.commit()
+        try:
+            connexion.execute(
+                f"""
+                UPDATE utilisateurs
+                SET {", ".join(champs)}
+                WHERE id = ?
+                """,
+                tuple(valeurs),
+            )
+            connexion.commit()
+        except sqlite3.IntegrityError as err:
+            raise HTTPException(409, "Ce pseudo est déjà pris") from err
         ligne = connexion.execute(
             "SELECT * FROM utilisateurs WHERE id = ?",
             (utilisateur["id"],),

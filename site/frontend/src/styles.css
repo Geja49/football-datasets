@@ -5320,6 +5320,48 @@ tr.zone-hors-course td:first-child {
   margin-bottom: 18px;
 }
 
+.bouton-apercu-avatar {
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  line-height: 0;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.bouton-apercu-avatar:hover,
+.bouton-apercu-avatar:focus-visible {
+  border-color: var(--marque);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--marque) 35%, transparent);
+  outline: none;
+}
+
+.entete-profil-edition h2 {
+  margin: 0 0 4px;
+}
+
+.panneau-profil {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panneau-avatars {
+  min-height: 12rem;
+}
+
+.lien-reessayer {
+  margin-left: 8px;
+  background: none;
+  border: none;
+  color: var(--marque);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .entete-profil-public {
   display: flex;
   align-items: center;
@@ -5348,6 +5390,10 @@ tr.zone-hors-course td:first-child {
   grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
   gap: 10px;
   margin-top: 10px;
+  max-height: min(62vh, 520px);
+  overflow: auto;
+  padding: 4px 2px 8px;
+  scrollbar-gutter: stable;
 }
 
 .bouton-avatar {

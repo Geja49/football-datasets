@@ -2,26 +2,38 @@
 import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 
 /**
- * Petite palette d'emojis unicode (pas de HTML).
+ * Petite palette d'emojis unicode (pas de HTML), orientée football.
  * Émet l'emoji choisi ; le parent l'insère dans le champ de saisie.
  */
 const EMOJIS_COURANTS = [
   "⚽",
+  "🏆",
+  "🥇",
+  "🥈",
+  "🥉",
+  "🥅",
+  "🏟️",
+  "🎽",
+  "👟",
+  "🧤",
+  "⏱️",
+  "📊",
+  "💪",
   "🔥",
   "👏",
-  "😂",
+  "🙌",
+  "🎯",
+  "⭐",
+  "🎊",
+  "🎉",
+  "👑",
+  "🦁",
+  "🦅",
   "❤️",
   "👍",
   "👎",
+  "😂",
   "😮",
-  "🎉",
-  "💪",
-  "🏆",
-  "😅",
-  "😢",
-  "✅",
-  "❌",
-  "🙏",
 ];
 
 const props = defineProps({

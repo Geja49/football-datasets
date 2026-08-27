@@ -23,16 +23,16 @@ defineProps({
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   margin: 28px 0 36px;
-  padding: 30px 20px 24px;
+  padding: 28px 20px 22px;
   border-radius: 14px;
   border: 1px solid color-mix(in srgb, #14b8a6 28%, #1a1a1a);
   background:
     radial-gradient(
-      ellipse 80% 65% at 50% 90%,
-      color-mix(in srgb, #14b8a6 14%, transparent),
-      transparent 70%
+      ellipse 55% 42% at 50% 38%,
+      color-mix(in srgb, #14b8a6 10%, transparent),
+      transparent 68%
     ),
     #050505;
   box-shadow: inset 0 1px 0 color-mix(in srgb, #14b8a6 10%, transparent);

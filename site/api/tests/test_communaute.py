@@ -59,10 +59,12 @@ def test_inscription_et_moi(client_communaute):
     reponse = _inscrire(client_communaute)
     assert reponse.status_code == 200
     assert reponse.json()["utilisateur"]["pseudo"] == "Testeur"
+    assert reponse.json()["utilisateur"]["changements_pseudo_restants"] == 4
 
     moi = client_communaute.get("/api/communaute/moi")
     assert moi.status_code == 200
     assert moi.json()["utilisateur"]["pseudo"] == "Testeur"
+    assert moi.json()["utilisateur"]["changements_pseudo_restants"] == 4
 
 
 def test_inscription_sans_cgu_refusee(client_communaute):
@@ -923,6 +925,7 @@ def test_profil_enrichi_maj(client_communaute):
     assert maj.status_code == 200
     assert maj.json()["utilisateur"]["bio"] == "Fan du ballon rond"
     assert maj.json()["utilisateur"]["equipe_favorite"] == "Barcelona"
+    assert maj.json()["utilisateur"]["changements_pseudo_restants"] == 4
 
     profil = client_communaute.get("/api/communaute/profil/BioFan")
     assert profil.status_code == 200
@@ -930,6 +933,69 @@ def test_profil_enrichi_maj(client_communaute):
     assert profil.json()["profil"]["equipe_favorite"] == "Barcelona"
     assert "taux_exacts" in profil.json()["profil"]
     assert "historique_recent" in profil.json()["profil"]
+
+
+def test_changement_pseudo_limite_quatre(client_communaute):
+    _inscrire(client_communaute, email="pseudo@exemple.fr", pseudo="PseudoZero")
+    moi = client_communaute.get("/api/communaute/moi")
+    assert moi.status_code == 200
+    assert moi.json()["utilisateur"]["changements_pseudo_restants"] == 4
+
+    meme = client_communaute.patch(
+        "/api/communaute/moi/profil",
+        json={"pseudo": "PseudoZero"},
+    )
+    assert meme.status_code == 200
+    assert meme.json()["utilisateur"]["changements_pseudo_restants"] == 4
+
+    for i, nouveau in enumerate(
+        ("PseudoUn", "PseudoDeux", "PseudoTrois", "PseudoQuatre"), start=1
+    ):
+        maj = client_communaute.patch(
+            "/api/communaute/moi/profil",
+            json={"pseudo": nouveau},
+        )
+        assert maj.status_code == 200
+        assert maj.json()["utilisateur"]["pseudo"] == nouveau
+        assert maj.json()["utilisateur"]["changements_pseudo_restants"] == 4 - i
+
+    refuse = client_communaute.patch(
+        "/api/communaute/moi/profil",
+        json={"pseudo": "PseudoCinq"},
+    )
+    assert refuse.status_code == 400
+    assert "limite" in refuse.json()["detail"].lower()
+
+    profil = client_communaute.get("/api/communaute/profil/PseudoQuatre")
+    assert profil.status_code == 200
+    assert profil.json()["profil"]["pseudo"] == "PseudoQuatre"
+
+    ancien = client_communaute.get("/api/communaute/profil/PseudoZero")
+    assert ancien.status_code == 404
+
+
+def test_changement_pseudo_unicite_et_validation(client_communaute):
+    _inscrire(client_communaute, email="a@exemple.fr", pseudo="AlphaUser")
+    client_communaute.post("/api/communaute/deconnexion")
+    _inscrire(client_communaute, email="b@exemple.fr", pseudo="BetaUser")
+
+    pris = client_communaute.patch(
+        "/api/communaute/moi/profil",
+        json={"pseudo": "alphauser"},
+    )
+    assert pris.status_code == 409
+
+    invalide = client_communaute.patch(
+        "/api/communaute/moi/profil",
+        json={"pseudo": "ab"},
+    )
+    assert invalide.status_code == 400
+
+    vide = client_communaute.patch(
+        "/api/communaute/moi/profil",
+        json={"pseudo": "   "},
+    )
+    assert vide.status_code == 400
 
 
 def test_catalogue_avatars(client_communaute):
