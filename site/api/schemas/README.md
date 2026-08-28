@@ -1,14 +1,7 @@
-# Validation des entrées client
+# Validation des entrées client (alias)
 
-Tous les corps JSON (`POST` / `PATCH` / `PUT`) et les paramètres de requête sensibles (`GET`) passent par des modèles Pydantic v2 dans ce dossier.
+Ce dossier est conservé pour la **compatibilité** avec les imports existants (`from schemas import ...`).
 
-Règles appliquées :
+Les définitions canoniques sont dans **`modeles/`**. Les fichiers ici ne font que réexporter `modeles.*`.
 
-- `extra='forbid'` sur les corps : rejette les champs inattendus (évite l'injection de données parasites).
-- Longueurs max alignées sur les colonnes SQLite et constantes métier.
-- `str_strip_whitespace` + refus des chaînes vides pour les champs obligatoires.
-- Regex pseudo, e-mail, saison, code ligue ; énumérations pour pronostics, réactions, votes 1/N/2.
-- `model_validator` pour la cohérence métier (ex. pronostic score vs 1X2, équipes distinctes).
-- Requêtes SQL inchangées : paramètres liés (`?`), jamais de concaténation de valeurs utilisateur.
-
-Les routeurs (`communaute.py`, `forum.py`, `serveur.py`, `stats_modele.py`) importent ces schémas ; la logique métier (anti-spam, rate limit, sessions) reste dans les modules routeurs.
+Nouveau code : `from modeles.parametres import ParametresClassement`

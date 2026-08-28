@@ -1,17 +1,3 @@
-"""Modèles de réponse standard pour endpoints critiques."""
+"""Compatibilité : préférez `from modeles import ...`."""
 
-from __future__ import annotations
-
-from pydantic import BaseModel
-
-
-class ReponseOk(BaseModel):
-    ok: bool = True
-
-
-class ReponseErreur(BaseModel):
-    detail: str
-
-
-class ReponseSignalement(BaseModel):
-    ok: bool = True
+from modeles.reponses import *  # noqa: F403

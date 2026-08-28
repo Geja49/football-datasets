@@ -4,39 +4,28 @@ Usage (a la racine du projet) : python -m uvicorn site.api.serveur:app --reload 
 """
 
 from collections import defaultdict
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Annotated
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 import os
 import re
 import sqlite3
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from analyse_rencontre import (
     LIGUES_NATIONALES,
-    analyser_rencontre,
     comparaison_previsions_reel,
-    lister_equipes_analyse,
-    serie_forme_matchs,
     _bilan_match,
 )
 from historique_analyses import (
-    cle_match,
     lire_prevision_figee,
     lire_prevision_sans_date,
     lire_resultat,
     ouvrir_base as ouvrir_analyses,
     pred_depuis_prevision_figee,
-)
-from ia_analyse import (
-    enregistrer_analyse_ia_cachee,
-    generer_analyse_ia,
-    generer_faits_pour_ia,
-    lire_analyse_ia_cachee,
 )
 from correspondances import (
     alias_noms_equipe,
@@ -45,25 +34,39 @@ from correspondances import (
     nom_pour_joueurs,
     normaliser,
 )
-from photos_joueurs import DOSSIER_PHOTOS, obtenir_photo, photo_en_cache
-from elo_clubs import elo_pour_equipe, enrichir_classement_elo
+from photos_joueurs import DOSSIER_PHOTOS, photo_en_cache
 from sites_officiels import SITES_CHAMPIONNATS, SITES_EQUIPES
-from cotes import lecture_marche_pour_analyse, routeur_cotes
-from schemas.parametres import (
-    ParametresAnalyseIa,
-    ParametresClassement,
-    ParametresElo,
-    ParametresEquipe,
-    ParametresFiltreChampionnatSaison,
-    ParametresJoueur,
-    ParametresMeilleurs,
-    ParametresProchainsMatchs,
-    ParametresRecherche,
-    ParametresRencontre,
-)
+from cotes import routeur_cotes
 from communaute import charger_fichier_env, initialiser_base, routeur_communaute
 from forum import assurer_tables_forum, routeur_forum
 from stats_modele import routeur_stats_modele
+from gestionnaires.accueil import routeur_accueil
+from gestionnaires.analyse import routeur_analyse
+from gestionnaires.classement import routeur_classement
+from gestionnaires.equipes import routeur_equipes
+from gestionnaires.joueurs import routeur_joueurs
+from gestionnaires.meilleurs import routeur_meilleurs
+from requetes.connexion import lignes_dict
+from requetes.equipes import (
+    choisir_nom_dans_competition as _choisir_nom_dans_competition,
+    lire_couverture_defense,
+    lire_site_equipe as _lire_site_equipe,
+    table_existe as _table_existe,
+)
+from requetes.joueurs import saison_avec_joueurs
+from requetes.matchs import (
+    choisir_prochain_jour,
+    lire_calendrier,
+    lire_horaire_match as _lire_horaire_match,
+    lister_buts_equipe_saison,
+    lister_calendrier_jour,
+    lister_lignes_xg,
+    lister_matchs_joues_jour,
+    lister_matchs_joues_saison,
+    lister_matchs_radar_equipe as _lister_matchs_radar_equipe,
+    lister_matchs_radar_ligue,
+    saisons_disponibles as _saisons_disponibles,
+)
 
 RACINE = Path(__file__).resolve().parents[2]
 FICHIER_BASE = RACINE / "donnees" / "football.db"
@@ -153,32 +156,26 @@ app.include_router(routeur_cotes)
 app.include_router(routeur_communaute)
 app.include_router(routeur_forum)
 app.include_router(routeur_stats_modele)
+app.include_router(routeur_accueil)
+app.include_router(routeur_meilleurs)
+app.include_router(routeur_classement)
+app.include_router(routeur_equipes)
+app.include_router(routeur_joueurs)
+app.include_router(routeur_analyse)
 initialiser_base()
 assurer_tables_forum()
 
 
 def lire_horaire_match(connexion, championnat, saison, domicile, exterieur):
     """Date, heure locale et commence_at UTC pour un match du calendrier."""
-    try:
-        ligne = connexion.execute(
-            """
-            SELECT date, heure FROM calendrier
-            WHERE championnat = ? AND saison = ?
-              AND domicile = ? AND exterieur = ?
-            ORDER BY date ASC
-            LIMIT 1
-            """,
-            (championnat, saison, domicile, exterieur),
-        ).fetchone()
-    except sqlite3.OperationalError:
-        ligne = None
-    if not ligne:
+    brut = _lire_horaire_match(connexion, championnat, saison, domicile, exterieur)
+    if not brut:
         return None
-    heure = ligne["heure"] or ""
+    heure = brut["heure"]
     return {
-        "date": ligne["date"],
+        "date": brut["date"],
         "heure": heure,
-        "commence_at": commence_at_iso(ligne["date"], heure, championnat),
+        "commence_at": commence_at_iso(brut["date"], heure, championnat),
     }
 
 
@@ -206,18 +203,8 @@ def limiter_texte(valeur: str, taille=80):
 
 def infos_site_equipe(connexion, nom_equipe):
     vide = {"nom_officiel": "", "url_site": "", "url_logo": "", "stade": ""}
-    try:
-        ligne = connexion.execute(
-            """
-            SELECT nom_officiel, url_site, url_logo, stade
-            FROM sites_equipes
-            WHERE equipe = ?
-            """,
-            (nom_equipe,),
-        ).fetchone()
-    except sqlite3.OperationalError:
-        ligne = None
-    data = dict(ligne) if ligne else vide.copy()
+    ligne = _lire_site_equipe(connexion, nom_equipe)
+    data = ligne if ligne else vide.copy()
     if not data.get("url_site"):
         data["url_site"] = SITES_EQUIPES.get(nom_equipe, "")
     # Eviter une page feminine / mauvaise URL renvoyee par l'annuaire
@@ -233,10 +220,6 @@ def infos_championnat(nom):
         "url_site": fiche.get("url_site", ""),
         "nom_affichage": fiche.get("nom_affichage", nom),
     }
-
-
-def lignes_dict(curseur):
-    return [dict(ligne) for ligne in curseur.fetchall()]
 
 
 def charger_transferts_joueur(connexion, nom_joueur, limite=20):
@@ -468,22 +451,8 @@ def _stats_equipes_ligue(matchs):
 
 def reperes_equipe_ligue(connexion, championnat, saison):
     """Moyenne / médiane / histogrammes des équipes du championnat (même saison)."""
-    try:
-        matchs = lignes_dict(
-            connexion.execute(
-                """
-                SELECT date, domicile, exterieur, buts_domicile, buts_exterieur,
-                       tirs_domicile, tirs_exterieur
-                FROM matchs
-                WHERE championnat = ? AND saison = ?
-                  AND buts_domicile IS NOT NULL
-                  AND buts_exterieur IS NOT NULL
-                ORDER BY date
-                """,
-                (championnat, saison),
-            )
-        )
-    except sqlite3.OperationalError:
+    matchs = lister_matchs_radar_ligue(connexion, championnat, saison)
+    if matchs is None:
         return None
     if not matchs:
         return {
@@ -622,51 +591,7 @@ def calculer_classement(matchs):
 
 def saisons_disponibles(connexion, championnat=None):
     """Liste les saisons en base ; la saison en cours apparait meme si peu de donnees."""
-    saisons = {SAISON_COURANTE}
-    for table in ("matchs", "calendrier"):
-        try:
-            if championnat:
-                curseur = connexion.execute(
-                    f"SELECT saison FROM {table} WHERE championnat = ? GROUP BY saison",
-                    (championnat,),
-                )
-            else:
-                curseur = connexion.execute(
-                    f"SELECT saison FROM {table} GROUP BY saison"
-                )
-            for row in curseur:
-                saisons.add(row[0])
-        except sqlite3.OperationalError:
-            continue
-    return sorted(saisons, reverse=True)
-
-
-def lire_calendrier(connexion, championnat, saison, equipe=None):
-    try:
-        if equipe:
-            curseur = connexion.execute(
-                """
-                SELECT date, heure, journee, domicile, exterieur
-                FROM calendrier
-                WHERE championnat = ? AND saison = ?
-                  AND (domicile = ? OR exterieur = ?)
-                ORDER BY date, heure
-                """,
-                (championnat, saison, equipe, equipe),
-            )
-        else:
-            curseur = connexion.execute(
-                """
-                SELECT date, heure, journee, domicile, exterieur
-                FROM calendrier
-                WHERE championnat = ? AND saison = ?
-                ORDER BY date, heure
-                """,
-                (championnat, saison),
-            )
-        return lignes_dict(curseur)
-    except sqlite3.OperationalError:
-        return []
+    return _saisons_disponibles(connexion, championnat, SAISON_COURANTE)
 
 
 def ajouter_logos_programme(connexion, programme):
@@ -752,16 +677,8 @@ def joindre_xg(connexion, championnat, saison, matchs):
     """Ajoute xg_domicile / xg_exterieur via matchs_xg (noms Understat)."""
     if not matchs:
         return matchs
-    try:
-        lignes = connexion.execute(
-            """
-            SELECT date, domicile, exterieur, xg_domicile, xg_exterieur
-            FROM matchs_xg
-            WHERE championnat = ? AND saison = ?
-            """,
-            (championnat, saison),
-        ).fetchall()
-    except sqlite3.OperationalError:
+    lignes = lister_lignes_xg(connexion, championnat, saison)
+    if lignes is None:
         for match in matchs:
             match.setdefault("xg_domicile", None)
             match.setdefault("xg_exterieur", None)
@@ -891,11 +808,7 @@ CHAMPS_DEFENSE = (
 
 
 def table_existe(connexion, nom):
-    ligne = connexion.execute(
-        "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?",
-        (nom,),
-    ).fetchone()
-    return bool(ligne)
+    return _table_existe(connexion, nom)
 
 
 def fusionner_defense_sources(lignes):
@@ -937,18 +850,8 @@ def totaux_defense(lignes):
 def message_couverture_defense(connexion, championnat, saison):
     if not table_existe(connexion, "couverture_sources"):
         return MESSAGE_DEFENSE_ABSENT, False
-    try:
-        lignes = lignes_dict(
-            connexion.execute(
-                """
-                SELECT source, nb_matchs, complet, commentaire
-                FROM couverture_sources
-                WHERE championnat = ? AND saison = ?
-                """,
-                (championnat, saison),
-            )
-        )
-    except sqlite3.OperationalError:
+    lignes = lire_couverture_defense(connexion, championnat, saison)
+    if lignes is None:
         return MESSAGE_DEFENSE_ABSENT, False
     if not lignes:
         return MESSAGE_DEFENSE_ABSENT, False
@@ -1120,42 +1023,7 @@ def charger_defense_joueur(connexion, nom_joueur):
 
 def choisir_nom_dans_competition(connexion, championnat, saison, noms):
     """Nom tel qu'il apparait dans les matchs (ou le calendrier) de la competition."""
-    if not noms:
-        return ""
-    places = ", ".join(["?"] * len(noms))
-    requete = f"""
-        SELECT nom FROM (
-            SELECT domicile AS nom FROM matchs
-            WHERE championnat = ? AND saison = ? AND domicile IN ({places})
-            UNION
-            SELECT exterieur FROM matchs
-            WHERE championnat = ? AND saison = ? AND exterieur IN ({places})
-        )
-        LIMIT 1
-        """
-    ligne = connexion.execute(
-        requete,
-        (championnat, saison, *noms, championnat, saison, *noms),
-    ).fetchone()
-    if ligne:
-        return ligne[0]
-    try:
-        ligne = connexion.execute(
-            f"""
-            SELECT nom FROM (
-                SELECT domicile AS nom FROM calendrier
-                WHERE championnat = ? AND saison = ? AND domicile IN ({places})
-                UNION
-                SELECT exterieur FROM calendrier
-                WHERE championnat = ? AND saison = ? AND exterieur IN ({places})
-            )
-            LIMIT 1
-            """,
-            (championnat, saison, *noms, championnat, saison, *noms),
-        ).fetchone()
-    except sqlite3.OperationalError:
-        ligne = None
-    return ligne[0] if ligne else noms[0]
+    return _choisir_nom_dans_competition(connexion, championnat, saison, noms)
 
 
 def sommer_buts_equipe(connexion, saison, noms):
@@ -1165,18 +1033,7 @@ def sommer_buts_equipe(connexion, saison, noms):
         return vides
     connus = set(noms)
     competitions = list(LIGUES_NATIONALES) + [NOM_LDC]
-    places_noms = ", ".join(["?"] * len(noms))
-    places_comp = ", ".join(["?"] * len(competitions))
-    lignes = connexion.execute(
-        f"""
-        SELECT championnat, domicile, exterieur, buts_domicile, buts_exterieur
-        FROM matchs
-        WHERE saison = ?
-          AND championnat IN ({places_comp})
-          AND (domicile IN ({places_noms}) OR exterieur IN ({places_noms}))
-        """,
-        (saison, *competitions, *noms, *noms),
-    )
+    lignes = lister_buts_equipe_saison(connexion, saison, competitions, noms)
     for ligne in lignes:
         if ligne["buts_domicile"] is None or ligne["buts_exterieur"] is None:
             continue
@@ -1219,27 +1076,8 @@ def resume_buts_equipe(connexion, saison, nom_equipe, championnat_page):
 
 def charger_matchs_radar_equipe(connexion, saison, noms):
     """Matchs joues ligue + LDC, pour les moyennes du radar."""
-    if not noms:
-        return []
     competitions = list(LIGUES_NATIONALES) + [NOM_LDC]
-    places_noms = ", ".join(["?"] * len(noms))
-    places_comp = ", ".join(["?"] * len(competitions))
-    matchs = lignes_dict(
-        connexion.execute(
-            f"""
-            SELECT date, domicile, exterieur, buts_domicile, buts_exterieur,
-                   tirs_domicile, tirs_exterieur, championnat
-            FROM matchs
-            WHERE saison = ?
-              AND championnat IN ({places_comp})
-              AND (domicile IN ({places_noms}) OR exterieur IN ({places_noms}))
-              AND buts_domicile IS NOT NULL
-              AND buts_exterieur IS NOT NULL
-            ORDER BY date
-            """,
-            (saison, *competitions, *noms, *noms),
-        )
-    )
+    matchs = _lister_matchs_radar_equipe(connexion, saison, competitions, noms)
     for match in matchs:
         match["joue"] = True
     return matchs
@@ -1332,39 +1170,12 @@ def joueurs_depuis_ligue(connexion, nom_equipe, saison):
 
 
 def charger_programme_saison(connexion, championnat, saison):
-    joues = lignes_dict(
-        connexion.execute(
-            """
-            SELECT date, domicile, exterieur, buts_domicile, buts_exterieur
-            FROM matchs
-            WHERE championnat = ? AND saison = ?
-            ORDER BY date
-            """,
-            (championnat, saison),
-        )
-    )
+    joues = lister_matchs_joues_saison(connexion, championnat, saison)
     avenir = lire_calendrier(connexion, championnat, saison)
     programme = fusionner_programme(joues, avenir, championnat)
     joindre_journee(connexion, championnat, saison, programme)
     joindre_xg(connexion, championnat, saison, programme)
     return programme
-
-
-def saison_avec_joueurs(connexion, championnat):
-    try:
-        ligne = connexion.execute(
-            """
-            SELECT saison FROM joueurs
-            WHERE championnat = ? AND minutes > 0
-            GROUP BY saison
-            ORDER BY saison DESC
-            LIMIT 1
-            """,
-            (championnat,),
-        ).fetchone()
-    except sqlite3.OperationalError:
-        return None
-    return ligne[0] if ligne else None
 
 
 def top_joueurs_accueil_par_ligue(connexion, colonne_tri, champs_stats):
@@ -1408,48 +1219,12 @@ def passeurs_par_ligue(connexion):
 
 
 def choisir_jour_matchs(connexion, aujourd_hui):
-    try:
-        ligne = connexion.execute(
-            """
-            SELECT MIN(date) FROM (
-                SELECT date FROM matchs WHERE date >= ?
-                UNION
-                SELECT date FROM calendrier WHERE date >= ?
-            )
-            """,
-            (aujourd_hui, aujourd_hui),
-        ).fetchone()
-    except sqlite3.OperationalError:
-        return None
-    return ligne[0] if ligne and ligne[0] else None
+    return choisir_prochain_jour(connexion, aujourd_hui)
 
 
 def charger_matchs_jour(connexion, jour):
-    joues = lignes_dict(
-        connexion.execute(
-            """
-            SELECT date, saison, championnat, domicile, exterieur,
-                   buts_domicile, buts_exterieur
-            FROM matchs
-            WHERE date = ?
-            """,
-            (jour,),
-        )
-    )
-    try:
-        avenir = lignes_dict(
-            connexion.execute(
-                """
-                SELECT date, saison, championnat, heure, journee,
-                       domicile, exterieur
-                FROM calendrier
-                WHERE date = ?
-                """,
-                (jour,),
-            )
-        )
-    except sqlite3.OperationalError:
-        avenir = []
+    joues = lister_matchs_joues_jour(connexion, jour)
+    avenir = lister_calendrier_jour(connexion, jour)
     vus = {}
     programme = []
     for match in joues:
@@ -1494,534 +1269,6 @@ def charger_matchs_jour(connexion, jour):
     enrichir_horaires(programme)
     ajouter_logos_programme(connexion, programme)
     return programme
-
-
-@app.get("/api/accueil")
-def accueil():
-    connexion = ouvrir_base()
-    try:
-        aujourd_hui = date.today().isoformat()
-        jour = choisir_jour_matchs(connexion, aujourd_hui)
-        matchs_jour = charger_matchs_jour(connexion, jour) if jour else []
-        return {
-            "championnats": [infos_championnat(nom) for nom in CHAMPIONNATS],
-            "saisons": saisons_disponibles(connexion),
-            "jour": jour or aujourd_hui,
-            "matchs_jour": matchs_jour,
-            "buteurs": buteurs_par_ligue(connexion),
-            "passeurs": passeurs_par_ligue(connexion),
-        }
-    finally:
-        connexion.close()
-
-
-@app.get("/api/classement")
-def classement(filtres: Annotated[ParametresClassement, Query()]):
-    championnat, saison, elo = filtres.championnat, filtres.saison, filtres.elo
-    connexion = ouvrir_base()
-    try:
-        try:
-            matchs = lignes_dict(
-                connexion.execute(
-                    """
-                    SELECT date, domicile, exterieur, buts_domicile, buts_exterieur, resultat, phase
-                    FROM matchs
-                    WHERE championnat = ? AND saison = ?
-                    """,
-                    (championnat, saison),
-                )
-            )
-        except sqlite3.OperationalError:
-            matchs = lignes_dict(
-                connexion.execute(
-                    """
-                    SELECT date, domicile, exterieur, buts_domicile, buts_exterieur, resultat
-                    FROM matchs
-                    WHERE championnat = ? AND saison = ?
-                    """,
-                    (championnat, saison),
-                )
-            )
-        classement = calculer_classement(matchs_classement(matchs, championnat))
-        for ligne in classement:
-            ligne["forme"] = serie_forme_matchs(matchs, ligne["equipe"])
-            ligne.update(infos_site_equipe(connexion, ligne["equipe"]))
-        elo_meta = {"disponible": False, "message": "", "date": "", "source": ""}
-        if elo:
-            elo_meta = enrichir_classement_elo(connexion, classement, force_api=False)
-        payload = {
-            "classement": classement,
-            "championnat": infos_championnat(championnat),
-            "saisons": saisons_disponibles(connexion, championnat),
-            "format": "phase_de_ligue" if championnat == NOM_LDC else "ligue",
-            "elo": elo_meta,
-        }
-        if championnat == NOM_LDC:
-            payload["mention_sources"] = MESSAGE_LDC_PAGE
-        return payload
-    finally:
-        connexion.close()
-
-
-@app.get("/api/elo")
-def elo_api(filtres: Annotated[ParametresElo, Query()]):
-    """Force relative ClubElo pour un club (retry soft via forcer=1)."""
-    nom = filtres.equipe
-    connexion = ouvrir_base()
-    try:
-        alias = alias_noms_equipe(nom)
-        return elo_pour_equipe(connexion, alias, force_api=bool(filtres.forcer))
-    finally:
-        connexion.close()
-
-
-@app.get("/api/calendrier")
-def calendrier_api(filtres: Annotated[ParametresFiltreChampionnatSaison, Query()]):
-    championnat, saison = filtres.championnat, filtres.saison
-    connexion = ouvrir_base()
-    try:
-        programme = charger_programme_saison(connexion, championnat, saison)
-        ajouter_logos_programme(connexion, programme)
-        payload = {
-            "programme": programme,
-            "championnat": infos_championnat(championnat),
-            "saison": saison,
-            "saisons": saisons_disponibles(connexion, championnat),
-            "format": "phase_de_ligue" if championnat == NOM_LDC else "ligue",
-        }
-        if championnat == NOM_LDC:
-            payload["mention_sources"] = MESSAGE_LDC_PAGE
-        return payload
-    finally:
-        connexion.close()
-
-
-@app.get("/api/equipe")
-def fiche_equipe(filtres: Annotated[ParametresEquipe, Query()]):
-    championnat, saison = filtres.championnat, filtres.saison
-    nom_page = filtres.equipe
-    connexion = ouvrir_base()
-    try:
-        noms_alias = alias_noms_equipe(nom_page)
-        nom_matchs = (
-            choisir_nom_dans_competition(
-                connexion, championnat, saison, noms_alias
-            )
-            or nom_page
-        )
-        resume_buts = resume_buts_equipe(
-            connexion, saison, nom_page, championnat
-        )
-        matchs_radar = charger_matchs_radar_equipe(
-            connexion, saison, resume_buts["alias"]
-        )
-        par_xg = defaultdict(list)
-        for match in matchs_radar:
-            par_xg[match.get("championnat")].append(match)
-        for nom_comp, groupe in par_xg.items():
-            if nom_comp and nom_comp != NOM_LDC:
-                joindre_xg(connexion, nom_comp, saison, groupe)
-        matchs = lignes_dict(
-            connexion.execute(
-                """
-                SELECT date, domicile, exterieur, buts_domicile, buts_exterieur,
-                       resultat, tirs_domicile, tirs_exterieur,
-                       tirs_cadres_domicile, tirs_cadres_exterieur,
-                       jaunes_domicile, jaunes_exterieur,
-                       rouges_domicile, rouges_exterieur
-                FROM matchs
-                WHERE championnat = ? AND saison = ?
-                  AND (domicile = ? OR exterieur = ?)
-                ORDER BY date
-                """,
-                (championnat, saison, nom_matchs, nom_matchs),
-            )
-        )
-        for match in matchs:
-            match["joue"] = True
-            match["heure"] = match.get("heure") or ""
-            match["journee"] = match.get("journee") or ""
-        vus = {(m["domicile"], m["exterieur"]) for m in matchs}
-        for ligne in lire_calendrier(connexion, championnat, saison, nom_matchs):
-            cle = (ligne["domicile"], ligne["exterieur"])
-            if cle in vus:
-                continue
-            vus.add(cle)
-            matchs.append(
-                {
-                    "date": ligne["date"],
-                    "heure": ligne.get("heure") or "",
-                    "journee": ligne.get("journee") or "",
-                    "domicile": ligne["domicile"],
-                    "exterieur": ligne["exterieur"],
-                    "buts_domicile": None,
-                    "buts_exterieur": None,
-                    "resultat": None,
-                    "tirs_domicile": None,
-                    "tirs_exterieur": None,
-                    "tirs_cadres_domicile": None,
-                    "tirs_cadres_exterieur": None,
-                    "jaunes_domicile": None,
-                    "jaunes_exterieur": None,
-                    "rouges_domicile": None,
-                    "rouges_exterieur": None,
-                    "xg_domicile": None,
-                    "xg_exterieur": None,
-                    "joue": False,
-                }
-            )
-        matchs.sort(key=lambda m: (m["date"] or "", m.get("heure") or ""))
-        joindre_journee(connexion, championnat, saison, matchs)
-        joindre_xg(connexion, championnat, saison, matchs)
-        enrichir_horaires(matchs, championnat)
-        ajouter_logos_programme(connexion, matchs)
-        noms_understat = [
-            row[0]
-            for row in connexion.execute(
-                """
-                SELECT DISTINCT equipe FROM joueurs
-                WHERE championnat = ? AND saison = ?
-                """,
-                (championnat, saison),
-            )
-        ]
-        nom_stats = nom_pour_joueurs(nom_matchs, noms_understat)
-        joueurs = lignes_dict(
-            connexion.execute(
-                """
-                SELECT joueur, poste, matchs, minutes, buts, passes_decisives,
-                       tirs, passes_cles, xg, xa, xg_chaine, xg_construction,
-                       carton_jaune, carton_rouge, equipe
-                FROM joueurs
-                WHERE championnat = ? AND saison = ?
-                  AND (equipe = ? OR equipe LIKE ? OR equipe LIKE ?)
-                ORDER BY buts DESC, minutes DESC
-                """,
-                (
-                    championnat,
-                    saison,
-                    nom_stats,
-                    nom_stats + ",%",
-                    "%," + nom_stats,
-                ),
-            )
-        )
-        if not joueurs and championnat == NOM_LDC:
-            joueurs = joueurs_depuis_ligue(connexion, nom_matchs, saison)
-        for joueur in joueurs:
-            joueur["url_photo"] = photo_en_cache(connexion, joueur["joueur"])
-        alias_radar = resume_buts.pop("alias")
-        defense = charger_defense_equipe(
-            connexion, championnat, saison, nom_matchs, alias_radar
-        )
-        reperes = reperes_equipe_ligue(connexion, championnat, saison)
-        elo = elo_pour_equipe(connexion, alias_radar, force_api=False)
-        payload = {
-            "equipe": nom_matchs,
-            "nom_stats": nom_stats,
-            "matchs": matchs,
-            "matchs_radar": matchs_radar,
-            "alias_equipe": alias_radar,
-            "buts": resume_buts,
-            "joueurs": joueurs,
-            "defense": defense,
-            "reperes": reperes,
-            "elo": elo,
-            "site": infos_site_equipe(connexion, nom_matchs),
-            "championnat": infos_championnat(championnat),
-        }
-        if championnat == NOM_LDC:
-            payload["mention_sources"] = MESSAGE_LDC_PAGE
-        return payload
-    finally:
-        connexion.close()
-
-
-@app.get("/api/joueur")
-def fiche_joueur(filtres: Annotated[ParametresJoueur, Query()]):
-    nom_joueur = filtres.nom
-    championnat = filtres.championnat
-    # Pas de stats joueurs LDC : on ne filtre pas sur cette competition.
-    filtre_ligue = championnat if championnat and championnat != NOM_LDC else None
-    connexion = ouvrir_base()
-    try:
-        if filtre_ligue:
-            saisons = lignes_dict(
-                connexion.execute(
-                    """
-                    SELECT championnat, saison, equipe, poste, matchs, minutes,
-                           buts, passes_decisives, tirs, passes_cles, xg, xa,
-                           xg_chaine, xg_construction, carton_jaune, carton_rouge
-                    FROM joueurs
-                    WHERE joueur = ? AND championnat = ?
-                    ORDER BY saison DESC
-                    """,
-                    (nom_joueur, filtre_ligue),
-                )
-            )
-        else:
-            saisons = lignes_dict(
-                connexion.execute(
-                    """
-                    SELECT championnat, saison, equipe, poste, matchs, minutes,
-                           buts, passes_decisives, tirs, passes_cles, xg, xa,
-                           xg_chaine, xg_construction, carton_jaune, carton_rouge
-                    FROM joueurs
-                    WHERE joueur = ?
-                    ORDER BY saison DESC, championnat
-                    """,
-                    (nom_joueur,),
-                )
-            )
-        if not saisons:
-            raise HTTPException(404, "Joueur introuvable")
-        club_recent = (saisons[0].get("equipe") or "").split(",")[0]
-        ligne_radar = saison_pour_radar(saisons)
-        reperes = None
-        if ligne_radar:
-            reperes = reperes_joueur_ligue(
-                connexion,
-                ligne_radar.get("championnat"),
-                ligne_radar.get("saison"),
-            )
-        return {
-            "joueur": nom_joueur,
-            "saisons": saisons,
-            "url_photo": obtenir_photo(connexion, nom_joueur, club_recent),
-            "reperes": reperes,
-            "buts": resume_buts_joueur(
-                saisons, ldc_par_joueur_en_base(connexion, nom_joueur)
-            ),
-            "defense": charger_defense_joueur(connexion, nom_joueur),
-            "valeur_marche": charger_valeur_marche(connexion, nom_joueur),
-            "transferts": charger_transferts_joueur(connexion, nom_joueur),
-        }
-    finally:
-        connexion.close()
-
-
-@app.get("/api/recherche")
-def recherche(filtres: Annotated[ParametresRecherche, Query()]):
-    texte = filtres.q.replace("%", "").replace("_", "")
-    if len(texte) < 2:
-        raise HTTPException(400, "Recherche trop courte")
-    motif = f"%{texte}%"
-    connexion = ouvrir_base()
-    try:
-        joueurs = lignes_dict(
-            connexion.execute(
-                """
-                SELECT DISTINCT joueur, equipe, championnat, saison, buts
-                FROM joueurs
-                WHERE joueur LIKE ?
-                ORDER BY saison DESC, buts DESC
-                LIMIT 20
-                """,
-                (motif,),
-            )
-        )
-        equipes = lignes_dict(
-            connexion.execute(
-                """
-                SELECT DISTINCT domicile AS equipe, championnat, saison
-                FROM matchs
-                WHERE domicile LIKE ?
-                UNION
-                SELECT DISTINCT exterieur, championnat, saison
-                FROM matchs
-                WHERE exterieur LIKE ?
-                ORDER BY saison DESC
-                LIMIT 15
-                """,
-                (motif, motif),
-            )
-        )
-        return {"joueurs": joueurs, "equipes": equipes}
-    finally:
-        connexion.close()
-
-
-@app.get("/api/prochains_matchs")
-def prochains_matchs_api(filtres: Annotated[ParametresProchainsMatchs, Query()]):
-    championnat, saison = filtres.championnat, filtres.saison
-    equipe, limite = filtres.equipe, filtres.limite
-    connexion = ouvrir_base()
-    try:
-        aujourd_hui = date.today().isoformat()
-        programme = charger_programme_saison(connexion, championnat, saison)
-        prochains = filtrer_matchs_a_venir(programme, aujourd_hui)
-        nom_equipe = ""
-        if equipe:
-            nom_equipe = resoudre_nom_equipe(equipe, programme)
-        matchs_equipe = []
-        if nom_equipe:
-            du_club = [
-                match
-                for match in prochains
-                if match["domicile"] == nom_equipe or match["exterieur"] == nom_equipe
-            ]
-            matchs_equipe = annoter_pour_equipe(du_club[:limite], nom_equipe)
-        matchs_ligue = extraire_prochaine_journee(prochains)
-        ajouter_logos_programme(connexion, matchs_equipe)
-        ajouter_logos_programme(connexion, matchs_ligue)
-        return {
-            "equipe": nom_equipe,
-            "aujourd_hui": aujourd_hui,
-            "matchs_equipe": matchs_equipe,
-            "matchs_ligue": matchs_ligue,
-            "championnat": infos_championnat(championnat),
-            "saison": saison,
-        }
-    finally:
-        connexion.close()
-
-
-@app.get("/api/equipes-analyse")
-def equipes_analyse(filtres: Annotated[ParametresFiltreChampionnatSaison, Query()]):
-    championnat, saison = filtres.championnat, filtres.saison
-    connexion = ouvrir_base()
-    try:
-        noms = lister_equipes_analyse(connexion, championnat, saison)
-        equipes = []
-        for nom in noms:
-            fiche = infos_site_equipe(connexion, nom)
-            equipes.append(
-                {
-                    "equipe": nom,
-                    "url_logo": fiche.get("url_logo", ""),
-                }
-            )
-        return {
-            "equipes": equipes,
-            "championnat": infos_championnat(championnat),
-            "saison": saison,
-        }
-    finally:
-        connexion.close()
-
-
-@app.get("/api/analyse-rencontre")
-def analyse_rencontre_api(filtres: Annotated[ParametresRencontre, Query()]):
-    championnat, saison = filtres.championnat, filtres.saison
-    nom_domicile, nom_exterieur = filtres.domicile, filtres.exterieur
-    connexion = ouvrir_base()
-    try:
-        try:
-            resultat = analyser_rencontre(
-                connexion, championnat, saison, nom_domicile, nom_exterieur
-            )
-        except ValueError as erreur:
-            raise HTTPException(400, str(erreur)) from erreur
-        for cote in ("domicile", "exterieur"):
-            site = infos_site_equipe(connexion, resultat[cote]["nom"])
-            resultat[cote]["url_logo"] = site.get("url_logo", "")
-        resultat["championnat"] = infos_championnat(championnat)
-        date_match = None
-        match_joue = resultat.get("match_joue") or {}
-        if match_joue.get("joue"):
-            date_match = match_joue.get("date")
-        resultat["lecture_marche"] = lecture_marche_pour_analyse(
-            championnat,
-            nom_domicile,
-            nom_exterieur,
-            date_match=date_match,
-            prediction=resultat.get("prediction"),
-        )
-        if not match_joue.get("joue"):
-            resultat["match_a_venir"] = lire_horaire_match(
-                connexion, championnat, saison, nom_domicile, nom_exterieur
-            )
-        else:
-            resultat["match_a_venir"] = None
-
-        # Enrichissement historique : prevision figee si disponible.
-        enrichir_avec_prevision_figee(resultat, championnat, saison, nom_domicile, nom_exterieur)
-        return resultat
-    finally:
-        connexion.close()
-
-
-@app.get("/api/analyse-rencontre/ia")
-def analyse_rencontre_ia_api(filtres: Annotated[ParametresAnalyseIa, Query()]):
-    """Analyse narrative IA (LLM ou template) à partir de faits vérifiables."""
-    championnat, saison = filtres.championnat, filtres.saison
-    nom_domicile, nom_exterieur = filtres.domicile, filtres.exterieur
-    regerer = filtres.regerer
-    connexion = ouvrir_base()
-    try:
-        try:
-            resultat = analyser_rencontre(
-                connexion, championnat, saison, nom_domicile, nom_exterieur
-            )
-        except ValueError as erreur:
-            raise HTTPException(400, str(erreur)) from erreur
-
-        match_joue = resultat.get("match_joue") or {}
-        if not match_joue.get("joue"):
-            resultat["match_a_venir"] = lire_horaire_match(
-                connexion, championnat, saison, nom_domicile, nom_exterieur
-            )
-        else:
-            resultat["match_a_venir"] = None
-
-        enrichir_avec_prevision_figee(
-            resultat, championnat, saison, nom_domicile, nom_exterieur
-        )
-        prevision_figee = resultat.get("prevision_figee")
-
-        date_ref = None
-        if match_joue.get("joue"):
-            date_ref = match_joue.get("date")
-        elif resultat.get("match_a_venir"):
-            date_ref = resultat["match_a_venir"].get("date")
-        if not date_ref and prevision_figee:
-            date_ref = prevision_figee.get("date_match")
-        date_ref = (date_ref or "")[:10]
-
-        cle = cle_match(championnat, saison, date_ref, nom_domicile, nom_exterieur)
-        connexion_ia = ouvrir_analyses()
-        try:
-            if not regerer:
-                cache = lire_analyse_ia_cachee(connexion_ia, cle)
-                if cache and cache.get("texte"):
-                    return {
-                        "texte": cache["texte"],
-                        "source": cache["source"],
-                        "genere_le": cache.get("genere_le"),
-                        "cle_match": cle,
-                        "depuis_cache": True,
-                    }
-
-            faits = generer_faits_pour_ia(
-                resultat.get("prediction") or {},
-                prevision_figee,
-                championnat=championnat,
-                saison=saison,
-                domicile=nom_domicile,
-                exterieur=nom_exterieur,
-                domicile_profil=resultat.get("domicile"),
-                exterieur_profil=resultat.get("exterieur"),
-                confrontations=resultat.get("confrontations"),
-            )
-            produit = generer_analyse_ia(faits)
-            enregistrer_analyse_ia_cachee(
-                connexion_ia,
-                cle,
-                produit["texte"],
-                produit["source"],
-                faits,
-            )
-            return {
-                "texte": produit["texte"],
-                "source": produit["source"],
-                "genere_le": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "cle_match": cle,
-                "depuis_cache": False,
-            }
-        finally:
-            connexion_ia.close()
-    finally:
-        connexion.close()
 
 
 def enrichir_avec_prevision_figee(resultat, championnat, saison, nom_domicile, nom_exterieur):
@@ -2119,94 +1366,5 @@ def enrichir_avec_prevision_figee(resultat, championnat, saison, nom_domicile, n
     finally:
         if connexion_hist is not None:
             connexion_hist.close()
-COLONNES_MEILLEURS = {
-    "buts": "buts",
-    "passes": "passes_decisives",
-}
-
-
-def lister_meilleurs(connexion, championnat, saison, colonne):
-    """Top 20 joueurs pour une colonne (buts ou passes_decisives)."""
-    return lignes_dict(
-        connexion.execute(
-            f"""
-            SELECT joueur, equipe, poste, matchs, minutes,
-                   buts, passes_decisives, tirs, xg, xa
-            FROM joueurs
-            WHERE championnat = ? AND saison = ? AND minutes > 0
-            ORDER BY {colonne} DESC, minutes DESC
-            LIMIT 20
-            """,
-            (championnat, saison),
-        )
-    )
-
-
-@app.get("/api/meilleurs")
-def meilleurs_api(filtres: Annotated[ParametresMeilleurs, Query()]):
-    """Top 20 buteurs ou passeurs. Les dribbles n'existent pas chez Understat."""
-    championnat, saison = filtres.championnat, filtres.saison
-    type_classement = filtres.type
-    if type_classement == "dribbles":
-        return {
-            "type": type_classement,
-            "disponible": False,
-            "raison": (
-                "Understat ne fournit pas les dribbles. "
-                "Il faudrait une autre source (par exemple FBref)."
-            ),
-            "joueurs": [],
-            "championnat": infos_championnat(championnat),
-            "saison": saison,
-            "saison_utilisee": saison,
-            "saison_de_secours": False,
-            "message": "",
-        }
-    colonne = COLONNES_MEILLEURS.get(type_classement)
-    if not colonne:
-        raise HTTPException(400, "Type inconnu (buts, passes ou dribbles)")
-    connexion = ouvrir_base()
-    try:
-        joueurs = lister_meilleurs(connexion, championnat, saison, colonne)
-        saison_utilisee = saison
-        message = ""
-        if not joueurs:
-            autre = saison_avec_joueurs(connexion, championnat)
-            if autre and autre != saison:
-                joueurs = lister_meilleurs(connexion, championnat, autre, colonne)
-                if joueurs:
-                    saison_utilisee = autre
-                    libelle = "buteur" if type_classement == "buts" else "passeur"
-                    message = (
-                        f"Aucun {libelle} pour {saison}. "
-                        f"Affichage de la saison {autre}."
-                    )
-        for joueur in joueurs:
-            joueur["url_photo"] = photo_en_cache(connexion, joueur["joueur"])
-        if not joueurs:
-            libelle = "buteur" if type_classement == "buts" else "passeur"
-            message = f"Aucun {libelle} pour {championnat} en {saison}."
-        if championnat == NOM_LDC and not message:
-            message = (
-                "Buteurs LDC : OpenML 2013-2021. "
-                "Pas de xG ni de saisons recentes cote joueurs."
-            )
-        elif championnat == NOM_LDC and message:
-            message = f"{message} Sources : openfootball (scores) + OpenML 2013-2021 (buteurs)."
-        return {
-            "type": type_classement,
-            "disponible": True,
-            "joueurs": joueurs,
-            "championnat": infos_championnat(championnat),
-            "saison": saison,
-            "saison_utilisee": saison_utilisee,
-            "saison_de_secours": saison_utilisee != saison,
-            "message": message,
-            "mention_sources": MESSAGE_LDC_PAGE if championnat == NOM_LDC else "",
-        }
-    finally:
-        connexion.close()
-
-
 DOSSIER_PHOTOS.mkdir(parents=True, exist_ok=True)
 app.mount("/photos", StaticFiles(directory=str(DOSSIER_PHOTOS)), name="photos")
