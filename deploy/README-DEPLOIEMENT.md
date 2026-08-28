@@ -176,6 +176,7 @@ La copie fichier suffit pour démarrer (1 worker). Sous forte charge, préférer
 | Mises à jour | `git pull` + rebuild front + `systemctl restart statsfoot` |
 | Google OAuth | Origines JS = URL HTTPS exacte du site |
 | Exposition publique | Rate limit connexion/inscription déjà côté API ; garder Nginx à jour |
+| Validation entrées | Corps JSON et query sensibles validés via `site/api/schemas/` (Pydantic v2, `extra=forbid`, longueurs max) |
 
 ## Script modèle
 

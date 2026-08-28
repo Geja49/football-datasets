@@ -6,6 +6,7 @@ Usage (a la racine du projet) : python -m uvicorn site.api.serveur:app --reload 
 from collections import defaultdict
 from datetime import date, datetime, timezone
 from pathlib import Path
+from typing import Annotated
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 import os
 import re
@@ -48,6 +49,18 @@ from photos_joueurs import DOSSIER_PHOTOS, obtenir_photo, photo_en_cache
 from elo_clubs import elo_pour_equipe, enrichir_classement_elo
 from sites_officiels import SITES_CHAMPIONNATS, SITES_EQUIPES
 from cotes import lecture_marche_pour_analyse, routeur_cotes
+from schemas.parametres import (
+    ParametresAnalyseIa,
+    ParametresClassement,
+    ParametresElo,
+    ParametresEquipe,
+    ParametresFiltreChampionnatSaison,
+    ParametresJoueur,
+    ParametresMeilleurs,
+    ParametresProchainsMatchs,
+    ParametresRecherche,
+    ParametresRencontre,
+)
 from communaute import charger_fichier_env, initialiser_base, routeur_communaute
 from forum import assurer_tables_forum, routeur_forum
 from stats_modele import routeur_stats_modele
@@ -1503,12 +1516,8 @@ def accueil():
 
 
 @app.get("/api/classement")
-def classement(
-    championnat: str = Query(...),
-    saison: str = Query(...),
-    elo: int = Query(0, ge=0, le=1),
-):
-    verifier_filtres(championnat, saison)
+def classement(filtres: Annotated[ParametresClassement, Query()]):
+    championnat, saison, elo = filtres.championnat, filtres.saison, filtres.elo
     connexion = ouvrir_base()
     try:
         try:
@@ -1555,26 +1564,20 @@ def classement(
 
 
 @app.get("/api/elo")
-def elo_api(
-    equipe: str = Query(...),
-    forcer: int = Query(0, ge=0, le=1),
-):
+def elo_api(filtres: Annotated[ParametresElo, Query()]):
     """Force relative ClubElo pour un club (retry soft via forcer=1)."""
-    nom = limiter_texte(equipe)
+    nom = filtres.equipe
     connexion = ouvrir_base()
     try:
         alias = alias_noms_equipe(nom)
-        return elo_pour_equipe(connexion, alias, force_api=bool(forcer))
+        return elo_pour_equipe(connexion, alias, force_api=bool(filtres.forcer))
     finally:
         connexion.close()
 
 
 @app.get("/api/calendrier")
-def calendrier_api(
-    championnat: str = Query(...),
-    saison: str = Query(...),
-):
-    verifier_filtres(championnat, saison)
+def calendrier_api(filtres: Annotated[ParametresFiltreChampionnatSaison, Query()]):
+    championnat, saison = filtres.championnat, filtres.saison
     connexion = ouvrir_base()
     try:
         programme = charger_programme_saison(connexion, championnat, saison)
@@ -1594,13 +1597,9 @@ def calendrier_api(
 
 
 @app.get("/api/equipe")
-def fiche_equipe(
-    championnat: str = Query(...),
-    saison: str = Query(...),
-    equipe: str = Query(...),
-):
-    verifier_filtres(championnat, saison)
-    nom_page = limiter_texte(equipe)
+def fiche_equipe(filtres: Annotated[ParametresEquipe, Query()]):
+    championnat, saison = filtres.championnat, filtres.saison
+    nom_page = filtres.equipe
     connexion = ouvrir_base()
     try:
         noms_alias = alias_noms_equipe(nom_page)
@@ -1739,10 +1738,9 @@ def fiche_equipe(
 
 
 @app.get("/api/joueur")
-def fiche_joueur(nom: str = Query(...), championnat: str | None = None):
-    nom_joueur = limiter_texte(nom)
-    if championnat and championnat not in CHAMPIONNATS:
-        raise HTTPException(400, "Championnat inconnu")
+def fiche_joueur(filtres: Annotated[ParametresJoueur, Query()]):
+    nom_joueur = filtres.nom
+    championnat = filtres.championnat
     # Pas de stats joueurs LDC : on ne filtre pas sur cette competition.
     filtre_ligue = championnat if championnat and championnat != NOM_LDC else None
     connexion = ouvrir_base()
@@ -1803,8 +1801,8 @@ def fiche_joueur(nom: str = Query(...), championnat: str | None = None):
 
 
 @app.get("/api/recherche")
-def recherche(q: str = Query(..., min_length=2, max_length=80)):
-    texte = q.strip().replace("%", "").replace("_", "")
+def recherche(filtres: Annotated[ParametresRecherche, Query()]):
+    texte = filtres.q.replace("%", "").replace("_", "")
     if len(texte) < 2:
         raise HTTPException(400, "Recherche trop courte")
     motif = f"%{texte}%"
@@ -1844,13 +1842,9 @@ def recherche(q: str = Query(..., min_length=2, max_length=80)):
 
 
 @app.get("/api/prochains_matchs")
-def prochains_matchs_api(
-    championnat: str = Query(...),
-    saison: str = Query(...),
-    equipe: str | None = None,
-    limite: int = Query(LIMITE_EQUIPE, ge=1, le=20),
-):
-    verifier_filtres(championnat, saison)
+def prochains_matchs_api(filtres: Annotated[ParametresProchainsMatchs, Query()]):
+    championnat, saison = filtres.championnat, filtres.saison
+    equipe, limite = filtres.equipe, filtres.limite
     connexion = ouvrir_base()
     try:
         aujourd_hui = date.today().isoformat()
@@ -1858,7 +1852,7 @@ def prochains_matchs_api(
         prochains = filtrer_matchs_a_venir(programme, aujourd_hui)
         nom_equipe = ""
         if equipe:
-            nom_equipe = resoudre_nom_equipe(limiter_texte(equipe), programme)
+            nom_equipe = resoudre_nom_equipe(equipe, programme)
         matchs_equipe = []
         if nom_equipe:
             du_club = [
@@ -1883,11 +1877,8 @@ def prochains_matchs_api(
 
 
 @app.get("/api/equipes-analyse")
-def equipes_analyse(
-    championnat: str = Query(...),
-    saison: str = Query(...),
-):
-    verifier_filtres(championnat, saison)
+def equipes_analyse(filtres: Annotated[ParametresFiltreChampionnatSaison, Query()]):
+    championnat, saison = filtres.championnat, filtres.saison
     connexion = ouvrir_base()
     try:
         noms = lister_equipes_analyse(connexion, championnat, saison)
@@ -1910,15 +1901,9 @@ def equipes_analyse(
 
 
 @app.get("/api/analyse-rencontre")
-def analyse_rencontre_api(
-    championnat: str = Query(...),
-    saison: str = Query(...),
-    domicile: str = Query(...),
-    exterieur: str = Query(...),
-):
-    verifier_filtres(championnat, saison)
-    nom_domicile = limiter_texte(domicile)
-    nom_exterieur = limiter_texte(exterieur)
+def analyse_rencontre_api(filtres: Annotated[ParametresRencontre, Query()]):
+    championnat, saison = filtres.championnat, filtres.saison
+    nom_domicile, nom_exterieur = filtres.domicile, filtres.exterieur
     connexion = ouvrir_base()
     try:
         try:
@@ -1957,17 +1942,11 @@ def analyse_rencontre_api(
 
 
 @app.get("/api/analyse-rencontre/ia")
-def analyse_rencontre_ia_api(
-    championnat: str = Query(...),
-    saison: str = Query(...),
-    domicile: str = Query(...),
-    exterieur: str = Query(...),
-    regerer: bool = Query(False, description="Ignorer le cache IA"),
-):
+def analyse_rencontre_ia_api(filtres: Annotated[ParametresAnalyseIa, Query()]):
     """Analyse narrative IA (LLM ou template) à partir de faits vérifiables."""
-    verifier_filtres(championnat, saison)
-    nom_domicile = limiter_texte(domicile)
-    nom_exterieur = limiter_texte(exterieur)
+    championnat, saison = filtres.championnat, filtres.saison
+    nom_domicile, nom_exterieur = filtres.domicile, filtres.exterieur
+    regerer = filtres.regerer
     connexion = ouvrir_base()
     try:
         try:
@@ -2164,14 +2143,10 @@ def lister_meilleurs(connexion, championnat, saison, colonne):
 
 
 @app.get("/api/meilleurs")
-def meilleurs_api(
-    championnat: str = Query(...),
-    saison: str = Query(...),
-    type_classement: str = Query(..., alias="type"),
-):
+def meilleurs_api(filtres: Annotated[ParametresMeilleurs, Query()]):
     """Top 20 buteurs ou passeurs. Les dribbles n'existent pas chez Understat."""
-    verifier_filtres(championnat, saison)
-    type_classement = (type_classement or "").strip()
+    championnat, saison = filtres.championnat, filtres.saison
+    type_classement = filtres.type
     if type_classement == "dribbles":
         return {
             "type": type_classement,

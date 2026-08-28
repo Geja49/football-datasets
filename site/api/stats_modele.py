@@ -2,34 +2,25 @@
 
 from __future__ import annotations
 
-import re
 from collections import defaultdict
+from typing import Annotated
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Query
 
 from calibration import agreger_metriques_saison
 from calibrateur import infos_calibrateur
 from historique_analyses import lister_resultats_avec_previsions, ouvrir_base
+from schemas.parametres import ParametresStatsModele
 
 routeur_stats_modele = APIRouter()
-MOTIF_SAISON = re.compile(r"^\d{4}-\d{4}$")
 
 
 @routeur_stats_modele.get("/api/stats-modele")
-def stats_modele_api(
-    saison: str = Query(...),
-    championnat: str | None = Query(None),
-    inclure_retroactif: int = Query(
-        0,
-        description="1 pour inclure les previsions backfill (retroactif=1), 0 par defaut",
-    ),
-):
+def stats_modele_api(filtres: Annotated[ParametresStatsModele, Query()]):
     """Agregats de calibration depuis analyses.db (previsions figees vs realite)."""
-    if not MOTIF_SAISON.match(saison):
-        raise HTTPException(400, "Format de saison invalide (ex. 2026-2027)")
-    if inclure_retroactif not in (0, 1):
-        raise HTTPException(400, "inclure_retroactif doit valoir 0 ou 1")
-    champ_filtre = championnat.strip()[:80] if championnat else None
+    saison = filtres.saison
+    champ_filtre = filtres.championnat
+    inclure_retroactif = filtres.inclure_retroactif
     connexion = ouvrir_base()
     try:
         resultats = lister_resultats_avec_previsions(

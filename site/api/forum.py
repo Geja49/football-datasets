@@ -9,7 +9,6 @@ import threading
 import time
 
 from fastapi import APIRouter, HTTPException, Request
-from pydantic import BaseModel, Field
 
 from avatars import lire_avatar_id_ligne
 from communaute import (
@@ -21,6 +20,16 @@ from communaute import (
     session_optionnelle,
     utilisateur_connecte,
     valider_type_reaction,
+)
+from schemas.forum import (
+    MessageCreerBody,
+    MessageModifierBody,
+    ReactionBody,
+    SignalementBody,
+    SondageCreerBody,
+    SondageVoteBody,
+    SujetCreerBody,
+    SujetModifierBody,
 )
 
 LONGUEUR_TITRE_MAX = 120
@@ -592,45 +601,6 @@ def serialiser_sondage(connexion, sondage, utilisateur_id: int = 0) -> dict:
         "mon_option_id": mon_option_id,
         "a_vote": a_vote,
     }
-
-
-class SujetCreerBody(BaseModel):
-    titre: str = Field(..., min_length=1, max_length=LONGUEUR_TITRE_MAX)
-    contenu: str = Field(..., min_length=1, max_length=LONGUEUR_MESSAGE_MAX)
-
-
-class SujetModifierBody(BaseModel):
-    titre: str = Field(..., min_length=1, max_length=LONGUEUR_TITRE_MAX)
-
-
-class MessageCreerBody(BaseModel):
-    contenu: str = Field(..., min_length=1, max_length=LONGUEUR_MESSAGE_MAX)
-    message_parent_id: int | None = None
-
-
-class MessageModifierBody(BaseModel):
-    contenu: str = Field(..., min_length=1, max_length=LONGUEUR_MESSAGE_MAX)
-
-
-class SignalementBody(BaseModel):
-    motif: str = Field("", max_length=LONGUEUR_MOTIF_MAX)
-
-
-class ReactionBody(BaseModel):
-    type_reaction: str = "pouce"
-
-
-class SondageCreerBody(BaseModel):
-    question: str = Field(..., min_length=1, max_length=LONGUEUR_QUESTION_SONDAGE_MAX)
-    options: list[str] = Field(
-        ...,
-        min_length=NB_OPTIONS_SONDAGE_MIN,
-        max_length=NB_OPTIONS_SONDAGE_MAX,
-    )
-
-
-class SondageVoteBody(BaseModel):
-    option_id: int
 
 
 @routeur_forum.get("")

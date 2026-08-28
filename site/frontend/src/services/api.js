@@ -1,3 +1,7 @@
+/** @typedef {import('../types/api.js').InscriptionPayload} InscriptionPayload */
+/** @typedef {import('../types/api.js').PronosticPayload} PronosticPayload */
+/** @typedef {import('../types/api.js').CommentaireMatchPayload} CommentaireMatchPayload */
+
 const cacheMemoire = new Map();
 const DUREE_CACHE_MS = 90_000;
 const enCours = new Map();
@@ -160,6 +164,9 @@ export function chargerUtilisateurConnecte() {
   return envoyerJson("/api/communaute/moi");
 }
 
+/**
+ * @param {InscriptionPayload} donnees
+ */
 export function inscrireUtilisateur(donnees) {
   return envoyerJson("/api/communaute/inscription", {
     method: "POST",
@@ -183,6 +190,9 @@ export function chargerCommentairesMatch(championnat, saison, domicile, exterieu
   return envoyerJson(`/api/communaute/commentaires?${params}`);
 }
 
+/**
+ * @param {CommentaireMatchPayload} donnees
+ */
 export function publierCommentaireMatch(donnees) {
   return envoyerJson("/api/communaute/commentaires", {
     method: "POST",
@@ -216,6 +226,9 @@ export function chargerPronosticMatch(championnat, saison, domicile, exterieur) 
   return envoyerJson(`/api/communaute/pronostics?${params}`);
 }
 
+/**
+ * @param {PronosticPayload} donnees
+ */
 export function deposerPronostic(donnees) {
   return envoyerJson("/api/communaute/pronostics", {
     method: "POST",

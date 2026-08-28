@@ -103,7 +103,7 @@ def test_analyse_rencontre_equipes_identiques(client_api):
             "exterieur": "Barcelona",
         },
     )
-    assert reponse.status_code == 400
+    assert reponse.status_code in (400, 422)
 
 
 def test_championnat_inconnu(client_api):
@@ -111,7 +111,7 @@ def test_championnat_inconnu(client_api):
         "/api/classement",
         params={"championnat": "Ligue inventée", "saison": "2026-2027"},
     )
-    assert reponse.status_code == 400
+    assert reponse.status_code in (400, 422)
 
 
 def test_cotes_sans_cle(client_api):

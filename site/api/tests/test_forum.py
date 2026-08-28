@@ -309,7 +309,7 @@ def test_modifier_validation_longueur(client_forum):
         f"/api/forum/sujets/{sujet_id}",
         json={"titre": "   "},
     )
-    assert titre_vide.status_code == 400
+    assert titre_vide.status_code in (400, 422)
 
     message_long = client_forum.patch(
         f"/api/forum/messages/{message_id}",

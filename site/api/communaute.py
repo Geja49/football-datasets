@@ -8,6 +8,7 @@ Base SQLite séparée : donnees/communaute.db
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from typing import Annotated
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 import os
 import re
@@ -17,8 +18,30 @@ import threading
 import time
 
 import requests
-from fastapi import APIRouter, HTTPException, Request, Response
-from pydantic import BaseModel, Field
+from fastapi import APIRouter, HTTPException, Query, Request, Response
+
+from schemas.communaute import (
+    CommentaireBody,
+    ConnexionBody,
+    GoogleConnexionBody,
+    InscriptionBody,
+    LigueCreerBody,
+    LigueRejoindreBody,
+    MessageLigueBody,
+    ProfilMajBody,
+    PronosticBody,
+    PronosticsLotBody,
+    ReactionBody,
+    SignalementBody,
+    SignalementTraiterBody,
+    SondageMatchVoteBody,
+)
+from schemas.parametres import (
+    ParametresClassementCommunaute,
+    ParametresClassementLigue,
+    ParametresJourneePronos,
+    ParametresMatchCommunaute,
+)
 from passlib.context import CryptContext
 
 from avatars import CATALOGUE_AVATARS, lire_avatar_id_ligne, valider_avatar_id
@@ -2063,88 +2086,6 @@ def enregistrer_pronostic_interne(
     return curseur.lastrowid
 
 
-class InscriptionBody(BaseModel):
-    email: str
-    pseudo: str
-    mot_de_passe: str
-    age_18_plus: bool = False
-    cgu_acceptees: bool = False
-
-
-class ConnexionBody(BaseModel):
-    """identifiant = pseudo ou e-mail. Le champ email reste accepté (compatibilité)."""
-
-    identifiant: str = ""
-    email: str = ""
-    mot_de_passe: str
-
-
-class CommentaireBody(BaseModel):
-    championnat: str
-    saison: str
-    domicile: str
-    exterieur: str
-    contenu: str = Field(max_length=LONGUEUR_COMMENTAIRE_MAX)
-    commentaire_parent_id: int | None = None
-
-
-class SignalementBody(BaseModel):
-    motif: str = Field(default="", max_length=200)
-
-
-class ReactionBody(BaseModel):
-    type_reaction: str = "pouce"
-
-
-class PronosticBody(BaseModel):
-    championnat: str
-    saison: str
-    domicile: str
-    exterieur: str
-    type_pronostic: str
-    buts_domicile: int | None = None
-    buts_exterieur: int | None = None
-    resultat_1x2: str | None = None
-
-
-class SondageMatchVoteBody(BaseModel):
-    championnat: str
-    saison: str
-    domicile: str
-    exterieur: str
-    choix: str = Field(..., min_length=1, max_length=1)
-
-class GoogleConnexionBody(BaseModel):
-    id_token: str = Field(max_length=8192)
-
-
-class LigueCreerBody(BaseModel):
-    nom: str = Field(max_length=LONGUEUR_NOM_LIGUE_MAX)
-
-
-class LigueRejoindreBody(BaseModel):
-    code_invitation: str = Field(max_length=12)
-
-
-class ProfilMajBody(BaseModel):
-    bio: str = Field(default="", max_length=LONGUEUR_BIO_MAX)
-    equipe_favorite: str = Field(default="", max_length=LONGUEUR_EQUIPE_FAVORITE_MAX)
-    avatar_id: str | None = Field(default=None, max_length=32)
-    pseudo: str | None = Field(default=None, max_length=LONGUEUR_PSEUDO_MAX)
-
-
-class MessageLigueBody(BaseModel):
-    contenu: str = Field(max_length=LONGUEUR_MESSAGE_LIGUE_MAX)
-
-
-class PronosticsLotBody(BaseModel):
-    pronostics: list[PronosticBody] = Field(default_factory=list, max_length=LIMITE_PRONOS_LOT)
-
-
-class SignalementTraiterBody(BaseModel):
-    statut: str = Field(default="traite", max_length=20)
-
-
 @routeur_communaute.get("/config")
 def lire_config_communaute():
     client_id = google_client_id()
@@ -2335,16 +2276,13 @@ def moi(request: Request):
 @routeur_communaute.get("/commentaires")
 def lister_commentaires(
     request: Request,
-    championnat: str,
-    saison: str,
-    domicile: str,
-    exterieur: str,
+    filtres: Annotated[ParametresMatchCommunaute, Query()],
 ):
     initialiser_base()
-    champ = valider_texte_match(championnat, "Championnat")
-    sais = valider_texte_match(saison, "Saison", 16)
-    dom = valider_texte_match(domicile, "Domicile")
-    ext = valider_texte_match(exterieur, "Extérieur")
+    champ = filtres.championnat
+    sais = filtres.saison
+    dom = filtres.domicile
+    ext = filtres.exterieur
     utilisateur, connexion_session = session_optionnelle(request)
     connexion = connexion_session or ouvrir_base()
     fermer_apres = connexion_session is None
@@ -2698,16 +2636,13 @@ def lister_mes_pronostics(request: Request):
 @routeur_communaute.get("/pronostics")
 def lire_pronostic_match(
     request: Request,
-    championnat: str,
-    saison: str,
-    domicile: str,
-    exterieur: str,
+    filtres: Annotated[ParametresMatchCommunaute, Query()],
 ):
     utilisateur, connexion = utilisateur_connecte(request)
-    champ = valider_texte_match(championnat, "Championnat")
-    sais = valider_texte_match(saison, "Saison", 16)
-    dom = valider_texte_match(domicile, "Domicile")
-    ext = valider_texte_match(exterieur, "Extérieur")
+    champ = filtres.championnat
+    sais = filtres.saison
+    dom = filtres.domicile
+    ext = filtres.exterieur
     try:
         ligne = connexion.execute(
             """
@@ -2817,18 +2752,13 @@ def deposer_pronostic(donnees: PronosticBody, request: Request):
 @routeur_communaute.get("/sondage-match")
 def lire_sondage_match(
     request: Request,
-    championnat: str,
-    saison: str,
-    domicile: str,
-    exterieur: str,
+    filtres: Annotated[ParametresMatchCommunaute, Query()],
 ):
     """Sondage communautaire 1/N/2 lié à un match (lecture publique)."""
-    champ = valider_texte_match(championnat, "Championnat")
-    sais = valider_texte_match(saison, "Saison", 16)
-    dom = valider_texte_match(domicile, "Domicile")
-    ext = valider_texte_match(exterieur, "Extérieur")
-    if dom == ext:
-        raise HTTPException(400, "Les deux équipes doivent être différentes")
+    champ = filtres.championnat
+    sais = filtres.saison
+    dom = filtres.domicile
+    ext = filtres.exterieur
     utilisateur, connexion_session = session_optionnelle(request)
     connexion = connexion_session or ouvrir_base()
     fermer = connexion_session is None
@@ -2906,8 +2836,10 @@ def voter_sondage_match(donnees: SondageMatchVoteBody, request: Request):
 
 
 @routeur_communaute.get("/classement")
-def lire_classement_pronos(championnat: str, saison: str):
-    champ, sais = valider_filtres_classement(championnat, saison)
+def lire_classement_pronos(
+    filtres: Annotated[ParametresClassementCommunaute, Query()],
+):
+    champ, sais = filtres.championnat, filtres.saison
     classement = calculer_classement_pronos(champ, sais)
     return {
         "championnat": champ,
@@ -2932,8 +2864,10 @@ def lire_profil_public(pseudo: str):
 
 
 @routeur_communaute.get("/pronostics/journees")
-def lister_journees_pronos(championnat: str, saison: str):
-    champ, sais = valider_filtres_classement(championnat, saison)
+def lister_journees_pronos(
+    filtres: Annotated[ParametresClassementCommunaute, Query()],
+):
+    champ, sais = filtres.championnat, filtres.saison
     journees = lister_journees_disponibles(champ, sais)
     return {
         "championnat": champ,
@@ -2946,12 +2880,10 @@ def lister_journees_pronos(championnat: str, saison: str):
 @routeur_communaute.get("/pronostics/journee")
 def lire_pronos_journee(
     request: Request,
-    championnat: str,
-    saison: str,
-    journee: str,
+    filtres: Annotated[ParametresJourneePronos, Query()],
 ):
-    champ, sais = valider_filtres_classement(championnat, saison)
-    jour = valider_texte_match(journee, "Journée", 16)
+    champ, sais = filtres.championnat, filtres.saison
+    jour = filtres.journee
     utilisateur, connexion = utilisateur_connecte(request)
     try:
         matchs = lister_matchs_journee(champ, sais, jour)
@@ -3126,16 +3058,12 @@ def lire_ligue(code: str, request: Request):
 def classement_ligue(
     code: str,
     request: Request,
-    championnat: str,
-    saison: str,
-    journee: str | None = None,
+    filtres: Annotated[ParametresClassementLigue, Query()],
 ):
     utilisateur, connexion = utilisateur_connecte(request)
     code_valide = valider_code_invitation(code)
-    champ, sais = valider_filtres_classement(championnat, saison)
-    jour = None
-    if journee:
-        jour = valider_texte_match(journee, "Journée", 16)
+    champ, sais = filtres.championnat, filtres.saison
+    jour = filtres.journee or None
     try:
         ligne = lire_ligue_par_code(connexion, code_valide)
         if not ligne:

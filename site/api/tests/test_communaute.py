@@ -989,13 +989,13 @@ def test_changement_pseudo_unicite_et_validation(client_communaute):
         "/api/communaute/moi/profil",
         json={"pseudo": "ab"},
     )
-    assert invalide.status_code == 400
+    assert invalide.status_code in (400, 422)
 
     vide = client_communaute.patch(
         "/api/communaute/moi/profil",
         json={"pseudo": "   "},
     )
-    assert vide.status_code == 400
+    assert vide.status_code in (400, 422)
 
 
 def test_catalogue_avatars(client_communaute):
@@ -1411,7 +1411,7 @@ def test_sondage_match_1n2(client_communaute):
         "/api/communaute/sondage-match",
         json={**params, "choix": "X"},
     )
-    assert mauvais.status_code == 400
+    assert mauvais.status_code in (400, 422)
 
 
 def test_comparer_pronos_au_modele(tmp_path, monkeypatch):
