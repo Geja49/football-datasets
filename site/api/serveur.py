@@ -18,8 +18,24 @@ from fastapi.staticfiles import StaticFiles
 from analyse_rencontre import (
     LIGUES_NATIONALES,
     analyser_rencontre,
+    comparaison_previsions_reel,
     lister_equipes_analyse,
     serie_forme_matchs,
+    _bilan_match,
+)
+from historique_analyses import (
+    cle_match,
+    lire_prevision_figee,
+    lire_prevision_sans_date,
+    lire_resultat,
+    ouvrir_base as ouvrir_analyses,
+    pred_depuis_prevision_figee,
+)
+from ia_analyse import (
+    enregistrer_analyse_ia_cachee,
+    generer_analyse_ia,
+    generer_faits_pour_ia,
+    lire_analyse_ia_cachee,
 )
 from correspondances import (
     alias_noms_equipe,
@@ -34,6 +50,7 @@ from sites_officiels import SITES_CHAMPIONNATS, SITES_EQUIPES
 from cotes import lecture_marche_pour_analyse, routeur_cotes
 from communaute import charger_fichier_env, initialiser_base, routeur_communaute
 from forum import assurer_tables_forum, routeur_forum
+from stats_modele import routeur_stats_modele
 
 RACINE = Path(__file__).resolve().parents[2]
 FICHIER_BASE = RACINE / "donnees" / "football.db"
@@ -122,6 +139,7 @@ app.add_middleware(
 app.include_router(routeur_cotes)
 app.include_router(routeur_communaute)
 app.include_router(routeur_forum)
+app.include_router(routeur_stats_modele)
 initialiser_base()
 assurer_tables_forum()
 
@@ -1930,11 +1948,198 @@ def analyse_rencontre_api(
             )
         else:
             resultat["match_a_venir"] = None
+
+        # Enrichissement historique : prevision figee si disponible.
+        enrichir_avec_prevision_figee(resultat, championnat, saison, nom_domicile, nom_exterieur)
         return resultat
     finally:
         connexion.close()
 
 
+@app.get("/api/analyse-rencontre/ia")
+def analyse_rencontre_ia_api(
+    championnat: str = Query(...),
+    saison: str = Query(...),
+    domicile: str = Query(...),
+    exterieur: str = Query(...),
+    regerer: bool = Query(False, description="Ignorer le cache IA"),
+):
+    """Analyse narrative IA (LLM ou template) à partir de faits vérifiables."""
+    verifier_filtres(championnat, saison)
+    nom_domicile = limiter_texte(domicile)
+    nom_exterieur = limiter_texte(exterieur)
+    connexion = ouvrir_base()
+    try:
+        try:
+            resultat = analyser_rencontre(
+                connexion, championnat, saison, nom_domicile, nom_exterieur
+            )
+        except ValueError as erreur:
+            raise HTTPException(400, str(erreur)) from erreur
+
+        match_joue = resultat.get("match_joue") or {}
+        if not match_joue.get("joue"):
+            resultat["match_a_venir"] = lire_horaire_match(
+                connexion, championnat, saison, nom_domicile, nom_exterieur
+            )
+        else:
+            resultat["match_a_venir"] = None
+
+        enrichir_avec_prevision_figee(
+            resultat, championnat, saison, nom_domicile, nom_exterieur
+        )
+        prevision_figee = resultat.get("prevision_figee")
+
+        date_ref = None
+        if match_joue.get("joue"):
+            date_ref = match_joue.get("date")
+        elif resultat.get("match_a_venir"):
+            date_ref = resultat["match_a_venir"].get("date")
+        if not date_ref and prevision_figee:
+            date_ref = prevision_figee.get("date_match")
+        date_ref = (date_ref or "")[:10]
+
+        cle = cle_match(championnat, saison, date_ref, nom_domicile, nom_exterieur)
+        connexion_ia = ouvrir_analyses()
+        try:
+            if not regerer:
+                cache = lire_analyse_ia_cachee(connexion_ia, cle)
+                if cache and cache.get("texte"):
+                    return {
+                        "texte": cache["texte"],
+                        "source": cache["source"],
+                        "genere_le": cache.get("genere_le"),
+                        "cle_match": cle,
+                        "depuis_cache": True,
+                    }
+
+            faits = generer_faits_pour_ia(
+                resultat.get("prediction") or {},
+                prevision_figee,
+                championnat=championnat,
+                saison=saison,
+                domicile=nom_domicile,
+                exterieur=nom_exterieur,
+                domicile_profil=resultat.get("domicile"),
+                exterieur_profil=resultat.get("exterieur"),
+                confrontations=resultat.get("confrontations"),
+            )
+            produit = generer_analyse_ia(faits)
+            enregistrer_analyse_ia_cachee(
+                connexion_ia,
+                cle,
+                produit["texte"],
+                produit["source"],
+                faits,
+            )
+            return {
+                "texte": produit["texte"],
+                "source": produit["source"],
+                "genere_le": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "cle_match": cle,
+                "depuis_cache": False,
+            }
+        finally:
+            connexion_ia.close()
+    finally:
+        connexion.close()
+
+
+def enrichir_avec_prevision_figee(resultat, championnat, saison, nom_domicile, nom_exterieur):
+    """
+    Si une prevision a ete enregistree avant le match, l'exposer et
+    (pour un match joue) recalculer bilan/comparaison sur la prevision FIGEE.
+    """
+    resultat["prevision_figee"] = None
+    connexion_hist = None
+    try:
+        connexion_hist = ouvrir_analyses()
+        date_ref = None
+        match_joue = resultat.get("match_joue") or {}
+        if match_joue.get("joue"):
+            date_ref = match_joue.get("date")
+        else:
+            a_venir = resultat.get("match_a_venir") or {}
+            date_ref = a_venir.get("date")
+
+        prevision = None
+        if date_ref:
+            prevision = lire_prevision_figee(
+                connexion_hist, championnat, saison, date_ref, nom_domicile, nom_exterieur
+            )
+        if not prevision:
+            prevision = lire_prevision_sans_date(
+                connexion_hist, championnat, saison, nom_domicile, nom_exterieur
+            )
+        if not prevision:
+            return
+
+        pred_figee = pred_depuis_prevision_figee(prevision)
+        meta = {
+            "genere_le": prevision.get("genere_le"),
+            "version_modele": prevision.get("version_modele"),
+            "date_match": prevision.get("date_match"),
+            "prediction": pred_figee,
+        }
+        resultat_hist = lire_resultat(connexion_hist, prevision["id"])
+        if resultat_hist:
+            meta["resultat"] = {
+                "match_joue_le": resultat_hist.get("match_joue_le"),
+                "issue_reelle": resultat_hist.get("issue_reelle"),
+                "score_exact_ok": resultat_hist.get("score_exact_ok"),
+                "bilan": resultat_hist.get("bilan"),
+            }
+
+        resultat["prevision_figee"] = meta
+
+        # Match joue + prevision figee : remplacer les champs predictifs live
+        # pour que le bilan affiche la prevision enregistree (pas un recalcul).
+        if not match_joue.get("joue"):
+            return
+
+        live = resultat.get("prediction") or {}
+        fusion = dict(live)
+        for cle in (
+            "xg_prevu_domicile",
+            "xg_prevu_exterieur",
+            "xg_total",
+            "score_plus_probable",
+            "probabilite_score",
+            "commentaire_score",
+            "scores_frequents",
+            "p_victoire_domicile",
+            "p_nul",
+            "p_victoire_exterieur",
+            "p_les_deux_marquent",
+            "p_plus_de_2_buts",
+            "cartons",
+            "scenarios",
+            "recit",
+            "texte",
+        ):
+            if cle in pred_figee:
+                fusion[cle] = pred_figee[cle]
+        if resultat_hist and resultat_hist.get("bilan"):
+            bilan_stocke = resultat_hist["bilan"]
+            fusion["bilan"] = {
+                "points": bilan_stocke.get("points") or [],
+            }
+            if bilan_stocke.get("comparaison"):
+                fusion["comparaison"] = bilan_stocke["comparaison"]
+            else:
+                fusion["comparaison"] = comparaison_previsions_reel(pred_figee, match_joue)
+        else:
+            fusion["bilan"] = _bilan_match(pred_figee, match_joue)
+            fusion["comparaison"] = comparaison_previsions_reel(pred_figee, match_joue)
+        fusion["depuis_historique"] = True
+        fusion["genere_le"] = prevision.get("genere_le")
+        resultat["prediction"] = fusion
+    except Exception:
+        # L'historique ne doit jamais casser l'analyse live.
+        return
+    finally:
+        if connexion_hist is not None:
+            connexion_hist.close()
 COLONNES_MEILLEURS = {
     "buts": "buts",
     "passes": "passes_decisives",

@@ -22,6 +22,13 @@ from pydantic import BaseModel, Field
 from passlib.context import CryptContext
 
 from avatars import CATALOGUE_AVATARS, lire_avatar_id_ligne, valider_avatar_id
+from calibration import issue_prevue_1x2
+from historique_analyses import (
+    issue_depuis_buts,
+    lire_prevision_figee,
+    lire_prevision_sans_date,
+    ouvrir_base as ouvrir_base_analyses,
+)
 
 RACINE = Path(__file__).resolve().parents[2]
 FICHIER_COMMUNAUTE = RACINE / "donnees" / "communaute.db"
@@ -1504,6 +1511,98 @@ def lister_journees_disponibles(championnat: str, saison: str) -> list[str]:
         connexion.close()
 
 
+def comparer_pronos_au_modele(lignes_pronostics) -> dict:
+    """
+    Compare les pronos utilisateur au modèle figé (1X2) pour les matchs joués
+    ayant une prévision en analyses.db.
+    """
+    nb_pronos = 0
+    nb_corrects_utilisateur = 0
+    nb_corrects_modele = 0
+
+    if not lignes_pronostics:
+        return {
+            "nb_pronos": 0,
+            "nb_corrects_utilisateur": 0,
+            "nb_corrects_modele": 0,
+            "score_utilisateur": 0.0,
+            "score_modele": 0.0,
+        }
+
+    connexion_analyses = ouvrir_base_analyses()
+    try:
+        for prono in lignes_pronostics:
+            resultat = lire_resultat_match(
+                prono["championnat"],
+                prono["saison"],
+                prono["domicile"],
+                prono["exterieur"],
+            )
+            if not resultat:
+                continue
+
+            issue_reelle = issue_depuis_buts(
+                resultat["buts_domicile"], resultat["buts_exterieur"]
+            )
+            if prono["type_pronostic"] == "1x2":
+                issue_utilisateur = prono["resultat_1x2"]
+            else:
+                issue_utilisateur = resultat_1x2(
+                    prono["buts_domicile"], prono["buts_exterieur"]
+                )
+            if issue_utilisateur not in ("1", "N", "2"):
+                continue
+
+            date_match = (resultat.get("date") or prono["commence_at"] or "")[:10]
+            prevision = lire_prevision_figee(
+                connexion_analyses,
+                prono["championnat"],
+                prono["saison"],
+                date_match,
+                prono["domicile"],
+                prono["exterieur"],
+            )
+            if not prevision:
+                prevision = lire_prevision_sans_date(
+                    connexion_analyses,
+                    prono["championnat"],
+                    prono["saison"],
+                    prono["domicile"],
+                    prono["exterieur"],
+                )
+            if not prevision:
+                continue
+
+            p1 = prevision.get("p_victoire_domicile")
+            pn = prevision.get("p_nul")
+            p2 = prevision.get("p_victoire_exterieur")
+            if p1 is None or pn is None or p2 is None:
+                continue
+
+            issue_modele = issue_prevue_1x2(p1, pn, p2)
+            nb_pronos += 1
+            if issue_utilisateur == issue_reelle:
+                nb_corrects_utilisateur += 1
+            if issue_modele == issue_reelle:
+                nb_corrects_modele += 1
+    finally:
+        connexion_analyses.close()
+
+    score_utilisateur = (
+        round(100.0 * nb_corrects_utilisateur / nb_pronos, 1) if nb_pronos else 0.0
+    )
+    score_modele = (
+        round(100.0 * nb_corrects_modele / nb_pronos, 1) if nb_pronos else 0.0
+    )
+    return {
+        "nb_pronos": nb_pronos,
+        "nb_corrects_utilisateur": nb_corrects_utilisateur,
+        "nb_corrects_modele": nb_corrects_modele,
+        "score_utilisateur": score_utilisateur,
+        "score_modele": score_modele,
+    }
+
+
 def profil_public_stats(pseudo: str) -> dict | None:
     initialiser_base()
     connexion = ouvrir_base()
@@ -1554,6 +1653,7 @@ def profil_public_stats(pseudo: str) -> dict | None:
             "par_championnat": [],
             "historique_recent": [],
             "badges": [],
+            "vs_modele": comparer_pronos_au_modele([]),
         }
 
     points_total = 0
@@ -1630,6 +1730,7 @@ def profil_public_stats(pseudo: str) -> dict | None:
         "historique_recent": historique_recent,
     }
     stats["badges"] = attribuer_badges(stats)
+    stats["vs_modele"] = comparer_pronos_au_modele(lignes)
     return stats
 
 

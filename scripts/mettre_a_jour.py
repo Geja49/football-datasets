@@ -41,6 +41,11 @@ def main():
     # Valeurs de marche : re-telecharge le dump publie (pas de scrape Transfermarkt).
     lancer("collecter_valeurs_marche.py", obligatoire=False)
     lancer("creer_base.py")
+    # Historique analyses (base separee) : ne doit pas faire echouer la MAJ.
+    try:
+        lancer("enregistrer_analyses.py", obligatoire=False)
+    except Exception as erreur:  # noqa: BLE001
+        print(f"enregistrer_analyses.py ignore ({erreur}), on continue.")
     print("\nTermine. Rechargez la page du site (localhost:5173).")
     print(
         "Pour rester a jour ensuite : python scripts/surveiller_sources.py"
@@ -74,8 +79,9 @@ def main():
         "(snapshot figé, matching noms Understat best-effort)."
     )
     print(
-        "API-Football : uniquement si CLE_API_FOOTBALL est dans .env "
-        "(une ligue a la fois, cache)."
+        "API-Football : si CLE_API_FOOTBALL est dans .env — fixtures/scores "
+        "(rotation 1–2 ligues/jour + LDC si quota) puis stats joueurs ; "
+        "sinon ignoree proprement. Free ~100 req/jour, cache disque."
     )
 
 

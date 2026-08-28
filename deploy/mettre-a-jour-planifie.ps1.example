@@ -1,0 +1,28 @@
+# Exemple : mise a jour planifiee de football.db (Windows)
+# Copier vers mettre-a-jour-planifie.ps1 et adapter $RacineProjet.
+# Ne pas lancer si une collecte est deja en cours.
+
+$ErrorActionPreference = "Stop"
+$RacineProjet = "C:\Users\sekei\football-datasets"
+$Journal = Join-Path $RacineProjet "donnees\journal-mise-a-jour.log"
+
+Set-Location $RacineProjet
+$horodatage = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+Add-Content -Path $Journal -Value "[$horodatage] debut mise a jour"
+
+# Prefere la surveillance (collecte seulement si les sources ont change).
+# Pour forcer une collecte complete : remplacer par scripts\mettre_a_jour.py
+& python scripts\surveiller_sources.py --une-fois
+$code = $LASTEXITCODE
+
+if ($code -eq 0) {
+  # Enregistrer previsions avant match + resultats apres (analyses.db separee).
+  & python scripts\enregistrer_analyses.py --saison 2026-2027
+  if ($LASTEXITCODE -ne 0) {
+    $code = $LASTEXITCODE
+  }
+}
+
+$horodatageFin = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+Add-Content -Path $Journal -Value "[$horodatageFin] fin code=$code"
+exit $code

@@ -13,6 +13,7 @@ trivy-brut.json
 donnees/etat_sources.json
 donnees/collecte.lock
 donnees/football-nouveau.db
+donnees/analyses.db
 .env
 .env.*
 !.env.exemple

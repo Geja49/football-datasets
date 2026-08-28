@@ -95,6 +95,12 @@ export function chargerAnalyse(championnat, saison, domicile, exterieur) {
   return getJson(`/api/analyse-rencontre?${params}`, { cache: false });
 }
 
+export function chargerStatsModele(saison, championnat) {
+  const params = new URLSearchParams({ saison });
+  if (championnat) params.set("championnat", championnat);
+  return getJson(`/api/stats-modele?${params}`, { cache: false });
+}
+
 export function chargerMeilleurs(championnat, saison, type) {
   const params = new URLSearchParams({ championnat, saison, type });
   return getJson(`/api/meilleurs?${params}`);

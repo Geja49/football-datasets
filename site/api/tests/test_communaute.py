@@ -1412,3 +1412,78 @@ def test_sondage_match_1n2(client_communaute):
         json={**params, "choix": "X"},
     )
     assert mauvais.status_code == 400
+
+
+def test_comparer_pronos_au_modele(tmp_path, monkeypatch):
+    import sqlite3
+    from pathlib import Path
+
+    from historique_analyses import assurer_schema, enregistrer_prevision, ouvrir_base
+
+    chemin_foot = tmp_path / "foot_test.db"
+    connexion_foot = sqlite3.connect(chemin_foot)
+    connexion_foot.execute(
+        """
+        CREATE TABLE matchs (
+            date TEXT, saison TEXT, championnat TEXT,
+            domicile TEXT, exterieur TEXT,
+            buts_domicile INTEGER, buts_exterieur INTEGER
+        )
+        """
+    )
+    connexion_foot.execute(
+        """
+        INSERT INTO matchs VALUES
+        ('2026-08-10', '2026-2027', 'La Liga', 'Barcelona', 'Sevilla', 2, 1)
+        """
+    )
+    connexion_foot.commit()
+    connexion_foot.close()
+
+    chemin_analyses = tmp_path / "analyses_test.db"
+    connexion_analyses = ouvrir_base(chemin_analyses)
+    assurer_schema(connexion_analyses)
+    enregistrer_prevision(
+        connexion_analyses,
+        championnat="La Liga",
+        saison="2026-2027",
+        date_match="2026-08-10",
+        domicile="Barcelona",
+        exterieur="Sevilla",
+        prediction={
+            "p_victoire_domicile": 60.0,
+            "p_nul": 25.0,
+            "p_victoire_exterieur": 15.0,
+        },
+    )
+    connexion_analyses.close()
+
+    monkeypatch.setattr(communaute, "FICHIER_FOOTBALL", chemin_foot)
+    monkeypatch.setattr(
+        communaute,
+        "ouvrir_base_analyses",
+        lambda chemin=None: ouvrir_base(chemin_analyses),
+    )
+
+    prono_correct = {
+        "championnat": "La Liga",
+        "saison": "2026-2027",
+        "domicile": "Barcelona",
+        "exterieur": "Sevilla",
+        "type_pronostic": "1x2",
+        "resultat_1x2": "1",
+        "buts_domicile": None,
+        "buts_exterieur": None,
+        "commence_at": "2026-08-10T20:00:00",
+    }
+    prono_rate = {
+        **prono_correct,
+        "resultat_1x2": "2",
+    }
+
+    stats = communaute.comparer_pronos_au_modele([prono_correct, prono_rate])
+    assert stats["nb_pronos"] == 2
+    assert stats["nb_corrects_utilisateur"] == 1
+    assert stats["nb_corrects_modele"] == 2
+    assert stats["score_utilisateur"] == 50.0
+    assert stats["score_modele"] == 100.0

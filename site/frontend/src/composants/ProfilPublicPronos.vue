@@ -68,6 +68,36 @@ watch(() => props.pseudo, charger);
           <dd>{{ profil.nb_exacts }}</dd>
         </div>
       </dl>
+      <section
+        v-if="profil.vs_modele?.nb_pronos"
+        class="bloc-vs-modele"
+        aria-label="Comparaison au modèle"
+      >
+        <h4 class="titre-vs-modele">Vous vs le modèle</h4>
+        <p class="doux petit">
+          Sur {{ profil.vs_modele.nb_pronos }} match(s) joué(s) avec prévision figée (1X2).
+        </p>
+        <dl class="stats-vs-modele">
+          <div>
+            <dt>Vous</dt>
+            <dd>
+              {{ profil.vs_modele.score_utilisateur }} %
+              <span class="doux petit">
+                ({{ profil.vs_modele.nb_corrects_utilisateur }} bon(s))
+              </span>
+            </dd>
+          </div>
+          <div>
+            <dt>Modèle</dt>
+            <dd>
+              {{ profil.vs_modele.score_modele }} %
+              <span class="doux petit">
+                ({{ profil.vs_modele.nb_corrects_modele }} bon(s))
+              </span>
+            </dd>
+          </div>
+        </dl>
+      </section>
       <p v-if="profil.badges?.length" class="badges-profil">
         <span v-for="badge in profil.badges" :key="badge" class="badge-classement">
           {{ badge }}

@@ -14,7 +14,7 @@ from datetime import date, timedelta
 
 import requests
 
-from correspondances import normaliser
+from correspondances import alias_noms_equipe, normaliser
 
 URL_JOUR = "https://api.clubelo.com/{date}"
 TIMEOUT_API = 8
@@ -53,6 +53,51 @@ def lire_elo_base(connexion):
         ]
     except sqlite3.OperationalError:
         return []
+
+
+def lire_elo_a_date(connexion, date_limite: str | None):
+    """
+    Classement Elo le plus récent strictement avant ou à date_limite (YYYY-MM-DD).
+
+    Retourne (lignes, date_ref, mode) où mode vaut :
+    - "historique" si une date antérieure a été trouvée en base
+    - "indisponible" si aucune ligne avant cette date
+    """
+    if not table_elo_existe(connexion):
+        return [], None, "indisponible"
+    jour = (date_limite or "")[:10]
+    if not jour:
+        lignes = lire_elo_base(connexion)
+        date_ref = lignes[0].get("date") if lignes else None
+        return lignes, date_ref, "courant"
+    try:
+        ligne_date = connexion.execute(
+            """
+            SELECT MAX(date) FROM classements_elo
+            WHERE date <= ?
+            """,
+            (jour,),
+        ).fetchone()
+        date_ref = (ligne_date[0] or "").strip() if ligne_date else ""
+        if not date_ref:
+            return [], None, "indisponible"
+        lignes = [
+            dict(row)
+            for row in connexion.execute(
+                """
+                SELECT date, rang, club, pays, niveau, elo, source
+                FROM classements_elo
+                WHERE date = ?
+                ORDER BY elo DESC
+                """,
+                (date_ref,),
+            )
+        ]
+        if not lignes:
+            return [], None, "indisponible"
+        return lignes, date_ref, "historique"
+    except sqlite3.OperationalError:
+        return [], None, "indisponible"
 
 
 def telecharger_elo_jour(jour):
@@ -154,8 +199,35 @@ def charger_elo_api(force=False):
     }
 
 
-def charger_elo(connexion, force_api=False):
-    """Prefere la table SQLite si presente, sinon API live."""
+def charger_elo(connexion, force_api=False, date_limite=None):
+    """Prefere la table SQLite si presente, sinon API live.
+
+    Avec date_limite : uniquement l'historique en base (pas d'appel API live).
+    """
+    if date_limite:
+        lignes, date_ref, mode = lire_elo_a_date(connexion, date_limite)
+        if lignes:
+            return {
+                "disponible": True,
+                "date": date_ref or "",
+                "lignes": lignes,
+                "message": "",
+                "source": lignes[0].get("source") or SOURCE,
+                "mode": mode,
+            }
+        jour = (date_limite or "")[:10]
+        return {
+            "disponible": False,
+            "date": "",
+            "lignes": [],
+            "message": (
+                f"Pas de classement Elo en base au {jour} ou avant. "
+                "L'historique ClubElo n'est pas collecté jour par jour "
+                "(lancez scripts/collecter_clubelo.py régulièrement pour enrichir la base)."
+            ),
+            "source": SOURCE,
+            "mode": mode,
+        }
     lignes = lire_elo_base(connexion)
     if lignes and not force_api:
         date_ref = lignes[0].get("date") or ""
@@ -165,8 +237,11 @@ def charger_elo(connexion, force_api=False):
             "lignes": lignes,
             "message": "",
             "source": lignes[0].get("source") or SOURCE,
+            "mode": "courant",
         }
-    return charger_elo_api(force=force_api)
+    paquet = charger_elo_api(force=force_api)
+    paquet["mode"] = "api" if paquet.get("disponible") else "indisponible"
+    return paquet
 
 
 def score_correspondance(nom_equipe, nom_elo):
@@ -202,8 +277,10 @@ def trouver_ligne_elo(lignes, noms_alias):
     return meilleurs[0][1]
 
 
-def elo_pour_equipe(connexion, noms_alias, force_api=False):
-    paquet = charger_elo(connexion, force_api=force_api)
+def elo_pour_equipe(connexion, noms_alias, force_api=False, date_limite=None):
+    paquet = charger_elo(
+        connexion, force_api=force_api, date_limite=date_limite
+    )
     if not paquet["disponible"]:
         return {
             "disponible": False,
@@ -312,3 +389,53 @@ def enrichir_classement_elo(connexion, classement, force_api=False):
         else:
             ligne["force_relative"] = 0.5
     return meta
+
+
+def elo_differentiel(
+    connexion,
+    nom_domicile: str,
+    nom_exterieur: str,
+    force_api: bool = False,
+    date_limite: str | None = None,
+) -> dict:
+    """
+    Differentiel Elo domicile - exterieur (positif = avantage locaux).
+    Fallback gracieux si ClubElo indisponible ou club non trouve.
+
+    Avec date_limite : Elo le plus récent en base avant cette date (point-in-time).
+    """
+    elo_dom = elo_pour_equipe(
+        connexion,
+        alias_noms_equipe(nom_domicile),
+        force_api=force_api,
+        date_limite=date_limite,
+    )
+    elo_ext = elo_pour_equipe(
+        connexion,
+        alias_noms_equipe(nom_exterieur),
+        force_api=force_api,
+        date_limite=date_limite,
+    )
+    if not elo_dom.get("disponible") or not elo_ext.get("disponible"):
+        message = elo_dom.get("message") or elo_ext.get("message") or ""
+        return {
+            "disponible": False,
+            "message": message,
+            "differentiel": None,
+            "domicile": elo_dom,
+            "exterieur": elo_ext,
+        }
+    diff = round(float(elo_dom["elo"]) - float(elo_ext["elo"]), 1)
+    reponse = {
+        "disponible": True,
+        "message": "",
+        "differentiel": diff,
+        "domicile": elo_dom,
+        "exterieur": elo_ext,
+        "date": elo_dom.get("date") or elo_ext.get("date") or "",
+        "source": elo_dom.get("source") or SOURCE,
+    }
+    if date_limite:
+        reponse["date_limite"] = (date_limite or "")[:10]
+        reponse["mode"] = "historique"
+    return reponse

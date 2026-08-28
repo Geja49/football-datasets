@@ -174,6 +174,7 @@ def verifier(forcer=False):
     for nom in changements:
         print(f"  - {nom}")
     if mettre_a_jour():
+        # L'historique analyses est deja lance en fin de mettre_a_jour.py.
         sauver_etat(nouveau)
         print("Base a jour.")
     else:

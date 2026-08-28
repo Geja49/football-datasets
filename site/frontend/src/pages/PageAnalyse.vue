@@ -8,6 +8,7 @@ import { formaterDate, formaterHeureLocale } from "../dates.js";
 import {
   chargerAccueil,
   chargerAnalyse,
+  chargerStatsModele,
   chargerCommentairesMatch,
   chargerEquipesAnalyse,
   chargerPronosticMatch,
@@ -70,6 +71,34 @@ const sondageMatch = ref(null);
 const chargementSondage = ref(false);
 const envoiSondageMatch = ref(false);
 const erreurSondage = ref("");
+const statsModele = ref(null);
+
+async function chargerStatsPrecision() {
+  if (!saison.value) return;
+  try {
+    statsModele.value = await chargerStatsModele(saison.value, championnat.value);
+  } catch {
+    statsModele.value = null;
+  }
+}
+
+const metriquesPrecision = computed(() => {
+  const bloc = statsModele.value;
+  if (!bloc || !bloc.disponible) return null;
+  const m = bloc.metriques || {};
+  if (!m.nb_matchs) return null;
+  return m;
+});
+
+function formaterPctPrecision(val) {
+  if (val == null || val === "") return "—";
+  return `${Number(val).toFixed(1).replace(".", ",")} %`;
+}
+
+function formaterNombrePrecision(val, decimales = 3) {
+  if (val == null || val === "") return "—";
+  return Number(val).toFixed(decimales).replace(".", ",");
+}
 
 async function chargerSaisons() {
   const meta = await chargerAccueil();
@@ -86,6 +115,7 @@ async function chargerListe() {
   if (!championnat.value || !saison.value) return;
   const liste = await chargerEquipesAnalyse(championnat.value, saison.value);
   equipes.value = liste.equipes || [];
+  await chargerStatsPrecision();
 }
 
 async function chargerSuggestions() {
@@ -266,8 +296,29 @@ const pronosticVerrouille = computed(() => {
 const confrontations = computed(() => (data.value && data.value.confrontations) || null);
 const scenarios = computed(() => pred.value.scenarios || []);
 const cartons = computed(() => pred.value.cartons || null);
+const comparaisonPrevisions = computed(() => {
   const bloc = pred.value.comparaison;
   return bloc && bloc.lignes && bloc.lignes.length ? bloc.lignes : [];
+});
+const pointsBilan = computed(() => {
+  const bloc = pred.value.bilan;
+  return bloc && Array.isArray(bloc.points) ? bloc.points : [];
+});
+const previsionFigeeMeta = computed(() => {
+  const bloc = data.value && data.value.prevision_figee;
+  if (!bloc || !bloc.genere_le) return null;
+  return bloc;
+});
+const labelPrevisionFigee = computed(() => {
+  const meta = previsionFigeeMeta.value;
+  if (!meta || !meta.genere_le) return "";
+  const brut = String(meta.genere_le);
+  const jour = brut.slice(0, 10);
+  if (/^\d{4}-\d{2}-\d{2}$/.test(jour)) {
+    const [y, m, d] = jour.split("-");
+    return `Prévision enregistrée le ${d}/${m}/${y}`;
+  }
+  return `Prévision enregistrée le ${brut}`;
 });
 const recit = computed(() => pred.value.recit || []);
 const lectureMarche = computed(() => {
@@ -693,7 +744,8 @@ async function seDeconnecter() {
         </p>
       </header>
 
-      <div class="filtres-analyse">
+      <section class="filtres-analyse bloc-analyse-section bloc-analyse-section-hero" aria-label="Choisir un match">
+        <h2 class="titre-section-analyse">Choisir un match</h2>
         <div class="rangee-filtres">
           <label class="champ-filtre">
             Championnat
@@ -741,20 +793,67 @@ async function seDeconnecter() {
             </select>
           </label>
         </div>
-      </div>
+      </section>
     </div>
   </section>
 
   <div class="page">
     <p v-if="erreur" class="erreur">{{ erreur }}</p>
+
+    <section
+      v-if="metriquesPrecision"
+      class="bloc-analyse-section bloc-precision-modele"
+      aria-label="Précision du modèle"
+    >
+      <h2 class="titre-section-analyse">Précision du modèle</h2>
+      <p class="doux intro-section-analyse">
+        {{ championnat }} — {{ saison }} · {{ metriquesPrecision.nb_matchs }} match(s) évalué(s)
+      </p>
+      <p class="doux note-precision-modele">
+        Basé uniquement sur les prévisions figées avant le match (hors backfill rétroactif).
+      </p>
+      <div class="grille-precision-modele">
+        <div class="carte-stat">
+          <span>Issue 1X2</span>
+          <strong>{{ formaterPctPrecision(metriquesPrecision.pct_issue_1x2) }}</strong>
+        </div>
+        <div class="carte-stat">
+          <span>Score exact</span>
+          <strong>{{ formaterPctPrecision(metriquesPrecision.pct_score_exact) }}</strong>
+        </div>
+        <div class="carte-stat">
+          <span>Brier (moy.)</span>
+          <strong>{{ formaterNombrePrecision(metriquesPrecision.brier_moyen, 4) }}</strong>
+        </div>
+        <div class="carte-stat">
+          <span>MAE xG</span>
+          <strong>{{ formaterNombrePrecision(metriquesPrecision.mae_xg_moyen, 2) }}</strong>
+        </div>
+        <div
+          v-if="metriquesPrecision.pct_btts != null"
+          class="carte-stat"
+        >
+          <span>BTTS</span>
+          <strong>{{ formaterPctPrecision(metriquesPrecision.pct_btts) }}</strong>
+        </div>
+        <div
+          v-if="metriquesPrecision.pct_o25 != null"
+          class="carte-stat"
+        >
+          <span>Over 2,5</span>
+          <strong>{{ formaterPctPrecision(metriquesPrecision.pct_o25) }}</strong>
+        </div>
+      </div>
+    </section>
+
     <ChargementPage
       v-if="chargement"
       message="Calcul du scénario"
     />
 
     <template v-if="suggestionsVisibles">
-      <div class="bloc" v-if="club">
-        <h2>Prochains matchs de {{ club }}</h2>
+      <section class="bloc-analyse-section" v-if="club">
+        <h2 class="titre-section-analyse">Prochains matchs de {{ club }}</h2>
         <p v-if="!matchsEquipe.length" class="doux">
           Pas de match à venir pour {{ club }} en {{ saison }}.
         </p>
@@ -776,13 +875,14 @@ async function seDeconnecter() {
             </button>
           </li>
         </ul>
-      </div>
-      <div class="bloc" v-else>
+      </section>
+      <section class="bloc-analyse-section" v-else>
+        <h2 class="titre-section-analyse">Par où commencer ?</h2>
         <p class="doux">Choisissez un club pour voir ses 8 prochains matchs, ou cliquez un match de la ligue.</p>
-      </div>
+      </section>
 
-      <div class="bloc" v-if="matchsLigue.length">
-        <h2>Prochaine journée</h2>
+      <section class="bloc-analyse-section" v-if="matchsLigue.length">
+        <h2 class="titre-section-analyse">Prochaine journée</h2>
         <ul class="liste-suggestions">
           <li v-for="match in matchsLigue" :key="'l' + match.date + match.domicile + match.exterieur">
             <button type="button" class="suggestion-match" @click="choisirMatch(match)">
@@ -810,7 +910,7 @@ async function seDeconnecter() {
             </button>
           </li>
         </ul>
-      </div>
+      </section>
     </template>
 
     <p v-else-if="domicile === exterieur" class="erreur">Choisissez deux équipes différentes.</p>
@@ -818,7 +918,9 @@ async function seDeconnecter() {
     <template v-if="data">
       <p class="mention">Saison des moyennes : {{ data.saison_ligue }}.</p>
 
-      <div class="grille-analyse">
+      <section class="bloc-analyse-section" aria-label="Profils des équipes">
+        <h2 class="titre-section-analyse">Profils des équipes</h2>
+        <div class="grille-analyse">
         <article
           class="carte-equipe"
           v-for="(cote, rang) in [data.domicile, data.exterieur]"
@@ -868,10 +970,11 @@ async function seDeconnecter() {
             <li v-for="phrase in cote.faiblesses" :key="phrase" class="point-faiblesse">{{ phrase }}</li>
           </ul>
         </article>
-      </div>
+        </div>
+      </section>
 
-      <div class="bloc carte-scenario" v-if="matchJoue">
-        <h2>Ce qui s'est passé</h2>
+      <section v-if="matchJoue" class="bloc-analyse-section" aria-label="Résultat du match">
+        <h2 class="titre-section-analyse">Résultat du match</h2>
         <p class="doux date-resultat-match">{{ formaterDate(matchJoue.date) }}</p>
 
         <div class="entete-resultat-match">
@@ -930,13 +1033,15 @@ async function seDeconnecter() {
           </div>
         </section>
         <p v-else class="doux">Statistiques détaillées indisponibles pour ce match.</p>
+      </section>
 
-        <section
-          v-if="comparaisonPrevisions.length"
-          class="comparaison-previsions-reel"
-          aria-label="Prévisions vs réalité"
-        >
-          <h3>Prévisions vs réalité</h3>
+      <section
+        v-if="comparaisonPrevisions.length"
+        class="bloc-analyse-section"
+        aria-label="Prévisions vs réalité"
+      >
+        <h2 class="titre-section-analyse">Prévisions vs réalité</h2>
+        <div class="comparaison-previsions-reel">
           <div class="enveloppe-tableau">
             <table class="table-comparaison-previsions">
               <thead>
@@ -959,72 +1064,129 @@ async function seDeconnecter() {
               </tbody>
             </table>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      <div class="bloc carte-scenario">
-        <header class="entete-bloc">
-          <h2>{{ matchJoue ? "Ce qui pouvait se passer" : "Ce qui peut se passer" }}</h2>
-          <p class="doux" v-if="pred.texte">{{ pred.texte }}</p>
-        </header>
+      <section class="bloc-analyse-section" aria-label="Résumé du scénario">
+        <h2 class="titre-section-analyse">
+          {{ matchJoue ? "Ce qui était prévu" : "Résumé du scénario" }}
+        </h2>
+        <p v-if="labelPrevisionFigee" class="badge-prevision-figee">{{ labelPrevisionFigee }}</p>
+        <p v-if="pred.phrase_elo" class="doux phrase-elo-analyse">{{ pred.phrase_elo }}</p>
+        <p class="doux" v-if="pred.texte">{{ pred.texte }}</p>
 
-        <div class="resume-analyse" aria-label="Résumé du scénario">
+        <div
+          v-if="pointsBilan.length"
+          class="bilan-analyse"
+          aria-label="Bilan de la prévision"
+        >
+          <h3>Bilan</h3>
+          <ul>
+            <li v-for="(point, index) in pointsBilan" :key="index">{{ point }}</li>
+          </ul>
+        </div>
+
+        <div class="resume-analyse resume-analyse-compact" aria-label="Score le plus probable">
           <div class="cartes-stats cartes-stats-resume">
             <div class="carte-stat carte-stat-large">
               <span>Score le plus probable</span>
               <strong>{{ pred.score_plus_probable }}</strong>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div
-            v-if="lignesStatsPrevues.length"
-            class="stats-match stats-match-prevues"
-            aria-label="Statistiques prévues"
-          >
-            <div
-              v-for="ligne in lignesStatsPrevues"
-              :key="ligne.libelle"
-              class="ligne-stat-match ligne-stat-prevue"
-            >
-              <span class="valeur-stat valeur-stat-dom">
-                {{ formaterStatMatch(ligne.dom, ligne.decimales) }}
-              </span>
-              <div class="centre-stat-match">
-                <span class="libelle-stat-match">{{ ligne.libelle }}</span>
-                <div
-                  class="barre-stat-match"
-                  role="img"
-                  :aria-label="`${ligne.libelle} : ${formaterStatMatch(ligne.dom, ligne.decimales)} contre ${formaterStatMatch(ligne.ext, ligne.decimales)}`"
-                >
-                  <div class="seg-stat-dom" :style="styleBarreStat(ligne.dom, ligne.ext, 'dom')"></div>
-                  <div class="seg-stat-ext" :style="styleBarreStat(ligne.dom, ligne.ext, 'ext')"></div>
-                </div>
-                <div class="legendes-xg-prevu">
-                  <span>{{ data.domicile.nom }}</span>
-                  <span>{{ data.exterieur.nom }}</span>
-                </div>
-              </div>
-              <span class="valeur-stat valeur-stat-ext">
-                {{ formaterStatMatch(ligne.ext, ligne.decimales) }}
-              </span>
-            </div>
+      <section class="bloc-analyse-section" aria-label="Probabilités">
+        <h2 class="titre-section-analyse">Probabilités</h2>
+        <div class="bloc-1n2">
+          <div class="ligne-1n2">
+            <span>{{ data.domicile.nom }} {{ pred.p_victoire_domicile }} %</span>
+            <span>Nul {{ pred.p_nul }} %</span>
+            <span>{{ data.exterieur.nom }} {{ pred.p_victoire_exterieur }} %</span>
           </div>
-          <div class="bloc-1n2">
-            <div class="ligne-1n2">
-              <span>{{ data.domicile.nom }} {{ pred.p_victoire_domicile }} %</span>
-              <span>Nul {{ pred.p_nul }} %</span>
-              <span>{{ data.exterieur.nom }} {{ pred.p_victoire_exterieur }} %</span>
-            </div>
-            <div class="barre-1n2" role="img" :aria-label="'Probabilités 1N2'">
-              <div class="seg-1" :style="largeur(pred.p_victoire_domicile)"></div>
-              <div class="seg-n" :style="largeur(pred.p_nul)"></div>
-              <div class="seg-2" :style="largeur(pred.p_victoire_exterieur)"></div>
-            </div>
+          <div class="barre-1n2" role="img" :aria-label="'Probabilités 1N2'">
+            <div class="seg-1" :style="largeur(pred.p_victoire_domicile)"></div>
+            <div class="seg-n" :style="largeur(pred.p_nul)"></div>
+            <div class="seg-2" :style="largeur(pred.p_victoire_exterieur)"></div>
           </div>
         </div>
+        <div class="cartes-stats grille-probabilites">
+          <div class="carte-stat">
+            <span>Les deux marquent</span>
+            <strong>{{ pred.p_les_deux_marquent }} %</strong>
+          </div>
+          <div class="carte-stat">
+            <span>Plus de 2 buts</span>
+            <strong>{{ pred.p_plus_de_2_buts }} %</strong>
+          </div>
+          <template v-if="cartons">
+            <div class="carte-stat">
+              <span>Jaunes prévus</span>
+              <strong>{{ cartons.jaunes_match }}</strong>
+              <p class="doux petit">
+                {{ cartons.jaunes_domicile }} – {{ cartons.jaunes_exterieur }}
+                (moy. ligue {{ cartons.moyenne_championnat }})
+              </p>
+            </div>
+            <div class="carte-stat">
+              <span>Rouges prévus</span>
+              <strong>{{ cartons.rouges_match }}</strong>
+              <p class="doux petit">
+                au moins un rouge : {{ cartons.p_au_moins_un_rouge }} %
+              </p>
+            </div>
+          </template>
+        </div>
+      </section>
 
-        <div class="grille-scenario" v-if="recit.length || lectureMarche || cartons">
-          <div class="colonne-scenario" v-if="recit.length || lectureMarche">
+      <section
+        v-if="lignesStatsPrevues.length"
+        class="bloc-analyse-section"
+        aria-label="Statistiques prévues"
+      >
+        <h2 class="titre-section-analyse">Statistiques comparatives prévues</h2>
+        <div
+          class="stats-match stats-match-prevues"
+          aria-label="Statistiques prévues"
+        >
+          <div
+            v-for="ligne in lignesStatsPrevues"
+            :key="ligne.libelle"
+            class="ligne-stat-match ligne-stat-prevue"
+          >
+            <span class="valeur-stat valeur-stat-dom">
+              {{ formaterStatMatch(ligne.dom, ligne.decimales) }}
+            </span>
+            <div class="centre-stat-match">
+              <span class="libelle-stat-match">{{ ligne.libelle }}</span>
+              <div
+                class="barre-stat-match"
+                role="img"
+                :aria-label="`${ligne.libelle} : ${formaterStatMatch(ligne.dom, ligne.decimales)} contre ${formaterStatMatch(ligne.ext, ligne.decimales)}`"
+              >
+                <div class="seg-stat-dom" :style="styleBarreStat(ligne.dom, ligne.ext, 'dom')"></div>
+                <div class="seg-stat-ext" :style="styleBarreStat(ligne.dom, ligne.ext, 'ext')"></div>
+              </div>
+              <div class="legendes-xg-prevu">
+                <span>{{ data.domicile.nom }}</span>
+                <span>{{ data.exterieur.nom }}</span>
+              </div>
+            </div>
+            <span class="valeur-stat valeur-stat-ext">
+              {{ formaterStatMatch(ligne.ext, ligne.decimales) }}
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section
+        v-if="recit.length || lectureMarche"
+        class="bloc-analyse-section"
+        aria-label="Analyse narrative"
+      >
+        <h2 class="titre-section-analyse">Lecture du match</h2>
+        <div class="grille-scenario grille-scenario-recit">
+          <div class="colonne-scenario">
             <div class="bloc-recit" v-if="recit.length">
               <h3>Le récit du match</h3>
               <p v-for="(paragraphe, i) in recit" :key="'r' + i">{{ paragraphe }}</p>
@@ -1045,64 +1207,44 @@ async function seDeconnecter() {
               <p>{{ lectureMarche.texte }}</p>
             </div>
           </div>
-          <aside class="colonne-stats" v-if="cartons">
-            <h3 class="titre-sous-section">Indicateurs</h3>
-            <div class="cartes-stats">
-              <div class="carte-stat">
-                <span>Jaunes prévus</span>
-                <strong>{{ cartons.jaunes_match }}</strong>
-                <p class="doux petit">
-                  {{ cartons.jaunes_domicile }} – {{ cartons.jaunes_exterieur }}
-                  (moy. ligue {{ cartons.moyenne_championnat }})
-                </p>
-              </div>
-              <div class="carte-stat">
-                <span>Rouges prévus</span>
-                <strong>{{ cartons.rouges_match }}</strong>
-                <p class="doux petit">
-                  au moins un rouge : {{ cartons.p_au_moins_un_rouge }} %
-                </p>
-              </div>
-              <div class="carte-stat">
-                <span>Les deux marquent</span>
-                <strong>{{ pred.p_les_deux_marquent }} %</strong>
-              </div>
-              <div class="carte-stat">
-                <span>Plus de 2 buts</span>
-                <strong>{{ pred.p_plus_de_2_buts }} %</strong>
-              </div>
-            </div>
-          </aside>
         </div>
+      </section>
 
-        <section class="sous-section-analyse">
-          <h3>Comment le match peut tourner</h3>
-          <ul class="liste-scenarios">
-            <li v-for="item in scenarios" :key="item.cle" class="carte-scenario-detail">
-              <h4>{{ item.titre }}</h4>
-              <p>{{ item.texte }}</p>
-              <p class="doux petit" v-if="item.chiffre">{{ item.chiffre }}</p>
-              <p class="doux petit" v-else-if="item.pct != null">{{ item.pct }} %</p>
-            </li>
-          </ul>
-        </section>
+      <section
+        v-if="scenarios.length"
+        class="bloc-analyse-section"
+        aria-label="Scénarios possibles"
+      >
+        <h2 class="titre-section-analyse">Comment le match peut tourner</h2>
+        <ul class="liste-scenarios">
+          <li v-for="item in scenarios" :key="item.cle" class="carte-scenario-detail">
+            <h4>{{ item.titre }}</h4>
+            <p>{{ item.texte }}</p>
+            <p class="doux petit" v-if="item.chiffre">{{ item.chiffre }}</p>
+            <p class="doux petit" v-else-if="item.pct != null">{{ item.pct }} %</p>
+          </li>
+        </ul>
+      </section>
 
-        <section class="sous-section-analyse">
-          <h3>Scores les plus fréquents</h3>
-          <ul class="liste-scores">
-            <li v-for="item in pred.scores_frequents" :key="item.score">
-              <div class="ligne-score-pct">
-                <span class="score-gros">{{ item.score }}</span>
-                <span class="doux">{{ item.pct }} %</span>
-              </div>
-              <span class="commentaire-score" v-if="item.commentaire">{{ item.commentaire }}</span>
-            </li>
-          </ul>
-        </section>
-      </div>
+      <section
+        v-if="pred.scores_frequents && pred.scores_frequents.length"
+        class="bloc-analyse-section"
+        aria-label="Scores les plus fréquents"
+      >
+        <h2 class="titre-section-analyse">Scores les plus probables</h2>
+        <ul class="liste-scores">
+          <li v-for="item in pred.scores_frequents" :key="item.score">
+            <div class="ligne-score-pct">
+              <span class="score-gros">{{ item.score }}</span>
+              <span class="doux">{{ item.pct }} %</span>
+            </div>
+            <span class="commentaire-score" v-if="item.commentaire">{{ item.commentaire }}</span>
+          </li>
+        </ul>
+      </section>
 
-      <div class="bloc carte-scenario" v-if="confrontations">
-        <h2>Confrontations</h2>
+      <section class="bloc-analyse-section" v-if="confrontations" aria-label="Confrontations directes">
+        <h2 class="titre-section-analyse">Confrontations directes</h2>
         <p v-if="!confrontations.nb" class="doux">
           Pas encore de match entre ces deux clubs dans cette compétition.
         </p>
@@ -1127,13 +1269,13 @@ async function seDeconnecter() {
             </li>
           </ul>
         </template>
-      </div>
+      </section>
 
-      <div class="zone-communaute">
+      <section class="bloc-analyse-section zone-communaute" aria-label="Pronostic et communauté">
+        <h2 class="titre-section-analyse">Pronostic &amp; communauté</h2>
       <div class="bloc bloc-pronostics" v-if="data && utilisateur">
         <header class="entete-bloc">
-          <p class="tag-section">Communauté</p>
-          <h2>Mon pronostic privé</h2>
+          <h3 class="titre-sous-section-communaute">Mon pronostic privé</h3>
         </header>
 
         <p v-if="chargementPronostic" class="doux">Chargement du pronostic…</p>
@@ -1240,8 +1382,7 @@ async function seDeconnecter() {
 
       <div class="bloc bloc-pronostics" v-else-if="data && !utilisateur && !matchJoue">
         <header class="entete-bloc">
-          <p class="tag-section">Communauté</p>
-          <h2>Mon pronostic privé</h2>
+          <h3 class="titre-sous-section-communaute">Mon pronostic privé</h3>
         </header>
         <p class="doux">
           <router-link :to="lienConnexionMatch()">Connectez-vous</router-link>
@@ -1251,8 +1392,7 @@ async function seDeconnecter() {
 
       <div class="bloc bloc-sondage-match" v-if="data">
         <header class="entete-bloc">
-          <p class="tag-section">Communauté</p>
-          <h2>Sondage du match</h2>
+          <h3 class="titre-sous-section-communaute">Sondage du match</h3>
         </header>
         <p v-if="chargementSondage" class="doux">Chargement du sondage…</p>
         <p v-if="erreurSondage" class="erreur">{{ erreurSondage }}</p>
@@ -1276,8 +1416,7 @@ async function seDeconnecter() {
 
       <div class="bloc bloc-commentaires" v-if="data">
         <header class="entete-bloc">
-          <p class="tag-section">Communauté</p>
-          <h2>Commentaires</h2>
+          <h3 class="titre-sous-section-communaute">Commentaires</h3>
         </header>
 
         <p v-if="chargementCommentaires" class="doux">Chargement des commentaires…</p>
@@ -1451,10 +1590,10 @@ async function seDeconnecter() {
           <button type="button" class="lien-action" @click="seDeconnecter">Se déconnecter</button>
         </p>
       </div>
-      </div>
+      </section>
 
-      <div class="bloc" v-if="matchsEquipe.length">
-        <h2>Autres matchs de {{ club || domicile }}</h2>
+      <section class="bloc-analyse-section" v-if="matchsEquipe.length" aria-label="Autres matchs">
+        <h2 class="titre-section-analyse">Autres matchs de {{ club || domicile }}</h2>
         <ul class="liste-suggestions">
           <li v-for="match in matchsEquipe" :key="'a' + match.date + match.domicile + match.exterieur">
             <button type="button" class="suggestion-match" @click="choisirMatch(match)">
@@ -1464,7 +1603,7 @@ async function seDeconnecter() {
             </button>
           </li>
         </ul>
-      </div>
+      </section>
     </template>
   </div>
 </template>

@@ -19,11 +19,16 @@ mkdir -p "$CIBLE"
 
 # Copie a froid : suffisante pour un debut (1 worker uvicorn = peu d'ecritures concurrentes).
 # Pour une copie plus propre sous charge : sqlite3 fichier ".backup '/chemin/copie.db'"
-for base in communaute.db football.db; do
+for base in communaute.db football.db analyses.db; do
   source="${CHEMIN_PROJET}/donnees/${base}"
   if [[ -f "$source" ]]; then
-    cp -a "$source" "${CIBLE}/${base}"
-    echo "[ok] ${base} -> ${CIBLE}/${base}"
+    if command -v sqlite3 >/dev/null 2>&1; then
+      sqlite3 "$source" ".backup '${CIBLE}/${base}'"
+      echo "[ok] ${base} (sqlite3 .backup) -> ${CIBLE}/${base}"
+    else
+      cp -a "$source" "${CIBLE}/${base}"
+      echo "[ok] ${base} (cp — installer sqlite3 pour .backup) -> ${CIBLE}/${base}"
+    fi
   else
     echo "[skip] absent : ${source}"
   fi

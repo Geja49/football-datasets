@@ -140,6 +140,12 @@ curl -s "https://VOTRE_DOMAINE/api/communaute/config"
 # Connexion navigateur : cookie session_communaute avec Secure ; HttpOnly ; SameSite=Lax
 ```
 
+## Données à jour (pas « live »)
+
+Les CSV open data ont souvent **1–2 jours de retard**. Pour rafraîchir
+automatiquement `football.db` (Task Scheduler Windows, cron Linux, limites API),
+voir **`deploy/planifier-mise-a-jour.md`**.
+
 ## Sauvegardes automatiques
 
 ```bash

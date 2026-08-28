@@ -1621,6 +1621,130 @@ tr.zone-hors-course td:first-child {
   background: var(--fond-carte);
 }
 
+/* Sections page analyse de match */
+.bloc-analyse-section {
+  margin-top: 24px;
+  padding: 20px 22px;
+  background: var(--fond-carte);
+  border: 1px solid var(--ligne);
+  border-radius: 8px;
+}
+
+.bloc-analyse-section-hero {
+  margin-top: 0;
+  background: color-mix(in srgb, var(--fond-carte) 88%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--ligne));
+}
+
+.titre-section-analyse {
+  margin: 0 0 16px;
+  padding-bottom: 10px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.25;
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 45%, var(--ligne));
+}
+
+.intro-section-analyse {
+  margin: -8px 0 10px;
+}
+
+.bloc-analyse-section .grille-analyse {
+  margin-top: 0;
+}
+
+.bloc-analyse-section .carte-equipe {
+  background: var(--fond-lisible);
+}
+
+.bloc-analyse-section .comparaison-previsions-reel {
+  margin-top: 0;
+}
+
+.resume-analyse-compact {
+  position: static;
+  margin: 16px 0 0;
+  padding: 14px 16px;
+  box-shadow: none;
+}
+
+.grille-probabilites {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.grille-scenario-recit {
+  margin-bottom: 0;
+}
+
+.titre-sous-section-communaute {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.bloc-analyse-section.zone-communaute {
+  border-top: 2px solid color-mix(in srgb, var(--marque) 30%, var(--ligne));
+}
+
+.bloc-analyse-section.zone-communaute .bloc {
+  margin-top: 20px;
+  padding: 16px;
+  background: var(--fond-lisible);
+  border: 1px solid var(--ligne);
+  border-radius: 6px;
+}
+
+.bloc-analyse-section.zone-communaute .bloc:first-of-type {
+  margin-top: 4px;
+}
+
+.bloc-analyse-section .bloc-precision-modele {
+  margin-bottom: 0;
+}
+
+.bloc-analyse-section .note-precision-modele {
+  margin: 0 0 14px;
+}
+
+.bloc-analyse-section .liste-scenarios {
+  margin-top: 0;
+}
+
+.bloc-analyse-section .liste-scores {
+  margin-top: 0;
+}
+
+.bloc-analyse-section .stats-match-prevues {
+  margin-top: 0;
+}
+
+.bloc-analyse-section .bloc-1n2 {
+  margin-top: 0;
+}
+
+.bloc-analyse-section .bilan-analyse {
+  margin-top: 12px;
+}
+
+.bloc-analyse-section .badge-prevision-figee {
+  margin-bottom: 8px;
+}
+
+.bloc-analyse-section .phrase-elo-analyse {
+  margin-top: 0;
+}
+
+.bloc-analyse-section .stats-match {
+  margin-top: 8px;
+}
+
+.bloc-analyse-section .ligne-1n2 + .liste-suggestions {
+  margin-top: 14px;
+}
+
 .grille-analyse {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1808,6 +1932,64 @@ tr.zone-hors-course td:first-child {
 
 .bloc-bilan {
   margin-top: 18px;
+}
+
+.bloc-bilan h3,
+.bilan-analyse h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.bilan-analyse {
+  margin: 12px 0 16px;
+}
+
+.bilan-analyse ul,
+.bloc-bilan ul {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.bilan-analyse li,
+.bloc-bilan li {
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.badge-prevision-figee {
+  display: inline-block;
+  margin: 6px 0 0;
+  padding: 3px 8px;
+  font-size: 0.8rem;
+  color: #5a6570;
+  background: #e8eef3;
+  border-radius: 4px;
+}
+
+.bloc-precision-modele {
+  margin-bottom: 1rem;
+}
+
+.grille-precision-modele {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.grille-precision-modele .carte-stat {
+  padding: 10px 12px;
+  background: #f4f7fa;
+  border-radius: 6px;
+}
+
+.grille-precision-modele .carte-stat span {
+  display: block;
+  font-size: 0.8rem;
+  color: #5a6570;
+}
+
+.grille-precision-modele .carte-stat strong {
+  font-size: 1.1rem;
 }
 
 .date-resultat-match {
@@ -2026,9 +2208,9 @@ tr.zone-hors-course td:first-child {
 }
 
 .zone-communaute {
-  margin-top: 40px;
-  padding-top: 8px;
-  border-top: 1px solid color-mix(in srgb, var(--marque) 35%, var(--ligne));
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
 }
 
 .zone-communaute .bloc {
@@ -2982,6 +3164,19 @@ tr.zone-hors-course td:first-child {
   .liste-scenarios,
   .grille-scenario {
     grid-template-columns: 1fr;
+  }
+
+  .bloc-analyse-section {
+    padding: 16px;
+    margin-top: 18px;
+  }
+
+  .titre-section-analyse {
+    font-size: 1.05rem;
+  }
+
+  .grille-probabilites {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .resume-analyse {

@@ -10,6 +10,7 @@ cotes.lecture_marche_pour_analyse — pas de tipster.
 import math
 
 from correspondances import nom_pour_joueurs
+from elo_clubs import elo_differentiel
 
 NOM_LDC = "Ligue des champions"
 LIGUES_NATIONALES = (
@@ -37,6 +38,9 @@ SEUIL_MATCH_OUVERT = 1.15
 SEUIL_MATCH_FERME = 0.85
 # Cartons : au moins 3 matchs récents avec jaunes/rouges renseignés.
 SEUIL_CARTONS_FORME = 3
+# Ajustement Elo sur les lambda Poisson (simple, borne).
+FACTEUR_ELO_LAMBDA = 0.003
+MAX_AJUST_ELO_LAMBDA = 0.12
 
 
 def saison_precedente(saison):
@@ -239,24 +243,31 @@ def _moyennes_matchs_ligue(connexion, championnat, saison):
     }
 
 
-def _profil_xg(connexion, championnat, saison, nom_xg, a_domicile):
+def _profil_xg(connexion, championnat, saison, nom_xg, a_domicile, date_limite=None):
+    clause_date = ""
+    params = [championnat, saison, nom_xg]
+    if date_limite:
+        clause_date = " AND date < ?"
+        params.append((date_limite or "")[:10])
     if a_domicile:
         ligne = connexion.execute(
-            """
+            f"""
             SELECT AVG(xg_domicile), AVG(xg_exterieur), COUNT(*)
             FROM matchs_xg
             WHERE championnat = ? AND saison = ? AND domicile = ?
+            {clause_date}
             """,
-            (championnat, saison, nom_xg),
+            params,
         ).fetchone()
     else:
         ligne = connexion.execute(
-            """
+            f"""
             SELECT AVG(xg_exterieur), AVG(xg_domicile), COUNT(*)
             FROM matchs_xg
             WHERE championnat = ? AND saison = ? AND exterieur = ?
+            {clause_date}
             """,
-            (championnat, saison, nom_xg),
+            params,
         ).fetchone()
     return {
         "xg_marques": _flottant(ligne[0]),
@@ -265,27 +276,34 @@ def _profil_xg(connexion, championnat, saison, nom_xg, a_domicile):
     }
 
 
-def _profil_buts(connexion, championnat, saison, nom_matchs, a_domicile):
+def _profil_buts(connexion, championnat, saison, nom_matchs, a_domicile, date_limite=None):
     """Sans xG : on utilise les buts reels (historique LDC)."""
+    clause_date = ""
+    params = [championnat, saison, nom_matchs]
+    if date_limite:
+        clause_date = " AND date < ?"
+        params.append((date_limite or "")[:10])
     if a_domicile:
         ligne = connexion.execute(
-            """
+            f"""
             SELECT AVG(buts_domicile), AVG(buts_exterieur), COUNT(*)
             FROM matchs
             WHERE championnat = ? AND saison = ? AND domicile = ?
               AND buts_domicile IS NOT NULL
+              {clause_date}
             """,
-            (championnat, saison, nom_matchs),
+            params,
         ).fetchone()
     else:
         ligne = connexion.execute(
-            """
+            f"""
             SELECT AVG(buts_exterieur), AVG(buts_domicile), COUNT(*)
             FROM matchs
             WHERE championnat = ? AND saison = ? AND exterieur = ?
               AND buts_exterieur IS NOT NULL
+              {clause_date}
             """,
-            (championnat, saison, nom_matchs),
+            params,
         ).fetchone()
     return {
         "xg_marques": _flottant(ligne[0]),
@@ -306,30 +324,37 @@ def xg_depuis_ligue_nationale(connexion, nom_matchs, saison):
     return None
 
 
-def _profil_matchs(connexion, championnat, saison, nom_matchs, a_domicile):
+def _profil_matchs(connexion, championnat, saison, nom_matchs, a_domicile, date_limite=None):
+    clause_date = ""
+    params = [championnat, saison, nom_matchs]
+    if date_limite:
+        clause_date = " AND date < ?"
+        params.append((date_limite or "")[:10])
     if a_domicile:
         ligne = connexion.execute(
-            """
+            f"""
             SELECT
                 AVG(tirs_cadres_domicile), AVG(tirs_domicile),
                 AVG(jaunes_domicile), AVG(rouges_domicile), COUNT(*)
             FROM matchs
             WHERE championnat = ? AND saison = ? AND domicile = ?
               AND tirs_cadres_domicile IS NOT NULL
+              {clause_date}
             """,
-            (championnat, saison, nom_matchs),
+            params,
         ).fetchone()
     else:
         ligne = connexion.execute(
-            """
+            f"""
             SELECT
                 AVG(tirs_cadres_exterieur), AVG(tirs_exterieur),
                 AVG(jaunes_exterieur), AVG(rouges_exterieur), COUNT(*)
             FROM matchs
             WHERE championnat = ? AND saison = ? AND exterieur = ?
               AND tirs_cadres_exterieur IS NOT NULL
+              {clause_date}
             """,
-            (championnat, saison, nom_matchs),
+            params,
         ).fetchone()
     return {
         "tirs_cadres": _flottant(ligne[0]),
@@ -347,10 +372,16 @@ def _taux_ou_moyenne(valeur, nb, moyenne):
     return valeur, False
 
 
-def forme_recente(connexion, championnat, nom_matchs):
+def forme_recente(connexion, championnat, nom_matchs, date_limite=None):
     """5 derniers matchs joues, toutes saisons confondues (plus recent d'abord)."""
+    clause_date = ""
+    params_base = [championnat, nom_matchs, nom_matchs]
+    if date_limite:
+        clause_date = " AND date < ?"
+        params_base.append((date_limite or "")[:10])
+    params_base.append(NB_FORME)
     lignes = connexion.execute(
-        """
+        f"""
         SELECT date, saison, domicile, exterieur,
                buts_domicile, buts_exterieur, resultat,
                jaunes_domicile, jaunes_exterieur,
@@ -360,10 +391,11 @@ def forme_recente(connexion, championnat, nom_matchs):
           AND (domicile = ? OR exterieur = ?)
           AND buts_domicile IS NOT NULL
           AND buts_exterieur IS NOT NULL
+          {clause_date}
         ORDER BY date DESC
         LIMIT ?
         """,
-        (championnat, nom_matchs, nom_matchs, NB_FORME),
+        params_base,
     ).fetchall()
 
     serie = []
@@ -534,6 +566,38 @@ def _phrases(profil, moyennes, a_domicile, donnees_limitees):
             f"Pas de faiblesse marquée {lieu} face à la moyenne du championnat."
         )
     return {"forces": forces, "faiblesses": faiblesses}
+
+
+def _ajuster_lambda_elo(lam_dom: float, lam_ext: float, differentiel: float | None) -> tuple[float, float]:
+    """Ajuste legerement les lambda Poisson selon l'ecart Elo (dom - ext)."""
+    if differentiel is None:
+        return lam_dom, lam_ext
+    adj = min(MAX_AJUST_ELO_LAMBDA, abs(differentiel) * FACTEUR_ELO_LAMBDA)
+    if differentiel > 0:
+        return lam_dom * (1.0 + adj), lam_ext * (1.0 - adj)
+    if differentiel < 0:
+        return lam_dom * (1.0 - adj), lam_ext * (1.0 + adj)
+    return lam_dom, lam_ext
+
+
+def _phrase_elo(nom_dom: str, nom_ext: str, paquet_elo: dict) -> str | None:
+    if not paquet_elo.get("disponible"):
+        return None
+    diff = paquet_elo.get("differentiel")
+    if diff is None:
+        return None
+    elo_dom = paquet_elo["domicile"].get("elo")
+    elo_ext = paquet_elo["exterieur"].get("elo")
+    if abs(diff) < 15:
+        return (
+            f"Force Elo proche : {nom_dom} {elo_dom:.0f}, "
+            f"{nom_ext} {elo_ext:.0f} (écart {diff:+.0f})."
+        )
+    favori = nom_dom if diff > 0 else nom_ext
+    return (
+        f"Elo favorise {favori} (écart {diff:+.0f} pts : "
+        f"{nom_dom} {elo_dom:.0f}, {nom_ext} {elo_ext:.0f})."
+    )
 
 
 def _poisson(k, lam):
@@ -1243,10 +1307,15 @@ def lister_equipes_analyse(connexion, championnat, saison):
     return [row[0] for row in lignes]
 
 
-def confrontations_directes(connexion, championnat, nom_a, nom_b):
+def confrontations_directes(connexion, championnat, nom_a, nom_b, date_limite=None):
     """Matchs A vs B dans cette compétition, toutes saisons."""
+    clause_date = ""
+    params = [championnat, nom_a, nom_b, nom_b, nom_a]
+    if date_limite:
+        clause_date = " AND date < ?"
+        params.append((date_limite or "")[:10])
     lignes = connexion.execute(
-        """
+        f"""
         SELECT date, saison, domicile, exterieur,
                buts_domicile, buts_exterieur
         FROM matchs
@@ -1257,9 +1326,10 @@ def confrontations_directes(connexion, championnat, nom_a, nom_b):
           )
           AND buts_domicile IS NOT NULL
           AND buts_exterieur IS NOT NULL
+          {clause_date}
         ORDER BY date DESC
         """,
-        (championnat, nom_a, nom_b, nom_b, nom_a),
+        params,
     ).fetchall()
     victoires_a = 0
     nuls = 0
@@ -1351,7 +1421,14 @@ def lire_match_joue(connexion, championnat, saison, nom_domicile, nom_exterieur)
     }
 
 
-def analyser_rencontre(connexion, championnat, saison, nom_domicile, nom_exterieur):
+def analyser_rencontre(
+    connexion,
+    championnat,
+    saison,
+    nom_domicile,
+    nom_exterieur,
+    date_limite=None,
+):
     if nom_domicile == nom_exterieur:
         raise ValueError("Les deux équipes doivent être différentes")
     if not _equipe_presente(connexion, championnat, nom_domicile):
@@ -1375,17 +1452,24 @@ def analyser_rencontre(connexion, championnat, saison, nom_domicile, nom_exterie
         saison_xg, nom_xg, nb_xg = choisir_saison_xg(
             connexion, championnat, saison, nom_matchs
         )
-        xg = _profil_xg(connexion, champ_stats, saison_xg, nom_xg, a_domicile)
+        xg = _profil_xg(
+            connexion, champ_stats, saison_xg, nom_xg, a_domicile, date_limite
+        )
         if xg["nb"] < SEUIL_MATCHS_PROFIL:
             xg = _profil_buts(
-                connexion, championnat, saison, nom_matchs, a_domicile
+                connexion, championnat, saison, nom_matchs, a_domicile, date_limite
             )
             saison_xg = saison
             nom_xg = nom_matchs
             if xg["nb"] < SEUIL_MATCHS_PROFIL:
                 precedente = saison_precedente(saison)
                 xg_prec = _profil_buts(
-                    connexion, championnat, precedente, nom_matchs, a_domicile
+                    connexion,
+                    championnat,
+                    precedente,
+                    nom_matchs,
+                    a_domicile,
+                    date_limite,
                 )
                 if xg_prec["nb"] > xg["nb"]:
                     xg = xg_prec
@@ -1398,10 +1482,15 @@ def analyser_rencontre(connexion, championnat, saison, nom_domicile, nom_exterie
             if trouve:
                 champ_stats, saison_xg, nom_xg, _nb = trouve
                 xg = _profil_xg(
-                    connexion, champ_stats, saison_xg, nom_xg, a_domicile
+                    connexion,
+                    champ_stats,
+                    saison_xg,
+                    nom_xg,
+                    a_domicile,
+                    date_limite,
                 )
         stats = _profil_matchs(
-            connexion, champ_stats, saison_xg, nom_matchs, a_domicile
+            connexion, champ_stats, saison_xg, nom_matchs, a_domicile, date_limite
         )
         suffixe = "domicile" if a_domicile else "exterieur"
         xg_marques, lim_att = _taux_ou_moyenne(
@@ -1440,7 +1529,9 @@ def analyser_rencontre(connexion, championnat, saison, nom_domicile, nom_exterie
             "tirs_cadres": _arrondi(stats["tirs_cadres"], 1),
             "jaunes": _arrondi(stats["jaunes"], 1),
             "rouges": _arrondi(stats["rouges"], 2),
-            "forme": forme_recente(connexion, championnat, nom_matchs),
+            "forme": forme_recente(
+                connexion, championnat, nom_matchs, date_limite=date_limite
+            ),
             "forces": phrases["forces"],
             "faiblesses": phrases["faiblesses"],
             "donnees_limitees": donnees_limitees,
@@ -1451,6 +1542,17 @@ def analyser_rencontre(connexion, championnat, saison, nom_domicile, nom_exterie
     domicile = bloc(nom_domicile, True)
     exterieur = bloc(nom_exterieur, False)
 
+    paquet_elo = elo_differentiel(
+        connexion, nom_domicile, nom_exterieur, date_limite=date_limite
+    )
+    if paquet_elo.get("disponible"):
+        if paquet_elo["domicile"].get("elo") is not None:
+            domicile["elo"] = paquet_elo["domicile"]["elo"]
+            domicile["force_relative_elo"] = paquet_elo["domicile"].get("force_relative")
+        if paquet_elo["exterieur"].get("elo") is not None:
+            exterieur["elo"] = paquet_elo["exterieur"]["elo"]
+            exterieur["force_relative_elo"] = paquet_elo["exterieur"].get("force_relative")
+
     # xG attendu = attaque relative x defense relative x moyenne du lieu.
     att_dom = domicile["xg_marques_modele"] / moyennes["xg_domicile"]
     def_ext = exterieur["xg_encaisses_modele"] / moyennes["xg_encaisses_exterieur"]
@@ -1459,7 +1561,60 @@ def analyser_rencontre(connexion, championnat, saison, nom_domicile, nom_exterie
     lam_dom = att_dom * def_ext * moyennes["xg_domicile"]
     lam_ext = att_ext * def_dom * moyennes["xg_exterieur"]
 
+    lam_dom, lam_ext = _ajuster_lambda_elo(
+        lam_dom, lam_ext, paquet_elo.get("differentiel")
+    )
+
     pred = _scenario_poisson(lam_dom, lam_ext)
+    pred["probas_1x2_brutes"] = {
+        "p_victoire_domicile": pred["p_victoire_domicile"],
+        "p_nul": pred["p_nul"],
+        "p_victoire_exterieur": pred["p_victoire_exterieur"],
+    }
+    try:
+        from calibrateur import appliquer_calibrateur, calibrateur_actif
+
+        if calibrateur_actif():
+            p1, pn, p2 = appliquer_calibrateur(
+                pred["p_victoire_domicile"],
+                pred["p_nul"],
+                pred["p_victoire_exterieur"],
+                features={
+                    "xg_total_prevu": pred.get("xg_total"),
+                    "elo_diff": paquet_elo.get("differentiel"),
+                    "championnat": championnat,
+                },
+            )
+            pred["p_victoire_domicile"] = p1
+            pred["p_nul"] = pn
+            pred["p_victoire_exterieur"] = p2
+            pred["calibration_appliquee"] = True
+    except ImportError:
+        pass
+
+    if paquet_elo.get("disponible"):
+        pred["elo"] = {
+            "disponible": True,
+            "differentiel": paquet_elo.get("differentiel"),
+            "domicile": {
+                "elo": paquet_elo["domicile"].get("elo"),
+                "club_elo": paquet_elo["domicile"].get("club_elo"),
+            },
+            "exterieur": {
+                "elo": paquet_elo["exterieur"].get("elo"),
+                "club_elo": paquet_elo["exterieur"].get("club_elo"),
+            },
+            "date": paquet_elo.get("date"),
+            "source": paquet_elo.get("source"),
+        }
+        phrase_elo = _phrase_elo(nom_domicile, nom_exterieur, paquet_elo)
+        if phrase_elo:
+            pred["phrase_elo"] = phrase_elo
+    else:
+        pred["elo"] = {
+            "disponible": False,
+            "message": paquet_elo.get("message") or "",
+        }
 
     moy_j_match = moyennes["jaunes_domicile"] + moyennes["jaunes_exterieur"]
     lam_j_dom, lam_r_dom, src_dom = _lambda_cartons_equipe(
@@ -1503,7 +1658,8 @@ def analyser_rencontre(connexion, championnat, saison, nom_domicile, nom_exterie
     match_joue = lire_match_joue(
         connexion, championnat, saison, nom_domicile, nom_exterieur
     )
-    if match_joue.get("joue"):
+    # En mode retroactif (date_limite), ne pas injecter le resultat dans la prevision.
+    if match_joue.get("joue") and not date_limite:
         pred["bilan"] = _bilan_match(pred, match_joue)
         pred["comparaison"] = comparaison_previsions_reel(pred, match_joue)
 
@@ -1519,7 +1675,12 @@ def analyser_rencontre(connexion, championnat, saison, nom_domicile, nom_exterie
         "exterieur": exterieur,
         "prediction": pred,
         "confrontations": confrontations_directes(
-            connexion, championnat, nom_domicile, nom_exterieur
+            connexion,
+            championnat,
+            nom_domicile,
+            nom_exterieur,
+            date_limite=date_limite,
         ),
         "match_joue": match_joue,
+        "date_limite": date_limite,
     }
