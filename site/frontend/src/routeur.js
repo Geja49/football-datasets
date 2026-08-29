@@ -21,6 +21,7 @@ const PageForumSujet = () => import("./pages/PageForumSujet.vue");
 const PageNotifications = () => import("./pages/PageNotifications.vue");
 const PageMonProfil = () => import("./pages/PageMonProfil.vue");
 const PageModeration = () => import("./pages/PageModeration.vue");
+const PageSolo = () => import("./pages/PageSolo.vue");
 const PageIntrouvable = () => import("./pages/PageIntrouvable.vue");
 
 export default createRouter({
@@ -40,6 +41,7 @@ export default createRouter({
     { path: "/notifications", component: PageNotifications },
     { path: "/mon-profil", component: PageMonProfil },
     { path: "/moderation", component: PageModeration },
+    { path: "/solo", component: PageSolo },
     { path: "/forum", component: PageForum },
     { path: "/forum/sujet/:id", component: PageForumSujet },
     { path: "/forum/:championnat", component: PageForumChampionnat },

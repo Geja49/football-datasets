@@ -6,18 +6,24 @@ Avec cle (priorite free tier ~100 req/jour) :
   1) fixtures / scores recents : Big 5 + Super Lig (+ LDC si quota)
      → fusion anti-doublons dans matchs.csv et calendrier.csv
   2) stats joueurs defensives (une ligue, paginees, cache) si quota restant
+  3) option --corners-ldc : corners LDC via /fixtures/statistics (batch limite)
 
 Rotation : 1–2 ligues domestiques par jour + LDC en bonus.
 Pas de cotes. Pas de telechargement massif.
+
+Usage corners LDC :
+    python scripts/collecter_api_football.py --corners-ldc --limite 20
 """
 
 from __future__ import annotations
 
+import argparse
 import csv
 import json
 import os
 import sys
 import time
+from collections import defaultdict
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
@@ -641,6 +647,324 @@ def collecter_joueurs(session, restant_initial=None):
     return lignes, couverture
 
 
+def _corners_manquants(match):
+    """True si match LDC termine sans corners renseignes."""
+    if match.get("championnat") != LIGUE_LDC["nom"]:
+        return False
+    if not match.get("buts_domicile") or not match.get("buts_exterieur"):
+        return False
+    for cle in ("corners_domicile", "corners_exterieur"):
+        val = match.get(cle)
+        if val is not None and str(val).strip() != "":
+            return False
+    return True
+
+
+def lister_ldc_sans_corners(matchs, limite=None):
+    """Matchs LDC joues sans corners, du plus recent au plus ancien."""
+    candidats = [m for m in matchs if _corners_manquants(m)]
+    candidats.sort(key=lambda m: m.get("date") or "", reverse=True)
+    if limite is not None and limite > 0:
+        return candidats[:limite]
+    return candidats
+
+
+def _annee_saison_match(match):
+    """Annee de debut de saison API (ex. 2025-2026 -> 2025)."""
+    saison = match.get("saison") or ""
+    try:
+        return int(saison[:4])
+    except ValueError:
+        return ANNEE_SAISON
+
+
+def chemin_cache_statistics(fixture_id):
+    return DOSSIER_CACHE / f"statistics_{fixture_id}.json"
+
+
+def lire_cache_statistics(fixture_id):
+    return _lire_json_cache(chemin_cache_statistics(fixture_id))
+
+
+def sauver_cache_statistics(fixture_id, data):
+    if formater_erreurs_api(data):
+        return
+    DOSSIER_CACHE.mkdir(parents=True, exist_ok=True)
+    chemin_cache_statistics(fixture_id).write_text(
+        json.dumps(data), encoding="utf-8"
+    )
+
+
+def chemin_cache_fixtures_date(ligue_id, annee, date_iso):
+    return DOSSIER_CACHE / f"fixtures_{ligue_id}_{annee}_{date_iso}.json"
+
+
+def lire_cache_fixtures_date(ligue_id, annee, date_iso):
+    return _lire_json_cache(chemin_cache_fixtures_date(ligue_id, annee, date_iso))
+
+
+def sauver_cache_fixtures_date(ligue_id, annee, date_iso, data):
+    if formater_erreurs_api(data):
+        return
+    DOSSIER_CACHE.mkdir(parents=True, exist_ok=True)
+    chemin_cache_fixtures_date(ligue_id, annee, date_iso).write_text(
+        json.dumps(data), encoding="utf-8"
+    )
+
+
+def extraire_corners_statistics(data):
+    """
+    Parse GET /fixtures/statistics.
+    Retourne (corners_domicile, corners_exterieur) ou (None, None).
+    """
+    blocs = data.get("response") or []
+    if len(blocs) < 2:
+        return None, None
+    resultat = {}
+    for bloc in blocs:
+        nom = ((bloc.get("team") or {}).get("name") or "").strip()
+        if not nom:
+            continue
+        for stat in bloc.get("statistics") or []:
+            if (stat.get("type") or "").strip().lower() == "corner kicks":
+                brut = stat.get("value")
+                try:
+                    resultat[nom] = int(brut)
+                except (TypeError, ValueError):
+                    if brut is not None and str(brut).isdigit():
+                        resultat[nom] = int(str(brut))
+                break
+    if len(resultat) < 2:
+        return None, None
+    noms = list(resultat.keys())
+    return resultat.get(noms[0]), resultat.get(noms[1])
+
+
+def _fixture_correspond(match, item):
+    """True si la fixture API correspond au match en base."""
+    teams = item.get("teams") or {}
+    dom_api = ((teams.get("home") or {}).get("name") or "").strip()
+    ext_api = ((teams.get("away") or {}).get("name") or "").strip()
+    goals = item.get("goals") or {}
+    buts_d = goals.get("home")
+    buts_e = goals.get("away")
+    if not equipes_compatibles(dom_api, match.get("domicile")):
+        return False
+    if not equipes_compatibles(ext_api, match.get("exterieur")):
+        return False
+    if buts_d is not None and str(match.get("buts_domicile")) != str(buts_d):
+        return False
+    if buts_e is not None and str(match.get("buts_exterieur")) != str(buts_e):
+        return False
+    return True
+
+
+def _id_fixture(item):
+    fixture = item.get("fixture") or {}
+    brut = fixture.get("id")
+    try:
+        return int(brut)
+    except (TypeError, ValueError):
+        return None
+
+
+def charger_fixtures_jour(session, annee, date_iso, restant):
+    """Liste les fixtures LDC d'une date (cache disque)."""
+    data, restant_apres, _ = requete_json(
+        session,
+        "/fixtures",
+        {"league": LIGUE_LDC["id"], "season": annee, "date": date_iso},
+        lambda: lire_cache_fixtures_date(LIGUE_LDC["id"], annee, date_iso),
+        lambda d: sauver_cache_fixtures_date(LIGUE_LDC["id"], annee, date_iso, d),
+    )
+    if data is None:
+        return [], restant_apres, False
+    detail_err = formater_erreurs_api(data)
+    if detail_err:
+        if est_erreur_plan_saison(detail_err):
+            message_plan_saison(detail_err)
+            return [], restant_apres, True
+        print(f"   fixtures {date_iso}: erreur API — {detail_err}")
+        return [], restant_apres, False
+    return data.get("response") or [], restant_apres, False
+
+
+def fusionner_corners_matchs(existants, maj_corners):
+    """
+    maj_corners : liste de dicts avec championnat, saison, date, domicile,
+    exterieur, corners_domicile, corners_exterieur.
+    """
+    resultat = [dict(l) for l in existants]
+    nb = 0
+    for patch in maj_corners:
+        idx = trouver_index_match(resultat, patch)
+        if idx is None:
+            continue
+        cible = resultat[idx]
+        change = False
+        for cle in ("corners_domicile", "corners_exterieur"):
+            if patch.get(cle) is None or patch.get(cle) == "":
+                continue
+            if str(cible.get(cle) or "") != str(patch[cle]):
+                cible[cle] = patch[cle]
+                change = True
+        if change:
+            nb += 1
+    return resultat, nb
+
+
+def collecter_corners_ldc(session, matchs, limite=20, restant_initial=None):
+    """
+    Complete corners_domicile/corners_exterieur pour matchs LDC via
+    /fixtures/statistics (1 requete par match + 1 par date pour l'id).
+    """
+    candidats = lister_ldc_sans_corners(matchs, limite=limite)
+    if not candidats:
+        print("   corners LDC : rien a completer.")
+        return [], 0, restant_initial, False
+
+    print(f"   corners LDC : {len(candidats)} match(s) a traiter (limite {limite}).")
+    restant = restant_initial
+    if restant is not None and restant <= 0:
+        message_quota_epuise(restant)
+        return [], 0, restant, False
+
+    par_date = defaultdict(list)
+    for match in candidats:
+        par_date[(_annee_saison_match(match), match.get("date"))].append(match)
+
+    cache_fixtures = {}
+    plan_bloque = False
+    patches = []
+    requetes = 0
+
+    for (annee, date_iso), groupe in sorted(
+        par_date.items(), key=lambda x: x[0][1] or "", reverse=True
+    ):
+        if restant is not None and restant <= 0:
+            message_quota_epuise(restant)
+            break
+        if restant is not None and restant < 2:
+            print(f"   quota restant {restant}, stop corners LDC.")
+            break
+
+        cle_cache = (annee, date_iso)
+        if cle_cache not in cache_fixtures:
+            fixtures, restant, bloque = charger_fixtures_jour(
+                session, annee, date_iso, restant
+            )
+            if bloque:
+                plan_bloque = True
+                break
+            cache_fixtures[cle_cache] = fixtures
+            if restant is not None:
+                requetes += 1
+
+        fixtures = cache_fixtures[cle_cache]
+        for match in groupe:
+            if restant is not None and restant <= 0:
+                message_quota_epuise(restant)
+                break
+            fixture_id = None
+            for item in fixtures:
+                if _fixture_correspond(match, item):
+                    fixture_id = _id_fixture(item)
+                    break
+            if not fixture_id:
+                print(
+                    f"   fixture introuvable : {match.get('domicile')} "
+                    f"- {match.get('exterieur')} ({date_iso})"
+                )
+                continue
+
+            data, restant_apres, depuis_cache = requete_json(
+                session,
+                "/fixtures/statistics",
+                {"fixture": fixture_id},
+                lambda fid=fixture_id: lire_cache_statistics(fid),
+                lambda d, fid=fixture_id: sauver_cache_statistics(fid, d),
+            )
+            if not depuis_cache:
+                requetes += 1
+            if data is None:
+                restant = restant_apres
+                continue
+            restant = restant_apres
+            detail_err = formater_erreurs_api(data)
+            if detail_err:
+                if est_erreur_plan_saison(detail_err):
+                    message_plan_saison(detail_err)
+                    plan_bloque = True
+                    break
+                print(f"   statistics {fixture_id}: {detail_err}")
+                continue
+
+            c_dom, c_ext = extraire_corners_statistics(data)
+            if c_dom is None or c_ext is None:
+                print(
+                    f"   corners absents API : {match.get('domicile')} "
+                    f"- {match.get('exterieur')} ({date_iso})"
+                )
+                continue
+            # Re-aligner domicile/exterieur selon les noms du match.
+            blocs = data.get("response") or []
+            noms_api = [
+                ((b.get("team") or {}).get("name") or "").strip() for b in blocs[:2]
+            ]
+            if len(noms_api) == 2:
+                if equipes_compatibles(noms_api[0], match.get("exterieur")):
+                    c_dom, c_ext = c_ext, c_dom
+            patches.append(
+                {
+                    "championnat": match["championnat"],
+                    "saison": match["saison"],
+                    "date": match["date"],
+                    "domicile": match["domicile"],
+                    "exterieur": match["exterieur"],
+                    "corners_domicile": c_dom,
+                    "corners_exterieur": c_ext,
+                }
+            )
+            print(
+                f"   corners {match['domicile']} {c_dom}-{c_ext} "
+                f"{match['exterieur']} ({date_iso})"
+            )
+
+    print(f"   corners LDC : {len(patches)} match(s) mis a jour ({requetes} requete(s) API).")
+    return patches, len(patches), restant, plan_bloque
+
+
+def collecter_corners_ldc_fichier(limite=20):
+    """Point d'entree CLI : met a jour matchs.csv avec les corners LDC."""
+    charger_env(RACINE)
+    cle = (os.environ.get("CLE_API_FOOTBALL") or "").strip()
+    print("API-Football — corners LDC...")
+    if not cle:
+        print("   ignore (pas de CLE_API_FOOTBALL dans .env)")
+        return {"corners_maj": 0}
+
+    session = requests.Session()
+    session.headers.update(
+        {
+            "x-apisports-key": cle,
+            "User-Agent": "StatsChampionnats/1.0 (projet local; API-Football)",
+        }
+    )
+    chemin_matchs = DOSSIER_SORTIE / "matchs.csv"
+    matchs = lire_csv(chemin_matchs)
+    patches, nb, restant, plan_bloque = collecter_corners_ldc(
+        session, matchs, limite=limite
+    )
+    if plan_bloque and not patches:
+        print("   arret : plan free incompatible avec la saison demandee.")
+        return {"corners_maj": 0}
+    if patches:
+        matchs, nb_fusion = fusionner_corners_matchs(matchs, patches)
+        ecrire_csv_matchs(chemin_matchs, matchs)
+        print(f"   {nb_fusion} ligne(s) matchs.csv mises a jour.")
+    return {"corners_maj": nb}
+
+
 def collecter():
     charger_env(RACINE)
     cle = (os.environ.get("CLE_API_FOOTBALL") or "").strip()
@@ -729,7 +1053,23 @@ def collecter():
 
 
 def main():
-    collecter()
+    parseur = argparse.ArgumentParser(description="Collecte optionnelle API-Football.")
+    parseur.add_argument(
+        "--corners-ldc",
+        action="store_true",
+        help="Completer corners LDC via /fixtures/statistics (batch limite).",
+    )
+    parseur.add_argument(
+        "--limite",
+        type=int,
+        default=20,
+        help="Nombre max de matchs LDC a traiter (--corners-ldc). Defaut : 20.",
+    )
+    arguments = parseur.parse_args()
+    if arguments.corners_ldc:
+        collecter_corners_ldc_fichier(limite=max(1, arguments.limite))
+    else:
+        collecter()
 
 
 if __name__ == "__main__":

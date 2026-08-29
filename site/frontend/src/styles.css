@@ -1760,6 +1760,19 @@ tr.zone-hors-course td:first-child {
   padding: 18px;
 }
 
+.badge-style-jeu {
+  display: inline-block;
+  margin: 0.35rem 0 0;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--texte);
+  background: color-mix(in srgb, var(--accent, #2d6a4f) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent, #2d6a4f) 35%, var(--ligne));
+  border-radius: 4px;
+}
+
 .entete-equipe {
   display: flex;
   gap: 16px;

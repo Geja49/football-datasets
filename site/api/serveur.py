@@ -46,6 +46,7 @@ from gestionnaires.classement import routeur_classement
 from gestionnaires.equipes import routeur_equipes
 from gestionnaires.joueurs import routeur_joueurs
 from gestionnaires.meilleurs import routeur_meilleurs
+from gestionnaires.solo import routeur_solo
 from requetes.connexion import lignes_dict
 from requetes.equipes import (
     choisir_nom_dans_competition as _choisir_nom_dans_competition,
@@ -162,6 +163,7 @@ app.include_router(routeur_classement)
 app.include_router(routeur_equipes)
 app.include_router(routeur_joueurs)
 app.include_router(routeur_analyse)
+app.include_router(routeur_solo)
 initialiser_base()
 assurer_tables_forum()
 

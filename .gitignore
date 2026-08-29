@@ -1,19 +1,36 @@
+# Racine / outils
 /anu/
 test/
 .DS_Store
 venv
+900
+demo/
+.scan-securite/
+_tmp_*
+node_modules/
+
+# Frontend
 donnees/photos_joueurs/
 **/__pycache__/
 *.pyc
 site/frontend/node_modules/
 site/frontend/dist/
+site/frontend/public/_verif-transparence/
+site/frontend/public/_appliquer_accents_teal.py
+
+# Securite / scans
 .cache/trivy/
 resultats-trivy.sarif
 trivy-brut.json
+
+# Donnees locales / caches
 donnees/etat_sources.json
 donnees/collecte.lock
 donnees/football-nouveau.db
+donnees/football.db
+donnees/communaute.db
 donnees/analyses.db
+donnees/*.db
 .env
 .env.*
 !.env.exemple

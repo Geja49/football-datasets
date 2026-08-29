@@ -1,6 +1,9 @@
 # Exemple : mise a jour planifiee de football.db (Windows)
 # Copier vers mettre-a-jour-planifie.ps1 et adapter $RacineProjet.
 # Ne pas lancer si une collecte est deja en cours.
+#
+# Une seule tache Task Scheduler (1–2×/jour, ou toutes les 6 h) suffit :
+# la boucle decide seule de figer (jeudi soir / vendredi), juger et calibrer.
 
 $ErrorActionPreference = "Stop"
 $RacineProjet = "C:\Users\sekei\football-datasets"
@@ -17,10 +20,18 @@ $code = $LASTEXITCODE
 
 if ($code -eq 0) {
   # Enregistrer previsions avant match + resultats apres (analyses.db separee).
+  # (Aussi lance en fin de mettre_a_jour.py si une collecte a eu lieu.)
   & python scripts\enregistrer_analyses.py --saison 2026-2027
   if ($LASTEXITCODE -ne 0) {
     $code = $LASTEXITCODE
   }
+}
+
+# Toujours : figer / juger / calibrer selon le jour (idempotent).
+# Necessaire meme sans changement de sources (ex. figer le vendredi).
+& python scripts\boucle_amelioration.py
+if ($LASTEXITCODE -ne 0 -and $code -eq 0) {
+  $code = $LASTEXITCODE
 }
 
 $horodatageFin = Get-Date -Format "yyyy-MM-dd HH:mm:ss"

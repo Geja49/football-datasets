@@ -296,6 +296,7 @@ const pronosticVerrouille = computed(() => {
 const confrontations = computed(() => (data.value && data.value.confrontations) || null);
 const scenarios = computed(() => pred.value.scenarios || []);
 const cartons = computed(() => pred.value.cartons || null);
+const fautesPrevues = computed(() => pred.value.fautes || null);
 const comparaisonPrevisions = computed(() => {
   const bloc = pred.value.comparaison;
   return bloc && bloc.lignes && bloc.lignes.length ? bloc.lignes : [];
@@ -408,6 +409,21 @@ const lignesStatsPrevues = computed(() => {
         decimales: 2,
       });
     }
+  }
+  if (
+    fautesPrevues.value
+    && fautesPrevues.value.disponible !== false
+    && (
+      fautesPrevues.value.fautes_domicile != null
+      || fautesPrevues.value.fautes_exterieur != null
+    )
+  ) {
+    lignes.push({
+      libelle: "Fautes prévues",
+      dom: fautesPrevues.value.fautes_domicile,
+      ext: fautesPrevues.value.fautes_exterieur,
+      decimales: 1,
+    });
   }
   return lignes;
 });
@@ -931,6 +947,14 @@ async function seDeconnecter() {
             <div>
               <p class="tag">{{ rang === 0 ? "Domicile" : "Extérieur" }}</p>
               <h2>{{ cote.nom }}</h2>
+              <p
+                v-if="cote.style_de_jeu"
+                class="badge-style-jeu"
+                :title="cote.style_de_jeu.explication"
+              >
+                Style : {{ cote.style_de_jeu.libelle }}
+                <span v-if="cote.style_de_jeu.proxy_possession" class="doux petit">(proxy)</span>
+              </p>
               <p class="doux">
                 xG {{ cote.saison_xg }} · {{ cote.nb_matchs_xg }} matchs
                 {{ rang === 0 ? "à domicile" : "à l'extérieur" }}
@@ -954,6 +978,21 @@ async function seDeconnecter() {
                 <template v-if="cote.rouges != null">
                   · {{ cote.rouges }} rouges / match
                 </template>
+                <template v-if="cote.fautes != null">
+                  · {{ cote.fautes }} fautes / match
+                </template>
+              </p>
+              <p
+                v-else-if="cote.fautes != null"
+                class="doux"
+              >
+                Saison {{ cote.saison_xg }} : {{ cote.fautes }} fautes / match
+              </p>
+              <p
+                v-if="cote.style_de_jeu && cote.style_de_jeu.explication"
+                class="doux petit"
+              >
+                {{ cote.style_de_jeu.explication }}
               </p>
             </div>
           </header>
@@ -1136,6 +1175,18 @@ async function seDeconnecter() {
               </p>
             </div>
           </template>
+          <div
+            v-if="fautesPrevues && fautesPrevues.disponible !== false"
+            class="carte-stat"
+          >
+            <span>Fautes prévues</span>
+            <strong>{{ fautesPrevues.fautes_match }}</strong>
+            <p class="doux petit">
+              {{ fautesPrevues.fautes_domicile }} – {{ fautesPrevues.fautes_exterieur }}
+              (moy. ligue {{ fautesPrevues.moyenne_championnat }})
+            </p>
+            <p class="doux petit">{{ fautesPrevues.titre }}</p>
+          </div>
         </div>
       </section>
 

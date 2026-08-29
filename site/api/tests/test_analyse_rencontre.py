@@ -4,12 +4,17 @@ from analyse_rencontre import (
     _bilan_match,
     _commentaire_score,
     _lambda_cartons_equipe,
+    _lambda_corners_equipe,
+    _lambda_fautes_equipe,
     _phrases,
     _poisson,
     _recit_scenario,
     _scenario_cartons,
+    _scenario_corners,
+    _scenario_fautes,
     _scenario_poisson,
     _scenarios_detailles,
+    classer_style_de_jeu,
     comparaison_previsions_reel,
     saison_precedente,
     serie_forme_matchs,
@@ -99,6 +104,23 @@ def test_lambda_cartons_equipe_preferer_forme():
     assert source == "5 derniers matchs"
 
 
+def test_lambda_corners_equipe_preferer_forme():
+    forme = {
+        "nb_avec_corners": 4,
+        "corners_par_match": 6.2,
+    }
+    lam, source = _lambda_corners_equipe(forme, 4.5, 5.0)
+    assert lam == 6.2
+    assert source == "5 derniers matchs"
+
+
+def test_scenario_corners_structure():
+    corners = _scenario_corners(5.5, 4.8, 9.5, ["saison", "saison"])
+    assert corners["corners_match"] == 10.3
+    assert corners["p_corners_total_over"] is not None
+    assert "corners" in corners["texte"].lower()
+
+
 def test_scenario_cartons_et_scenarios_detailles():
     cartons = _scenario_cartons(
         2.0, 2.5, 0.05, 0.05, 4.0, ["saison", "saison"]
@@ -139,6 +161,7 @@ def test_comparaison_previsions_reel_lignes_chiffrees():
     pred["cartons"] = _scenario_cartons(
         2.0, 1.8, 0.05, 0.02, 3.8, ["saison", "saison"]
     )
+    pred["fautes"] = _scenario_fautes(11.0, 12.0, 23.0, ["saison", "saison"])
     comparaison = comparaison_previsions_reel(
         pred,
         {
@@ -150,6 +173,8 @@ def test_comparaison_previsions_reel_lignes_chiffrees():
             "jaunes_exterieur": 2,
             "rouges_domicile": 0,
             "rouges_exterieur": 1,
+            "fautes_domicile": 10,
+            "fautes_exterieur": 14,
         },
     )
     libelles = [ligne["statistique"] for ligne in comparaison["lignes"]]
@@ -158,6 +183,7 @@ def test_comparaison_previsions_reel_lignes_chiffrees():
         "Occasions (xG)",
         "Cartons jaunes",
         "Cartons rouges",
+        "Fautes",
     ]
     buts = comparaison["lignes"][0]
     assert buts["prevu_domicile"] == 2
@@ -191,6 +217,7 @@ def test_phrases_simples_expliquent_xg():
         "tirs_cadres_domicile": 4.5,
         "jaunes_domicile": 2.0,
         "rouges_domicile": 0.1,
+        "fautes_domicile": 11.0,
     }
     profil = {
         "xg_marques": 2.0,
@@ -198,16 +225,19 @@ def test_phrases_simples_expliquent_xg():
         "tirs_cadres": 6.0,
         "jaunes": 1.2,
         "rouges": 0.05,
+        "fautes": 14.0,
     }
     phrases = _phrases(profil, moyennes, True, False)
-    texte = " ".join(phrases["forces"]).lower()
+    texte = " ".join(phrases["forces"] + phrases["faiblesses"]).lower()
     assert "occasions attendues" in texte
     assert "attaque" in texte or "défense" in texte or "tirs cadrés" in texte
+    assert "fautes" in texte
 
 
 def test_recit_scenario_style_film():
     pred = _scenario_poisson(2.0, 1.0)
     cartons = _scenario_cartons(1.5, 1.8, 0.05, 0.05, 3.5, ["saison", "saison"])
+    fautes = _scenario_fautes(10.0, 11.0, 23.0, ["saison", "saison"])
     pred["scenarios"] = _scenarios_detailles(pred, cartons, 2.5)
     domicile = {
         "forces": [
@@ -218,6 +248,12 @@ def test_recit_scenario_style_film():
             "Pas de faiblesse marquée à domicile face à la moyenne du championnat."
         ],
         "donnees_limitees": False,
+        "style_de_jeu": {
+            "code": "offensif",
+            "libelle": "Offensif",
+            "explication": "Beaucoup d'occasions.",
+            "proxy_possession": False,
+        },
     }
     exterieur = {
         "forces": [
@@ -229,12 +265,62 @@ def test_recit_scenario_style_film():
             "(1.80 xG encaissés, moyenne 1.20)."
         ],
         "donnees_limitees": False,
+        "style_de_jeu": {
+            "code": "defensif",
+            "libelle": "Défensif",
+            "explication": "Peu d'occasions concédées.",
+            "proxy_possession": False,
+        },
     }
-    recit = _recit_scenario("Paris", "Lyon", domicile, exterieur, pred, cartons)
+    recit = _recit_scenario(
+        "Paris", "Lyon", domicile, exterieur, pred, cartons, fautes
+    )
     assert 3 <= len(recit) <= 6
     texte = " ".join(recit).lower()
     assert "affiche" in texte
     assert "dénouement" in texte
     assert "paris" in texte and "lyon" in texte
+    assert "offensif" in texte or "défensif" in texte
     # Pas une liste sèche de stats collées
     assert "xG marqués par match" not in texte
+
+
+def test_lambda_et_scenario_fautes():
+    forme = {"nb_avec_fautes": 4, "fautes_par_match": 13.5}
+    lam, source = _lambda_fautes_equipe(forme, 11.0, 12.0)
+    assert lam == 13.5
+    assert source == "5 derniers matchs"
+    scenario = _scenario_fautes(13.0, 14.0, 23.0, ["saison", "saison"])
+    assert scenario["fautes_match"] == 27.0
+    assert scenario["rythme"] == "physique"
+    assert "fautes" in scenario["texte"].lower()
+    assert "football-data" in scenario["texte"].lower()
+
+
+def test_classer_style_de_jeu_offensif_et_defensif():
+    moyennes = {
+        "xg_domicile": 1.4,
+        "xg_encaisses_domicile": 1.2,
+        "tirs_domicile": 12.0,
+        "corners_domicile": 5.0,
+    }
+    offensif = classer_style_de_jeu(2.0, 1.1, 16.0, 5.0, moyennes, True)
+    assert offensif["code"] == "offensif"
+    defensif = classer_style_de_jeu(1.3, 0.8, 11.0, 5.0, moyennes, True)
+    assert defensif["code"] == "defensif"
+
+
+def test_classer_style_de_jeu_direct_possession_proxy():
+    moyennes = {
+        "xg_domicile": 1.4,
+        "xg_encaisses_domicile": 1.2,
+        "tirs_domicile": 12.0,
+        "corners_domicile": 5.0,
+    }
+    direct = classer_style_de_jeu(1.4, 1.2, 16.0, 3.5, moyennes, True)
+    assert direct["code"] == "direct"
+    possession = classer_style_de_jeu(1.5, 1.1, 11.0, 7.0, moyennes, True)
+    assert possession["code"] == "possession"
+    assert possession["proxy_possession"] is True
+    equilibre = classer_style_de_jeu(1.4, 1.2, 12.0, 5.0, moyennes, True)
+    assert equilibre["code"] == "equilibre"

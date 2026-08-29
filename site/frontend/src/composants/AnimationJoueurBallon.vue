@@ -1,123 +1,179 @@
 <template>
   <div class="scene-ballon" aria-hidden="true">
-    <svg class="scene" viewBox="0 0 100 72" xmlns="http://www.w3.org/2000/svg" fill="none">
+    <svg class="scene" viewBox="0 0 100 76" xmlns="http://www.w3.org/2000/svg" fill="none">
       <defs>
-        <!-- Sphère : lumière haut-gauche, ombre bas-droite -->
-        <radialGradient id="degrade-sphere" cx="34%" cy="28%" r="72%" fx="30%" fy="24%">
+        <!-- Sphère : lumière haut-gauche -->
+        <radialGradient id="degrade-sphere" cx="32%" cy="26%" r="78%" fx="28%" fy="22%">
           <stop offset="0%" stop-color="#ffffff" />
-          <stop offset="42%" stop-color="#f4f4f4" />
-          <stop offset="78%" stop-color="#c8c8c8" />
-          <stop offset="100%" stop-color="#8f8f8f" />
+          <stop offset="38%" stop-color="#f7f7f7" />
+          <stop offset="72%" stop-color="#d8d8d8" />
+          <stop offset="100%" stop-color="#9a9a9a" />
         </radialGradient>
 
-        <!-- Assombrissement périphérique pour le volume -->
-        <radialGradient id="ombre-volume" cx="50%" cy="48%" r="50%">
-          <stop offset="55%" stop-color="#000000" stop-opacity="0" />
-          <stop offset="100%" stop-color="#000000" stop-opacity="0.28" />
+        <!-- Panneaux blancs légèrement ombrés -->
+        <linearGradient id="degrade-panneau-blanc" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff" />
+          <stop offset="100%" stop-color="#e8e8e8" />
+        </linearGradient>
+
+        <!-- Pentagones noirs avec léger relief -->
+        <linearGradient id="degrade-panneau-noir" x1="20%" y1="10%" x2="80%" y2="90%">
+          <stop offset="0%" stop-color="#1a1a1a" />
+          <stop offset="55%" stop-color="#0a0a0a" />
+          <stop offset="100%" stop-color="#000000" />
+        </linearGradient>
+
+        <!-- Assombrissement périphérique -->
+        <radialGradient id="ombre-volume" cx="52%" cy="50%" r="50%">
+          <stop offset="50%" stop-color="#000000" stop-opacity="0" />
+          <stop offset="100%" stop-color="#000000" stop-opacity="0.32" />
         </radialGradient>
 
-        <!-- Lueur teal ambiante très légère -->
-        <radialGradient id="reflet-teal" cx="48%" cy="42%" r="58%">
-          <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.14" />
-          <stop offset="70%" stop-color="#14b8a6" stop-opacity="0.04" />
+        <!-- Lueur teal ambiante (thème site) -->
+        <radialGradient id="reflet-teal" cx="50%" cy="44%" r="62%">
+          <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.18" />
+          <stop offset="65%" stop-color="#14b8a6" stop-opacity="0.05" />
           <stop offset="100%" stop-color="#14b8a6" stop-opacity="0" />
         </radialGradient>
 
-        <!-- Reflet spéculaire -->
+        <!-- Reflet spéculaire principal -->
         <radialGradient id="degrade-reflet" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.75" />
-          <stop offset="55%" stop-color="#ffffff" stop-opacity="0.22" />
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.92" />
+          <stop offset="45%" stop-color="#ffffff" stop-opacity="0.28" />
           <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
         </radialGradient>
 
-        <filter id="lueur-ballon" x="-50%" y="-50%" width="200%" height="200%">
+        <!-- Second reflet discret -->
+        <radialGradient id="degrade-reflet-secondaire" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35" />
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+        </radialGradient>
+
+        <filter id="lueur-ballon" x="-60%" y="-60%" width="220%" height="220%">
           <feDropShadow
             dx="0"
-            dy="1.2"
-            stdDeviation="2.2"
+            dy="1.4"
+            stdDeviation="2.8"
             flood-color="#14b8a6"
-            flood-opacity="0.22"
+            flood-opacity="0.28"
           />
           <feDropShadow
-            dx="0.4"
-            dy="1.8"
-            stdDeviation="1.1"
+            dx="0.5"
+            dy="2.2"
+            stdDeviation="1.4"
             flood-color="#000000"
-            flood-opacity="0.35"
+            flood-opacity="0.4"
           />
         </filter>
 
         <radialGradient id="degrade-ombre-sol" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#000000" stop-opacity="0.55" />
-          <stop offset="70%" stop-color="#000000" stop-opacity="0.22" />
+          <stop offset="0%" stop-color="#000000" stop-opacity="0.62" />
+          <stop offset="65%" stop-color="#000000" stop-opacity="0.24" />
           <stop offset="100%" stop-color="#000000" stop-opacity="0" />
         </radialGradient>
 
         <clipPath id="clip-sphere">
-          <circle cx="50" cy="28" r="16" />
+          <circle cx="50" cy="30" r="17" />
         </clipPath>
       </defs>
 
-      <ellipse class="ombre-sol" cx="50" cy="60" rx="14" ry="3.2" fill="url(#degrade-ombre-sol)" />
+      <ellipse class="ombre-sol" cx="50" cy="63" rx="15" ry="3.4" fill="url(#degrade-ombre-sol)" />
 
       <g class="ballon-rebond">
         <g class="ballon-rotation">
-          <g filter="url(#lueur-ballon)">
+          <g class="ballon-corps" filter="url(#lueur-ballon)">
             <g clip-path="url(#clip-sphere)">
-              <circle cx="50" cy="28" r="16" fill="url(#degrade-sphere)" />
+              <circle cx="50" cy="30" r="17" fill="url(#degrade-sphere)" />
 
+              <!-- Motif classique : pentagones + hexagones (projection frontale) -->
               <!-- Pentagone central -->
               <path
                 class="panneau-noir"
-                d="M50 16.2 L56.1 20.6 L53.9 28 L46.1 28 L43.9 20.6 Z"
+                d="M50 15.8 L56.4 20.5 L54.1 28.2 L45.9 28.2 L43.6 20.5 Z"
               />
-              <!-- Hexagones / panneaux latéraux -->
+              <!-- Hexagones autour du pentagone central -->
               <path
-                class="panneau-noir"
-                d="M34.4 26.2 L38.4 21.4 L43.9 23.8 L42.4 30.4 L36.6 32.6 Z"
-              />
-              <path
-                class="panneau-noir"
-                d="M65.6 26.2 L61.6 21.4 L56.1 23.8 L57.6 30.4 L63.4 32.6 Z"
+                class="panneau-blanc"
+                d="M43.6 20.5 L38.2 17.2 L38.8 11.2 L45.2 11.8 L48.8 16.2 Z"
               />
               <path
+                class="panneau-blanc"
+                d="M56.4 20.5 L61.8 17.2 L61.2 11.2 L54.8 11.8 L51.2 16.2 Z"
+              />
+              <path
+                class="panneau-blanc"
+                d="M38.4 26.8 L43.6 28.2 L42.8 34.2 L37.2 36.2 L33.6 31.8 Z"
+              />
+              <path
+                class="panneau-blanc"
+                d="M61.6 26.8 L56.4 28.2 L57.2 34.2 L62.8 36.2 L66.4 31.8 Z"
+              />
+              <path
+                class="panneau-blanc"
+                d="M45.9 28.2 L42.8 34.2 L46.2 39.2 L53.8 39.2 L57.2 34.2 L54.1 28.2 Z"
+              />
+              <!-- Pentagones périphériques -->
+              <path
                 class="panneau-noir"
-                d="M38.8 40.2 L44 37.6 L48.6 40.8 L46.6 45.6 L41.2 45.8 Z"
+                d="M38.8 11.2 L45.2 11.8 L48.8 16.2 L45.6 20.8 L39.8 18.6 Z"
               />
               <path
                 class="panneau-noir"
-                d="M61.2 40.2 L56 37.6 L51.4 40.8 L53.4 45.6 L58.8 45.8 Z"
+                d="M61.2 11.2 L54.8 11.8 L51.2 16.2 L54.4 20.8 L60.2 18.6 Z"
               />
               <path
                 class="panneau-noir"
-                d="M50 43.8 L45.8 40.8 L47.6 37 L52.4 37 L54.2 40.8 Z"
+                d="M33.6 31.8 L37.2 36.2 L35.4 42.2 L29.2 42.8 L27.2 36.8 Z"
+              />
+              <path
+                class="panneau-noir"
+                d="M66.4 31.8 L62.8 36.2 L64.6 42.2 L70.8 42.8 L72.8 36.8 Z"
+              />
+              <path
+                class="panneau-noir"
+                d="M46.2 39.2 L42.4 44.2 L46.8 47.2 L53.2 47.2 L57.6 44.2 L53.8 39.2 Z"
               />
 
+              <!-- Coutures entre panneaux -->
               <path
                 class="couture"
-                d="M50 22.4 L50 12
-                   M56.1 20.6 L64.2 17.6
-                   M53.9 28 L58.8 35.2
-                   M46.1 28 L41.2 35.2
-                   M43.9 20.6 L35.8 17.6
-                   M38.8 40.2 L30.6 41.8
-                   M61.2 40.2 L69.4 41.8
-                   M50 42.8 L50 44.2"
+                d="M50 15.8 L50 11.2
+                   M43.6 20.5 L38.2 17.2
+                   M56.4 20.5 L61.8 17.2
+                   M45.9 28.2 L38.4 26.8
+                   M54.1 28.2 L61.6 26.8
+                   M45.9 28.2 L46.2 39.2
+                   M54.1 28.2 L53.8 39.2
+                   M38.8 11.2 L45.2 11.8 L48.8 16.2 L45.6 20.8
+                   M61.2 11.2 L54.8 11.8 L51.2 16.2 L54.4 20.8
+                   M33.6 31.8 L37.2 36.2 L35.4 42.2
+                   M66.4 31.8 L62.8 36.2 L64.6 42.2
+                   M46.2 39.2 L42.4 44.2 L46.8 47.2
+                   M53.8 39.2 L57.6 44.2 L53.2 47.2"
               />
 
-              <circle cx="50" cy="28" r="16" fill="url(#ombre-volume)" />
-              <circle cx="50" cy="28" r="16" fill="url(#reflet-teal)" />
+              <circle cx="50" cy="30" r="17" fill="url(#ombre-volume)" />
+              <circle cx="50" cy="30" r="17" fill="url(#reflet-teal)" />
             </g>
 
-            <!-- Contour fin pour détacher du fond sombre -->
-            <circle
-              cx="50"
-              cy="28"
-              r="16"
-              class="contour-ballon"
-            />
+            <circle cx="50" cy="30" r="17" class="contour-ballon" />
 
-            <ellipse class="reflet" cx="42.5" cy="20.5" rx="4.6" ry="2.6" fill="url(#degrade-reflet)" />
+            <ellipse
+              class="reflet reflet-principal"
+              cx="41.5"
+              cy="21"
+              rx="5.2"
+              ry="3"
+              fill="url(#degrade-reflet)"
+            />
+            <ellipse
+              class="reflet reflet-secondaire"
+              cx="58"
+              cy="36"
+              rx="2.4"
+              ry="1.4"
+              fill="url(#degrade-reflet-secondaire)"
+            />
           </g>
         </g>
       </g>
@@ -127,7 +183,7 @@
 
 <style scoped>
 .scene-ballon {
-  width: min(128px, 42vw);
+  width: min(132px, 44vw);
   line-height: 0;
 }
 
@@ -139,66 +195,96 @@
 }
 
 .ombre-sol {
-  transform-origin: 50px 60px;
-  animation: ombre-rebond 0.95s infinite;
-  animation-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  transform-origin: 50px 63px;
+  animation: ombre-rebond 1.05s infinite;
+  animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
 }
 
 .ballon-rebond {
-  transform-origin: 50px 60px;
-  animation: rebond-ballon 0.95s infinite;
+  transform-origin: 50px 63px;
+  animation: rebond-ballon 1.05s infinite;
 }
 
 .ballon-rotation {
-  transform-origin: 50px 28px;
-  animation: rotation-ballon 2.4s linear infinite;
+  transform-origin: 50px 30px;
+  animation: rotation-ballon 3s linear infinite;
+}
+
+.ballon-corps {
+  transform-origin: 50px 30px;
+  animation: pulse-lueur 1.05s ease-in-out infinite;
 }
 
 .panneau-noir {
-  fill: #0d0d0d;
+  fill: url(#degrade-panneau-noir);
+}
+
+.panneau-blanc {
+  fill: url(#degrade-panneau-blanc);
+  opacity: 0.92;
 }
 
 .couture {
-  stroke: #d4d4d4;
-  stroke-width: 0.4;
+  stroke: #c8c8c8;
+  stroke-width: 0.38;
   stroke-linecap: round;
   stroke-linejoin: round;
-  opacity: 0.5;
+  opacity: 0.55;
+  fill: none;
 }
 
 .contour-ballon {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.12);
-  stroke-width: 0.55;
+  stroke: rgba(255, 255, 255, 0.14);
+  stroke-width: 0.5;
 }
 
 .reflet {
   pointer-events: none;
 }
 
+.reflet-principal {
+  transform-origin: 41.5px 21px;
+  animation: scintillement-reflet 1.05s ease-in-out infinite;
+}
+
 @keyframes rebond-ballon {
-  0% {
-    transform: translateY(0);
-    animation-timing-function: cubic-bezier(0.55, 0.08, 0.68, 0.5);
+  0%,
+  100% {
+    transform: translateY(0) scale(1, 1);
+    animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1);
   }
-  50% {
-    transform: translateY(20px);
+  18% {
+    transform: translateY(0) scale(1.04, 0.94);
+    animation-timing-function: cubic-bezier(0.55, 0.08, 0.68, 0.45);
+  }
+  48% {
+    transform: translateY(22px) scale(0.96, 1.06);
     animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
   }
-  100% {
-    transform: translateY(0);
+  72% {
+    transform: translateY(6px) scale(1.02, 0.98);
+    animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1);
   }
 }
 
 @keyframes ombre-rebond {
   0%,
   100% {
-    transform: scale(0.52, 0.7);
-    opacity: 0.28;
+    transform: scale(0.48, 0.65);
+    opacity: 0.22;
   }
-  50% {
-    transform: scale(1, 1);
-    opacity: 0.7;
+  18% {
+    transform: scale(1.08, 1.12);
+    opacity: 0.78;
+  }
+  48% {
+    transform: scale(0.92, 0.95);
+    opacity: 0.55;
+  }
+  72% {
+    transform: scale(1.02, 1.05);
+    opacity: 0.68;
   }
 }
 
@@ -208,16 +294,43 @@
   }
 }
 
+@keyframes pulse-lueur {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  18% {
+    opacity: 1.03;
+  }
+  48% {
+    opacity: 0.94;
+  }
+}
+
+@keyframes scintillement-reflet {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  48% {
+    opacity: 0.75;
+    transform: scale(0.88);
+  }
+}
+
 @media (max-width: 420px) {
   .scene-ballon {
-    width: min(112px, 40vw);
+    width: min(116px, 42vw);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ombre-sol,
   .ballon-rebond,
-  .ballon-rotation {
+  .ballon-rotation,
+  .ballon-corps,
+  .reflet-principal {
     animation: none;
   }
 
@@ -227,7 +340,7 @@
   }
 
   .ballon-rebond {
-    transform: translateY(12px);
+    transform: translateY(14px);
   }
 }
 </style>

@@ -9,6 +9,11 @@ Usage (a la racine du projet) :
 
 Base : donnees/analyses.db (separee de football.db).
 
+Note Solo :
+    Préférer la boucle auto (figer / juger / calibrer selon le jour) :
+        python scripts/boucle_amelioration.py
+    Déjà enchaînée en fin de `mettre_a_jour.py` (non bloquant).
+
 Note backfill : sans date_limite parfaite sur toutes les agregats saison,
 les previsions retroactives restent approximatives pour la calibration historique.
 Le flag retroactif=1 les identifie en base.

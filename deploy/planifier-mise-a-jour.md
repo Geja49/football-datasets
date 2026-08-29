@@ -19,22 +19,46 @@ Commande manuelle (≈ 10 min) à la racine du dépôt :
 python scripts/mettre_a_jour.py
 ```
 
-Puis enregistrer les prévisions figées et les résultats (base séparée `donnees/analyses.db`) :
+Ce script enchaîne déjà (non bloquant) :
 
-```bash
-python scripts/enregistrer_analyses.py --saison 2026-2027
-```
-
-Le script planifié Windows (`mettre-a-jour-planifie.ps1.example`) enchaîne automatiquement
-`surveiller_sources.py --une-fois` puis `enregistrer_analyses.py` après une mise à jour réussie.
+1. `enregistrer_analyses.py` — prévisions / résultats dans `analyses.db`
+2. `boucle_amelioration.py` — figer / juger / calibrer Solo selon le jour
 
 Puis recharger le site (ex. localhost:5173).
 
 ---
 
+## Boucle d’amélioration Solo (automatique)
+
+Une **seule** tâche planifiée 1–2× / jour (ou toutes les 6 h) suffit.
+`boucle_amelioration.py` décide selon **l’heure locale** du PC :
+
+| Quand | Action | Idempotent |
+|-------|--------|------------|
+| Jeudi ≥ 18 h ou vendredi | Figer les marchés Solo du weekend (si pas déjà figé) | Oui |
+| Chaque passage | Juger les matchs joués sans verdict | Oui |
+| Après juger | Réentraîner le calibrateur si ≥ 20 matchs | Oui / skip |
+
+Suivi hit-rate : `donnees/modeles/bilan_solo.json` (suggestion de seuils en log si hit-rate très faible — **aucun changement magique** des seuils Solo).
+
+```bash
+python scripts/boucle_amelioration.py
+python scripts/boucle_amelioration.py --forcer-figer
+python scripts/boucle_amelioration.py --skip-calibrateur
+```
+
+Pas besoin d’une tâche « vendredi 12 h » dédiée : la logique jour dans la boucle suffit
+dès que le planificateur tourne au moins une fois le vendredi (ou jeudi soir).
+
+Le script planifié Windows (`mettre-a-jour-planifie.ps1.example`) enchaîne
+`surveiller_sources.py --une-fois` → `enregistrer_analyses.py` → **`boucle_amelioration.py`**
+(même si aucune source n’a changé — indispensable pour figer le vendredi).
+
+---
+
 ## Option A — PC Windows (Task Scheduler)
 
-Idéal chez soi : mise à jour **toutes les 6 heures** (ou 1–3× / jour).
+Idéal chez soi : mise à jour **1–2× / jour** (ou toutes les 6 heures).
 
 ### 1. Script d’exemple
 
@@ -45,7 +69,7 @@ Copier `deploy/mettre-a-jour-planifie.ps1.example` vers
 
 1. Ouvrir **Planificateur de tâches** → Créer une tâche.
 2. Déclencheur : quotidien, répéter toutes les **6 heures** pendant 1 jour
-   (ou plusieurs déclencheurs matin / midi / soir).
+   (ou 2 déclencheurs : matin + soir — assez pour figer le vendredi).
 3. Action : démarrer un programme
    - Programme : `powershell.exe`
    - Arguments :
@@ -65,7 +89,7 @@ $declencheur = New-ScheduledTaskTrigger -Once -At (Get-Date).Date `
   -RepetitionInterval (New-TimeSpan -Hours 6) `
   -RepetitionDuration (New-TimeSpan -Days 3650)
 Register-ScheduledTask -TaskName "StatsFoot-MiseAJour" `
-  -Action $action -Trigger $declencheur -Description "Met a jour football.db"
+  -Action $action -Trigger $declencheur -Description "MAJ football.db + boucle Solo"
 ```
 
 ### Surveillance intelligente (recommandé si le PC reste allumé)
@@ -82,6 +106,10 @@ Une seule passe (pour Task Scheduler) :
 ```bash
 python scripts/surveiller_sources.py --une-fois
 ```
+
+**Important** : si vous n’utilisez que `surveiller_sources` en boucle, ajoutez aussi un
+appel périodique à `boucle_amelioration.py` (comme dans le `.ps1.example`), sinon le
+figeage vendredi ne tourne que lorsqu’une source change.
 
 ---
 
@@ -114,25 +142,27 @@ hors flux open data / free tier actuel.
 
 ## Option Linux (serveur / Raspberry Pi)
 
-Cron toutes les 6 heures :
+Cron 2× / jour (collecte + boucle Solo) :
 
 ```cron
-0 */6 * * * cd /opt/statsfoot && .venv/bin/python scripts/mettre_a_jour.py >> /var/log/statsfoot-maj.log 2>&1 && .venv/bin/python scripts/enregistrer_analyses.py --saison 2026-2027 >> /var/log/statsfoot-analyses.log 2>&1
+0 8,18 * * * cd /opt/statsfoot && .venv/bin/python scripts/mettre_a_jour.py >> /var/log/statsfoot-maj.log 2>&1
 ```
 
-Ou surveillance une fois :
+Ou surveillance + boucle (recommandé) :
 
 ```cron
-*/30 * * * * cd /opt/statsfoot && .venv/bin/python scripts/surveiller_sources.py --une-fois >> /var/log/statsfoot-surveillance.log 2>&1
+*/30 * * * * cd /opt/statsfoot && .venv/bin/python scripts/surveiller_sources.py --une-fois >> /var/log/statsfoot-surveillance.log 2>&1 && .venv/bin/python scripts/boucle_amelioration.py >> /var/log/statsfoot-boucle.log 2>&1
 ```
 
 ---
 
 ## Limites à garder en tête
 
-- **Sauvegarde** : inclure `donnees/analyses.db` dans les backups (voir `deploy/sauvegarder-bases.sh.example`).
+- **Sauvegarde** : inclure `donnees/analyses.db` et `donnees/modeles/` dans les backups
+  (voir `deploy/sauvegarder-bases.sh.example`).
 - **football-data.co.uk** : résultats souvent publiés avec **1–2 jours** de retard →
   même avec un cron horaire, le match d’hier soir peut manquer jusqu’à publication.
 - Understat / openfootball : mises à jour irrégulières, pas live.
 - Ne pas lancer deux collectes en parallèle (`surveiller_sources.py` pose déjà un verrou).
 - ClubElo / free APIs : peuvent être down ou quota limité — la collecte continue sans elles.
+- La boucle Solo **ne bloque jamais** `mettre_a_jour.py` en cas d’échec.

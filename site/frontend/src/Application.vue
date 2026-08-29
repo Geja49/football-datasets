@@ -184,6 +184,7 @@ const communauteActif = computed(
     route.path === "/notifications" ||
     route.path === "/mon-profil" ||
     route.path === "/moderation" ||
+    route.path === "/solo" ||
     route.path === "/forum" ||
     route.path.startsWith("/forum/"),
 );
@@ -391,6 +392,15 @@ function allerEquipe(item) {
               >
                 {{ nbNotifications > 9 ? "9+" : nbNotifications }}
               </span>
+            </router-link>
+            <router-link
+              v-if="utilisateur?.est_admin"
+              class="lien-menu-nav"
+              role="menuitem"
+              to="/solo"
+              :class="{ actif: route.path === '/solo' }"
+            >
+              Solo
             </router-link>
             <router-link
               v-if="utilisateur?.est_admin"

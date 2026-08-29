@@ -140,6 +140,42 @@ def assurer_schema(connexion: sqlite3.Connection) -> None:
             contenu_json TEXT NOT NULL,
             genere_le TEXT NOT NULL
         );
+
+        CREATE TABLE IF NOT EXISTS pronos_solo (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            cle_match TEXT NOT NULL,
+            weekend_debut TEXT NOT NULL,
+            championnat TEXT NOT NULL,
+            saison TEXT NOT NULL,
+            date_match TEXT NOT NULL,
+            domicile TEXT NOT NULL,
+            exterieur TEXT NOT NULL,
+            type_marche TEXT NOT NULL,
+            libelle_marche TEXT,
+            probabilite REAL NOT NULL,
+            detail_json TEXT,
+            fige_le TEXT NOT NULL,
+            prevision_id INTEGER,
+            UNIQUE (cle_match, type_marche, weekend_debut)
+        );
+
+        CREATE TABLE IF NOT EXISTS verdicts_solo (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            prono_solo_id INTEGER NOT NULL UNIQUE,
+            vrai INTEGER NOT NULL,
+            motif_code TEXT,
+            motif_texte TEXT,
+            buts_domicile INTEGER,
+            buts_exterieur INTEGER,
+            juge_le TEXT NOT NULL,
+            FOREIGN KEY (prono_solo_id) REFERENCES pronos_solo(id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_pronos_solo_weekend
+            ON pronos_solo (weekend_debut, championnat);
+
+        CREATE INDEX IF NOT EXISTS idx_pronos_solo_cle
+            ON pronos_solo (cle_match);
         """
     )
     _migrer_colonnes_resultats(connexion)

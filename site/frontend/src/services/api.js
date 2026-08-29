@@ -374,6 +374,28 @@ export function traiterSignalementAdmin(signalementId, statut = "traite") {
   });
 }
 
+/** Pronos weekend admin Solo (figés si snapshot BD, sinon live ≥ 85 %). */
+export function chargerPronosWeekendSolo({ dateDebut, championnat } = {}) {
+  const params = new URLSearchParams();
+  if (dateDebut) params.set("date_debut", dateDebut);
+  if (championnat) params.set("championnat", championnat);
+  const query = params.toString();
+  return getJson(`/api/solo/pronos-weekend${query ? `?${query}` : ""}`, {
+    cache: false,
+  });
+}
+
+/** Bilan hit-rate des marchés Solo figés (admin). */
+export function chargerBilanWeekendSolo({ dateDebut, championnat } = {}) {
+  const params = new URLSearchParams();
+  if (dateDebut) params.set("date_debut", dateDebut);
+  if (championnat) params.set("championnat", championnat);
+  const query = params.toString();
+  return getJson(`/api/solo/bilan-weekend${query ? `?${query}` : ""}`, {
+    cache: false,
+  });
+}
+
 export function chargerEspacesForum() {
   return envoyerJson("/api/forum");
 }

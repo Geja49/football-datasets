@@ -199,5 +199,106 @@ class TestParserEtFusion(unittest.TestCase):
                 os.environ["CLE_API_FOOTBALL"] = ancienne
 
 
+class TestCornersLdc(unittest.TestCase):
+    def test_corners_manquants_ldc(self):
+        matchs = [
+            {
+                "championnat": "Ligue des champions",
+                "saison": "2025-2026",
+                "date": "2026-01-10",
+                "domicile": "PSG",
+                "exterieur": "Bayern",
+                "buts_domicile": 2,
+                "buts_exterieur": 1,
+                "corners_domicile": "",
+                "corners_exterieur": "",
+            },
+            {
+                "championnat": "Ligue des champions",
+                "saison": "2025-2026",
+                "date": "2026-01-09",
+                "domicile": "Real",
+                "exterieur": "City",
+                "buts_domicile": 1,
+                "buts_exterieur": 1,
+                "corners_domicile": 5,
+                "corners_exterieur": 4,
+            },
+            {
+                "championnat": "Ligue 1",
+                "saison": "2025-2026",
+                "date": "2026-01-10",
+                "domicile": "Lyon",
+                "exterieur": "Lille",
+                "buts_domicile": 1,
+                "buts_exterieur": 0,
+                "corners_domicile": "",
+                "corners_exterieur": "",
+            },
+        ]
+        sans = api.lister_ldc_sans_corners(matchs, limite=10)
+        self.assertEqual(len(sans), 1)
+        self.assertEqual(sans[0]["domicile"], "PSG")
+
+    def test_extraire_corners_statistics(self):
+        data = {
+            "response": [
+                {
+                    "team": {"name": "Arsenal"},
+                    "statistics": [{"type": "Corner Kicks", "value": 7}],
+                },
+                {
+                    "team": {"name": "Chelsea"},
+                    "statistics": [{"type": "Corner Kicks", "value": 3}],
+                },
+            ]
+        }
+        dom, ext = api.extraire_corners_statistics(data)
+        self.assertEqual(dom, 7)
+        self.assertEqual(ext, 3)
+
+    def test_fusionner_corners_matchs(self):
+        existants = [
+            {
+                "championnat": "Ligue des champions",
+                "saison": api.SAISON,
+                "date": "2026-01-10",
+                "domicile": "PSG",
+                "exterieur": "Bayern",
+                "buts_domicile": 2,
+                "buts_exterieur": 1,
+                "corners_domicile": "",
+                "corners_exterieur": "",
+            }
+        ]
+        patches = [
+            {
+                "championnat": "Ligue des champions",
+                "saison": api.SAISON,
+                "date": "2026-01-10",
+                "domicile": "PSG",
+                "exterieur": "Bayern",
+                "corners_domicile": 6,
+                "corners_exterieur": 4,
+            }
+        ]
+        resultat, nb = api.fusionner_corners_matchs(existants, patches)
+        self.assertEqual(nb, 1)
+        self.assertEqual(resultat[0]["corners_domicile"], 6)
+        self.assertEqual(resultat[0]["corners_exterieur"], 4)
+
+    def test_corners_ldc_sans_cle(self):
+        ancienne = os.environ.pop("CLE_API_FOOTBALL", None)
+        original = api.charger_env
+        api.charger_env = lambda _racine: None
+        try:
+            stats = api.collecter_corners_ldc_fichier(limite=5)
+            self.assertEqual(stats["corners_maj"], 0)
+        finally:
+            api.charger_env = original
+            if ancienne is not None:
+                os.environ["CLE_API_FOOTBALL"] = ancienne
+
+
 if __name__ == "__main__":
     unittest.main()

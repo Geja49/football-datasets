@@ -38,9 +38,23 @@ SEUIL_MATCH_OUVERT = 1.15
 SEUIL_MATCH_FERME = 0.85
 # Cartons : au moins 3 matchs récents avec jaunes/rouges renseignés.
 SEUIL_CARTONS_FORME = 3
+# Corners : même seuil pour la forme récente.
+SEUIL_CORNERS_FORME = 3
+# Fautes (HF/AF football-data) : même seuil pour la forme récente.
+SEUIL_FAUTES_FORME = 3
+# Seuil over corners total (marché courant).
+SEUIL_CORNERS_OVER = 9.5
 # Ajustement Elo sur les lambda Poisson (simple, borne).
 FACTEUR_ELO_LAMBDA = 0.003
 MAX_AJUST_ELO_LAMBDA = 0.12
+# Style de jeu : libellés FR (pas de possession réelle en base).
+LIBELLES_STYLE_JEU = {
+    "offensif": "Offensif",
+    "defensif": "Défensif",
+    "possession": "Possession",
+    "direct": "Direct",
+    "equilibre": "Équilibré",
+}
 
 
 def saison_precedente(saison):
@@ -224,7 +238,9 @@ def _moyennes_matchs_ligue(connexion, championnat, saison):
             AVG(tirs_cadres_domicile), AVG(tirs_cadres_exterieur),
             AVG(tirs_domicile), AVG(tirs_exterieur),
             AVG(jaunes_domicile), AVG(jaunes_exterieur),
-            AVG(rouges_domicile), AVG(rouges_exterieur)
+            AVG(rouges_domicile), AVG(rouges_exterieur),
+            AVG(corners_domicile), AVG(corners_exterieur),
+            AVG(fautes_domicile), AVG(fautes_exterieur)
         FROM matchs
         WHERE championnat = ? AND saison = ?
           AND tirs_cadres_domicile IS NOT NULL
@@ -240,6 +256,10 @@ def _moyennes_matchs_ligue(connexion, championnat, saison):
         "jaunes_exterieur": _flottant(ligne[5]) or 2.2,
         "rouges_domicile": _flottant(ligne[6]) or 0.1,
         "rouges_exterieur": _flottant(ligne[7]) or 0.1,
+        "corners_domicile": _flottant(ligne[8]) or 5.0,
+        "corners_exterieur": _flottant(ligne[9]) or 4.5,
+        "fautes_domicile": _flottant(ligne[10]) or 11.5,
+        "fautes_exterieur": _flottant(ligne[11]) or 12.0,
     }
 
 
@@ -335,7 +355,8 @@ def _profil_matchs(connexion, championnat, saison, nom_matchs, a_domicile, date_
             f"""
             SELECT
                 AVG(tirs_cadres_domicile), AVG(tirs_domicile),
-                AVG(jaunes_domicile), AVG(rouges_domicile), COUNT(*)
+                AVG(jaunes_domicile), AVG(rouges_domicile),
+                AVG(corners_domicile), AVG(fautes_domicile), COUNT(*)
             FROM matchs
             WHERE championnat = ? AND saison = ? AND domicile = ?
               AND tirs_cadres_domicile IS NOT NULL
@@ -348,7 +369,8 @@ def _profil_matchs(connexion, championnat, saison, nom_matchs, a_domicile, date_
             f"""
             SELECT
                 AVG(tirs_cadres_exterieur), AVG(tirs_exterieur),
-                AVG(jaunes_exterieur), AVG(rouges_exterieur), COUNT(*)
+                AVG(jaunes_exterieur), AVG(rouges_exterieur),
+                AVG(corners_exterieur), AVG(fautes_exterieur), COUNT(*)
             FROM matchs
             WHERE championnat = ? AND saison = ? AND exterieur = ?
               AND tirs_cadres_exterieur IS NOT NULL
@@ -361,7 +383,9 @@ def _profil_matchs(connexion, championnat, saison, nom_matchs, a_domicile, date_
         "tirs": _flottant(ligne[1]),
         "jaunes": _flottant(ligne[2]),
         "rouges": _flottant(ligne[3]),
-        "nb": int(ligne[4] or 0),
+        "corners": _flottant(ligne[4]),
+        "fautes": _flottant(ligne[5]),
+        "nb": int(ligne[6] or 0),
     }
 
 
@@ -385,7 +409,9 @@ def forme_recente(connexion, championnat, nom_matchs, date_limite=None):
         SELECT date, saison, domicile, exterieur,
                buts_domicile, buts_exterieur, resultat,
                jaunes_domicile, jaunes_exterieur,
-               rouges_domicile, rouges_exterieur
+               rouges_domicile, rouges_exterieur,
+               corners_domicile, corners_exterieur,
+               fautes_domicile, fautes_exterieur
         FROM matchs
         WHERE championnat = ?
           AND (domicile = ? OR exterieur = ?)
@@ -404,6 +430,10 @@ def forme_recente(connexion, championnat, nom_matchs, date_limite=None):
     jaunes = 0
     rouges = 0
     nb_avec_cartons = 0
+    corners = 0
+    nb_avec_corners = 0
+    fautes = 0
+    nb_avec_fautes = 0
     matchs = []
     for ligne in lignes:
         est_domicile = ligne["domicile"] == nom_matchs
@@ -417,6 +447,14 @@ def forme_recente(connexion, championnat, nom_matchs, date_limite=None):
             jaunes += int(j)
             rouges += int(r or 0)
             nb_avec_cartons += 1
+        c = ligne["corners_domicile"] if est_domicile else ligne["corners_exterieur"]
+        if c is not None:
+            corners += int(c)
+            nb_avec_corners += 1
+        f = ligne["fautes_domicile"] if est_domicile else ligne["fautes_exterieur"]
+        if f is not None:
+            fautes += int(f)
+            nb_avec_fautes += 1
         if bp > bc:
             issue = "V"
         elif bp < bc:
@@ -434,6 +472,7 @@ def forme_recente(connexion, championnat, nom_matchs, date_limite=None):
                 "issue": issue,
                 "jaunes": int(j) if j is not None else None,
                 "rouges": int(r) if r is not None else None,
+                "fautes": int(f) if f is not None else None,
             }
         )
     victoires = serie.count("V")
@@ -449,6 +488,12 @@ def forme_recente(connexion, championnat, nom_matchs, date_limite=None):
         "nb_avec_cartons": nb_avec_cartons,
         "jaunes_par_match": _arrondi(jaunes / nb_avec_cartons, 1) if nb_avec_cartons else None,
         "rouges_par_match": _arrondi(rouges / nb_avec_cartons, 2) if nb_avec_cartons else None,
+        "corners": corners if nb_avec_corners else None,
+        "nb_avec_corners": nb_avec_corners,
+        "corners_par_match": _arrondi(corners / nb_avec_corners, 1) if nb_avec_corners else None,
+        "fautes": fautes if nb_avec_fautes else None,
+        "nb_avec_fautes": nb_avec_fautes,
+        "fautes_par_match": _arrondi(fautes / nb_avec_fautes, 1) if nb_avec_fautes else None,
         "matchs": matchs,
     }
 
@@ -555,6 +600,20 @@ def _phrases(profil, moyennes, a_domicile, donnees_limitees):
             f"Risque de carton rouge {lieu} plus élevé "
             f"({rouges:.2f} par match, moyenne {moy_r:.2f})."
         )
+
+    fautes = profil.get("fautes")
+    moy_f = moyennes.get("fautes_" + suffixe)
+    if fautes is not None and moy_f:
+        if fautes >= moy_f * SEUIL_FORCE:
+            faiblesses.append(
+                f"Beaucoup de fautes {lieu} "
+                f"({fautes:.1f} par match, moyenne {moy_f:.1f}) : match plus physique."
+            )
+        elif fautes <= moy_f * SEUIL_FAIBLESSE:
+            forces.append(
+                f"Peu de fautes {lieu} "
+                f"({fautes:.1f} par match, moyenne {moy_f:.1f}) : jeu plus propre."
+            )
 
     if not forces:
         forces.append(
@@ -755,6 +814,200 @@ def _scenario_cartons(lam_j_dom, lam_j_ext, lam_r_dom, lam_r_ext, moy_j_match, s
     }
 
 
+def _poisson_au_moins(k_entier, lam):
+    """P(X >= k_entier) pour X ~ Poisson(lam), k entier."""
+    if k_entier <= 0:
+        return 1.0
+    lam = max(0.01, lam)
+    cumul = sum(_poisson(i, lam) for i in range(k_entier))
+    return max(0.0, min(1.0, 1.0 - cumul))
+
+
+def _lambda_corners_equipe(forme, saison_corners, moy_corners):
+    """5 derniers matchs si assez de corners, sinon moyenne de saison, sinon ligue."""
+    if (
+        forme.get("nb_avec_corners", 0) >= SEUIL_CORNERS_FORME
+        and forme.get("corners_par_match") is not None
+    ):
+        return float(forme["corners_par_match"]), "5 derniers matchs"
+    if saison_corners is not None:
+        return float(saison_corners), "saison"
+    return float(moy_corners), "moyenne du championnat"
+
+
+def _scenario_corners(lam_c_dom, lam_c_ext, moy_c_match, sources, seuil_over=SEUIL_CORNERS_OVER):
+    """Estimation Poisson simple du total corners."""
+    lam_c = max(0.5, lam_c_dom + lam_c_ext)
+    seuil_entier = int(seuil_over) + 1
+    p_over = _poisson_au_moins(seuil_entier, lam_c)
+    if lam_c >= moy_c_match * SEUIL_FORCE:
+        rythme = "eleve"
+        titre = "Corners élevés"
+    elif lam_c <= moy_c_match * SEUIL_FAIBLESSE:
+        rythme = "faible"
+        titre = "Peu de corners"
+    else:
+        rythme = "dans_la_moyenne"
+        titre = "Corners dans la moyenne"
+    if sources[0] == sources[1]:
+        source = sources[0]
+    else:
+        source = f"{sources[0]} (domicile), {sources[1]} (extérieur)"
+    texte = (
+        f"On attend environ {lam_c:.1f} corners au total "
+        f"({lam_c_dom:.1f} pour les locaux, {lam_c_ext:.1f} pour les visiteurs), "
+        f"d'après {source}."
+    )
+    if p_over >= 0.35:
+        texte += (
+            f" Plus de {seuil_over:.1f} corners est plausible "
+            f"(environ {100 * p_over:.0f} % des cas)."
+        )
+    return {
+        "corners_domicile": _arrondi(lam_c_dom, 1),
+        "corners_exterieur": _arrondi(lam_c_ext, 1),
+        "corners_match": _arrondi(lam_c, 1),
+        "moyenne_championnat": _arrondi(moy_c_match, 1),
+        "seuil_over": seuil_over,
+        "p_corners_total_over": _arrondi(100 * p_over, 1),
+        "rythme": rythme,
+        "titre": titre,
+        "source": source,
+        "texte": texte,
+    }
+
+
+def _lambda_fautes_equipe(forme, saison_fautes, moy_fautes):
+    """5 derniers matchs si assez de fautes HF/AF, sinon saison, sinon ligue."""
+    if (
+        forme.get("nb_avec_fautes", 0) >= SEUIL_FAUTES_FORME
+        and forme.get("fautes_par_match") is not None
+    ):
+        return float(forme["fautes_par_match"]), "5 derniers matchs"
+    if saison_fautes is not None:
+        return float(saison_fautes), "saison"
+    return float(moy_fautes), "moyenne du championnat"
+
+
+def _scenario_fautes(lam_f_dom, lam_f_ext, moy_f_match, sources):
+    """Estimation simple des fautes (colonnes HF/AF football-data)."""
+    lam_f = max(1.0, lam_f_dom + lam_f_ext)
+    if lam_f >= moy_f_match * SEUIL_FORCE:
+        rythme = "physique"
+        titre = "Match physique"
+    elif lam_f <= moy_f_match * SEUIL_FAIBLESSE:
+        rythme = "propre"
+        titre = "Peu de fautes"
+    else:
+        rythme = "dans_la_moyenne"
+        titre = "Fautes dans la moyenne"
+    if sources[0] == sources[1]:
+        source = sources[0]
+    else:
+        source = f"{sources[0]} (domicile), {sources[1]} (extérieur)"
+    texte = (
+        f"On attend environ {lam_f:.1f} fautes au total "
+        f"({lam_f_dom:.1f} pour les locaux, {lam_f_ext:.1f} pour les visiteurs), "
+        f"d'après {source} (HF/AF football-data)."
+    )
+    return {
+        "fautes_domicile": _arrondi(lam_f_dom, 1),
+        "fautes_exterieur": _arrondi(lam_f_ext, 1),
+        "fautes_match": _arrondi(lam_f, 1),
+        "moyenne_championnat": _arrondi(moy_f_match, 1),
+        "rythme": rythme,
+        "titre": titre,
+        "source": source,
+        "texte": texte,
+    }
+
+
+def classer_style_de_jeu(
+    xg_marques,
+    xg_encaisses,
+    tirs,
+    corners,
+    moyennes,
+    a_domicile,
+    donnees_limitees=False,
+):
+    """
+    Style simple à partir des stats déjà en base (pas de possession réelle).
+
+    Règles (priorité) :
+    - offensif : xG marqués élevés et tirs élevés
+    - defensif : xG encaissés bas (et pas déjà offensif)
+    - direct : beaucoup de tirs par rapport aux corners (proxy vertical)
+    - possession : beaucoup de corners, tirs modérés (proxy construction ;
+      libellé honnête : pas de % possession en base)
+    - equilibre : sinon
+    """
+    suffixe = "domicile" if a_domicile else "exterieur"
+    moy_xg = moyennes.get("xg_" + suffixe) or 1.4
+    moy_enc = moyennes.get("xg_encaisses_" + suffixe) or 1.1
+    moy_tirs = moyennes.get("tirs_" + suffixe) or 11.0
+    moy_corners = moyennes.get("corners_" + suffixe) or 5.0
+
+    if donnees_limitees or xg_marques is None or xg_encaisses is None:
+        return {
+            "code": "equilibre",
+            "libelle": LIBELLES_STYLE_JEU["equilibre"],
+            "explication": (
+                "Trop peu de matchs pour classer le style : profil équilibré par défaut."
+            ),
+            "proxy_possession": False,
+        }
+
+    tirs_val = tirs if tirs is not None else moy_tirs
+    corners_val = corners if corners is not None else moy_corners
+    ratio_tirs_corners = tirs_val / max(corners_val, 0.5)
+    moy_ratio = moy_tirs / max(moy_corners, 0.5)
+
+    if (
+        xg_marques >= moy_xg * SEUIL_FORCE
+        and tirs_val >= moy_tirs * SEUIL_FORCE
+    ):
+        code = "offensif"
+        explication = (
+            f"Beaucoup d'occasions ({xg_marques:.2f} xG) et de tirs "
+            f"({tirs_val:.1f}) par rapport à la moyenne."
+        )
+    elif xg_encaisses <= moy_enc * SEUIL_FAIBLESSE:
+        code = "defensif"
+        explication = (
+            f"Peu d'occasions concédées ({xg_encaisses:.2f} xG encaissés, "
+            f"moyenne {moy_enc:.2f})."
+        )
+    elif ratio_tirs_corners >= moy_ratio * SEUIL_FORCE:
+        code = "direct"
+        explication = (
+            f"Beaucoup de tirs ({tirs_val:.1f}) pour peu de corners "
+            f"({corners_val:.1f}) : jeu plus direct (proxy sans possession)."
+        )
+    elif (
+        corners_val >= moy_corners * SEUIL_FORCE
+        and tirs_val <= moy_tirs * SEUIL_FORCE
+    ):
+        code = "possession"
+        explication = (
+            f"Beaucoup de corners ({corners_val:.1f}) sans volume de tirs excessif "
+            f"({tirs_val:.1f}) : proxy « possession / construction » "
+            "(pas de % possession en base)."
+        )
+    else:
+        code = "equilibre"
+        explication = (
+            "Profil proche de la moyenne : ni très offensif, ni très défensif."
+        )
+
+    return {
+        "code": code,
+        "libelle": LIBELLES_STYLE_JEU[code],
+        "explication": explication,
+        "proxy_possession": code == "possession",
+    }
+
+
 def _scenarios_detailles(pred, cartons, moy_xg_total):
     """Quatre lectures du match : rythme, buts, les deux marquent, cartons."""
     total_xg = (pred["xg_prevu_domicile"] or 0) + (pred["xg_prevu_exterieur"] or 0)
@@ -872,7 +1125,7 @@ def _a_motif(phrases, motifs):
     return False
 
 
-def _recit_scenario(nom_dom, nom_ext, domicile, exterieur, pred, cartons):
+def _recit_scenario(nom_dom, nom_ext, domicile, exterieur, pred, cartons, fautes=None):
     """
     Récit type bande-annonce : enjeu, intrigue, dénouement probable.
     3 à 6 phrases fluides ; les chiffres restent secondaires.
@@ -889,8 +1142,13 @@ def _recit_scenario(nom_dom, nom_ext, domicile, exterieur, pred, cartons):
     def_e_faible = _a_motif(exterieur.get("faiblesses"), ["défense"])
     jeu_rugueux = _a_motif(
         (domicile.get("faiblesses") or []) + (exterieur.get("faiblesses") or []),
-        ["jaunes", "rouges"],
+        ["jaunes", "rouges", "fautes"],
     )
+
+    style_d = (domicile.get("style_de_jeu") or {}).get("libelle")
+    style_e = (exterieur.get("style_de_jeu") or {}).get("libelle")
+    code_d = (domicile.get("style_de_jeu") or {}).get("code")
+    code_e = (exterieur.get("style_de_jeu") or {}).get("code")
 
     # --- Début : l'affiche / l'enjeu ---
     atouts_dom = []
@@ -927,6 +1185,19 @@ def _recit_scenario(nom_dom, nom_ext, domicile, exterieur, pred, cartons):
             f"Affiche : {nom_dom} reçoit {nom_ext}. "
             "Sur le papier, peu d'écart : le match se jouera sur les détails."
         )
+    if (
+        style_d
+        and style_e
+        and code_d
+        and code_e
+        and code_d != "equilibre"
+        and code_e != "equilibre"
+    ):
+        debut += f" Styles : {nom_dom} plutôt {style_d.lower()}, {nom_ext} plutôt {style_e.lower()}."
+    elif style_d and code_d and code_d != "equilibre":
+        debut += f" {nom_dom} affiche un style plutôt {style_d.lower()}."
+    elif style_e and code_e and code_e != "equilibre":
+        debut += f" {nom_ext} affiche un style plutôt {style_e.lower()}."
     phrases.append(debut)
 
     # --- Milieu : l'intrigue / la tension ---
@@ -1020,7 +1291,18 @@ def _recit_scenario(nom_dom, nom_ext, domicile, exterieur, pred, cartons):
 
     if jeu_rugueux:
         jaunes = cartons.get("jaunes_match")
-        if jaunes is not None:
+        fautes_match = (fautes or {}).get("fautes_match")
+        if fautes_match is not None and jaunes is not None:
+            intrigue.append(
+                f"Sous la pression, les fautes peuvent s'accumuler "
+                f"(environ {fautes_match} fautes et {jaunes} cartons jaunes attendus)."
+            )
+        elif fautes_match is not None:
+            intrigue.append(
+                f"Sous la pression, les fautes peuvent s'accumuler "
+                f"(environ {fautes_match} fautes attendues)."
+            )
+        elif jaunes is not None:
             intrigue.append(
                 f"Sous la pression, les fautes peuvent s'accumuler "
                 f"(environ {jaunes} cartons jaunes attendus)."
@@ -1029,6 +1311,10 @@ def _recit_scenario(nom_dom, nom_ext, domicile, exterieur, pred, cartons):
             intrigue.append(
                 "Sous la pression, les fautes et les cartons peuvent s'accumuler."
             )
+    elif fautes and fautes.get("rythme") == "physique":
+        intrigue.append(
+            f"Match plutôt physique : environ {fautes.get('fautes_match')} fautes attendues."
+        )
 
     if len(intrigue) <= 2:
         phrases.extend(intrigue)
@@ -1159,6 +1445,18 @@ def comparaison_previsions_reel(pred, match_joue):
     if ligne_rouges:
         lignes.append(ligne_rouges)
 
+    fautes = pred.get("fautes") or {}
+    ligne_fautes = _ligne_comparaison(
+        "Fautes",
+        fautes.get("fautes_domicile"),
+        fautes.get("fautes_exterieur"),
+        match_joue.get("fautes_domicile"),
+        match_joue.get("fautes_exterieur"),
+        decimales=1,
+    )
+    if ligne_fautes:
+        lignes.append(ligne_fautes)
+
     return {"lignes": lignes}
 
 
@@ -1240,6 +1538,23 @@ def _bilan_match(pred, match_joue):
             phrase += ")"
         phrase += "."
         points.append(phrase)
+
+    f_d = match_joue.get("fautes_domicile")
+    f_e = match_joue.get("fautes_exterieur")
+    fautes_pred = pred.get("fautes") or {}
+    if f_d is not None and f_e is not None:
+        total_f = int(f_d) + int(f_e)
+        prevu_f = fautes_pred.get("fautes_match")
+        phrase_f = f"{total_f} fautes au total"
+        if prevu_f is not None:
+            phrase_f += f" (environ {prevu_f} attendues"
+            if total_f >= prevu_f + 4:
+                phrase_f += " : plus physique que prévu"
+            elif total_f <= prevu_f - 4:
+                phrase_f += " : plus propre que prévu"
+            phrase_f += ")"
+        phrase_f += "."
+        points.append(phrase_f)
 
     return {"points": points}
 
@@ -1508,6 +1823,12 @@ def analyser_rencontre(
         rouges, _ = _taux_ou_moyenne(
             stats["rouges"], stats["nb"], moyennes["rouges_" + suffixe]
         )
+        corners, _ = _taux_ou_moyenne(
+            stats["corners"], stats["nb"], moyennes["corners_" + suffixe]
+        )
+        tirs, _ = _taux_ou_moyenne(
+            stats["tirs"], stats["nb"], moyennes["tirs_" + suffixe]
+        )
         donnees_limitees = lim_att or lim_def
         profil = {
             "xg_marques": xg_marques,
@@ -1515,8 +1836,19 @@ def analyser_rencontre(
             "tirs_cadres": tirs_cadres,
             "jaunes": jaunes,
             "rouges": rouges,
+            "corners": corners,
+            "fautes": stats["fautes"] if stats["fautes"] is not None else None,
         }
         phrases = _phrases(profil, moyennes, a_domicile, donnees_limitees)
+        style = classer_style_de_jeu(
+            xg_marques,
+            xg_encaisses,
+            tirs,
+            corners,
+            moyennes,
+            a_domicile,
+            donnees_limitees=donnees_limitees,
+        )
         return {
             "nom": nom_matchs,
             "nom_xg": nom_xg,
@@ -1527,16 +1859,25 @@ def analyser_rencontre(
                 xg["xg_encaisses"] if xg["xg_encaisses"] is not None else xg_encaisses
             ),
             "tirs_cadres": _arrondi(stats["tirs_cadres"], 1),
+            "tirs": _arrondi(stats["tirs"], 1),
             "jaunes": _arrondi(stats["jaunes"], 1),
             "rouges": _arrondi(stats["rouges"], 2),
+            "corners": _arrondi(stats["corners"], 1),
+            "fautes": _arrondi(stats["fautes"], 1),
             "forme": forme_recente(
                 connexion, championnat, nom_matchs, date_limite=date_limite
             ),
             "forces": phrases["forces"],
             "faiblesses": phrases["faiblesses"],
+            "style_de_jeu": style,
             "donnees_limitees": donnees_limitees,
             "xg_marques_modele": xg_marques,
             "xg_encaisses_modele": xg_encaisses,
+            "corners_modele": corners,
+            # Uniquement si HF/AF réels en base (pas de défaut inventé pour LDC).
+            "fautes_modele": (
+                _arrondi(stats["fautes"], 1) if stats["fautes"] is not None else None
+            ),
         }
 
     domicile = bloc(nom_domicile, True)
@@ -1635,11 +1976,70 @@ def analyser_rencontre(
         lam_j_dom, lam_j_ext, lam_r_dom, lam_r_ext, moy_j_match, [src_dom, src_ext]
     )
     pred["cartons"] = cartons
+
+    moy_c_match = moyennes["corners_domicile"] + moyennes["corners_exterieur"]
+    lam_c_dom, src_c_dom = _lambda_corners_equipe(
+        domicile["forme"],
+        domicile.get("corners_modele"),
+        moyennes["corners_domicile"],
+    )
+    lam_c_ext, src_c_ext = _lambda_corners_equipe(
+        exterieur["forme"],
+        exterieur.get("corners_modele"),
+        moyennes["corners_exterieur"],
+    )
+    corners = _scenario_corners(
+        lam_c_dom, lam_c_ext, moy_c_match, [src_c_dom, src_c_ext]
+    )
+    pred["corners"] = corners
+    pred["corners_prevus_domicile"] = corners["corners_domicile"]
+    pred["corners_prevus_exterieur"] = corners["corners_exterieur"]
+    pred["p_corners_total_over_9_5"] = corners.get("p_corners_total_over")
+
+    moy_f_match = moyennes["fautes_domicile"] + moyennes["fautes_exterieur"]
+    fautes_disponibles = (
+        domicile["forme"].get("nb_avec_fautes", 0) > 0
+        or exterieur["forme"].get("nb_avec_fautes", 0) > 0
+        or domicile.get("fautes_modele") is not None
+        or exterieur.get("fautes_modele") is not None
+    )
+    if fautes_disponibles:
+        lam_f_dom, src_f_dom = _lambda_fautes_equipe(
+            domicile["forme"],
+            domicile.get("fautes_modele"),
+            moyennes["fautes_domicile"],
+        )
+        lam_f_ext, src_f_ext = _lambda_fautes_equipe(
+            exterieur["forme"],
+            exterieur.get("fautes_modele"),
+            moyennes["fautes_exterieur"],
+        )
+        fautes = _scenario_fautes(
+            lam_f_dom, lam_f_ext, moy_f_match, [src_f_dom, src_f_ext]
+        )
+        fautes["disponible"] = True
+    else:
+        fautes = {
+            "disponible": False,
+            "fautes_domicile": None,
+            "fautes_exterieur": None,
+            "fautes_match": None,
+            "moyenne_championnat": None,
+            "rythme": None,
+            "titre": "Fautes non disponibles",
+            "source": None,
+            "texte": (
+                "Fautes non renseignées pour ce match "
+                "(souvent le cas en Ligue des champions : pas de HF/AF)."
+            ),
+        }
+    pred["fautes"] = fautes
+
     pred["scenarios"] = _scenarios_detailles(
         pred, cartons, moyennes["xg_domicile"] + moyennes["xg_exterieur"]
     )
     pred["recit"] = _recit_scenario(
-        nom_domicile, nom_exterieur, domicile, exterieur, pred, cartons
+        nom_domicile, nom_exterieur, domicile, exterieur, pred, cartons, fautes
     )
     pred["texte"] = _texte_prediction(
         nom_domicile,
@@ -1652,8 +2052,12 @@ def analyser_rencontre(
 
     domicile.pop("xg_marques_modele", None)
     domicile.pop("xg_encaisses_modele", None)
+    domicile.pop("corners_modele", None)
+    domicile.pop("fautes_modele", None)
     exterieur.pop("xg_marques_modele", None)
     exterieur.pop("xg_encaisses_modele", None)
+    exterieur.pop("corners_modele", None)
+    exterieur.pop("fautes_modele", None)
 
     match_joue = lire_match_joue(
         connexion, championnat, saison, nom_domicile, nom_exterieur

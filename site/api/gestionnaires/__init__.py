@@ -9,6 +9,7 @@ from gestionnaires.equipes import routeur_equipes
 from gestionnaires.forum import routeur_forum
 from gestionnaires.joueurs import routeur_joueurs
 from gestionnaires.meilleurs import routeur_meilleurs
+from gestionnaires.solo import routeur_solo
 from gestionnaires.stats_modele import routeur_stats_modele
 
 __all__ = [
@@ -21,5 +22,6 @@ __all__ = [
     "routeur_forum",
     "routeur_joueurs",
     "routeur_meilleurs",
+    "routeur_solo",
     "routeur_stats_modele",
 ]

@@ -46,6 +46,11 @@ def main():
         lancer("enregistrer_analyses.py", obligatoire=False)
     except Exception as erreur:  # noqa: BLE001
         print(f"enregistrer_analyses.py ignore ({erreur}), on continue.")
+    # Solo : figer / juger / calibrer selon le jour (idempotent, non bloquant).
+    try:
+        lancer("boucle_amelioration.py", obligatoire=False)
+    except Exception as erreur:  # noqa: BLE001
+        print(f"boucle_amelioration.py ignore ({erreur}), on continue.")
     print("\nTermine. Rechargez la page du site (localhost:5173).")
     print(
         "Pour rester a jour ensuite : python scripts/surveiller_sources.py"
