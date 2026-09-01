@@ -23,19 +23,12 @@ defineProps({
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin: 28px 0 36px;
-  padding: 28px 20px 22px;
-  border-radius: 14px;
-  border: 1px solid color-mix(in srgb, #14b8a6 28%, #1a1a1a);
-  background:
-    radial-gradient(
-      ellipse 55% 42% at 50% 38%,
-      color-mix(in srgb, #14b8a6 10%, transparent),
-      transparent 68%
-    ),
-    #050505;
-  box-shadow: inset 0 1px 0 color-mix(in srgb, #14b8a6 10%, transparent);
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  margin: 24px 0 32px;
+  padding: 0 16px;
+  background: transparent;
 }
 
 .message-chargement {
@@ -44,17 +37,17 @@ defineProps({
   gap: 1px;
   margin: 0;
   font-size: clamp(0.9rem, 2.8vw, 1rem);
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  letter-spacing: 0.03em;
 }
 
 .message-texte {
-  color: #ffffff;
+  color: var(--texte);
 }
 
 .points span {
   display: inline-block;
-  color: #14b8a6;
+  color: var(--accent);
   animation: point-clignote 1.2s ease-in-out infinite;
   opacity: 0.25;
 }
@@ -79,8 +72,8 @@ defineProps({
 
 @media (max-width: 420px) {
   .chargement-scenario {
-    margin: 20px 0 28px;
-    padding: 22px 14px 18px;
+    margin: 18px 0 24px;
+    padding: 0 12px;
   }
 }
 

@@ -4,7 +4,6 @@ import { useRoute, useRouter } from "vue-router";
 import CalendrierMatchs from "../composants/CalendrierMatchs.vue";
 import ChargementPage from "../composants/ChargementPage.vue";
 import PortraitJoueur from "../composants/PortraitJoueur.vue";
-import DiagrammeDensites from "../composants/DiagrammeDensites.vue";
 import DiagrammeRadar from "../composants/DiagrammeRadar.vue";
 import { axesComparaisonLigue, axesDepuisEquipe } from "../composants/axesDiagramme.js";
 import { definirExtraNavigation, viderExtraNavigation } from "../contexteNavigation.js";
@@ -245,8 +244,7 @@ function analyserMatch(match) {
         <h2>Forces de l’équipe</h2>
         <p class="doux">
           Moyennes par match (buts, xG, tirs), forme sur 5 matchs, solidité et xG encaissés (inversés).
-          Comparaison à la moyenne du championnat (même saison) : polygone pointillé sur le radar,
-          losange sur les densités.
+          Comparaison à la moyenne du championnat (même saison) : polygone pointillé sur le radar.
           <template v-if="butsEquipe && (butsEquipe.matchs_championnat || butsEquipe.matchs_ldc)">
             Totaux buts (cartes) : championnat + Ligue des champions
             ({{ butsEquipe.matchs_championnat }} + {{ butsEquipe.matchs_ldc }} matchs).
@@ -263,10 +261,6 @@ function analyserMatch(match) {
             libelle-sujet="Club"
             libelle-comparaison="Moyenne ligue"
           />
-        </div>
-        <div class="cadre-diagramme">
-          <p class="titre-cadre">Densités (vs championnat)</p>
-          <DiagrammeDensites :lignes="axesEquipe" libelle-sujet="Club" />
         </div>
       </div>
       <div class="enveloppe-tableau" v-if="comparaisonLigue.length">

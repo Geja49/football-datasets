@@ -1,5 +1,9 @@
 """
-Fige les marchés Solo ≥ seuil (85 %, corners 75 %) dans analyses.db.
+Fige les marchés Solo (mêmes critères que la page live) dans analyses.db.
+
+Critères : victoire 1/2 la plus probable, buts si potentiel > 2,
+corners si total prévu > 8 — sans filtre d'exclusion 85 % / 75 %.
+Le badge « haute confiance ≥ 85 % » reste informatif.
 
 Usage (à la racine du projet) :
     python scripts/figer_pronos_solo.py

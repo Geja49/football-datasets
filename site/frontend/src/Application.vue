@@ -6,6 +6,7 @@ import AvatarUtilisateur from "./composants/AvatarUtilisateur.vue";
 import MentionJeuResponsable from "./composants/MentionJeuResponsable.vue";
 import Raccourcis from "./composants/Raccourcis.vue";
 import { extraNavigation } from "./contexteNavigation.js";
+import { aAccesSolo } from "./accesSolo.js";
 import { formaterPseudoAffichage } from "./formaterPseudo.js";
 import { chargerUtilisateurConnecte, chargerMatchsSansProno, chargerCompteNotifications, deconnecterUtilisateur, rechercher } from "./services/api.js";
 import { appliquerTheme, nomTheme } from "./themes.js";
@@ -17,7 +18,7 @@ const resultats = ref(null);
 const utilisateur = ref(null);
 const nbMatchsSansProno = ref(0);
 const nbNotifications = ref(0);
-/** @type {import('vue').Ref<'stats' | 'communaute' | 'compte' | null>} */
+/** @type {import('vue').Ref<'stats' | 'pronos' | 'communaute' | 'compte' | null>} */
 const menuOuvert = ref(null);
 let delai = null;
 
@@ -173,6 +174,12 @@ const statsActif = computed(
     route.query.onglet === "calendrier",
 );
 
+const pronosActif = computed(
+  () => route.path === "/solo" || route.path === "/bilan-pronos",
+);
+
+const accesPronos = computed(() => aAccesSolo(utilisateur.value));
+
 const communauteActif = computed(
   () =>
     route.path === "/classement-pronos" ||
@@ -184,7 +191,6 @@ const communauteActif = computed(
     route.path === "/notifications" ||
     route.path === "/mon-profil" ||
     route.path === "/moderation" ||
-    route.path === "/solo" ||
     route.path === "/forum" ||
     route.path.startsWith("/forum/"),
 );
@@ -303,6 +309,52 @@ function allerEquipe(item) {
         </div>
 
         <div
+          v-if="accesPronos"
+          class="nav-groupe"
+          :class="{ ouvert: menuOuvert === 'pronos' }"
+        >
+          <button
+            id="bouton-nav-pronos"
+            type="button"
+            class="bouton-nav-groupe"
+            :class="{ actif: pronosActif }"
+            :aria-expanded="menuOuvert === 'pronos'"
+            aria-haspopup="true"
+            aria-controls="menu-nav-pronos"
+            @click.stop="basculerMenu('pronos')"
+            @keydown="surToucheBoutonMenu($event, 'pronos')"
+          >
+            Pronos
+            <span class="fleche-nav" aria-hidden="true">▾</span>
+          </button>
+          <div
+            v-show="menuOuvert === 'pronos'"
+            id="menu-nav-pronos"
+            class="menu-nav-deroulant"
+            role="menu"
+            aria-labelledby="bouton-nav-pronos"
+            @click.stop
+          >
+            <router-link
+              class="lien-menu-nav"
+              role="menuitem"
+              to="/solo"
+              :class="{ actif: route.path === '/solo' }"
+            >
+              Weekend
+            </router-link>
+            <router-link
+              class="lien-menu-nav"
+              role="menuitem"
+              to="/bilan-pronos"
+              :class="{ actif: route.path === '/bilan-pronos' }"
+            >
+              Bilan
+            </router-link>
+          </div>
+        </div>
+
+        <div
           class="nav-groupe"
           :class="{ ouvert: menuOuvert === 'communaute' }"
         >
@@ -392,15 +444,6 @@ function allerEquipe(item) {
               >
                 {{ nbNotifications > 9 ? "9+" : nbNotifications }}
               </span>
-            </router-link>
-            <router-link
-              v-if="utilisateur?.est_admin"
-              class="lien-menu-nav"
-              role="menuitem"
-              to="/solo"
-              :class="{ actif: route.path === '/solo' }"
-            >
-              Solo
             </router-link>
             <router-link
               v-if="utilisateur?.est_admin"

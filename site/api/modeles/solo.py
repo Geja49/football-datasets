@@ -1,4 +1,4 @@
-"""Modèles Pydantic — page admin Solo (pronos weekend)."""
+"""Modèles Pydantic — page Solo (pronos weekend)."""
 
 from __future__ import annotations
 
@@ -61,28 +61,42 @@ class VerdictMarche(BaseModel):
 
 
 class MarcheQualifie(BaseModel):
-    """Marché retenu pour un match (seuil ≥ 85 % ou signal cartons)."""
+    """Marché Solo (victoire / buts / cartons / BTTS)."""
 
     type: Literal[
         "victoire_domicile",
         "victoire_exterieur",
         "btts",
+        "over_1_5",
+        "over_1_5_domicile",
+        "over_1_5_exterieur",
         "over_2_5",
         "cartons_jaunes",
+        "cartons_over_1_5",
+        "cartons_over_1_5_domicile",
+        "cartons_over_1_5_exterieur",
     ]
     libelle: str
     probabilite: float | None = None
     signal_fort: bool = False
+    haute_confiance: bool = False
+    mise_en_avant: bool = False
     detail: str | None = None
     verdict: VerdictMarche | None = None
 
 
 class CornersMatch(BaseModel):
-    """Corners — prévision Poisson (total attendu, signal élevé)."""
+    """Corners — total prévu ; potentiel si total > 8 ; fort si > 9."""
 
     disponible: bool
     message: str | None = None
     probabilite: float | None = None
+    total_prevu: float | None = None
+    ligne_over: float | None = None
+    potentiel: bool = False
+    fort: bool = False
+    haute_confiance: bool = False
+    mise_en_avant: bool = False
     detail: str | None = None
     verdict: VerdictMarche | None = None
 
@@ -104,7 +118,13 @@ class MatchPronoWeekend(BaseModel):
     journee: str | None = None
     domicile: str
     exterieur: str
+    url_logo_domicile: str | None = None
+    url_logo_exterieur: str | None = None
     score_modal: str | None = None
+    # Affiche compacte : potentiel buts (xG total + proba over 1.5 / 2.5).
+    buts_prevus_total: float | None = None
+    proba_over_1_5: float | None = None
+    proba_over_2_5: float | None = None
     marches: list[MarcheQualifie]
     corners: CornersMatch
     match_physique: SignalMatchPhysique = Field(
@@ -133,6 +153,7 @@ class ReponsePronosWeekend(BaseModel):
     avertissement: str
     weekend: WeekendInfo
     seuil_probabilite: float
+    seuil_mise_en_avant: float = 75.0
     nb_matchs_analyses: int
     nb_matchs_avec_prono: int
     pronos: list[MatchPronoWeekend]
@@ -166,11 +187,23 @@ class DetailVerdictSolo(BaseModel):
     buts_exterieur: int | None = None
 
 
+class ParametresBilanPronos(ParametresPronosWeekend):
+    """Query GET /api/solo/bilan-pronos (écarts ≥ seuil)."""
+
+    proba_min: float | None = Field(
+        default=None,
+        ge=0.0,
+        le=100.0,
+        description="Probabilité minimale prédite (défaut serveur : 70).",
+    )
+
+
 class ReponseBilanSolo(BaseModel):
-    """Réponse GET /api/solo/bilan-weekend."""
+    """Réponse GET /api/solo/bilan-weekend et /api/solo/bilan-pronos."""
 
     weekend: WeekendInfo
     fige_le: str | None = None
+    seuil_probabilite: float | None = None
     nb_pronos: int
     nb_juges: int
     nb_vrais: int

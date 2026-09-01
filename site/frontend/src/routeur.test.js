@@ -13,6 +13,7 @@ const routesAttendues = [
   "/mon-profil",
   "/moderation",
   "/solo",
+  "/bilan-pronos",
   "/forum",
   "/forum/sujet/:id",
   "/forum/:championnat",

@@ -374,7 +374,7 @@ export function traiterSignalementAdmin(signalementId, statut = "traite") {
   });
 }
 
-/** Pronos weekend admin Solo (figés si snapshot BD, sinon live ≥ 85 %). */
+/** Pronos weekend Solo (admin ou super utilisateur ; figés si snapshot BD, sinon live). */
 export function chargerPronosWeekendSolo({ dateDebut, championnat } = {}) {
   const params = new URLSearchParams();
   if (dateDebut) params.set("date_debut", dateDebut);
@@ -385,13 +385,25 @@ export function chargerPronosWeekendSolo({ dateDebut, championnat } = {}) {
   });
 }
 
-/** Bilan hit-rate des marchés Solo figés (admin). */
+/** Bilan hit-rate des marchés Solo figés (admin ou super utilisateur). */
 export function chargerBilanWeekendSolo({ dateDebut, championnat } = {}) {
   const params = new URLSearchParams();
   if (dateDebut) params.set("date_debut", dateDebut);
   if (championnat) params.set("championnat", championnat);
   const query = params.toString();
   return getJson(`/api/solo/bilan-weekend${query ? `?${query}` : ""}`, {
+    cache: false,
+  });
+}
+
+/** Écarts pronos vs réalité — marchés figés à proba ≥ seuil (défaut 70 %). */
+export function chargerBilanPronos({ dateDebut, championnat, probaMin } = {}) {
+  const params = new URLSearchParams();
+  if (dateDebut) params.set("date_debut", dateDebut);
+  if (championnat) params.set("championnat", championnat);
+  if (probaMin != null) params.set("proba_min", String(probaMin));
+  const query = params.toString();
+  return getJson(`/api/solo/bilan-pronos${query ? `?${query}` : ""}`, {
     cache: false,
   });
 }

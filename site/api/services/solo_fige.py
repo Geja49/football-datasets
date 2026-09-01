@@ -29,9 +29,15 @@ from requetes.solo import (
 )
 from services.solo import (
     AVERTISSEMENT_SOLO,
-    SEUIL_CORNERS,
+    LIGNE_CORNERS_OVER_8_5,
+    SEUIL_CORNERS_FORT,
+    SEUIL_HAUTE_CONFIANCE,
+    SEUIL_MISE_EN_AVANT,
     SEUIL_PROBABILITE,
+    _cle_tri_marche,
     construire_pronos_weekend,
+    enrichir_logos_pronos,
+    filtrer_reponse_pronos_utilisateur,
     grouper_pronos_par_championnat,
     libelle_weekend,
     plage_weekend,
@@ -43,13 +49,29 @@ TYPE_VERS_API = {
     "victoire_1": "victoire_domicile",
     "victoire_2": "victoire_exterieur",
     "btts": "btts",
+    "over_15": "over_1_5",
+    "over_15_dom": "over_1_5_domicile",
+    "over_15_ext": "over_1_5_exterieur",
     "over_25": "over_2_5",
     "cartons": "cartons_jaunes",
+    "cartons_15": "cartons_over_1_5",
+    "cartons_15_dom": "cartons_over_1_5_domicile",
+    "cartons_15_ext": "cartons_over_1_5_exterieur",
 }
 TYPE_DEPUIS_API = {v: k for k, v in TYPE_VERS_API.items()}
 TYPE_CORNERS = "corners_over_95"
 
+# Types BD cartons : conservés pour calibration, exclus du bilan utilisateur.
+TYPES_MARCHES_CARTONS_BD = frozenset({
+    "cartons",
+    "cartons_15",
+    "cartons_15_dom",
+    "cartons_15_ext",
+})
+
 SEUIL_CARTONS_DEFAUT = 4
+# Seuil page bilan écarts : ne garder que les marchés figés ≥ 70 %.
+SEUIL_BILAN_PRONOS = 70.0
 
 
 def _maintenant_iso() -> str:
@@ -84,8 +106,8 @@ def figer_pronos_weekend(
     chemin_analyses=None,
 ) -> dict:
     """
-    Snapshot des marchés Solo ≥ seuil dans analyses.db.
-    Réutilise la même extraction live que la page Solo.
+    Snapshot des marchés Solo (mêmes critères que la page live) dans analyses.db.
+    Victoire / buts potentiel / corners total prévu > 8 — pas de filtre 85 % / 75 %.
     """
     weekend = _weekend_iso(date_debut)
     reponse = construire_pronos_weekend(
@@ -113,14 +135,19 @@ def figer_pronos_weekend(
                     continue
                 proba = float(marche.probabilite) if marche.probabilite is not None else 0.0
                 if marche.type == "cartons_jaunes" and marche.signal_fort and proba <= 0:
-                    proba = SEUIL_PROBABILITE  # signal fort sans % chiffré
+                    proba = SEUIL_HAUTE_CONFIANCE  # signal fort sans % chiffré
                 detail = {
                     "signal_fort": marche.signal_fort,
+                    "haute_confiance": marche.haute_confiance,
+                    "mise_en_avant": marche.mise_en_avant,
                     "detail": marche.detail,
                     "type_api": marche.type,
                 }
                 if marche.type == "cartons_jaunes":
                     detail["seuil_jaunes"] = _extraire_seuil_cartons(marche.libelle)
+                if marche.type == "over_2_5":
+                    detail["buts_prevus_total"] = match.buts_prevus_total
+                    detail["proba_over_2_5"] = match.proba_over_2_5
 
                 ecrit = inserer_prono_solo(
                     connexion_analyses,
@@ -143,35 +170,51 @@ def figer_pronos_weekend(
                 else:
                     nb_ignores += 1
 
-            # Corners : marché séparé côté Solo live (≥ 75 %).
+            # Corners : même critère live (total prévu > 8).
             corners = match.corners
-            if corners and corners.disponible and corners.probabilite is not None:
-                if float(corners.probabilite) >= SEUIL_CORNERS:
-                    detail_c = {
-                        "detail": corners.detail,
-                        "type_api": TYPE_CORNERS,
-                        "seuil_ligne": 9.5,
-                    }
-                    ecrit = inserer_prono_solo(
-                        connexion_analyses,
-                        cle_match=cle,
-                        weekend_debut=weekend,
-                        championnat=match.championnat,
-                        saison=match.saison,
-                        date_match=match.date[:10],
-                        domicile=match.domicile,
-                        exterieur=match.exterieur,
-                        type_marche=TYPE_CORNERS,
-                        libelle_marche="Plus de 9,5 corners",
-                        probabilite=float(corners.probabilite),
-                        detail_json=json.dumps(detail_c, ensure_ascii=False),
-                        fige_le=fige_le,
-                        remplacer=forcer,
+            if (
+                corners
+                and corners.disponible
+                and corners.potentiel
+                and corners.probabilite is not None
+            ):
+                ligne = float(corners.ligne_over or LIGNE_CORNERS_OVER_8_5)
+                detail_c = {
+                    "detail": corners.detail,
+                    "type_api": TYPE_CORNERS,
+                    "seuil_ligne": ligne,
+                    "total_prevu": corners.total_prevu,
+                    "potentiel": True,
+                    "fort": bool(corners.fort),
+                    "haute_confiance": corners.haute_confiance,
+                    "mise_en_avant": corners.mise_en_avant,
+                }
+                libelle_c = f"Plus de {ligne} corners"
+                if corners.total_prevu is not None:
+                    libelle_c = (
+                        f"Corners (≈ {float(corners.total_prevu):.1f} prévus) "
+                        f"— plus de {ligne}"
                     )
-                    if ecrit:
-                        nb_figes += 1
-                    else:
-                        nb_ignores += 1
+                ecrit = inserer_prono_solo(
+                    connexion_analyses,
+                    cle_match=cle,
+                    weekend_debut=weekend,
+                    championnat=match.championnat,
+                    saison=match.saison,
+                    date_match=match.date[:10],
+                    domicile=match.domicile,
+                    exterieur=match.exterieur,
+                    type_marche=TYPE_CORNERS,
+                    libelle_marche=libelle_c,
+                    probabilite=float(corners.probabilite),
+                    detail_json=json.dumps(detail_c, ensure_ascii=False),
+                    fige_le=fige_le,
+                    remplacer=forcer,
+                )
+                if ecrit:
+                    nb_figes += 1
+                else:
+                    nb_ignores += 1
 
         connexion_analyses.commit()
     finally:
@@ -200,6 +243,26 @@ def _extraire_seuil_cartons(libelle: str | None) -> int:
             except ValueError:
                 break
     return SEUIL_CARTONS_DEFAUT
+
+
+def _extraire_buts_prevus(detail: str | None) -> float | None:
+    """Extrait le total buts depuis « Total buts prévu ≈ 2.6 »."""
+    if not detail:
+        return None
+    marqueur = "≈"
+    if marqueur not in detail:
+        return None
+    suite = detail.split(marqueur, 1)[1].strip().replace(",", ".")
+    nombre = ""
+    for car in suite:
+        if car.isdigit() or car == ".":
+            nombre += car
+        elif nombre:
+            break
+    try:
+        return float(nombre) if nombre else None
+    except ValueError:
+        return None
 
 
 def evaluer_verdict_marche(
@@ -245,6 +308,25 @@ def evaluer_verdict_marche(
             return True, "over_25_ok", f"Plus de 2,5 buts ({total} buts)"
         return False, "under_expected", f"Moins de 2,5 buts ({total} buts)"
 
+    if type_marche == "over_15":
+        total = buts_d + buts_e
+        vrai = total > 1.5
+        if vrai:
+            return True, "over_15_ok", f"Plus de 1,5 buts ({total} buts)"
+        return False, "under_15", f"Moins de 1,5 buts ({total} buts)"
+
+    if type_marche == "over_15_dom":
+        vrai = buts_d > 1.5
+        if vrai:
+            return True, "over_15_dom_ok", f"Domicile {buts_d} buts (> 1,5)"
+        return False, "over_15_dom_rate", f"Domicile {buts_d} buts (≤ 1,5)"
+
+    if type_marche == "over_15_ext":
+        vrai = buts_e > 1.5
+        if vrai:
+            return True, "over_15_ext_ok", f"Extérieur {buts_e} buts (> 1,5)"
+        return False, "over_15_ext_rate", f"Extérieur {buts_e} buts (≤ 1,5)"
+
     if type_marche == "cartons":
         j_d = score.get("jaunes_domicile")
         j_e = score.get("jaunes_exterieur")
@@ -256,6 +338,35 @@ def evaluer_verdict_marche(
         if vrai:
             return True, "cartons_eleves", f"{total_j} jaunes (≥ {seuil})"
         return False, "cartons_sous_seuil", f"{total_j} jaunes (< {seuil})"
+
+    if type_marche == "cartons_15":
+        j_d = score.get("jaunes_domicile")
+        j_e = score.get("jaunes_exterieur")
+        if j_d is None and j_e is None:
+            return None, "cartons_indisponibles", "Cartons jaunes absents du score"
+        total_j = (j_d or 0) + (j_e or 0)
+        vrai = total_j > 1.5
+        if vrai:
+            return True, "cartons_15_ok", f"{total_j} jaunes (> 1,5)"
+        return False, "cartons_15_rate", f"{total_j} jaunes (≤ 1,5)"
+
+    if type_marche == "cartons_15_dom":
+        j_d = score.get("jaunes_domicile")
+        if j_d is None:
+            return None, "cartons_indisponibles", "Cartons domicile absents"
+        vrai = int(j_d) > 1.5
+        if vrai:
+            return True, "cartons_15_dom_ok", f"Domicile {j_d} jaunes (> 1,5)"
+        return False, "cartons_15_dom_rate", f"Domicile {j_d} jaunes (≤ 1,5)"
+
+    if type_marche == "cartons_15_ext":
+        j_e = score.get("jaunes_exterieur")
+        if j_e is None:
+            return None, "cartons_indisponibles", "Cartons extérieur absents"
+        vrai = int(j_e) > 1.5
+        if vrai:
+            return True, "cartons_15_ext_ok", f"Extérieur {j_e} jaunes (> 1,5)"
+        return False, "cartons_15_ext_rate", f"Extérieur {j_e} jaunes (≤ 1,5)"
 
     if type_marche == TYPE_CORNERS:
         c_d = score.get("corners_domicile")
@@ -396,6 +507,8 @@ def construire_pronos_depuis_figes(
         meta = meta_match[cle]
         marches: list[MarcheQualifie] = []
         corners = CornersMatch(disponible=False, message="non disponible")
+        buts_prevus_total: float | None = None
+        proba_over_2_5: float | None = None
 
         for ligne in marches_lignes:
             type_db = ligne["type_marche"]
@@ -408,9 +521,28 @@ def construire_pronos_depuis_figes(
                     detail = {}
 
             if type_db == TYPE_CORNERS:
+                total_prevu = detail.get("total_prevu")
+                ligne_over = detail.get("seuil_ligne")
+                total_f = float(total_prevu) if total_prevu is not None else None
+                fort = bool(detail.get("fort"))
+                if not fort and total_f is not None:
+                    fort = total_f > SEUIL_CORNERS_FORT
+                proba_c = float(ligne["probabilite"])
+                haute_c = bool(
+                    detail.get("haute_confiance", proba_c >= SEUIL_HAUTE_CONFIANCE)
+                )
+                mise_c = bool(
+                    detail.get("mise_en_avant", proba_c >= SEUIL_MISE_EN_AVANT)
+                ) or haute_c
                 corners = CornersMatch(
                     disponible=True,
-                    probabilite=float(ligne["probabilite"]),
+                    probabilite=proba_c,
+                    total_prevu=total_f,
+                    ligne_over=float(ligne_over) if ligne_over is not None else None,
+                    potentiel=bool(detail.get("potentiel", True)),
+                    fort=fort,
+                    haute_confiance=haute_c,
+                    mise_en_avant=mise_c,
                     detail=detail.get("detail") or ligne.get("libelle_marche"),
                     message=None,
                     verdict=verdict,
@@ -418,17 +550,34 @@ def construire_pronos_depuis_figes(
                 continue
 
             type_api = TYPE_VERS_API.get(type_db, type_db)
+            proba = float(ligne["probabilite"])
+            if type_api == "over_2_5":
+                proba_over_2_5 = proba
+                brut_buts = detail.get("buts_prevus_total")
+                if brut_buts is not None:
+                    buts_prevus_total = float(brut_buts)
+                elif buts_prevus_total is None:
+                    buts_prevus_total = _extraire_buts_prevus(detail.get("detail"))
+            haute = bool(
+                detail.get("haute_confiance", proba >= SEUIL_HAUTE_CONFIANCE)
+            )
+            mise = bool(
+                detail.get("mise_en_avant", proba >= SEUIL_MISE_EN_AVANT)
+            ) or haute
             marches.append(
                 MarcheQualifie(
                     type=type_api,  # type: ignore[arg-type]
                     libelle=ligne.get("libelle_marche") or type_db,
-                    probabilite=float(ligne["probabilite"]),
+                    probabilite=proba,
                     signal_fort=bool(detail.get("signal_fort")),
+                    haute_confiance=haute,
+                    mise_en_avant=mise,
                     detail=detail.get("detail"),
                     verdict=verdict,
                 )
             )
 
+        marches.sort(key=_cle_tri_marche)
         if not marches and not corners.disponible:
             continue
 
@@ -442,26 +591,31 @@ def construire_pronos_depuis_figes(
                 domicile=meta["domicile"],
                 exterieur=meta["exterieur"],
                 score_modal=None,
+                buts_prevus_total=buts_prevus_total,
+                proba_over_2_5=proba_over_2_5,
                 marches=marches,
                 corners=corners,
             )
         )
 
     pronos_plats, groupes = grouper_pronos_par_championnat(resultats)
-    return ReponsePronosWeekend(
-        avertissement=AVERTISSEMENT_SOLO,
-        weekend=WeekendInfo(
-            date_debut=debut.isoformat(),
-            date_fin=fin.isoformat(),
-            libelle=libelle_weekend(debut, fin),
-        ),
-        seuil_probabilite=SEUIL_PROBABILITE,
-        nb_matchs_analyses=len(resultats),
-        nb_matchs_avec_prono=len(resultats),
-        pronos=pronos_plats,
-        pronos_par_championnat=groupes,
-        source="fige",
-        fige_le=fige_le,
+    return filtrer_reponse_pronos_utilisateur(
+        ReponsePronosWeekend(
+            avertissement=AVERTISSEMENT_SOLO,
+            weekend=WeekendInfo(
+                date_debut=debut.isoformat(),
+                date_fin=fin.isoformat(),
+                libelle=libelle_weekend(debut, fin),
+            ),
+            seuil_probabilite=SEUIL_PROBABILITE,
+            seuil_mise_en_avant=SEUIL_MISE_EN_AVANT,
+            nb_matchs_analyses=len(resultats),
+            nb_matchs_avec_prono=len(resultats),
+            pronos=pronos_plats,
+            pronos_par_championnat=groupes,
+            source="fige",
+            fige_le=fige_le,
+        )
     )
 
 
@@ -477,17 +631,22 @@ def construire_pronos_weekend_ou_figes(
         weekend, championnat=championnat, chemin_analyses=chemin_analyses
     )
     if figes is not None:
-        return figes
-    live = construire_pronos_weekend(
-        connexion_foot,
-        date_debut=weekend,
-        championnat=championnat,
+        return enrichir_logos_pronos(connexion_foot, figes)
+    live = filtrer_reponse_pronos_utilisateur(
+        construire_pronos_weekend(
+            connexion_foot,
+            date_debut=weekend,
+            championnat=championnat,
+        )
     )
-    return live.model_copy(
-        update={
-            "source": "live",
-            "fige_le": None,
-        }
+    return enrichir_logos_pronos(
+        connexion_foot,
+        live.model_copy(
+            update={
+                "source": "live",
+                "fige_le": None,
+            }
+        ),
     )
 
 
@@ -495,8 +654,13 @@ def bilan_weekend_solo(
     weekend_debut: str | None = None,
     championnat: str | None = None,
     chemin_analyses=None,
+    proba_min: float | None = None,
 ) -> ReponseBilanSolo:
-    """Hit-rate et détail des verdicts pour un weekend figé."""
+    """Hit-rate et détail des verdicts pour un weekend figé.
+
+    Si ``proba_min`` est fourni, ne retient que les marchés figés dont la
+    probabilité prédite est ≥ ce seuil (ex. page bilan ≥ 70 %).
+    """
     weekend = _weekend_iso(weekend_debut)
     vendredi = datetime.strptime(weekend, "%Y-%m-%d").date()
     debut, fin = plage_weekend(vendredi)
@@ -507,6 +671,20 @@ def bilan_weekend_solo(
         fige_le = date_fige_weekend(connexion, weekend)
     finally:
         connexion.close()
+
+    lignes = [
+        ligne
+        for ligne in lignes
+        if ligne["type_marche"] not in TYPES_MARCHES_CARTONS_BD
+    ]
+
+    if proba_min is not None:
+        lignes = [
+            ligne
+            for ligne in lignes
+            if ligne.get("probabilite") is not None
+            and float(ligne["probabilite"]) >= float(proba_min)
+        ]
 
     par_marche: dict[str, dict] = defaultdict(lambda: {"vrais": 0, "total": 0})
     par_champ: dict[str, dict] = defaultdict(lambda: {"vrais": 0, "total": 0})
@@ -557,6 +735,7 @@ def bilan_weekend_solo(
             libelle=libelle_weekend(debut, fin),
         ),
         fige_le=fige_le,
+        seuil_probabilite=float(proba_min) if proba_min is not None else None,
         nb_pronos=len(lignes),
         nb_juges=nb_juges,
         nb_vrais=nb_vrais,

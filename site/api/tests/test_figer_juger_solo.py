@@ -202,6 +202,83 @@ def test_juger_prono_avec_score(tmp_path: Path):
     assert len(bilan.details) == 2
 
 
+def test_bilan_filtre_proba_min_70(tmp_path: Path):
+    """Ne retient que les marchés figés ≥ 70 % (jugés)."""
+    from requetes.solo import inserer_verdict_solo
+    from services.solo_fige import SEUIL_BILAN_PRONOS
+
+    chemin_analyses, connexion = _base_analyses(tmp_path)
+    _inserer_prono(connexion, "victoire_1", "Victoire Barcelona", 92.0)
+    _inserer_prono(connexion, "over_25", "Plus de 2,5 buts", 65.0)
+    _inserer_prono(connexion, "btts", "Les deux marquent", 70.0)
+    connexion.commit()
+
+    lignes = lister_pronos_solo_weekend(connexion, WEEKEND)
+    assert len(lignes) == 3
+    for ligne in lignes:
+        inserer_verdict_solo(
+            connexion,
+            prono_solo_id=int(ligne["id"]),
+            vrai=ligne["type_marche"] != "btts",
+            motif_code="test",
+            motif_texte="motif test",
+            buts_domicile=2,
+            buts_exterieur=1,
+            juge_le="2026-08-30T12:00:00Z",
+        )
+    connexion.commit()
+    connexion.close()
+
+    assert SEUIL_BILAN_PRONOS == 70.0
+    bilan = bilan_weekend_solo(
+        WEEKEND,
+        chemin_analyses=chemin_analyses,
+        proba_min=SEUIL_BILAN_PRONOS,
+    )
+    assert bilan.seuil_probabilite == 70.0
+    assert bilan.nb_pronos == 2  # 92 et 70, pas 65
+    assert bilan.nb_juges == 2
+    assert bilan.nb_vrais == 1
+    assert bilan.nb_faux == 1
+    assert bilan.hit_rate == 50.0
+    types = {d.type_marche for d in bilan.details}
+    assert types == {"victoire_1", "btts"}
+    assert all(d.probabilite >= 70.0 for d in bilan.details)
+
+
+def test_bilan_exclut_marches_cartons(tmp_path: Path):
+    """Le bilan utilisateur ignore les marchés cartons (conservés en BD)."""
+    from requetes.solo import inserer_verdict_solo
+    from services.solo_fige import TYPES_MARCHES_CARTONS_BD
+
+    chemin_analyses, connexion = _base_analyses(tmp_path)
+    _inserer_prono(connexion, "victoire_1", "Victoire Barcelona", 88.0)
+    _inserer_prono(connexion, "cartons_15", "Plus de 1,5 cartons jaunes", 75.0)
+    _inserer_prono(connexion, "cartons", "Plus de 3 cartons jaunes", 82.0)
+    connexion.commit()
+
+    for ligne in lister_pronos_solo_weekend(connexion, WEEKEND):
+        inserer_verdict_solo(
+            connexion,
+            prono_solo_id=int(ligne["id"]),
+            vrai=True,
+            motif_code="test",
+            motif_texte="motif test",
+            buts_domicile=2,
+            buts_exterieur=1,
+            juge_le="2026-08-30T12:00:00Z",
+        )
+    connexion.commit()
+    connexion.close()
+
+    bilan = bilan_weekend_solo(WEEKEND, chemin_analyses=chemin_analyses)
+    assert bilan.nb_juges == 1
+    assert "victoire_1" in bilan.par_marche
+    assert not bilan.par_marche.keys() & TYPES_MARCHES_CARTONS_BD
+    types_details = {d.type_marche for d in bilan.details}
+    assert types_details == {"victoire_1"}
+
+
 def test_juger_verdict_faux(tmp_path: Path):
     chemin_analyses, connexion_analyses = _base_analyses(tmp_path)
     _inserer_prono(connexion_analyses, "victoire_1", "Victoire Barcelona")
